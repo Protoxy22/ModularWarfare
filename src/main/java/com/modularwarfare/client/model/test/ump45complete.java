@@ -10,6 +10,8 @@
 
 package com.modularwarfare.client.model.test; //Path where the model is located
 
+import org.lwjgl.util.vector.Vector3f;
+
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -34,8 +36,31 @@ public class ump45complete extends ModelGun //Same as Filename
 		initammoModel_1();
 		initslideModel_1();
 		initbackpackModel_1();
+		
+		modelScale = 0.05F;
 
 		translateAll(0F, -10.5F, -0.1F);
+
+		hasFlash = false;
+        hasArms = true;
+        
+        leftArmPos = new Vector3f(-0.03F, -0.33F, 0.05F);
+        leftArmRot = new Vector3f(60.0F, 45.0F, 0.0F);
+        leftArmReloadPos = new Vector3f(-0.20F, -0.35F, 0.26F);
+        leftArmReloadRot = new Vector3f(60.0F, 65.0F, -0.0F);
+        leftArmChargePos = new Vector3f(0.05F, 0.31F, 0.05F);
+        leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
+ 
+        rightArmPos = new Vector3f(0.23F, -0.6F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(0.23F, -0.55F, 0.05F);
+        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
+        
+        rightArmScale = new Vector3f(10.8F, 10.8F, 10.8F);
+        leftArmScale = new Vector3f(10.8F, 11.0F, 10.8F);
+ 
+        rightHandAmmo = false;
+        leftHandAmmo = true;
 
 
 		flipAll();
