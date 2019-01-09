@@ -18,7 +18,9 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
+import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.type.ContentTypes;
@@ -48,6 +50,7 @@ public class ModularWarfare {
 	public static File MOD_DIR;
 	
 	public static ArrayList<ItemGun> gunTypes = new ArrayList<ItemGun>();
+	public static ArrayList<ItemAmmo> ammoTypes = new ArrayList<ItemAmmo>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
 	// REGISTER ITEMS AND STUFF
@@ -88,6 +91,9 @@ public class ModularWarfare {
 	{
 		for(ItemGun itemGun : gunTypes)
 			GameRegistry.registerItem(itemGun, itemGun.type.internalName);
+		
+		for(ItemAmmo itemAmmo : ammoTypes)
+			GameRegistry.registerItem(itemAmmo, itemAmmo.type.internalName);
 	}
 
 	public void loadContentPacks() {
@@ -111,6 +117,7 @@ public class ModularWarfare {
 			switch(baseType.id)
 			{
 				case 0: {gunTypes.add(new ItemGun((GunType) baseType));break;}
+				case 1: {ammoTypes.add(new ItemAmmo((AmmoType) baseType));break;}
 			}
 		}
 	}

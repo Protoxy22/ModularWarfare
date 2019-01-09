@@ -70,10 +70,14 @@ public class RenderGun implements IItemRenderer {
 		{
 			float f = 1F / 16F;
 			float modelScale = model.modelScale;
-			
+						
 			renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + gunType + "_" + gunType.weaponSkins[0] + ".png"));
+
 			
 			GL11.glScalef(modelScale, modelScale, modelScale);
+			GL11.glRotatef(25F - 5F * 1f, 0F, 0F, 1F);
+			GL11.glRotatef(-5F, 0F, 1F, 0F);
+			GL11.glTranslatef(3.5f, -0.3f, 0);
 
 			model.renderGun(f);
 			model.renderDefaultScope(f);
@@ -174,6 +178,7 @@ public class RenderGun implements IItemRenderer {
 		}
 		else if (anim.pumped < 0.9 && model.rightHandBolt && model.rightHandAmmo) {
 			RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
+			//model.renderAmmo(f);
 		}
 		else if (!anim.reloading) {
 			RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);

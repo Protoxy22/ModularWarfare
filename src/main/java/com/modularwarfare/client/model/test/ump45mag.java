@@ -6,32 +6,30 @@
 // Model Creator: 
 // Created on: 01.08.2018 - 13:36:15
 // Last changed on: 01.08.2018 - 13:36:15
+package com.modularwarfare.client.model.test;
 
-package com.modularwarfare.client.model.test; //Path where the model is located
-
-import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
-public class ump45mag extends ModelGun //Same as Filename
+public class ump45mag extends ModelAmmo
 {
 	int textureX = 1024;
 	int textureY = 1024;
 
-	public ump45mag() //Same as Filename
+	public ump45mag()
 	{
 		ammoModel = new ModelRendererTurbo[25];
-		backpackModel = new ModelRendererTurbo[16];
+		fullAmmoModel = new ModelRendererTurbo[16];
 
-		initammoModel_1();
-		initbackpackModel_1();
+		initAmmoModel();
+		initFullAmmoModel();
 
 		translateAll(0F, -10.5F, -0.1F);
-
 
 		flipAll();
 	}
 
-	private void initammoModel_1()
+	private void initAmmoModel()
 	{
 		ammoModel[0] = new ModelRendererTurbo(this, 865, 81, textureX, textureY); // Import Box0
 		ammoModel[1] = new ModelRendererTurbo(this, 281, 89, textureX, textureY); // Import Box0
@@ -135,71 +133,71 @@ public class ump45mag extends ModelGun //Same as Filename
 		ammoModel[24].setRotationPoint(30F, -21.25F, -5F);
 	}
 
-	private void initbackpackModel_1()
+	private void initFullAmmoModel()
 	{
-		backpackModel[0] = new ModelRendererTurbo(this, 225, 185, textureX, textureY); // Box 440
-		backpackModel[1] = new ModelRendererTurbo(this, 377, 185, textureX, textureY); // Box 441
-		backpackModel[2] = new ModelRendererTurbo(this, 137, 193, textureX, textureY); // Box 446
-		backpackModel[3] = new ModelRendererTurbo(this, 321, 193, textureX, textureY); // Box 447
-		backpackModel[4] = new ModelRendererTurbo(this, 977, 177, textureX, textureY); // Box 136
-		backpackModel[5] = new ModelRendererTurbo(this, 1, 185, textureX, textureY); // Box 137
-		backpackModel[6] = new ModelRendererTurbo(this, 457, 193, textureX, textureY); // Box 148
-		backpackModel[7] = new ModelRendererTurbo(this, 473, 193, textureX, textureY); // Box 149
-		backpackModel[8] = new ModelRendererTurbo(this, 721, 193, textureX, textureY); // Box 174
-		backpackModel[9] = new ModelRendererTurbo(this, 745, 193, textureX, textureY); // Box 175
-		backpackModel[10] = new ModelRendererTurbo(this, 761, 193, textureX, textureY); // Box 176
-		backpackModel[11] = new ModelRendererTurbo(this, 777, 193, textureX, textureY); // Box 177
-		backpackModel[12] = new ModelRendererTurbo(this, 801, 193, textureX, textureY); // Box 178
-		backpackModel[13] = new ModelRendererTurbo(this, 817, 193, textureX, textureY); // Box 179
-		backpackModel[14] = new ModelRendererTurbo(this, 841, 193, textureX, textureY); // Box 180
-		backpackModel[15] = new ModelRendererTurbo(this, 857, 193, textureX, textureY); // Box 181
+		fullAmmoModel[0] = new ModelRendererTurbo(this, 225, 185, textureX, textureY); // Box 440
+		fullAmmoModel[1] = new ModelRendererTurbo(this, 377, 185, textureX, textureY); // Box 441
+		fullAmmoModel[2] = new ModelRendererTurbo(this, 137, 193, textureX, textureY); // Box 446
+		fullAmmoModel[3] = new ModelRendererTurbo(this, 321, 193, textureX, textureY); // Box 447
+		fullAmmoModel[4] = new ModelRendererTurbo(this, 977, 177, textureX, textureY); // Box 136
+		fullAmmoModel[5] = new ModelRendererTurbo(this, 1, 185, textureX, textureY); // Box 137
+		fullAmmoModel[6] = new ModelRendererTurbo(this, 457, 193, textureX, textureY); // Box 148
+		fullAmmoModel[7] = new ModelRendererTurbo(this, 473, 193, textureX, textureY); // Box 149
+		fullAmmoModel[8] = new ModelRendererTurbo(this, 721, 193, textureX, textureY); // Box 174
+		fullAmmoModel[9] = new ModelRendererTurbo(this, 745, 193, textureX, textureY); // Box 175
+		fullAmmoModel[10] = new ModelRendererTurbo(this, 761, 193, textureX, textureY); // Box 176
+		fullAmmoModel[11] = new ModelRendererTurbo(this, 777, 193, textureX, textureY); // Box 177
+		fullAmmoModel[12] = new ModelRendererTurbo(this, 801, 193, textureX, textureY); // Box 178
+		fullAmmoModel[13] = new ModelRendererTurbo(this, 817, 193, textureX, textureY); // Box 179
+		fullAmmoModel[14] = new ModelRendererTurbo(this, 841, 193, textureX, textureY); // Box 180
+		fullAmmoModel[15] = new ModelRendererTurbo(this, 857, 193, textureX, textureY); // Box 181
 
-		backpackModel[0].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F); // Box 440
-		backpackModel[0].setRotationPoint(38.5F, -21F, 2F);
+		fullAmmoModel[0].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F); // Box 440
+		fullAmmoModel[0].setRotationPoint(38.5F, -21F, 2F);
 
-		backpackModel[1].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 441
-		backpackModel[1].setRotationPoint(38.5F, -21F, 2F);
+		fullAmmoModel[1].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 441
+		fullAmmoModel[1].setRotationPoint(38.5F, -21F, 2F);
 
-		backpackModel[2].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 446
-		backpackModel[2].setRotationPoint(38.5F, -21F, 2F);
+		fullAmmoModel[2].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 446
+		fullAmmoModel[2].setRotationPoint(38.5F, -21F, 2F);
 
-		backpackModel[3].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 447
-		backpackModel[3].setRotationPoint(38.5F, -21F, 2F);
+		fullAmmoModel[3].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 447
+		fullAmmoModel[3].setRotationPoint(38.5F, -21F, 2F);
 
-		backpackModel[4].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.575F, -1.405F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.095F, -0.905F, 0F, -1.42F, -0.58F); // Box 136
-		backpackModel[4].setRotationPoint(34.5F, -21F, 2F);
+		fullAmmoModel[4].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.575F, -1.405F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.095F, -0.905F, 0F, -1.42F, -0.58F); // Box 136
+		fullAmmoModel[4].setRotationPoint(34.5F, -21F, 2F);
 
-		backpackModel[5].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.905F, -1.095F, 0F, -1.405F, -0.575F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F); // Box 137
-		backpackModel[5].setRotationPoint(34.5F, -21F, 2F);
+		fullAmmoModel[5].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.905F, -1.095F, 0F, -1.405F, -0.575F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F); // Box 137
+		fullAmmoModel[5].setRotationPoint(34.5F, -21F, 2F);
 
-		backpackModel[6].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.405F, -0.575F, 0F, -0.905F, -1.095F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 148
-		backpackModel[6].setRotationPoint(34.5F, -21F, 2F);
+		fullAmmoModel[6].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.405F, -0.575F, 0F, -0.905F, -1.095F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 148
+		fullAmmoModel[6].setRotationPoint(34.5F, -21F, 2F);
 
-		backpackModel[7].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.575F, -1.405F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.095F, -0.905F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 149
-		backpackModel[7].setRotationPoint(34.5F, -21F, 2F);
+		fullAmmoModel[7].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.575F, -1.405F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.095F, -0.905F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 149
+		fullAmmoModel[7].setRotationPoint(34.5F, -21F, 2F);
 
-		backpackModel[8].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 174
-		backpackModel[8].setRotationPoint(38.5F, -20F, -2F);
+		fullAmmoModel[8].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 174
+		fullAmmoModel[8].setRotationPoint(38.5F, -20F, -2F);
 
-		backpackModel[9].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.405F, -0.575F, 0F, -0.905F, -1.095F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 175
-		backpackModel[9].setRotationPoint(34.5F, -20F, -2F);
+		fullAmmoModel[9].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -1.23F, -0.15F, 0F, -1.405F, -0.575F, 0F, -0.905F, -1.095F, 0F, -0.58F, -1.42F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 175
+		fullAmmoModel[9].setRotationPoint(34.5F, -20F, -2F);
 
-		backpackModel[10].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.575F, -1.405F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.095F, -0.905F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 176
-		backpackModel[10].setRotationPoint(34.5F, -20F, -2F);
+		fullAmmoModel[10].addShapeBox(5F, -2F, -2F, 2, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.575F, -1.405F, 0F, -0.5F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.095F, -0.905F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 176
+		fullAmmoModel[10].setRotationPoint(34.5F, -20F, -2F);
 
-		backpackModel[11].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 177
-		backpackModel[11].setRotationPoint(38.5F, -20F, -2F);
+		fullAmmoModel[11].addShapeBox(-5F, -2F, -2F, 6, 2, 2, 0F,0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 177
+		fullAmmoModel[11].setRotationPoint(38.5F, -20F, -2F);
 
-		backpackModel[12].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.575F, -1.405F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.095F, -0.905F, 0F, -1.42F, -0.58F); // Box 178
-		backpackModel[12].setRotationPoint(34.5F, -20F, -2F);
+		fullAmmoModel[12].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, 0F, 0F, 0F, -0.5F, 0F, 0F, -0.575F, -1.405F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.095F, -0.905F, 0F, -1.42F, -0.58F); // Box 178
+		fullAmmoModel[12].setRotationPoint(34.5F, -20F, -2F);
 
-		backpackModel[13].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F); // Box 179
-		backpackModel[13].setRotationPoint(38.5F, -20F, -2F);
+		fullAmmoModel[13].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.15F, -1.23F, 0F, -0.15F, -1.23F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.42F, -0.58F, 0F, -1.42F, -0.58F); // Box 179
+		fullAmmoModel[13].setRotationPoint(38.5F, -20F, -2F);
 
-		backpackModel[14].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.905F, -1.095F, 0F, -1.405F, -0.575F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F); // Box 180
-		backpackModel[14].setRotationPoint(34.5F, -20F, -2F);
+		fullAmmoModel[14].addShapeBox(5F, -2F, 0F, 2, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.905F, -1.095F, 0F, -1.405F, -0.575F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -0.5F, 0F, 0F, 0F); // Box 180
+		fullAmmoModel[14].setRotationPoint(34.5F, -20F, -2F);
 
-		backpackModel[15].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 181
-		backpackModel[15].setRotationPoint(38.5F, -20F, -2F);
+		fullAmmoModel[15].addShapeBox(-5F, -2F, 0F, 6, 2, 2, 0F,0F, -0.58F, -1.42F, 0F, -0.58F, -1.42F, 0F, -1.23F, -0.15F, 0F, -1.23F, -0.15F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Box 181
+		fullAmmoModel[15].setRotationPoint(38.5F, -20F, -2F);
 	}
 }

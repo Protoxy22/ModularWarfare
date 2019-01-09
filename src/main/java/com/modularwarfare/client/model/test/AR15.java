@@ -9,6 +9,8 @@
 
 package com.modularwarfare.client.model.test; //Path where the model is located
 
+import org.lwjgl.util.vector.Vector3f;
+
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -876,6 +878,8 @@ public class AR15 extends ModelGun //Same as Filename
 		ammoModel[2].setRotationPoint(2.49F, 0.15F, -0.5F);
 		ammoModel[2].rotateAngleZ = 0.15707963F;
 
+		ammoMap.put("30rndstanag", new Vector3f(1, 1, 1));
+		
 		translateAll(0F, 0F, 0F);
 
 		flipAll();
