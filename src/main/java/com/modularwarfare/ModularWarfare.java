@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -43,8 +45,10 @@ public class ModularWarfare {
 	public static CommonProxy PROXY;
 	
 	public static Logger LOGGER;
+	public static File MOD_DIR;
 	
 	public static ArrayList<ItemGun> gunTypes = new ArrayList<ItemGun>();
+	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
 	// REGISTER ITEMS AND STUFF
 	@EventHandler
@@ -54,15 +58,15 @@ public class ModularWarfare {
 		LOGGER = event.getModLog();
 		
 		// Creates directory if doesn't exist
-		File contentDir = new File(event.getModConfigurationDirectory().getParentFile(), "ModularWarfare");
-		if(!contentDir.exists())
+		 MOD_DIR = new File(event.getModConfigurationDirectory().getParentFile(), "ModularWarfare");
+		if(!MOD_DIR.exists())
 		{
-			contentDir.mkdir();
+			MOD_DIR.mkdir();
 			LOGGER.info("Created ModularWarfare folder, it's recommended to install content packs.");
 			LOGGER.info("As the mod itself doesn't come with any content.");
 		}
 		
-		loadContentPacks(contentDir);
+		loadContentPacks();
 		registerItems();
 	}
 
@@ -83,9 +87,22 @@ public class ModularWarfare {
 			GameRegistry.registerItem(itemGun, itemGun.type.internalName);
 	}
 
-	public void loadContentPacks(File contentDir) {
-		ArrayList<BaseType> baseTypes = getTypeFiles(contentDir);
+	public void loadContentPacks() {
+		ClassLoader classloader = (net.minecraft.server.MinecraftServer.class).getClassLoader();
+		Method method = null;
+		try
+		{
+			method = (java.net.URLClassLoader.class).getDeclaredMethod("addURL", java.net.URL.class);
+			method.setAccessible(true);
+		} catch (Exception e)
+		{
+			LOGGER.error("Failed to get class loader. All content loading will now fail.");
+			e.printStackTrace();
+		}
 		
+		List<File> contentPacks = PROXY.getContentList(method, classloader);
+		getTypeFiles(contentPacks);
+				
 		for(BaseType baseType : baseTypes)
 		{
 			switch(baseType.id)
@@ -95,12 +112,11 @@ public class ModularWarfare {
 		}
 	}
 	
-	public ArrayList<BaseType> getTypeFiles(File contentDir)
+	public void getTypeFiles(List<File> contentPacks)
 	{
-		ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 		Gson gson = new Gson();
 		
-		for(File file : contentDir.listFiles())
+		for(File file : contentPacks)
 		{
 			if(file.isDirectory())
 			{
@@ -154,8 +170,6 @@ public class ModularWarfare {
 				}
 			}
 		}
-		
-		return baseTypes;
 	}
 
 }
