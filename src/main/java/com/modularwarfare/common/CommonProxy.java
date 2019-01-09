@@ -12,6 +12,10 @@ public class CommonProxy {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
 	
+	public void load() {}
+	
+	public void forceReload() {}
+	
 	public List<File> getContentList(Method method, ClassLoader classloader) {
 		List<File> contentPacks = new ArrayList<File>();
 		for (File file : ModularWarfare.MOD_DIR.listFiles())
@@ -24,6 +28,11 @@ public class CommonProxy {
 		}
 		ModularWarfare.LOGGER.info("Loaded content pack list server side.");
 		return contentPacks;
+	}
+	
+	public <T> T loadModel(String s, String shortName, Class<T> typeClass)
+	{
+		return null;
 	}
 
 }

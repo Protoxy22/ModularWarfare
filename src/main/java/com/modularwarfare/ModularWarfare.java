@@ -68,6 +68,9 @@ public class ModularWarfare {
 		
 		loadContentPacks();
 		registerItems();
+		
+		PROXY.load();
+		PROXY.forceReload();
 	}
 
 	// REGISTER EVENTS, IMC, AND WORLD STUFF

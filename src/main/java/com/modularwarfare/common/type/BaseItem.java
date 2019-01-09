@@ -12,6 +12,7 @@ public class BaseItem extends Item {
 		setCreativeTab(ModularWarfare.MOD_TAB);
 		String iconName = type.iconName != null ? type.iconName : type.internalName;
 		this.setTextureName(ModularWarfare.MOD_ID + ":" + iconName);
+		type.loadExtraValues();
 	}
 
 }

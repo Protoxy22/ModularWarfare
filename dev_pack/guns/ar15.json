@@ -1,7 +1,9 @@
 {
   "internalName": "ar15",
+  "iconName": "ar15",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.AR15",
   "weaponSkins": [
     {
       "skinName": "Default",
