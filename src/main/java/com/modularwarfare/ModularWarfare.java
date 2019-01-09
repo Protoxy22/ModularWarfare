@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.modularwarfare.common.CommonProxy;
+import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseType;
@@ -27,6 +28,8 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.creativetab.CreativeTabs;
 
 @Mod(modid = ModularWarfare.MOD_ID, name = ModularWarfare.MOD_NAME, version = ModularWarfare.MOD_VERSION)
 public class ModularWarfare {
@@ -34,6 +37,7 @@ public class ModularWarfare {
 	public static final String MOD_ID = "modularwarfare";
 	public static final String MOD_NAME = "Modular Warfare";
 	public static final String MOD_VERSION = "1.0.0";
+	public static CreativeTabs MOD_TAB;
 
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
@@ -46,6 +50,7 @@ public class ModularWarfare {
 	@EventHandler
 	public void onPreInitialization(FMLPreInitializationEvent event) {
 		ContentTypes.registerTypes();
+		MOD_TAB = new MWTab();
 		LOGGER = event.getModLog();
 		
 		// Creates directory if doesn't exist
@@ -58,11 +63,7 @@ public class ModularWarfare {
 		}
 		
 		loadContentPacks(contentDir);
-		
-		for(ItemGun itemGun : gunTypes)
-		{
-			System.out.println(itemGun.type.toString());
-		}
+		registerItems();
 	}
 
 	// REGISTER EVENTS, IMC, AND WORLD STUFF
@@ -74,6 +75,12 @@ public class ModularWarfare {
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event) {
 		
+	}
+	
+	public void registerItems()
+	{
+		for(ItemGun itemGun : gunTypes)
+			GameRegistry.registerItem(itemGun, itemGun.type.internalName);
 	}
 
 	public void loadContentPacks(File contentDir) {
