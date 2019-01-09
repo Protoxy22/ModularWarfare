@@ -7,8 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.CommonProxy;
+import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -24,15 +26,19 @@ public class ClientProxy extends CommonProxy {
 	public List<File> contentPacks;
 	public static String modelDir = "com.modularwarfare.client.model.";
 	public static RenderGun gunRenderer;
+	public static RenderAmmo ammoRenderer;
 	
 	@Override
 	public void load() 
 	{
 		gunRenderer = new RenderGun();
+		ammoRenderer = new RenderAmmo();
+		
 		for(ItemGun itemGun : ModularWarfare.gunTypes)
-		{
 			MinecraftForgeClient.registerItemRenderer(itemGun, gunRenderer);
-		}
+		
+		for(ItemAmmo itemAmmo : ModularWarfare.ammoTypes)
+			MinecraftForgeClient.registerItemRenderer(itemAmmo, ammoRenderer);
 	}
 	
 	@Override

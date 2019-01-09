@@ -3,7 +3,9 @@ package com.modularwarfare.client.model;
 import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
@@ -12,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
-public class RenderGun implements IItemRenderer {
+public class RenderAmmo implements IItemRenderer {
 	
 	private static TextureManager renderEngine;
 	public static float smoothing;
@@ -25,7 +27,7 @@ public class RenderGun implements IItemRenderer {
 				return false;
 		case EQUIPPED:
 		case EQUIPPED_FIRST_PERSON:
-			return item != null && item.getItem() instanceof ItemGun && ((ItemGun) item.getItem()).type.model != null;
+			return item != null && item.getItem() instanceof ItemAmmo && ((ItemAmmo) item.getItem()).type.model != null;
 		default:
 			break;
 		}
@@ -40,26 +42,25 @@ public class RenderGun implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		// Avoid any broken cases by returning
-		if (!(item.getItem() instanceof ItemGun))
+		if (!(item.getItem() instanceof ItemAmmo))
 			return;
 		
-		GunType gunType = ((ItemGun) item.getItem()).type;
-		if (gunType == null)
+		AmmoType ammoType = ((ItemAmmo) item.getItem()).type;
+		if (ammoType == null)
 			return;
 
-		ModelGun model = gunType.model;
+		ModelAmmo model = ammoType.model;
 		if (model == null)
 			return;
-		
 		{
-			renderGun(type, item, gunType, data);
+			renderAmmo(type, item, ammoType, data);
 		}
 		
 	}
 	
-	private void renderGun(ItemRenderType type, ItemStack item, GunType gunType, Object... data) {
+	private void renderAmmo(ItemRenderType type, ItemStack item, AmmoType ammoType, Object... data) {
 		
-		ModelGun model = gunType.model;
+		ModelAmmo model = ammoType.model;
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -69,21 +70,12 @@ public class RenderGun implements IItemRenderer {
 			float f = 1F / 16F;
 			float modelScale = 0.2f;
 			
-			renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + gunType + "_" + gunType.weaponSkins[0] + ".png"));
-
-			
+			renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + ammoType + ".png"));
 			GL11.glScalef(modelScale, modelScale, modelScale);
 			GL11.glRotatef(25F - 5F * 1f, 0F, 0F, 1F);
 			GL11.glRotatef(-5F, 0F, 1F, 0F);
 			GL11.glTranslatef(3.5f, -0.3f, 0);
-
-			model.renderGun(f);
-			model.renderDefaultScope(f);
-			model.renderDefaultBarrel(f);
-			model.renderDefaultStock(f);
-			model.renderDefaultGrip(f);
-			model.renderDefaultGadget(f);
-			//model.renderAmmo(f);
+			model.renderAmmo(f);
 		}
 		GL11.glPopMatrix();
 	}

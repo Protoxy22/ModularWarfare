@@ -1,5 +1,7 @@
 package com.modularwarfare.client.model;
 
+import java.util.HashMap;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -225,6 +227,8 @@ public class ModelGun extends ModelBase
 	private static float lightmapLastX;
     private static float lightmapLastY;
 	private static boolean optifineBreak = false;
+	
+	public HashMap<String, Vector3f> ammoMap = new HashMap<String, Vector3f>();
 
 	public static void glowOn()
 	{
@@ -496,4 +500,5 @@ public class ModelGun extends ModelBase
 			mod.rotationPointZ += z;
 		}
 	}
+	
 }
