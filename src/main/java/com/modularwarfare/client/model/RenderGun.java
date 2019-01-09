@@ -67,7 +67,7 @@ public class RenderGun implements IItemRenderer {
 		GL11.glPushMatrix();
 		{
 			float f = 1F / 16F;
-			float modelScale = 1f;
+			float modelScale = model.modelScale;
 			
 			renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + gunType + "_" + gunType.weaponSkins[0] + ".png"));
 			
