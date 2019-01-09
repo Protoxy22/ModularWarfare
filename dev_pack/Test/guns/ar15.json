@@ -1,0 +1,17 @@
+{
+  "internalName": "ar15",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "weaponSkins": [
+    {
+      "skinName": "Default",
+      "skinAsset": "default",
+      "requiredItems": ["dyeBlack/1"]
+    },
+    {
+      "skinName": "Black Widow",
+      "skinAsset": "blackwidow",
+      "requiredItems": ["dyeBlack/1", "dyeRed/2"]
+    }
+  ]
+}
