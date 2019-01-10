@@ -1,8 +1,11 @@
 {
   "internalName": "ump45",
+    "iconName": "mpp.ump45",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "test.ump45complete",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.ump45",
   "weaponSkins": [
     {
       "skinName": "Default",

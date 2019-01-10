@@ -1,5 +1,6 @@
 {
   "internalName": "ump45ammo",
+  "iconName": "mpp.ump45ammo",
   "modelName": "test.ump45mag",
   "skinAsset": "default"
 }

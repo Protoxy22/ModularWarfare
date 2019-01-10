@@ -9,6 +9,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GunType extends BaseType {
 	
+	//Weapon Classification for later use with default animations etc
+	//TODO Set this up
+	/** enum weaponType
+	 * CUSTOM, PISTOL, MP, SMG, CARBINE, RIFLE, AR, DMR, SNIPER, SHOTGUN, etc 
+	 */
+	
+	
 	//Recoil Variables
 	/** Base value for Upwards cursor/view recoil */
 	public float recoilPitch = 0.0F;
