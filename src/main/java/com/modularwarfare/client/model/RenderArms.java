@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 public class RenderArms {
 	
 	// right hand pump action animation
-	public static void renderArmPump(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	/*public static void renderArmPump(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
 	{
 		GL11.glTranslatef(-(armPosition.x
 				- Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) / model.pumpModifier),
@@ -64,6 +64,6 @@ public class RenderArms {
 		GL11.glRotatef(rotationPoint.y, 0F, 1F, 0F);
 		GL11.glRotatef(rotationPoint.z, 0F, 0F, 1F);
 		GL11.glRotatef(rotationPoint.x, 1F, 0F, 0F);
-	}
+	}*/
 
 }

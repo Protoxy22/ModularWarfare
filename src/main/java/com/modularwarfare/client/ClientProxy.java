@@ -31,6 +31,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void load() 
 	{
+		new TickHandlerClient();
+		
 		gunRenderer = new RenderGun();
 		ammoRenderer = new RenderAmmo();
 		
