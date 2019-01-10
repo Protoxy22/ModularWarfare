@@ -1,0 +1,13 @@
+{
+  "internalName": "ump45",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.ump45complete",
+  "weaponSkins": [
+    {
+      "skinName": "Default",
+      "skinAsset": "default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}
