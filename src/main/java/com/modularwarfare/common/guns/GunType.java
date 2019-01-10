@@ -56,6 +56,9 @@ public class GunType extends BaseType {
 	public float ammoRecoilPitch = 0.0F;
 	/** If true, recoil yaw is determined by loaded ammo type */
 	public float ammoRecoilYaw = 0.0F;
+	//Dynamic ammo models
+	/** If true && != null, ammo model will be set by ammo type used. Used built-in ammo model by default */
+	public boolean dynamicAmmo = false;
 	
 	//Visual variables
 	/** The model file for this gun */
