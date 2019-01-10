@@ -63,41 +63,42 @@ public class ModelGun extends ModelBase
 	public boolean hasFlash = false;
 
 	//Arms rendering
+	/** Set hasArms = true; in model file to render arms */
 	public boolean hasArms = false;
+	//TODO; Any reason this cant be a single boolean with left true as default?
+	public boolean leftHandAmmo = false;
+	public boolean rightHandAmmo = false;
+	public Vector3f leftArmScale = new Vector3f(0.8F,0.8F,0.8F);
+	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);
+	
+	/** Position/Rotation of the LEFT arm when not reloading */
 	public Vector3f leftArmPos = new Vector3f(0,0,0);
 	public Vector3f leftArmRot = new Vector3f(0,0,0);
-	public Vector3f leftArmScale = new Vector3f(1,1,1);
-
+	/** Position/Rotation of the RIGHT arm when not reloading */
 	public Vector3f rightArmPos = new Vector3f(0,0,0);
 	public Vector3f rightArmRot = new Vector3f(0,0,0);
-	public Vector3f rightArmScale = new Vector3f(1,1,1);
-
-	public Vector3f rightArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f rightArmReloadRot = new Vector3f(0,0,0);
+	/** Position/Rotation of the LEFT arm when reloading */
 	public Vector3f leftArmReloadPos = new Vector3f(0,0,0);
 	public Vector3f leftArmReloadRot = new Vector3f(0,0,0);
-	
-	public Vector3f rightArmChargePos = new Vector3f(0,0,0);
-	public Vector3f rightArmChargeRot = new Vector3f(0,0,0);
+	/** Position/Rotation of the RIGHT arm when reloading */
+	public Vector3f rightArmReloadPos = new Vector3f(0,0,0);
+	public Vector3f rightArmReloadRot = new Vector3f(0,0,0);
+	/** Position/Rotation of the LEFT arm when charging(cocking) */
 	public Vector3f leftArmChargePos = new Vector3f(0,0,0);
 	public Vector3f leftArmChargeRot = new Vector3f(0,0,0);
-	
-	public Vector3f stagedrightArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f stagedrightArmReloadRot = new Vector3f(0,0,0);
-	public Vector3f stagedleftArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f stagedleftArmReloadRot = new Vector3f(0,0,0);
+	/** Position/Rotation of the RIGHT arm when charging(cocking) */
+	public Vector3f rightArmChargePos = new Vector3f(0,0,0);
+	public Vector3f rightArmChargeRot = new Vector3f(0,0,0);
 
-	public boolean rightHandAmmo = false;
-	public boolean leftHandAmmo = false;
-
-	/** Recoil and slide based parameters */
+	//Model based recoil variables
 	public float gunSlideDistance = 1F / 4F;
 	public float altgunSlideDistance = 1F / 4F;
-	public float RecoilSlideDistance = 2F / 16F;
-	public float RotateSlideDistance = -3F;
-	public float ShakeDistance = 0F;
-	/** Select an amount of recoil per shot, between 0 and 1 */
-	public float recoilAmount = 0.33F;
+	/** Adds backwards recoil translations to the gun model when firing  */
+	public float modelRecoilBackwards = 1F / 16F;
+	/** Adds upwards/downwards recoil translations to the gun model when firing  */
+	public float modelRecoilUpwards = -1.5F;
+	/** Adds a left-right model shaking motion when firing, default 0.5 */
+	public float modelShake = 0.5F;
 
 	/** Casing and muzzle flash parameters */
     //  Total distance to translate
@@ -204,20 +205,16 @@ public class ModelGun extends ModelBase
 
 
 	/** Custom reload Parameters. If Enum.CUSTOM is set, these parameters can build an animation within the gun model classes */
+	//Gun movement variables
 	public float rotateGunVertical = 0F;
 	public float rotateGunHorizontal = 0F;
 	public float tiltGun = 0F;
 	public Vector3f translateGun = new Vector3f(0F, 0F, 0F);
-	/* Ammo Model reload parameters */
+	//Ammo movement variables
 	public float rotateClipVertical = 0F;
-	public float stagedrotateClipVertical = 0F;
 	public float rotateClipHorizontal = 0F;
-	public float stagedrotateClipHorizontal = 0F;
 	public float tiltClip = 0F;
-	public float stagedtiltClip = 0F;
 	public Vector3f translateClip = new Vector3f(0F, 0F, 0F);
-	public Vector3f stagedtranslateClip = new Vector3f(0F, 0F, 0F);
-	public boolean stagedReload = false;
 	
 
 	/** This offsets the render position for third person */
@@ -241,9 +238,7 @@ public class ModelGun extends ModelBase
     public static void glowOn(int glow)
     {
         GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-
         GL11.glEnable(GL11.GL_BLEND);
-		//GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
 
         try
