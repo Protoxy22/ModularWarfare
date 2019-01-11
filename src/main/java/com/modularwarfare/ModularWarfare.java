@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -52,8 +53,8 @@ public class ModularWarfare {
 	public static File MOD_DIR;
 	
 	// Arrays for the varied types
-	public static ArrayList<ItemGun> gunTypes = new ArrayList<ItemGun>();
-	public static ArrayList<ItemAmmo> ammoTypes = new ArrayList<ItemAmmo>();
+	public static HashMap<String, ItemGun> gunTypes = new HashMap<String, ItemGun>();
+	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
 	/**
@@ -75,7 +76,7 @@ public class ModularWarfare {
 		
 		// Loads Content Packs
 		ContentTypes.registerTypes();
-		loadContentPacks();
+		loadContentPacks(false);
 		registerItems();
 		
 		// Client side loading
@@ -106,17 +107,17 @@ public class ModularWarfare {
 	 */
 	public void registerItems()
 	{
-		for(ItemGun itemGun : gunTypes)
+		for(ItemGun itemGun : gunTypes.values())
 			GameRegistry.registerItem(itemGun, itemGun.type.internalName);
 		
-		for(ItemAmmo itemAmmo : ammoTypes)
+		for(ItemAmmo itemAmmo : ammoTypes.values())
 			GameRegistry.registerItem(itemAmmo, itemAmmo.type.internalName);
 	}
-
+	
 	/**
 	 * Sorts all type files into their proper arraylist
 	 */
-	public void loadContentPacks() {
+	public static void loadContentPacks(boolean reload) {
 		ClassLoader classloader = (net.minecraft.server.MinecraftServer.class).getClassLoader();
 		Method method = null;
 		try
@@ -131,13 +132,26 @@ public class ModularWarfare {
 		
 		List<File> contentPacks = PROXY.getContentList(method, classloader);
 		getTypeFiles(contentPacks);
-				
-		for(BaseType baseType : baseTypes)
+		
+		if(reload)
 		{
-			switch(baseType.id)
+			for(BaseType baseType : baseTypes)
 			{
-				case 0: {gunTypes.add(new ItemGun((GunType) baseType));break;}
-				case 1: {ammoTypes.add(new ItemAmmo((AmmoType) baseType));break;}
+				switch(baseType.id)
+				{
+					case 0: {gunTypes.get(baseType.internalName).setType((GunType) baseType); break;}
+					case 1: {ammoTypes.get(baseType.internalName).setType((AmmoType) baseType); break;}
+				}
+			}
+		} else
+		{
+			for(BaseType baseType : baseTypes)
+			{
+				switch(baseType.id)
+				{
+					case 0: {gunTypes.put(baseType.internalName, new ItemGun((GunType) baseType));break;}
+					case 1: {ammoTypes.put(baseType.internalName, new ItemAmmo((AmmoType) baseType));break;}
+				}
 			}
 		}
 	}
@@ -146,7 +160,7 @@ public class ModularWarfare {
 	 * Gets all type files from the content packs
 	 * @param contentPacks
 	 */
-	public void getTypeFiles(List<File> contentPacks)
+	private static void getTypeFiles(List<File> contentPacks)
 	{
 		Gson gson = new Gson();
 		

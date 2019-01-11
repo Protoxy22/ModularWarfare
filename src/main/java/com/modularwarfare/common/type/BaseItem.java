@@ -14,5 +14,10 @@ public class BaseItem extends Item {
 		this.setTextureName(ModularWarfare.MOD_ID + ":" + iconName);
 		type.loadExtraValues();
 	}
+	
+	public void setType(BaseType type)
+	{
+		
+	}
 
 }

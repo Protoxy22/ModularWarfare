@@ -1,11 +1,9 @@
 package com.modularwarfare.common.guns;
 
-import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.common.type.BaseItem;
+import com.modularwarfare.common.type.BaseType;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -22,9 +20,15 @@ public class ItemGun extends BaseItem {
 	}
 	
 	@Override
+	public void setType(BaseType type)
+	{
+		this.type = (GunType) type;
+	}
+	
+	@Override
     public void onUpdate(ItemStack itemStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
-    	
+    	System.out.println(type.gunDamage);
     }
 	
 	@Override

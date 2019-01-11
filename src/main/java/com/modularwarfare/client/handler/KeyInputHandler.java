@@ -68,6 +68,14 @@ public class KeyInputHandler extends ForgeEvent {
 			
 		case DebugMode:
 			System.out.println("debug mode");
+			if(Minecraft.getMinecraft().thePlayer != null)
+			{
+				if(Minecraft.getMinecraft().thePlayer.isSneaking())
+				{
+					ModularWarfare.loadContentPacks(true);
+					ModularWarfare.PROXY.reloadModels(true);
+				}
+			}
 			break;
 			
 		default:

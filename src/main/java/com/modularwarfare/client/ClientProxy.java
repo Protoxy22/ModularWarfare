@@ -40,10 +40,10 @@ public class ClientProxy extends CommonProxy {
 		gunRenderer = new RenderGun();
 		ammoRenderer = new RenderAmmo();
 		
-		for(ItemGun itemGun : ModularWarfare.gunTypes)
+		for(ItemGun itemGun : ModularWarfare.gunTypes.values())
 			MinecraftForgeClient.registerItemRenderer(itemGun, gunRenderer);
 		
-		for(ItemAmmo itemAmmo : ModularWarfare.ammoTypes)
+		for(ItemAmmo itemAmmo : ModularWarfare.ammoTypes.values())
 			MinecraftForgeClient.registerItemRenderer(itemAmmo, ammoRenderer);
 	}
 	

@@ -14,7 +14,7 @@ public class MWTab extends CreativeTabs {
 
 	@Override
 	public Item getTabIconItem() {
-		return ModularWarfare.gunTypes.size() > 0 ? ModularWarfare.gunTypes.get(0) : Items.iron_axe;
+		return ModularWarfare.gunTypes.size() > 0 ? (Item) ModularWarfare.gunTypes.values().toArray()[0] : Items.iron_axe;
 	}
 
 }
