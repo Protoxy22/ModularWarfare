@@ -28,7 +28,7 @@ public class ItemGun extends BaseItem {
 	@Override
     public void onUpdate(ItemStack itemStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
-    	System.out.println(type.gunDamage);
+    	
     }
 	
 	@Override
@@ -46,7 +46,7 @@ public class ItemGun extends BaseItem {
 	@Override
     public EnumAction getItemUseAction(ItemStack p_77661_1_)
     {
-        return isAiming ? EnumAction.bow : EnumAction.none;
+        return isAiming ? EnumAction.BOW : EnumAction.BOW;
     }
 
 }

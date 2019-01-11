@@ -6,12 +6,10 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
 import com.modularwarfare.utility.event.ForgeEvent;
-import com.modularwarfare.utility.event.SubscribeType;
-
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 
 public class KeyInputHandler extends ForgeEvent {
 
@@ -19,7 +17,7 @@ public class KeyInputHandler extends ForgeEvent {
 	
 	public KeyInputHandler() 
 	{
-		super(SubscribeType.FML);
+		super();
 		
 		keyBinds = new ArrayList<KeyEntry>();
 		keyBinds.add(new KeyEntry(KeyType.GunReload));
@@ -50,9 +48,9 @@ public class KeyInputHandler extends ForgeEvent {
 		switch(keyType)
 		{
 		case ClientReload:
-			if(Minecraft.getMinecraft().thePlayer != null)
+			if(Minecraft.getMinecraft().player != null)
 			{
-				if(Minecraft.getMinecraft().thePlayer.isSneaking())
+				if(Minecraft.getMinecraft().player.isSneaking())
 				{
 					ModularWarfare.PROXY.reloadModels(true);
 				} else
@@ -68,9 +66,9 @@ public class KeyInputHandler extends ForgeEvent {
 			
 		case DebugMode:
 			System.out.println("debug mode");
-			if(Minecraft.getMinecraft().thePlayer != null)
+			if(Minecraft.getMinecraft().player != null)
 			{
-				if(Minecraft.getMinecraft().thePlayer.isSneaking())
+				if(Minecraft.getMinecraft().player.isSneaking())
 				{
 					ModularWarfare.loadContentPacks(true);
 					ModularWarfare.PROXY.reloadModels(true);

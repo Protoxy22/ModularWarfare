@@ -2,11 +2,9 @@ package com.modularwarfare.client.handler;
 
 import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.utility.event.ForgeEvent;
-import com.modularwarfare.utility.event.SubscribeType;
-
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ClientTickHandler extends ForgeEvent {
 	
@@ -22,7 +20,7 @@ public class ClientTickHandler extends ForgeEvent {
 	
 	public ClientTickHandler()
 	{
-		super(SubscribeType.FML);
+		super();
 	}
 	
 	@SubscribeEvent
@@ -46,19 +44,19 @@ public class ClientTickHandler extends ForgeEvent {
 	
 	public void onClientTickEnd(Minecraft minecraft)
 	{
-		if (minecraft.thePlayer == null || minecraft.theWorld == null)
+		if (minecraft.player == null || minecraft.world == null)
 			return;
 		
 		if (playerRecoilPitch > 0)
 			playerRecoilPitch *= 0.8F;
 		
-		minecraft.thePlayer.rotationPitch -= playerRecoilPitch;
-		minecraft.thePlayer.rotationYaw -= playerRecoilYaw;
+		minecraft.player.rotationPitch -= playerRecoilPitch;
+		minecraft.player.rotationYaw -= playerRecoilYaw;
 		antiRecoilPitch += playerRecoilPitch;
 		antiRecoilYaw += playerRecoilYaw;
 
-		minecraft.thePlayer.rotationPitch += antiRecoilPitch * 0.2F;
-		minecraft.thePlayer.rotationYaw += antiRecoilYaw * 0.2F;
+		minecraft.player.rotationPitch += antiRecoilPitch * 0.2F;
+		minecraft.player.rotationYaw += antiRecoilYaw * 0.2F;
 		antiRecoilPitch *= 0.8F;
 		antiRecoilYaw *= 0.8F;
 		

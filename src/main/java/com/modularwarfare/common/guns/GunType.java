@@ -4,8 +4,8 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.common.type.BaseType;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GunType extends BaseType {
 	

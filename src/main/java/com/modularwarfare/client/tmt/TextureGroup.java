@@ -2,7 +2,7 @@ package com.modularwarfare.client.tmt;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -10,7 +10,7 @@ public class TextureGroup
 {
 	public TextureGroup()
 	{
-		poly = new ArrayList<TexturedPolygon>();
+		poly = new ArrayList<>();
 		texture = "";
 	}
 	
@@ -18,7 +18,7 @@ public class TextureGroup
 	{
 		poly.add(polygon);
 	}
-
+	
 	public void loadTexture()
 	{
 		loadTexture(-1);
@@ -28,12 +28,12 @@ public class TextureGroup
 	{
 		if(!texture.equals(""))
 		{
-			TextureManager renderengine = RenderManager.instance.renderEngine;
+			TextureManager renderengine = Minecraft.getMinecraft().renderEngine;
 			renderengine.bindTexture(new ResourceLocation("", texture)); //TODO : Check. Not sure about this one
 		}
 		else if(defaultTexture > -1)
 		{
-			RenderManager.instance.renderEngine.bindTexture(new ResourceLocation("", ""));
+			Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation("", ""));
 		}
 	}
 	

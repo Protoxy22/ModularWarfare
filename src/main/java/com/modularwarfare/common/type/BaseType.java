@@ -8,6 +8,7 @@ public class BaseType {
 	public String internalName;
 	public String iconName;
 	public transient int id;
+	public transient String contentPack;
 	
 	/**
 	 * Method for sub types to use for loading extra values

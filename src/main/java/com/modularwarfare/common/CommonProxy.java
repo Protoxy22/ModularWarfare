@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.type.BaseType;
 
 public class CommonProxy {
 
@@ -36,6 +37,11 @@ public class CommonProxy {
 	}
 	
 	public void reloadModels(boolean reloadSkins)
+	{
+		
+	}
+	
+	public void generateJsonModels(ArrayList<BaseType> types)
 	{
 		
 	}

@@ -10,8 +10,9 @@ run/*
 .classpath
 .project
 .settings/
-eclipse/*
-!eclipse/ModularWarfare/
+eclipse/
+run/*
+!run/ModularWarfare/
 .idea/
 *.iml
 *.ipr

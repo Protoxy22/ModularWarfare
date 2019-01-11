@@ -27,14 +27,18 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.type.ContentTypes;
 import com.modularwarfare.common.type.TypeEntry;
 
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Mod(modid = ModularWarfare.MOD_ID, name = ModularWarfare.MOD_NAME, version = ModularWarfare.MOD_VERSION)
 public class ModularWarfare {
@@ -77,11 +81,12 @@ public class ModularWarfare {
 		// Loads Content Packs
 		ContentTypes.registerTypes();
 		loadContentPacks(false);
-		registerItems();
 		
 		// Client side loading
 		PROXY.load();
 		PROXY.forceReload();
+		
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	/**
@@ -102,16 +107,14 @@ public class ModularWarfare {
 		
 	}
 	
-	/**
-	 * Goes through all ItemTypes and registers them to Forge
-	 */
-	public void registerItems()
+	@SubscribeEvent
+	public void registerItems(RegistryEvent.Register<Item> event) 
 	{
 		for(ItemGun itemGun : gunTypes.values())
-			GameRegistry.registerItem(itemGun, itemGun.type.internalName);
-		
-		for(ItemAmmo itemAmmo : ammoTypes.values())
-			GameRegistry.registerItem(itemAmmo, itemAmmo.type.internalName);
+			event.getRegistry().register(itemGun);
+	
+	    for(ItemAmmo itemAmmo : ammoTypes.values())
+	    	event.getRegistry().register(itemAmmo);
 	}
 	
 	/**
@@ -154,6 +157,8 @@ public class ModularWarfare {
 				}
 			}
 		}
+		
+		PROXY.generateJsonModels(baseTypes);
 	}
 	
 	/**
@@ -180,6 +185,7 @@ public class ModularWarfare {
 								JsonReader jsonReader = new JsonReader(new FileReader(typeFile));
 								BaseType parsedType = gson.fromJson(jsonReader, type.typeClass);
 								parsedType.id = type.id;
+								parsedType.contentPack = file.getName();
 								baseTypes.add(parsedType);
 							} catch(Exception exception)
 							{
