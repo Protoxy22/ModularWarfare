@@ -39,7 +39,7 @@ public class ump45complete extends ModelGun //Same as Filename
 		
 		modelScale = 0.25F;
 
-		translateAll(0F, 8F, -0.1F);
+		translateAll(0F, -10.5F, -0.1F);
 
 		hasFlash = false;
         hasArms = true;

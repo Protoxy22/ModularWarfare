@@ -70,7 +70,8 @@ public class RenderAmmo implements IItemRenderer {
 			float f = 1F / 16F;
 			float modelScale = 0.2f;
 			
-			renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + ammoType + ".png"));
+			String path = ammoType.skinAsset != null ? ammoType.skinAsset : ammoType.internalName;
+            renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + path + ".png"));
 			GL11.glScalef(modelScale, modelScale, modelScale);
 			GL11.glRotatef(25F - 5F * 1f, 0F, 0F, 1F);
 			GL11.glRotatef(-5F, 0F, 1F, 0F);

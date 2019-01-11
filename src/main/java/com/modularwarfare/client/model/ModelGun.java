@@ -12,9 +12,7 @@ import net.minecraft.client.renderer.OpenGlHelper;
 
 public class ModelGun extends ModelBase
 {
-	//Shapebox template. For quick copy pasting
-	//, 0F, /* 0 */ 0F, 0F, 0F, /* 1 */ 0F, 0F, 0F, /* 2 */ 0F, 0F, 0F, /* 3 */ 0F, 0F, 0F, /* 4 */ 0F, 0F, 0F, /* 5 */ 0F, 0F, 0F, /* 6 */ 0F, 0F, 0F, /* 7 */ 0F, 0F, 0F);
-
+	
 	//The scale of the gun model
 	public float modelScale = 1.0F;
 	
@@ -40,12 +38,9 @@ public class ModelGun extends ModelBase
     public ModelRendererTurbo[] pumpModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] chargeModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] altpumpModel = new ModelRendererTurbo[0];
-	public ModelRendererTurbo[] minigunBarrelModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] leverActionModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] hammerModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] althammerModel = new ModelRendererTurbo[0];
-	/** The point about which the minigun barrel rotates. Rotation is along the line of the gun through this point */
-	public Vector3f minigunBarrelOrigin = new Vector3f();
 
 	//These designate the locations of 3D attachment models on the gun
 	public Vector3f barrelAttachPoint = new Vector3f();
@@ -58,19 +53,17 @@ public class ModelGun extends ModelBase
 	public Vector3f accessoryAttachPoint = new Vector3f();
 
 	//Muzzle flash models
-	public Vector3f defaultBarrelFlashPoint = new Vector3f(0,0,0);
-	public Vector3f muzzleFlashPoint = new Vector3f(0,0,0);
 	public boolean hasFlash = false;
+	public float flashScale = 1F;
+	public Vector3f muzzleFlashPoint = new Vector3f(0,0,0);
 
 	//Arms rendering
-	/** Set hasArms = true; in model file to render arms */
 	public boolean hasArms = false;
 	//TODO; Any reason this cant be a single boolean with left true as default?
 	public boolean leftHandAmmo = false;
 	public boolean rightHandAmmo = false;
 	public Vector3f leftArmScale = new Vector3f(0.8F,0.8F,0.8F);
-	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);
-	
+	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);	
 	/** Position/Rotation of the LEFT arm when not reloading */
 	public Vector3f leftArmPos = new Vector3f(0,0,0);
 	public Vector3f leftArmRot = new Vector3f(0,0,0);
@@ -100,21 +93,21 @@ public class ModelGun extends ModelBase
 	/** Adds a left-right model shaking motion when firing, default 0.5 */
 	public float modelShake = 0.5F;
 
-	/** Casing and muzzle flash parameters */
-    //  Total distance to translate
+	// Casing and muzzle flash parameters
+	/** Total distance to translate the casing model, effects speed */
     public Vector3f casingAnimDistance = new Vector3f(0, 0, 16);
-    //  Total range in variance for random motion
+    /** The amount by which the casing may random deviate from the default path */
     public Vector3f casingAnimSpread = new Vector3f(2, 4, 4);
-    //  Number of ticks (I guess?) to complete movement 
-    public int casingAnimTime = 20;
-    //  Rotation of the casing, 180 is the total rotation. If you do not understand rotation vectors, like me, just use the standard value here.
+    /** Rotation of the casing, 180 is the total rotation. If you do not understand rotation vectors, like me, just use the standard value here. */
     public Vector3f casingRotateVector = new Vector3f(0.1F, 1F, 0.1F);
+    /** Use this to position to casing inside the gun */
 	public Vector3f casingAttachPoint = new Vector3f();
-	// Time before the casing is ejected from gun
+	/** Set the scale for the casing model, allows you to use the same model for many guns */
+	public Vector3f caseScale = new Vector3f(1.0F, 1.0F, 1.0F);
+    /** Time to complete / speed of the casing in ticks */
+    public int casingAnimTime = 20;
+	/** Allows you to set a tick delay to eject casing after firing (for bolt actions etc) */
 	public int casingDelay = 0;
-	// Scale the bullet casing separately from gun
-	public float caseScale = 1F;
-	public float flashScale = 1F;
 
     // Charge handle distance/delay/time
     public float chargeHandleDistance = 0F;
@@ -335,11 +328,6 @@ public class ModelGun extends ModelBase
 	{
 		render(fullammoModel, f);
 	}
-	
-	public void renderMinigunBarrel(float f)
-	{
-		render(minigunBarrelModel, f);
-	}
 
 	public void renderRevolverBarrel(float f)
 	{
@@ -438,7 +426,6 @@ public class ModelGun extends ModelBase
 		flip(pumpModel);
 		flip(altpumpModel);
 		flip(chargeModel);
-		flip(minigunBarrelModel);
 		flip(revolverBarrelModel);
 		flip(revolver2BarrelModel);
 		flip(breakActionModel);
@@ -476,7 +463,6 @@ public class ModelGun extends ModelBase
     		translate(pumpModel, x, y, z);
     		translate(altpumpModel, x, y, z);
     		translate(chargeModel, x, y, z);
-    		translate(minigunBarrelModel, x, y, z);
     		translate(revolverBarrelModel, x, y, z);
     		translate(revolver2BarrelModel, x, y, z);
     		translate(breakActionModel, x, y, z);
