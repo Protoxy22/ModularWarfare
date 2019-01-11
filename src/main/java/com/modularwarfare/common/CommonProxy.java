@@ -34,5 +34,10 @@ public class CommonProxy {
 	{
 		return null;
 	}
+	
+	public void reloadModels(boolean reloadSkins)
+	{
+		
+	}
 
 }

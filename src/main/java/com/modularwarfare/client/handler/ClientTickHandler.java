@@ -1,12 +1,14 @@
-package com.modularwarfare.client;
+package com.modularwarfare.client.handler;
 
-import cpw.mods.fml.common.FMLCommonHandler;
+import com.modularwarfare.client.AnimStateMachine;
+import com.modularwarfare.utility.event.ForgeEvent;
+import com.modularwarfare.utility.event.SubscribeType;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
 
-public class TickHandlerClient {
+public class ClientTickHandler extends ForgeEvent {
 	
 	private static AnimStateMachine gunAnimations;
 	
@@ -18,10 +20,9 @@ public class TickHandlerClient {
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
 	
-	public TickHandlerClient()
+	public ClientTickHandler()
 	{
-		FMLCommonHandler.instance().bus().register(this);
-		MinecraftForge.EVENT_BUS.register(this);
+		super(SubscribeType.FML);
 	}
 	
 	@SubscribeEvent

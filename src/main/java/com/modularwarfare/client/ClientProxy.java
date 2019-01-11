@@ -7,11 +7,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.handler.ClientTickHandler;
+import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.type.BaseType;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLModContainer;
@@ -31,7 +34,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void load() 
 	{
-		new TickHandlerClient();
+		new ClientTickHandler();
+		new KeyInputHandler();
 		
 		gunRenderer = new RenderGun();
 		ammoRenderer = new RenderAmmo();
@@ -118,6 +122,17 @@ public class ClientProxy extends CommonProxy {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@Override
+	public void reloadModels(boolean reloadSkins)
+	{
+		for(BaseType baseType : ModularWarfare.baseTypes)
+		{
+			baseType.reloadModel();
+		}
+		if(reloadSkins)
+			forceReload();
 	}
 	
 }

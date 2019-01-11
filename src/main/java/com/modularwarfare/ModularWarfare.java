@@ -41,23 +41,27 @@ public class ModularWarfare {
 	public static final String MOD_ID = "modularwarfare";
 	public static final String MOD_NAME = "Modular Warfare";
 	public static final String MOD_VERSION = "1.0.0";
-	public static CreativeTabs MOD_TAB;
+	public static CreativeTabs MOD_TAB = new MWTab();
 
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
 	
+	// Logger
 	public static Logger LOGGER;
+	// The ModularWarfare directory
 	public static File MOD_DIR;
 	
+	// Arrays for the varied types
 	public static ArrayList<ItemGun> gunTypes = new ArrayList<ItemGun>();
 	public static ArrayList<ItemAmmo> ammoTypes = new ArrayList<ItemAmmo>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
-	// REGISTER ITEMS AND STUFF
+	/**
+	 * Registers items, blocks, renders, etc
+	 * @param event
+	 */
 	@EventHandler
 	public void onPreInitialization(FMLPreInitializationEvent event) {
-		ContentTypes.registerTypes();
-		MOD_TAB = new MWTab();
 		LOGGER = event.getModLog();
 		
 		// Creates directory if doesn't exist
@@ -69,24 +73,37 @@ public class ModularWarfare {
 			LOGGER.info("As the mod itself doesn't come with any content.");
 		}
 		
+		// Loads Content Packs
+		ContentTypes.registerTypes();
 		loadContentPacks();
 		registerItems();
 		
+		// Client side loading
 		PROXY.load();
 		PROXY.forceReload();
 	}
 
-	// REGISTER EVENTS, IMC, AND WORLD STUFF
+	/**
+	 * Register events, imc, and world stuff
+	 * @param event
+	 */
 	@EventHandler
 	public void onInitialization(FMLInitializationEvent event) {
+		
 	}
 
-	// REGISTER COMMANDS AND SERVER SIDED REGIONS
+	/**
+	 * Registers commands and server sided regions
+	 * @param event
+	 */
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event) {
 		
 	}
 	
+	/**
+	 * Goes through all ItemTypes and registers them to Forge
+	 */
 	public void registerItems()
 	{
 		for(ItemGun itemGun : gunTypes)
@@ -96,6 +113,9 @@ public class ModularWarfare {
 			GameRegistry.registerItem(itemAmmo, itemAmmo.type.internalName);
 	}
 
+	/**
+	 * Sorts all type files into their proper arraylist
+	 */
 	public void loadContentPacks() {
 		ClassLoader classloader = (net.minecraft.server.MinecraftServer.class).getClassLoader();
 		Method method = null;
@@ -122,6 +142,10 @@ public class ModularWarfare {
 		}
 	}
 	
+	/**
+	 * Gets all type files from the content packs
+	 * @param contentPacks
+	 */
 	public void getTypeFiles(List<File> contentPacks)
 	{
 		Gson gson = new Gson();

@@ -1,7 +1,7 @@
 package com.modularwarfare.common.guns;
 
 import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.TickHandlerClient;
+import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.common.type.BaseItem;
 
 import net.minecraft.entity.Entity;
@@ -24,14 +24,13 @@ public class ItemGun extends BaseItem {
 	@Override
     public void onUpdate(ItemStack itemStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
-    	if(!world.isRemote)
-    	{
-    		if(holdingEntity instanceof EntityPlayer)
-    		{
-    			EntityPlayer entityPlayer = (EntityPlayer) holdingEntity;
-    			//entityPlayer.rayTrace(p_70614_1_, p_70614_3_)
-    		}
-    	}
+    	
+    }
+	
+	@Override
+    public boolean getShareTag()
+    {
+        return true;
     }
 	
 	@Override

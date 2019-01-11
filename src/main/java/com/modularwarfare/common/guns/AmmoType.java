@@ -42,6 +42,12 @@ public class AmmoType extends BaseType {
 
 	public void loadExtraValues()
 	{
+		reloadModel();
+	}
+	
+	@Override
+	public void reloadModel()
+	{
 		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelAmmo.class);
 	}
 	
