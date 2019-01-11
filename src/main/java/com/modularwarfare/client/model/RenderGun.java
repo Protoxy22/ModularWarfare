@@ -114,8 +114,7 @@ public class RenderGun implements IItemRenderer {
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
 							
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + gunType + "_" + gunType.weaponSkins[0] + ".png"));
-
+				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + gunType.weaponSkins[0].getSkin(gunType) + ".png"));				
 				
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				//GL11.glRotatef(25F - 5F * 1f, 0F, 0F, 1F);

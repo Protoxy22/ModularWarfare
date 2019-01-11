@@ -2,20 +2,14 @@ package com.modularwarfare.common.guns;
 
 public class SkinType {
 	
-	public String skinName;
+	public String internalName;
+	public String displayName;
 	public String skinAsset;
 	public String[] requiredItems;
 	
-	@Override
-	public String toString()
+	public String getSkin(GunType gunType)
 	{
-		String reqItemString = "";
-		for(String reqItem : requiredItems)
-		{
-			reqItemString += reqItem;
-		}
-		
-		return skinAsset;
+		return skinAsset != null ? skinAsset : gunType + internalName;
 	}
 
 }

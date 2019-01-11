@@ -8,8 +8,9 @@
   "reloadSound": "reload.mpp.ump45",
   "weaponSkins": [
     {
-      "skinName": "Default",
-      "skinAsset": "default",
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "ump45_default",
       "requiredItems": ["dyeBlack/1"]
     }
   ]
