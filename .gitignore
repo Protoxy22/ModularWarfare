@@ -25,3 +25,5 @@ Thumbs.db
 # Flan's Mod
 gradlew
 gradlew.bat
+ModularWarfare_Client.launch
+ModularWarfare_Server.launch
