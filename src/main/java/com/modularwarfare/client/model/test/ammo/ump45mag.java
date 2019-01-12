@@ -6,7 +6,7 @@
 // Model Creator: 
 // Created on: 01.08.2018 - 13:36:15
 // Last changed on: 01.08.2018 - 13:36:15
-package com.modularwarfare.client.model.test;
+package com.modularwarfare.client.model.test.ammo;
 
 import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;

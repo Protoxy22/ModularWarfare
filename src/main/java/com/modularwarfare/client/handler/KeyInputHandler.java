@@ -47,6 +47,7 @@ public class KeyInputHandler extends ForgeEvent {
 	{
 		switch(keyType)
 		{
+		// F9 Reloads Models /// SHIFT + F9 Reloads Textures & Icons
 		case ClientReload:
 			if(Minecraft.getMinecraft().player != null)
 			{
@@ -63,7 +64,7 @@ public class KeyInputHandler extends ForgeEvent {
 		case GunReload:
 			System.out.println("Gun Reload");
 			break;
-			
+		// SHIFT + F10 Reloads Packs & Models	
 		case DebugMode:
 			System.out.println("debug mode");
 			if(Minecraft.getMinecraft().player != null)
