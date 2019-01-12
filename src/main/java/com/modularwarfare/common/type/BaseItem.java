@@ -6,15 +6,15 @@ import net.minecraft.item.Item;
 
 public class BaseItem extends Item {
 	
+	public BaseType baseType;
+	
 	public BaseItem(BaseType type)
 	{
 		setUnlocalizedName(type.internalName);
 		setRegistryName(type.internalName);
 		setCreativeTab(ModularWarfare.MOD_TAB);
-		String iconName = type.iconName != null ? type.iconName : type.internalName;
-		// TODO: Item Textures
-		//this.setTextureName(ModularWarfare.MOD_ID + ":" + iconName);
 		type.loadExtraValues();
+		this.baseType = type;
 	}
 	
 	public void setType(BaseType type)

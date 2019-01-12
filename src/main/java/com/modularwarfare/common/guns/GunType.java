@@ -104,9 +104,16 @@ public class GunType extends BaseType {
 		reloadModel();
 	}
 	
+	@Override
 	public void reloadModel()
 	{
 		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelGun.class);
+	}
+	
+	@Override
+	public boolean hasModel()
+	{
+		return model != null;
 	}
 	
 }

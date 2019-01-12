@@ -66,11 +66,14 @@ public class RenderGun implements CustomItemRenderer {
 
 			case EQUIPPED_FIRST_PERSON: {
 				float adsSwitch = 0f;
-				GL11.glRotatef(25F - 5F * adsSwitch, 0F, 0F, 1F);
-				GL11.glRotatef(-5F, 0F, 1F, 0F);
-				GL11.glTranslatef(0.15F, 0.2F + 0.175F * adsSwitch, -0.6F - 0.405F * adsSwitch);
+				GL11.glRotatef(45F, 0F, 1F, 0F);
+				GL11.glRotatef(0F - 5F * adsSwitch, 0F, 0F, 1F);
+				
+				GL11.glTranslatef(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
+				/*if(gunType.hasScopeOverlay)
+					GL11.glTranslatef(-0.7F * adsSwitch, -0.12F * adsSwitch, -0.05F * adsSwitch);*/
 				GL11.glRotatef(4.5F * adsSwitch, 0F, 0F, 1F);
-				GL11.glTranslatef(-0.0F, -0.03F * adsSwitch, 0F);
+				GL11.glTranslatef(0F, -0.03F * adsSwitch, 0.5f*(1f-adsSwitch));
 				break;
 			}
 

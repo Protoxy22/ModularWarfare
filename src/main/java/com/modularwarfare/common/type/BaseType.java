@@ -27,6 +27,14 @@ public class BaseType {
 	}
 	
 	/**
+	 * Method for sub types to use for having models
+	 */
+	public boolean hasModel()
+	{
+		return false;
+	}
+	
+	/**
 	 * Returns internal name if not overridden by sub-type
 	 */
 	@Override

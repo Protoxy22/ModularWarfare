@@ -37,9 +37,9 @@ public class ump45complete extends ModelGun //Same as Filename
 		initslideModel_1();
 		initbackpackModel_1();
 		
-		modelScale = 0.12F;
+		modelScale = 0.25F;
 
-		translateAll(0F, -10.5F, -0.1F);
+		translateAll(4F, 18F, 0F);
 
 		hasFlash = false;
         hasArms = true;

@@ -39,6 +39,7 @@ public class AmmoType extends BaseType {
 	@SideOnly(Side.CLIENT)
 	public transient ModelAmmo model;
 
+	@Override
 	public void loadExtraValues()
 	{
 		reloadModel();
@@ -48,6 +49,12 @@ public class AmmoType extends BaseType {
 	public void reloadModel()
 	{
 		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelAmmo.class);
+	}
+	
+	@Override
+	public boolean hasModel()
+	{
+		return model != null;
 	}
 	
 }
