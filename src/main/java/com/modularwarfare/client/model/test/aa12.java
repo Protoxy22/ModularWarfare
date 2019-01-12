@@ -35,7 +35,8 @@ public class aa12 extends ModelGun //Same as Filename
 		initslideModel_1();
 		initfullammoModel_1();
 
-		translateAll(0F, -1.5F, -0.1F);//forward/down/right
+		//translateAll(0F, -1.5F, -0.1F);//forward/down/right
+		translateAll(0F, 0F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.06F, 0F);//forward/up/?
 
 		gunSlideDistance = 2F;

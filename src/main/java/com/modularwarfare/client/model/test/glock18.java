@@ -22,7 +22,7 @@ public class glock18 extends ModelGun //Same as Filename
 
 	public glock18() //Same as Filename
 	{
-		modelScale = 0.12F;
+		modelScale = 0.25F;
 		gunModel = new ModelRendererTurbo[190];
 		defaultBarrelModel = new ModelRendererTurbo[8];
 		defaultScopeModel = new ModelRendererTurbo[8];
@@ -35,7 +35,7 @@ public class glock18 extends ModelGun //Same as Filename
 		initammoModel_1();
 		initslideModel_1();
 
-		translateAll(-10.0F, -17.75F, -0.05F);//forward/down/right
+		translateAll(0F, 10F, -0.05F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.15F, 0F);//forward/up/? 
 
 

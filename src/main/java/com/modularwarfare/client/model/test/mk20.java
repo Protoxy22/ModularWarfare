@@ -22,7 +22,7 @@ public class mk20 extends ModelGun //Same as Filename
 
 	public mk20() //Same as Filename
 	{
-		modelScale = 0.06F;
+		modelScale = 0.15F;
 		gunModel = new ModelRendererTurbo[488];
 		defaultScopeModel = new ModelRendererTurbo[123];
 		ammoModel = new ModelRendererTurbo[14];
@@ -37,7 +37,7 @@ public class mk20 extends ModelGun //Same as Filename
 		gripAttachPoint = new Vector3f(165 /16F, 54F /16F, 0F /16F);
 		scopeAttachPoint = new Vector3f(10 /16F, 87F /16F, 0F /16F);
 
-		translateAll(-0.5F, -18F, -0.7F);//forward/down/right
+		translateAll(4F, 47.7F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.07F, 0F);//forward/up/?
 
 		gunSlideDistance = 3F;

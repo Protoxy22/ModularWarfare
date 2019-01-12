@@ -22,7 +22,7 @@ public class mp5sd extends ModelGun //Same as Filename
 
 	public mp5sd() //Same as Filename
 	{
-		modelScale = 0.12F;
+		modelScale = 0.24F;
 		gunModel = new ModelRendererTurbo[664];
 		ammoModel = new ModelRendererTurbo[42];
 		slideModel = new ModelRendererTurbo[6];
@@ -34,7 +34,7 @@ public class mp5sd extends ModelGun //Same as Filename
 
 		gripAttachPoint = new Vector3f(70 /16F, 30F /16F, 0F /16F);
 
-		translateAll(-59F, -8.5F, 0.5F);//forward/down/right
+		translateAll(4F, 23F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.10F, 0F);//forward/up/? 
 
 
