@@ -1,9 +1,14 @@
 package com.modularwarfare.common.guns;
 
+import java.util.List;
+
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.utility.RaytraceHelper.Line;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -28,7 +33,28 @@ public class ItemGun extends BaseItem {
 	@Override
     public void onUpdate(ItemStack itemStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
-    	
+		if(holdingEntity instanceof EntityPlayer)
+		{
+			EntityPlayer entityPlayer = (EntityPlayer) holdingEntity;
+
+			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+			{
+				if(world.isRemote)
+				{
+					Line line = Line.fromRaytrace(entityPlayer, 200);
+					line.spawnParticles2(world, 0.1, 10, 10, 0.01, 100);
+					List<Entity> entities = line.getEntities(world, Entity.class, false);
+					for(Entity e : entities)
+					{
+						if(e instanceof EntityLiving)
+						{
+							EntityLiving entityLiving = (EntityLiving) e;
+							entityLiving.setHealth(0f);
+						}
+					}
+				}	
+			}	
+		}
     }
 	
 	@Override
