@@ -74,5 +74,16 @@ public class ItemGun extends BaseItem {
     {
         return isAiming ? EnumAction.BOW : EnumAction.BOW;
     }
+	
+	@Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+    	boolean result = !oldStack.equals(newStack);
+    	if(result)
+    	{
+    		// RUN CODE FOR REEQUIP ANIMATION
+    	}
+        return result; 
+    }
 
 }

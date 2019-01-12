@@ -18,6 +18,9 @@ public class RenderGun implements CustomItemRenderer {
 	private static TextureManager renderEngine;
 	public static float smoothing;
 
+	private float adsSwitch = 1f;
+	private int direction = 0;
+	
 	@Override
 	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
 		if (!(item.getItem() instanceof ItemGun))
@@ -65,7 +68,34 @@ public class RenderGun implements CustomItemRenderer {
 			}
 
 			case EQUIPPED_FIRST_PERSON: {
-				float adsSwitch = 1f;
+				
+				boolean debugAiming = true;
+				
+				if(debugAiming)
+				{
+					float smoothing = 1f;
+					float defaultSpeed = 0.05f;
+									
+					if(adsSwitch - defaultSpeed*smoothing >= 0f && direction == 0)
+					{
+						adsSwitch -= defaultSpeed*smoothing;
+					} else if(!(adsSwitch - defaultSpeed*smoothing >= 0f) && direction == 0)
+					{
+						direction = 1;
+					} 
+					
+					if(adsSwitch + defaultSpeed*smoothing <= 1f && direction == 1)
+					{
+						adsSwitch += defaultSpeed*smoothing;
+					} else if(!(adsSwitch + defaultSpeed*smoothing <= 1f) && direction == 1)
+					{
+						direction = 0;
+					}
+				} else
+				{
+					adsSwitch = 1f;
+				}
+				
 				float modelScale = model.modelScale;
 				GL11.glRotatef(45F, 0F, 1F, 0F);
 				GL11.glRotatef(0F - 5F * adsSwitch, 0F, 0F, 1F);
