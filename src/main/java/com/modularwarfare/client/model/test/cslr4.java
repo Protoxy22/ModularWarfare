@@ -35,7 +35,7 @@ public class cslr4 extends ModelGun //Same as Filename
 
 		scopeAttachPoint = new Vector3f(15 /16F, 48F /16F, 0F /16F);
 
-		translateAll(0F, -10F, -.35F);//forward/down/right
+		translateAll(0F, 22.5F, 0.0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0F;

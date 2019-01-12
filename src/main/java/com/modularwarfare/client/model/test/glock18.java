@@ -35,7 +35,7 @@ public class glock18 extends ModelGun //Same as Filename
 		initammoModel_1();
 		initslideModel_1();
 
-		translateAll(0F, 10F, -0.05F);//forward/down/right
+		translateAll(0F, 12.5F, 0.1F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.15F, 0F);//forward/up/? 
 
 

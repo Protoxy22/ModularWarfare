@@ -36,7 +36,7 @@ public class dsr1 extends ModelGun //Same as Filename
 		initpumpModel_1();
 		initfullammoModel_1();
 
-		translateAll(0F, -13F, 0F);//forward/down/right
+		translateAll(0F, 22F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0F;
