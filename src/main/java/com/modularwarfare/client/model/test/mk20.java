@@ -22,7 +22,7 @@ public class mk20 extends ModelGun //Same as Filename
 
 	public mk20() //Same as Filename
 	{
-		modelScale = 0.15F;
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[488];
 		defaultScopeModel = new ModelRendererTurbo[123];
 		ammoModel = new ModelRendererTurbo[14];

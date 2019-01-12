@@ -22,7 +22,7 @@ public class dsr1 extends ModelGun //Same as Filename
 
 	public dsr1() //Same as Filename
 	{
-		modelScale = 0.09F;
+		modelScale = 0.18F;
 		gunModel = new ModelRendererTurbo[550];
 		defaultScopeModel = new ModelRendererTurbo[124];
 		ammoModel = new ModelRendererTurbo[16];

@@ -22,7 +22,7 @@ public class aa12 extends ModelGun //Same as Filename
 
 	public aa12() //Same as Filename
 	{
-		modelScale = 0.12F;
+		modelScale = 0.24F;
 		gunModel = new ModelRendererTurbo[290];
 		defaultScopeModel = new ModelRendererTurbo[79];
 		ammoModel = new ModelRendererTurbo[19];
@@ -35,8 +35,8 @@ public class aa12 extends ModelGun //Same as Filename
 		initslideModel_1();
 		initfullammoModel_1();
 
-		//translateAll(0F, -1.5F, -0.1F);//forward/down/right
-		translateAll(0F, 0F, 0F);//forward/down/right
+		//translateAll(8F, 15F, -0.1F);//forward/down/right
+		translateAll(15F, 26F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.06F, 0F);//forward/up/?
 
 		gunSlideDistance = 2F;
