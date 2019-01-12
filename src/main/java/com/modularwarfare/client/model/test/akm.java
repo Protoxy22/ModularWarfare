@@ -18,7 +18,7 @@ import com.modularwarfare.client.tmt.ModelRendererTurbo;
 public class akm extends ModelGun //Same as Filename
 {
 	int textureX = 1024;
-	int textureY = 128;
+	int textureY = 1024;
 
 	public akm() //Same as Filename
 	{
