@@ -22,6 +22,7 @@ public class aughbar extends ModelGun //Same as Filename
 
 	public aughbar() //Same as Filename
 	{
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[420];
 		defaultBarrelModel = new ModelRendererTurbo[9];
 		defaultScopeModel = new ModelRendererTurbo[107];

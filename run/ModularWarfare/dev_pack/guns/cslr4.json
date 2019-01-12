@@ -1,0 +1,17 @@
+{
+  "internalName": "cslr4",
+  "iconName": "mpp.cslr4",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.cslr4",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.cslr4",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "cslr4_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}

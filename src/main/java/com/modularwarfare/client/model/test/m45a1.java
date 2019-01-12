@@ -22,6 +22,7 @@ public class m45a1 extends ModelGun //Same as Filename
 
 	public m45a1() //Same as Filename
 	{
+		modelScale = 0.07F;
 		gunModel = new ModelRendererTurbo[338];
 		ammoModel = new ModelRendererTurbo[6];
 		slideModel = new ModelRendererTurbo[172];

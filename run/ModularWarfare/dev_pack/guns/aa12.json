@@ -1,0 +1,17 @@
+{
+  "internalName": "aa12",
+  "iconName": "mpp.aa12",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.aa12",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.aa12",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "aa12_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}

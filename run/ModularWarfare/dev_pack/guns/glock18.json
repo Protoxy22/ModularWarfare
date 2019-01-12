@@ -1,0 +1,17 @@
+{
+  "internalName": "glock18",
+  "iconName": "mpp.glock18",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.glock18",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.glock18",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "glock18_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}

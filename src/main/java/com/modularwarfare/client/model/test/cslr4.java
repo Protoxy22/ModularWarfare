@@ -22,6 +22,7 @@ public class cslr4 extends ModelGun //Same as Filename
 
 	public cslr4() //Same as Filename
 	{
+		modelScale = 0.11F;
 		gunModel = new ModelRendererTurbo[271];
 		defaultScopeModel = new ModelRendererTurbo[67];
 		ammoModel = new ModelRendererTurbo[20];

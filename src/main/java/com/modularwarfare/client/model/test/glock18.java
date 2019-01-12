@@ -22,6 +22,7 @@ public class glock18 extends ModelGun //Same as Filename
 
 	public glock18() //Same as Filename
 	{
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[190];
 		defaultBarrelModel = new ModelRendererTurbo[8];
 		defaultScopeModel = new ModelRendererTurbo[8];

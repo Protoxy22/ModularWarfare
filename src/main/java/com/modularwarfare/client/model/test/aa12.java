@@ -22,6 +22,7 @@ public class aa12 extends ModelGun //Same as Filename
 
 	public aa12() //Same as Filename
 	{
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[290];
 		defaultScopeModel = new ModelRendererTurbo[79];
 		ammoModel = new ModelRendererTurbo[19];

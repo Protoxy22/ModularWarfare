@@ -22,6 +22,7 @@ public class akm extends ModelGun //Same as Filename
 
 	public akm() //Same as Filename
 	{
+		modelScale = 0.18F;
 		gunModel = new ModelRendererTurbo[507];
 		defaultBarrelModel = new ModelRendererTurbo[18];
 		ammoModel = new ModelRendererTurbo[180];

@@ -22,6 +22,7 @@ public class stf12 extends ModelGun //Same as Filename
 
 	public stf12() //Same as Filename
 	{
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[437];
 		defaultScopeModel = new ModelRendererTurbo[61];
 		ammoModel = new ModelRendererTurbo[1];

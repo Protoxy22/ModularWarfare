@@ -1,0 +1,17 @@
+{
+  "internalName": "mp5sd",
+  "iconName": "mpp.mp5sd",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.mp5sd",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.mp5sd",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "mp5sd_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}

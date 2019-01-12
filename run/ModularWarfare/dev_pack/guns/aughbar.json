@@ -1,0 +1,17 @@
+{
+  "internalName": "aughbar",
+  "iconName": "mpp.aughbar",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.aughbar",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.aughbar",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "aughbar_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}

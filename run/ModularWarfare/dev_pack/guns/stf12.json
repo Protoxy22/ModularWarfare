@@ -1,0 +1,17 @@
+{
+  "internalName": "stf12",
+  "iconName": "mpp.stf12",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.stf12",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.stf12",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "stf12_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}

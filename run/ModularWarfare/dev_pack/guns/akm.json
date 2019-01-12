@@ -1,0 +1,17 @@
+{
+  "internalName": "akm",
+  "iconName": "mpp.akm",
+  "gunDamage": 5,
+  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "modelName": "test.akm",
+  "shootSound": "shoot.mpp.smg1",
+  "reloadSound": "reload.mpp.akm",
+  "weaponSkins": [
+    {
+      "internalName": "default",
+      "displayName": "Default",
+      "skinAsset": "akm_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}
