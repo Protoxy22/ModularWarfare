@@ -36,7 +36,7 @@ public class m45a1 extends ModelGun //Same as Filename
 		gripAttachPoint = new Vector3f(40F /16F, 65F /16F, 0F /16F);
 		barrelAttachPoint = new Vector3f(83F /16F, 80F /16F, 0F /16F);
 		
-		translateAll(4F, 10F, 0.00F);//forward/down/right
+		translateAll(4F, 13F, 0.15F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.15F, 0F);//forward/up/? 
 
 
