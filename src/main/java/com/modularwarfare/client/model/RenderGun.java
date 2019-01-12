@@ -69,7 +69,7 @@ public class RenderGun implements CustomItemRenderer {
 
 			case EQUIPPED_FIRST_PERSON: {
 				
-				boolean debugAiming = true;
+				boolean debugAiming = false;
 				
 				if(debugAiming)
 				{
@@ -132,6 +132,7 @@ public class RenderGun implements CustomItemRenderer {
 				model.renderDefaultStock(f);
 				model.renderDefaultGrip(f);
 				model.renderDefaultGadget(f);
+				model.renderSlide(f);
 
 				// TODO ARM RENDER CALL
 
