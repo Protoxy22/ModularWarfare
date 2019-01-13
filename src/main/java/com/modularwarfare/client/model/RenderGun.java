@@ -96,62 +96,43 @@ public class RenderGun implements CustomItemRenderer {
 				{
 					adsSwitch = 0f;
 				}
-				/** OLD
+
 				float modelScale = model.modelScale;
-				GL11.glRotatef(45F, 0F, 1F, 0F);
-				GL11.glRotatef(0F - 5F * adsSwitch, 0F, 0F, 1F);
-				
-				GL11.glTranslatef(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
-				//if(gunType.hasScopeOverlay)
-					//GL11.glTranslatef(-0.7F * adsSwitch, -0.12F * adsSwitch, -0.05F * adsSwitch);
-				GL11.glRotatef(4.5F * adsSwitch, 0F, 0F, 1F);
-				GL11.glTranslatef(0, -0.03F * modelScale * adsSwitch, 0.5f*modelScale*(1f-adsSwitch));
-				break;
-				*/
-			
-				float modelScale = model.modelScale;
-				float rotateA;
-				float rotateB;
-				float rotateC;
-				Vector3f translateA;
-				Vector3f translateB;
+				float rotateX = 0;
+				float rotateY = 0;
+				float rotateZ = 0;
+				Vector3f translateXYZ;
 				
 				if(model.renderPreset == 1)
 				{
-					rotateA = 47F - 2F * adsSwitch;
-					rotateB = -4F - 1F * adsSwitch;
-					rotateC = 4.5F * adsSwitch;
-					translateA = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
-					translateB = new Vector3f(0F, -0.11F * modelScale + 0.08F * modelScale * adsSwitch, 1.8f*modelScale*(1f-adsSwitch));
+					rotateX = 0; //ROLL LEFT-RIGHT
+					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT
+					rotateZ = -0.25F * adsSwitch; //ANGLE UP-DOWN
+					translateXYZ = new Vector3f(-1F, 0.875F + 0.06F * adsSwitch, -1F - 0.395F * adsSwitch);
 				}
 				//TODO; Create preset
 				else if(model.renderPreset == 2)
 				{
-					rotateA = 47F - 2F * adsSwitch;
-					rotateB = -4F - 1F * adsSwitch;
-					rotateC = 4.5F * adsSwitch;
-					translateA = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
-					translateB = new Vector3f(0F, -0.11F * modelScale + 0.08F * modelScale * adsSwitch, 1.8f*modelScale*(1f-adsSwitch));
+					rotateX = 0; //ROLL LEFT-RIGHT
+					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT
+					rotateZ = -0.25F * adsSwitch; //ANGLE UP-DOWN
+					translateXYZ = new Vector3f(-1F, 0.775F + 0.16F * adsSwitch, -0.5F - 0.895F * adsSwitch);
 				}
 				//TODO; Create preset
 				else//(3)
 				{
-					rotateA = 50F - 2F * adsSwitch;
-					rotateB = -4F - 1F * adsSwitch;
-					rotateC = 4.5F * adsSwitch;
-					translateA = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
-					translateB = new Vector3f(0F, -0.11F * modelScale + 0.08F * modelScale * adsSwitch, 1.8f*modelScale*(1f-adsSwitch));
+					rotateX = 47F - 2F * adsSwitch;
+					rotateY = -4F - 1F * adsSwitch;
+					rotateZ = 4.5F * adsSwitch;
+					translateXYZ = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
 				}
-	
-				// NEW Render Position, based on renderPreset
-				GL11.glRotatef(rotateA, 0F, 1F, 0F);
-				GL11.glRotatef(rotateB, 0F, 0F, 1F);
-				
-				GL11.glTranslatef(translateA.x, translateA.y, translateA.z);
 
-				GL11.glRotatef(rotateC, 0F, 0F, 1F);
-				GL11.glTranslatef(translateB.x, translateB.y, translateB.z);
-				break;
+					// NEW Render Position, based on renderPreset
+					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+					GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
+					GL11.glTranslatef(translateXYZ.x, translateXYZ.y, translateXYZ.z);
+					break;	
 			}
 
 			default:

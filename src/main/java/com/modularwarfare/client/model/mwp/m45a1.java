@@ -23,6 +23,7 @@ public class m45a1 extends ModelGun //Same as Filename
 	public m45a1() //Same as Filename
 	{
 		modelScale = 0.14F;
+		renderPreset = 2;
 		gunModel = new ModelRendererTurbo[338];
 		ammoModel = new ModelRendererTurbo[6];
 		slideModel = new ModelRendererTurbo[172];
@@ -36,7 +37,7 @@ public class m45a1 extends ModelGun //Same as Filename
 		gripAttachPoint = new Vector3f(40F /16F, 65F /16F, 0F /16F);
 		barrelAttachPoint = new Vector3f(83F /16F, 80F /16F, 0F /16F);
 		
-		translateAll(4F, 13F, 0.15F);//forward/down/right
+		translateAll(15F, 13F, 0.15F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.15F, 0F);//forward/up/? 
 
 
