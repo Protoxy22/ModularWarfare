@@ -1,14 +1,14 @@
 {
-  "internalName": "mk20",
-  "iconName": "mpp.mk20",
+  "internalName": "mwp.mk20",
+  "iconName": "mwp.mk20",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.mk20",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.mk20",
+  "modelName": "mwp.mk20",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.mk20",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "mk20_default",
       "requiredItems": ["dyeBlack/1"]

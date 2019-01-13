@@ -7,7 +7,7 @@
 // Created on: 01.08.2018 - 20:17:07
 // Last changed on: 01.08.2018 - 20:17:07
 
-package com.modularwarfare.client.model.test; //Path where the model is located
+package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -23,6 +23,7 @@ public class aa12 extends ModelGun //Same as Filename
 	public aa12() //Same as Filename
 	{
 		modelScale = 0.24F;
+		renderPreset = 1;
 		gunModel = new ModelRendererTurbo[290];
 		defaultScopeModel = new ModelRendererTurbo[79];
 		ammoModel = new ModelRendererTurbo[19];

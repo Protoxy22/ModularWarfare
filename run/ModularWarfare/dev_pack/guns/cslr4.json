@@ -1,14 +1,14 @@
 {
-  "internalName": "cslr4",
-  "iconName": "mpp.cslr4",
+  "internalName": "mwp.cslr4",
+  "iconName": "mwp.cslr4",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.cslr4",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.cslr4",
+  "modelName": "mwp.cslr4",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.cslr4",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "cslr4_default",
       "requiredItems": ["dyeBlack/1"]

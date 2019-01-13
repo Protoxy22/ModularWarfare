@@ -1,6 +1,7 @@
 package com.modularwarfare.client.model;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.common.guns.GunType;
@@ -93,18 +94,63 @@ public class RenderGun implements CustomItemRenderer {
 					}
 				} else
 				{
-					adsSwitch = 1f;
+					adsSwitch = 0f;
 				}
-				
+				/** OLD
 				float modelScale = model.modelScale;
 				GL11.glRotatef(45F, 0F, 1F, 0F);
 				GL11.glRotatef(0F - 5F * adsSwitch, 0F, 0F, 1F);
 				
 				GL11.glTranslatef(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
-				/*if(gunType.hasScopeOverlay)
-					GL11.glTranslatef(-0.7F * adsSwitch, -0.12F * adsSwitch, -0.05F * adsSwitch);*/
+				//if(gunType.hasScopeOverlay)
+					//GL11.glTranslatef(-0.7F * adsSwitch, -0.12F * adsSwitch, -0.05F * adsSwitch);
 				GL11.glRotatef(4.5F * adsSwitch, 0F, 0F, 1F);
 				GL11.glTranslatef(0, -0.03F * modelScale * adsSwitch, 0.5f*modelScale*(1f-adsSwitch));
+				break;
+				*/
+			
+				float modelScale = model.modelScale;
+				float rotateA;
+				float rotateB;
+				float rotateC;
+				Vector3f translateA;
+				Vector3f translateB;
+				
+				if(model.renderPreset == 1)
+				{
+					rotateA = 47F - 2F * adsSwitch;
+					rotateB = -4F - 1F * adsSwitch;
+					rotateC = 4.5F * adsSwitch;
+					translateA = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
+					translateB = new Vector3f(0F, -0.11F * modelScale + 0.08F * modelScale * adsSwitch, 1.8f*modelScale*(1f-adsSwitch));
+				}
+				//TODO; Create preset
+				else if(model.renderPreset == 2)
+				{
+					rotateA = 47F - 2F * adsSwitch;
+					rotateB = -4F - 1F * adsSwitch;
+					rotateC = 4.5F * adsSwitch;
+					translateA = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
+					translateB = new Vector3f(0F, -0.11F * modelScale + 0.08F * modelScale * adsSwitch, 1.8f*modelScale*(1f-adsSwitch));
+				}
+				//TODO; Create preset
+				else//(3)
+				{
+					rotateA = 50F - 2F * adsSwitch;
+					rotateB = -4F - 1F * adsSwitch;
+					rotateC = 4.5F * adsSwitch;
+					translateA = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
+					translateB = new Vector3f(0F, -0.11F * modelScale + 0.08F * modelScale * adsSwitch, 1.8f*modelScale*(1f-adsSwitch));
+				}
+	
+				// NEW Render Position, based on renderPreset
+				GL11.glRotatef(rotateA, 0F, 1F, 0F);
+				GL11.glRotatef(rotateB, 0F, 0F, 1F);
+				
+				GL11.glTranslatef(translateA.x, translateA.y, translateA.z);
+
+				GL11.glRotatef(rotateC, 0F, 0F, 1F);
+				GL11.glTranslatef(translateB.x, translateB.y, translateB.z);
 				break;
 			}
 

@@ -15,6 +15,8 @@ public class ModelGun extends ModelBase
 	
 	//The scale of the gun model
 	public float modelScale = 1.0F;
+	//Allows you to select a render preset for change the position of the gun in hand (1-3, default 1)
+	public int renderPreset = 1;
 	
 	//These first 7 models are static with no animation
 	public ModelRendererTurbo[] gunModel = new ModelRendererTurbo[0];

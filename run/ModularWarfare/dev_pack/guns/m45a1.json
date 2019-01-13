@@ -1,14 +1,14 @@
 {
-  "internalName": "m45a1",
-  "iconName": "mpp.m45a1",
+  "internalName": "mwp.m45a1",
+  "iconName": "mwp.m45a1",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.m45a1",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.m45a1",
+  "modelName": "mwp.m45a1",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.m45a1",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "m45a1_default",
       "requiredItems": ["dyeBlack/1"]

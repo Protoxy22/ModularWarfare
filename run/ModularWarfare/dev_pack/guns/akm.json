@@ -1,14 +1,14 @@
 {
-  "internalName": "akm",
-  "iconName": "mpp.akm",
+  "internalName": "mwp.akm",
+  "iconName": "mwp.akm",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.akm",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.akm",
+  "modelName": "mwp.akm",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.akm",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "akm_default",
       "requiredItems": ["dyeBlack/1"]

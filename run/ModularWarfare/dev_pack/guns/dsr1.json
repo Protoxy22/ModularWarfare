@@ -1,14 +1,14 @@
 {
-  "internalName": "dsr1",
-  "iconName": "mpp.dsr1",
+  "internalName": "mwp.dsr1",
+  "iconName": "mwp.dsr1",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.dsr1",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.dsr1",
+  "modelName": "mwp.dsr1",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.dsr1",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "dsr1_default",
       "requiredItems": ["dyeBlack/1"]

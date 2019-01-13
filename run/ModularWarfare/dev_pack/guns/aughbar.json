@@ -1,14 +1,14 @@
 {
-  "internalName": "aughbar",
-  "iconName": "mpp.aughbar",
+  "internalName": "mwp.aughbar",
+  "iconName": "mwp.aughbar",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.aughbar",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.aughbar",
+  "modelName": "mwp.aughbar",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.aughbar",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "aughbar_default",
       "requiredItems": ["dyeBlack/1"]

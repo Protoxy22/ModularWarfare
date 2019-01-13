@@ -1,14 +1,14 @@
 {
-  "internalName": "aa12",
-  "iconName": "mpp.aa12",
+  "internalName": "mwp.aa12",
+  "iconName": "mwp.aa12",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.aa12",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.aa12",
+  "modelName": "mwp.aa12",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.aa12",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "aa12_default",
       "requiredItems": ["dyeBlack/1"]

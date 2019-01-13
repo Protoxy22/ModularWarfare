@@ -7,7 +7,7 @@
 // Created on: -
 // Last changed on: -
 
-package com.modularwarfare.client.model.test.ammo; //Path where the model is located
+package com.modularwarfare.client.model.mwp.ammo; //Path where the model is located
 
 import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;

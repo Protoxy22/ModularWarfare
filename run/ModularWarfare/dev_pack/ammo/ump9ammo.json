@@ -1,6 +1,6 @@
 {
-  "internalName": "mpp.ump9ammo",
-  "iconName": "mpp.ump9ammo",
-  "modelName": "test.ammo.ump9mag",
+  "internalName": "mwp.ump9ammo",
+  "iconName": "mwp.ump9ammo",
+  "modelName": "mwp.ammo.ump9mag",
   "skinAsset": "default"
 }

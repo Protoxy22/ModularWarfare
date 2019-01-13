@@ -1,14 +1,14 @@
 {
-  "internalName": "ump45",
-  "iconName": "mpp.ump45",
+  "internalName": "mwp.ump45",
+  "iconName": "mwp.ump45",
   "gunDamage": 5,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
-  "modelName": "test.ump45complete",
-  "shootSound": "shoot.mpp.smg1",
-  "reloadSound": "reload.mpp.ump45",
+  "modelName": "mwp.ump45complete",
+  "shootSound": "shoot.mwp.smg1",
+  "reloadSound": "reload.mwp.ump45",
   "weaponSkins": [
     {
-      "internalName": "default",
+      "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "ump45_default",
       "requiredItems": ["dyeBlack/1"]

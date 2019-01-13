@@ -7,7 +7,7 @@
 // Created on: 10.09.2018 - 21:08:24
 // Last changed on: 10.09.2018 - 21:08:24
 
-package com.modularwarfare.client.model.test; //Path where the model is located
+package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
