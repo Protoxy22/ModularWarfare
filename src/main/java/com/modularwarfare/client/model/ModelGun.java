@@ -17,6 +17,12 @@ public class ModelGun extends ModelBase
 	public float modelScale = 1.0F;
 	//Allows you to select a render preset for change the position of the gun in hand (1-3, default 1)
 	public int renderPreset = 1;
+	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
+	public Vector3f rotateCarryPosition = new Vector3f(0F, 0F, 0F);
+	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
+	public Vector3f translateCarryPosition = new Vector3f(0F, 0F, 0F);
+	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)
+	public float adsSpeed = 0.00F;
 	
 	//These first 7 models are static with no animation
 	public ModelRendererTurbo[] gunModel = new ModelRendererTurbo[0];

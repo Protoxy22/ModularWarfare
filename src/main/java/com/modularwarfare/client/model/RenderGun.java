@@ -75,20 +75,20 @@ public class RenderGun implements CustomItemRenderer {
 				if(debugAiming)
 				{
 					float smoothing = 1f;
-					float defaultSpeed = 0.05f;
+					float adsSpeed = 0.05f + model.adsSpeed;
 									
-					if(adsSwitch - defaultSpeed*smoothing >= 0f && direction == 0)
+					if(adsSwitch - adsSpeed*smoothing >= 0f && direction == 0)
 					{
-						adsSwitch -= defaultSpeed*smoothing;
-					} else if(!(adsSwitch - defaultSpeed*smoothing >= 0f) && direction == 0)
+						adsSwitch -= adsSpeed*smoothing;
+					} else if(!(adsSwitch - adsSpeed*smoothing >= 0f) && direction == 0)
 					{
 						direction = 1;
 					} 
 					
-					if(adsSwitch + defaultSpeed*smoothing <= 1f && direction == 1)
+					if(adsSwitch + adsSpeed*smoothing <= 1f && direction == 1)
 					{
-						adsSwitch += defaultSpeed*smoothing;
-					} else if(!(adsSwitch + defaultSpeed*smoothing <= 1f) && direction == 1)
+						adsSwitch += adsSpeed*smoothing;
+					} else if(!(adsSwitch + adsSpeed*smoothing <= 1f) && direction == 1)
 					{
 						direction = 0;
 					}
@@ -102,37 +102,41 @@ public class RenderGun implements CustomItemRenderer {
 				float rotateY = 0;
 				float rotateZ = 0;
 				Vector3f translateXYZ;
+				//Stores the model settings as local variables to reduce calls
+				Vector3f customRotation = new Vector3f(model.rotateCarryPosition.x, model.rotateCarryPosition.y, model.rotateCarryPosition.z);
+				Vector3f customTranslate = new Vector3f(model.translateCarryPosition.x, model.translateCarryPosition.y, model.translateCarryPosition.z);
 				
+				//Default render calculation, set up to be compatible with existing gun configuration
 				if(model.renderPreset == 1)
 				{
-					rotateX = 0; //ROLL LEFT-RIGHT
-					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT
-					rotateZ = -0.25F * adsSwitch; //ANGLE UP-DOWN
-					translateXYZ = new Vector3f(-1F, 0.875F + 0.06F * adsSwitch, -1F - 0.395F * adsSwitch);
+					rotateX = 0; //ROLL LEFT-RIGHT (0 Total ADS Default)
+					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT (45 Total ADS Default)
+					rotateZ = 1 + (-1.0F * adsSwitch); //ANGLE UP-DOWN (0 Total ADS Default)
+					translateXYZ = new Vector3f(0.05F + -1.35F, 0.835F - -0.065F * adsSwitch, -1.05F - 0.35F * adsSwitch); //(-1.3F, 0.9F, -1.4F Total ADS Defaults)
 				}
 				//TODO; Create preset
 				else if(model.renderPreset == 2)
 				{
-					rotateX = 0; //ROLL LEFT-RIGHT
-					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT
-					rotateZ = -0.25F * adsSwitch; //ANGLE UP-DOWN
-					translateXYZ = new Vector3f(-1F, 0.775F + 0.16F * adsSwitch, -0.5F - 0.895F * adsSwitch);
+					rotateX = 0;
+					rotateY = 46F - 1F * adsSwitch;
+					rotateZ = 1 + (-1.0F * adsSwitch);
+					translateXYZ = new Vector3f(0.05F + -1.35F, 0.835F - -0.065F * adsSwitch, -1.05F - 0.35F * adsSwitch);
 				}
-				//TODO; Create preset
+				//Custom render, modified through gun model with rotateCarryPosition & translateCarryPosition
 				else//(3)
 				{
-					rotateX = 47F - 2F * adsSwitch;
-					rotateY = -4F - 1F * adsSwitch;
-					rotateZ = 4.5F * adsSwitch;
-					translateXYZ = new Vector3f(-1F, 0.675F + 0.180F * adsSwitch, -1F - 0.395F * adsSwitch);
+					rotateX = (0 + customRotation.x) - (customRotation.x * adsSwitch);
+					rotateY = (46F + customRotation.y) - (1F + customRotation.y) * adsSwitch;
+					rotateZ = (1 + customRotation.z) - (1.0F + customRotation.z) * adsSwitch;
+					translateXYZ = new Vector3f((-1.3F + customTranslate.x) - (0 + customTranslate.x) * adsSwitch, (0.835F + customTranslate.y) - (-0.065F + customTranslate.y) * adsSwitch, (-1.05F + customTranslate.z) - (0.35F + customTranslate.z) * adsSwitch);
 				}
 
-					// NEW Render Position, based on renderPreset
-					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
-					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
-					GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
-					GL11.glTranslatef(translateXYZ.x, translateXYZ.y, translateXYZ.z);
-					break;	
+				//Apply rotation and translation to model, based on renderPreset
+				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+				GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
+				GL11.glTranslatef(translateXYZ.x, translateXYZ.y, translateXYZ.z);
+				break;	
 			}
 
 			default:
