@@ -96,8 +96,8 @@ public class aa12 extends ModelGun //Same as Filename
 	    
 		crouchZoom = -0.15F;
 		fancyStance = true;
-		stanceRotate = new Vector3f(40.0F, -0.0F, 10.0F);
-		stanceTranslate = new Vector3f(0.5F, 0.0F, 0.0F);
+		sprintRotate = new Vector3f(-10.0F, 50.0F, 10.0F);
+		sprintTranslate = new Vector3f(1.6F, -0.1F, -0.8F);
 
 
 		flipAll();

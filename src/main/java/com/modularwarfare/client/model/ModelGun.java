@@ -21,6 +21,8 @@ public class ModelGun extends ModelBase
 	public Vector3f rotateCarryPosition = new Vector3f(0F, 0F, 0F);
 	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
 	public Vector3f translateCarryPosition = new Vector3f(0F, 0F, 0F);
+	public Vector3f sprintTranslate = new Vector3f(0F, 0F, 0F);
+	public Vector3f sprintRotate = new Vector3f(0F, 0F, 0F);
 	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)
 	public float adsSpeed = 0.00F;
 	
@@ -201,8 +203,7 @@ public class ModelGun extends ModelBase
 	public float gunOffset = 0F;
 	public float crouchZoom = 0F;
 	public boolean fancyStance = false;
-	public Vector3f stanceTranslate = new Vector3f();
-	public Vector3f stanceRotate = new Vector3f();
+
 
 
 	/** Custom reload Parameters. If Enum.CUSTOM is set, these parameters can build an animation within the gun model classes */

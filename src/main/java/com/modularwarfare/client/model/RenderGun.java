@@ -63,7 +63,7 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glRotatef(35F, 0F, 0F, 1F);
 				GL11.glRotatef(-5F, 0F, 1F, 0F);
 				GL11.glTranslatef(0.75F, -0.22F, -0.08F);
-				GL11.glScalef(1F, 1F, -1F);
+				GL11.glScalef(1F, 1F, 1F);
 				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y, model.thirdPersonOffset.z);
 				break;
 			}
@@ -94,17 +94,20 @@ public class RenderGun implements CustomItemRenderer {
 					}
 				} else
 				{
-					adsSwitch = 0f;
+					adsSwitch = 1f;
 				}
 
 				float modelScale = model.modelScale;
 				float rotateX = 0;
 				float rotateY = 0;
 				float rotateZ = 0;
+				float crouchZoom = model.crouchZoom;
 				Vector3f translateXYZ;
 				//Stores the model settings as local variables to reduce calls
 				Vector3f customRotation = new Vector3f(model.rotateCarryPosition.x, model.rotateCarryPosition.y, model.rotateCarryPosition.z);
 				Vector3f customTranslate = new Vector3f(model.translateCarryPosition.x, model.translateCarryPosition.y, model.translateCarryPosition.z);
+				Vector3f sprintRotate = new Vector3f(model.sprintRotate.x, model.sprintRotate.y, model.sprintRotate.z);
+				Vector3f sprintTranslate = new Vector3f(model.sprintTranslate.x, model.sprintTranslate.y, model.sprintTranslate.z);
 				
 				//Default render calculation, set up to be compatible with existing gun configuration
 				if(model.renderPreset == 1)
@@ -130,13 +133,34 @@ public class RenderGun implements CustomItemRenderer {
 					rotateZ = (1 + customRotation.z) - (1.0F + customRotation.z) * adsSwitch;
 					translateXYZ = new Vector3f((-1.3F + customTranslate.x) - (0 + customTranslate.x) * adsSwitch, (0.835F + customTranslate.y) - (-0.065F + customTranslate.y) * adsSwitch, (-1.05F + customTranslate.z) - (0.35F + customTranslate.z) * adsSwitch);
 				}
-
-				//Apply rotation and translation to model, based on renderPreset
-				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
-				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
-				GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
-				GL11.glTranslatef(translateXYZ.x, translateXYZ.y, translateXYZ.z);
+				//Apply rotation and translation to model, based on renderPreset and player state
+				//Applies a special position if player is sprinting and not ADS
+				if(ItemGun.isSprinting && adsSwitch <= 0.5)
+				{	
+					GL11.glRotatef(rotateX + sprintRotate.x, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+					GL11.glRotatef(rotateY + sprintRotate.y, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+					GL11.glRotatef(rotateZ + sprintRotate.z, 0F, 0F, 1F); //ANGLE UP-DOWN
+					GL11.glTranslatef(translateXYZ.x + sprintTranslate.x, translateXYZ.y + sprintTranslate.y, translateXYZ.z + sprintTranslate.z);
 				break;	
+				}
+				//Applies a special position if player is crouching and ADS
+				else if(ItemGun.isCrouching && crouchZoom != 0 && adsSwitch >= 0.5)
+				{
+					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+					GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
+					GL11.glTranslatef(translateXYZ.x + crouchZoom, translateXYZ.y, translateXYZ.z);
+					break;	
+				}
+				//Default position
+				else
+				{
+					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+					GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
+					GL11.glTranslatef(translateXYZ.x, translateXYZ.y, translateXYZ.z);
+					break;	
+				}
 			}
 
 			default:

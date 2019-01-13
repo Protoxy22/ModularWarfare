@@ -88,8 +88,8 @@ leftHandAmmo = true;
 
 crouchZoom = -0.10F;
 fancyStance = true;
-stanceRotate = new Vector3f(60.0F, -0.0F, 10.0F);
-stanceTranslate = new Vector3f(0.7F, -0.0F, 0.25F);
+sprintRotate = new Vector3f(60.0F, -0.0F, 10.0F);
+sprintTranslate = new Vector3f(0.7F, -0.0F, 0.25F);
 
 chargeHandleDistance = 1.6F;
 chargeDelay = 0;

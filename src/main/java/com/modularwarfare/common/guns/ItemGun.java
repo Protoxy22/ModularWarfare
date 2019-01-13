@@ -17,6 +17,8 @@ public class ItemGun extends BaseItem {
 	
 	public GunType type;
 	public boolean isAiming = false;
+	public static boolean isSprinting = false;
+	public static boolean isCrouching = false;
 	
 	public ItemGun(GunType type)
 	{
@@ -39,6 +41,10 @@ public class ItemGun extends BaseItem {
 
 			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 			{
+				//If crouching, set true
+				isCrouching = entityPlayer.isSneaking();
+				//If running, set true
+				isSprinting = entityPlayer.isSprinting();
 				if(world.isRemote)
 				{
 					Line line = Line.fromRaytrace(entityPlayer, 200);
