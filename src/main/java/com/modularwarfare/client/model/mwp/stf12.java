@@ -22,7 +22,7 @@ public class stf12 extends ModelGun //Same as Filename
 
 	public stf12() //Same as Filename
 	{
-		modelScale = 0.24F;
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[437];
 		defaultScopeModel = new ModelRendererTurbo[61];
 		ammoModel = new ModelRendererTurbo[1];
@@ -38,7 +38,7 @@ public class stf12 extends ModelGun //Same as Filename
 		scopeAttachPoint = new Vector3f(18 /16F, 48F /16F, 0F /16F);
 		gripAttachPoint = new Vector3f(26 /16F, 40F /16F, 0F /16F);
 
-		translateAll(0F, 16.5F, -0.0F);//forward/down/right
+		translateAll(0F, -13F, -0.150F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0.65F;

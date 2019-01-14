@@ -1,7 +1,9 @@
 package com.modularwarfare.common.guns;
 
 import java.util.List;
+import java.util.Random;
 
+import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
@@ -88,6 +90,8 @@ public class ItemGun extends BaseItem {
     	if(result)
     	{
     		// RUN CODE FOR REEQUIP ANIMATION
+			Random random = new Random();
+			RenderGun.randomOffset = random.nextFloat() / 10;
     	}
         return result; 
     }

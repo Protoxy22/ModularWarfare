@@ -22,7 +22,7 @@ public class dsr1 extends ModelGun //Same as Filename
 
 	public dsr1() //Same as Filename
 	{
-		modelScale = 0.18F;
+		modelScale = 0.09F;
 		gunModel = new ModelRendererTurbo[550];
 		defaultScopeModel = new ModelRendererTurbo[124];
 		ammoModel = new ModelRendererTurbo[16];
@@ -36,7 +36,7 @@ public class dsr1 extends ModelGun //Same as Filename
 		initpumpModel_1();
 		initfullammoModel_1();
 
-		translateAll(0F, 22F, 0F);//forward/down/right
+		translateAll(0F, -13F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0F;
