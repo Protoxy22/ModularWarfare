@@ -45,7 +45,7 @@ public class ItemGun extends BaseItem {
 				isCrouching = entityPlayer.isSneaking();
 				//If running, set true
 				isSprinting = entityPlayer.isSprinting();
-				if(world.isRemote)
+				if(!world.isRemote)
 				{
 					Line line = Line.fromRaytrace(entityPlayer, 200);
 					line.spawnParticles2(world, 0.1, 10, 10, 0.01, 100);

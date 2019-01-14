@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
+import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.utility.event.ForgeEvent;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -17,8 +20,6 @@ public class KeyInputHandler extends ForgeEvent {
 	
 	public KeyInputHandler() 
 	{
-		super();
-		
 		keyBinds = new ArrayList<KeyEntry>();
 		keyBinds.add(new KeyEntry(KeyType.GunReload));
 		keyBinds.add(new KeyEntry(KeyType.ClientReload));
@@ -62,11 +63,16 @@ public class KeyInputHandler extends ForgeEvent {
 			break;
 			
 		case GunReload:
-			System.out.println("Gun Reload");
+			if(Minecraft.getMinecraft().player != null)
+			{
+				EntityPlayerSP player = Minecraft.getMinecraft().player;
+				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
+				{
+					// TODO: TRIGGER RELOAD
+				}
+			}
 			break;
-		// SHIFT + F10 Reloads Packs & Models	
 		case DebugMode:
-			System.out.println("debug mode");
 			if(Minecraft.getMinecraft().player != null)
 			{
 				if(Minecraft.getMinecraft().player.isSneaking())

@@ -1,8 +1,15 @@
 package com.modularwarfare.client.handler;
 
+import org.lwjgl.input.Mouse;
+
 import com.modularwarfare.client.AnimStateMachine;
+import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.utility.event.ForgeEvent;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -39,7 +46,19 @@ public class ClientTickHandler extends ForgeEvent {
 	
 	public void onClientTickStart(Minecraft minecraft)
 	{
+		if (minecraft.player == null || minecraft.world == null)
+			return;
 		
+		EntityPlayerSP player = minecraft.player;
+		
+		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
+		{
+			ModelGun model = ((ItemGun) player.getHeldItemMainhand().getItem()).type.model;
+			float smoothing = 1f;
+			float adsSpeed = 0.15f + model.adsSpeed;
+			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
+			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
+		}
 	}
 	
 	public void onClientTickEnd(Minecraft minecraft)
@@ -47,16 +66,18 @@ public class ClientTickHandler extends ForgeEvent {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
 		
+		EntityPlayerSP player = minecraft.player;
+		
 		if (playerRecoilPitch > 0)
 			playerRecoilPitch *= 0.8F;
 		
-		minecraft.player.rotationPitch -= playerRecoilPitch;
-		minecraft.player.rotationYaw -= playerRecoilYaw;
+		player.rotationPitch -= playerRecoilPitch;
+		player.rotationYaw -= playerRecoilYaw;
 		antiRecoilPitch += playerRecoilPitch;
 		antiRecoilYaw += playerRecoilYaw;
 
-		minecraft.player.rotationPitch += antiRecoilPitch * 0.2F;
-		minecraft.player.rotationYaw += antiRecoilYaw * 0.2F;
+		player.rotationPitch += antiRecoilPitch * 0.2F;
+		player.rotationYaw += antiRecoilYaw * 0.2F;
 		antiRecoilPitch *= 0.8F;
 		antiRecoilYaw *= 0.8F;
 		

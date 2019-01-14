@@ -13,6 +13,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.export.ItemModelExport;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
+import com.modularwarfare.client.handler.MouseInputHandler;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.guns.ItemAmmo;
@@ -43,6 +44,7 @@ public class ClientProxy extends CommonProxy {
 	{
 		new ClientTickHandler();
 		new KeyInputHandler();
+		new MouseInputHandler();
 		new ClientRenderHooks();
 	}
 	

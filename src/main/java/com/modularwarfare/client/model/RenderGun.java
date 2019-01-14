@@ -19,7 +19,7 @@ public class RenderGun implements CustomItemRenderer {
 	private static TextureManager renderEngine;
 	public static float smoothing;
 
-	private float adsSwitch = 1f;
+	public static float adsSwitch = 0f;
 	private int direction = 0;
 	
 	@Override
@@ -70,7 +70,7 @@ public class RenderGun implements CustomItemRenderer {
 
 			case EQUIPPED_FIRST_PERSON: {
 				
-				boolean debugAiming = false;
+				/*boolean debugAiming = false;
 				
 				if(debugAiming)
 				{
@@ -95,7 +95,7 @@ public class RenderGun implements CustomItemRenderer {
 				} else
 				{
 					adsSwitch = 1f;
-				}
+				}*/
 
 				float modelScale = model.modelScale;
 				float rotateX = 0;
