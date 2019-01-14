@@ -43,6 +43,8 @@ public class GunType extends BaseType {
 	public float bulletSpread;
 	/** The fire rate of the gun in RPM, 1200 = MAX */
 	public int roundsPerMin = 0;
+	/** For when RPM is converted to ticks */
+	public transient int fireTickDelay = 0;
 	/** The number of bullets to fire per burst in burst mode */
 	public int numBurstRounds = 3;
 	/** For one shot items like a panzerfaust */
@@ -102,6 +104,8 @@ public class GunType extends BaseType {
 	public void loadExtraValues()
 	{
 		reloadModel();
+		
+		fireTickDelay = 1200 / roundsPerMin;
 	}
 	
 	@Override

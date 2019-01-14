@@ -10,6 +10,7 @@ import com.modularwarfare.utility.RaytraceHelper.Line;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -26,6 +27,8 @@ public class ItemGun extends BaseItem {
 	{
 		super(type);
 		this.type = type;
+		this.setMaxStackSize(1);
+		this.setNoRepair();
 	}
 	
 	@Override
@@ -43,27 +46,35 @@ public class ItemGun extends BaseItem {
 
 			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 			{
+				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
+				
+				if(world.isRemote)
+					onUpdateClient(entityPlayer, world, itemStack, itemGun);
+				else
+					onUpdateServer(entityPlayer, world, itemStack, itemGun);
+				
 				//If crouching, set true
 				isCrouching = entityPlayer.isSneaking();
 				//If running, set true
 				isSprinting = entityPlayer.isSprinting();
-				if(!world.isRemote)
-				{
-					Line line = Line.fromRaytrace(entityPlayer, 200);
-					line.spawnParticles2(world, 0.1, 10, 10, 0.01, 100);
-					List<Entity> entities = line.getEntities(world, Entity.class, false);
-					for(Entity e : entities)
-					{
-						if(e instanceof EntityLiving)
-						{
-							EntityLiving entityLiving = (EntityLiving) e;
-							entityLiving.setHealth(0f);
-						}
-					}
-				}	
 			}	
 		}
     }
+	
+	public void onUpdateClient(EntityPlayer player, World world, ItemStack itemStack, ItemGun itemGun)
+	{
+		
+	}
+	
+	public void onUpdateServer(EntityPlayer player, World world, ItemStack itemStack, ItemGun itemGun)
+	{
+		
+	}
+	
+	public void onGunFire(EntityPlayer player, World world, ItemStack itemStack, ItemGun itemGun)
+	{
+		
+	}
 	
 	@Override
     public boolean getShareTag()
@@ -81,6 +92,32 @@ public class ItemGun extends BaseItem {
     public EnumAction getItemUseAction(ItemStack p_77661_1_)
     {
         return isAiming ? EnumAction.BOW : EnumAction.BOW;
+    }
+	
+	@Override
+    public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
+    {
+		// SEMI-AUTO GUN FIRING
+		World world = entityLiving.world;
+		if(!world.isRemote)
+		{
+			if(entityLiving instanceof EntityPlayer)
+			{
+				EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
+				Line line = Line.fromRaytrace(entityPlayer, 200);
+				line.spawnParticles2(world, 0.1, 10, 10, 0.01, 100);
+				List<Entity> entities = line.getEntities(world, Entity.class, false);
+				for(Entity e : entities)
+				{
+					if(e instanceof EntityLiving)
+					{
+						EntityLiving targetLiving = (EntityLiving) e;
+						targetLiving.setHealth(0f);
+					}
+				}
+			}
+		}	
+        return true;
     }
 	
 	@Override

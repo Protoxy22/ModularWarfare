@@ -32,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderItemInFrameEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
@@ -92,6 +93,32 @@ public class ClientRenderHooks extends ForgeEvent {
 				GlStateManager.translate(0.15F, -0.15F, 0F);
 				customRenderers[0].renderItem(CustomItemRenderType.ENTITY, EnumHand.MAIN_HAND, event.getItem());
 				GlStateManager.popMatrix();
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public void renderGameOverlay(RenderGameOverlayEvent.Pre event)
+	{
+		EntityPlayer player = mc.player;
+		
+		ItemStack stack = player.getHeldItemMainhand();
+		if(stack != null && stack.getItem() instanceof ItemGun)
+		{
+			switch(event.getType())
+			{
+			
+			case CROSSHAIRS:
+				event.setCanceled(true);
+				/*if(RenderGun.adsSwitch > 0.5)
+				{
+					event.setCanceled(true);
+				}*/
+				break;
+			
+			default:
+				break;
+			
 			}
 		}
 	}
