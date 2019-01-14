@@ -20,6 +20,7 @@ public class RenderGun implements CustomItemRenderer {
 	private static TextureManager renderEngine;
 	public static float smoothing;
 	public static float randomOffset;
+	public static float randomRotateOffset;
 
 	public static float adsSwitch = 0f;
 	private int direction = 0;
@@ -123,9 +124,10 @@ public class RenderGun implements CustomItemRenderer {
 				//TODO; Create preset
 				else if(model.renderPreset == 2)
 				{
-					rotateX = (0 + customRotation.x) - (customRotation.x * adsSwitch);
-					rotateY = (46F + customRotation.y) - (1F + customRotation.y) * adsSwitch;
-					rotateZ = (1 + customRotation.z) - (1.0F + customRotation.z) * adsSwitch;
+					//Should probably just remove/replace this system if we add sway in hand
+					rotateX = (0 + randomRotateOffset) - (randomRotateOffset * adsSwitch);
+					rotateY = (46F + randomRotateOffset) - (1F + randomRotateOffset) * adsSwitch;
+					rotateZ = (1 + randomRotateOffset) - (1.0F + randomRotateOffset) * adsSwitch;
 					translateXYZ = new Vector3f((-1.3F + randomOffset) - (0 + randomOffset) * adsSwitch, (0.835F + randomOffset) - (-0.065F + randomOffset) * adsSwitch, (-1.05F + randomOffset) - (0.35F + randomOffset) * adsSwitch);
 				}
 				//Custom render, modified through gun model with rotateCarryPosition & translateCarryPosition

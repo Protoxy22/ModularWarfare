@@ -22,6 +22,7 @@ public class ItemGun extends BaseItem {
 	public boolean isAiming = false;
 	public static boolean isSprinting = false;
 	public static boolean isCrouching = false;
+	public static float modelScale;
 	
 	public ItemGun(GunType type)
 	{
@@ -123,12 +124,14 @@ public class ItemGun extends BaseItem {
 	@Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
+		modelScale = type.model.modelScale;
     	boolean result = !oldStack.equals(newStack);
     	if(result)
     	{
     		// RUN CODE FOR REEQUIP ANIMATION
 			Random random = new Random();
-			RenderGun.randomOffset = random.nextFloat() / 10;
+			RenderGun.randomOffset = random.nextFloat() / 10 * modelScale;
+			RenderGun.randomRotateOffset = random.nextFloat() * 5 * modelScale;
     	}
         return result; 
     }

@@ -2,6 +2,7 @@
   "internalName": "mwp.aughbar",
   "iconName": "mwp.aughbar",
   "gunDamage": 5,
+  "roundsPerMin": 700,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.aughbar",
   "shootSound": "shoot.mwp.smg1",

@@ -2,6 +2,7 @@
   "internalName": "mwp.mp5sd",
   "iconName": "mwp.mp5sd",
   "gunDamage": 5,
+  "roundsPerMin": 800,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.mp5sd",
   "shootSound": "shoot.mwp.smg1",

@@ -2,6 +2,7 @@
   "internalName": "mwp.cslr4",
   "iconName": "mwp.cslr4",
   "gunDamage": 5,
+  "roundsPerMin": 20,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.cslr4",
   "shootSound": "shoot.mwp.smg1",

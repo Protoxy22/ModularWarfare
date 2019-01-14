@@ -2,6 +2,7 @@
   "internalName": "mwp.ump45",
   "iconName": "mwp.ump45",
   "gunDamage": 5,
+  "roundsPerMin": 600,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.ump45complete",
   "shootSound": "shoot.mwp.smg1",

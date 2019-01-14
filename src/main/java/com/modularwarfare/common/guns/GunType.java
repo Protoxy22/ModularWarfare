@@ -42,7 +42,7 @@ public class GunType extends BaseType {
 	/** The amount that bullets spread out when fired from this gun */
 	public float bulletSpread;
 	/** The fire rate of the gun in RPM, 1200 = MAX */
-	public int roundsPerMin = 0;
+	public int roundsPerMin = 1;
 	/** For when RPM is converted to ticks */
 	public transient int fireTickDelay = 0;
 	/** The number of bullets to fire per burst in burst mode */
