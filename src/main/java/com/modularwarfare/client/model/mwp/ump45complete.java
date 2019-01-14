@@ -22,7 +22,7 @@ public class ump45complete extends ModelGun //Same as Filename
 
 	public ump45complete() //Same as Filename
 	{
-		modelScale = 0.24F;
+		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[736];
 		defaultBarrelModel = new ModelRendererTurbo[17];
 		defaultScopeModel = new ModelRendererTurbo[38];
@@ -38,7 +38,7 @@ public class ump45complete extends ModelGun //Same as Filename
 		initslideModel_1();
 		initbackpackModel_1();
 		
-		translateAll(4F, 18F, 0F);
+		translateAll(0F, -10.5F, -0.1F);//forward/down/right
 
 		hasFlash = false;
         hasArms = true;
