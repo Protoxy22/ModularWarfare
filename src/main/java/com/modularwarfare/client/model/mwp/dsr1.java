@@ -85,8 +85,8 @@ public class dsr1 extends ModelGun //Same as Filename
 		
 		crouchZoom = -0.25F;
 		fancyStance = true;
-		stanceRotate = new Vector3f(40.0F, 0.0F, -0.0F);
-		stanceTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
+		sprintRotate = new Vector3f(40.0F, 0.0F, -0.0F);
+		sprintTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
 		
 		casingAttachPoint = new Vector3f(15F /16F, 45F /16F, 0.05F /16F);
 		casingAnimDistance = new Vector3f(3, 1, 12);
