@@ -4,6 +4,7 @@ import org.lwjgl.util.glu.Project;
 
 import com.modularwarfare.client.model.CustomItemRenderType;
 import com.modularwarfare.client.model.CustomItemRenderer;
+import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
@@ -15,6 +16,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelBiped.ArmPose;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -29,20 +33,43 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderItemInFrameEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ClientRenderHooks extends ForgeEvent {
 	
 	private Minecraft mc;
 	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[2];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
+	private float partialTicks;
 	
 	public ClientRenderHooks()
 	{
 		mc = Minecraft.getMinecraft();
 		
 		customRenderers[0] = ClientProxy.gunRenderer = new RenderGun();
+	}
+	
+	@SubscribeEvent
+	public void renderTick(TickEvent.RenderTickEvent event)
+	{
+		switch(event.phase)
+		{
+			case START:
+			{
+				//RenderGun.smoothing = event.renderTickTime;
+				//FlansModClient.UpdateCameraZoom(event.renderTickTime);
+				SetPartialTick(event.renderTickTime);
+				break;
+			}
+			case END:
+			{
+				
+				break;
+			}
+		}
 	}
 	
 	@SubscribeEvent
@@ -169,11 +196,135 @@ public class ClientRenderHooks extends ForgeEvent {
 					itemRenderer.renderOverlays(partialTicks);
 					//hurtCameraEffect(partialTicks);
 				}
-				
+								
 				if(mc.gameSettings.viewBobbing)
 				{
 					//setupViewBobbing(partialTicks);
 				}
+			}
+		}
+	}
+	
+	public void SetPartialTick(float dT)
+	{
+		partialTicks = dT;
+	}
+	
+	@SubscribeEvent
+	public void renderThirdPersonWeapons(RenderLivingEvent.Pre event)
+	{
+		ModelBase mainModel = event.getRenderer().getMainModel();
+		EntityLivingBase entity = event.getEntity();
+		
+		for(int i = 0; i < 2; i++)
+		{
+			EnumHand hand = EnumHand.values()[i];
+			if(entity.getHeldItem(hand) != null && entity.getHeldItem(hand).getItem() instanceof ItemGun && mainModel instanceof ModelBiped)
+			{
+				ModelBiped biped = (ModelBiped)mainModel;
+				ItemStack stack = entity.getHeldItem(hand);
+				GunType type = ((ItemGun)stack.getItem()).type;
+				if(type.model == null)
+					return;
+				ModelGun gunModel = type.model;
+				
+				GlStateManager.pushMatrix();
+				GlStateManager.disableCull();
+				mainModel.swingProgress = entity.getSwingProgress(partialTicks);
+				mainModel.isRiding = entity.isRiding();
+				mainModel.isChild = entity.isChild();
+				
+				float f2 = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
+				float f3 = this.interpolateRotation(entity.prevRotationYawHead, entity.rotationYawHead, partialTicks);
+				float f4 = f3 - f2;
+				float f5;
+				
+				
+				if(Math.abs(entity.prevRenderYawOffset - entity.renderYawOffset) > 30F)
+					f2 = entity.renderYawOffset;
+				if(Math.abs(entity.prevRotationYawHead - entity.rotationYawHead) > 30F)
+					f3 = entity.rotationYawHead;
+				f4 = f3 - f2;
+				
+				//FlansMod.log.debug(entity.prevRenderYawOffset + "     " + entity.renderYawOffset);
+				
+				if(entity.isRiding() && entity.getRidingEntity() instanceof EntityLivingBase)
+				{
+					EntityLivingBase entitylivingbase1 = (EntityLivingBase)entity.getRidingEntity();
+					f2 = this.interpolateRotation(entitylivingbase1.prevRenderYawOffset, entitylivingbase1.renderYawOffset, partialTicks);
+					f4 = f3 - f2;
+					f5 = MathHelper.wrapDegrees(f4);
+					
+					if(f5 < -85.0F)
+					{
+						f5 = -85.0F;
+					}
+					
+					if(f5 >= 85.0F)
+					{
+						f5 = 85.0F;
+					}
+					
+					f2 = f3 - f5;
+					
+					if(f5 * f5 > 2500.0F)
+					{
+						f2 += f5 * 0.2F;
+					}
+				}
+				
+				float f9 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
+				if(Math.abs(entity.prevRotationPitch - entity.rotationPitch) > 5F)
+					f9 = entity.rotationPitch;
+				GlStateManager.translate(event.getX(), event.getY(), event.getZ());
+				
+				f5 = entity.ticksExisted + partialTicks;
+				//this.rotateCorpse(entity, f5, f2, partialTicks);
+				GlStateManager.rotate(180.0F - f2, 0.0F, 1.0F, 0.0F);
+				GlStateManager.enableRescaleNormal();
+				GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+				//this.preRenderCallback(entity, partialTicks);
+				float f6 = 0.0625F;
+				GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
+				float f7 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
+				float f8 = entity.limbSwing - entity.limbSwingAmount * (1.0F - partialTicks);
+				
+				if(entity.isChild())
+				{
+					f8 *= 3.0F;
+				}
+				
+				if(f7 > 1.0F)
+				{
+					f7 = 1.0F;
+				}
+				
+				GlStateManager.enableAlpha();
+				
+				//biped.isSneak = false;
+				biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+				biped.setLivingAnimations(entity, f8, f7, partialTicks);
+				biped.setRotationAngles(f8, f7, f5, f4, f9, 0.0625F, entity);
+				
+				//Render main hand gun
+				{
+					GlStateManager.pushMatrix();
+					if(hand == EnumHand.MAIN_HAND)
+					{
+						biped.bipedRightArm.postRender(0.0625F);
+						GlStateManager.translate(-0.05F, 0.4F, 0.05F);
+						ClientProxy.gunRenderer.renderItem(CustomItemRenderType.EQUIPPED, hand, stack, mc.world, entity);
+					}
+					GlStateManager.popMatrix();
+				}
+				
+				GlStateManager.depthMask(true);
+				GlStateManager.disableRescaleNormal();
+				GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+				GlStateManager.enableTexture2D();
+				GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+				GlStateManager.enableCull();
+				GlStateManager.popMatrix();
 			}
 		}
 	}
@@ -195,6 +346,20 @@ public class ClientRenderHooks extends ForgeEvent {
 			f1 = f1 * 60.0F / 70.0F;
 		
 		return f1;
+	}
+	
+	private float interpolateRotation(float x, float y, float dT)
+	{
+		float f3;
+		
+		for(f3 = y - x; f3 < -180.0F; f3 += 360.0F)
+		{
+		}
+		for(; f3 >= 180.0F; f3 -= 360.0F)
+		{
+		}
+		
+		return x + dT * f3;
 	}
 
 }

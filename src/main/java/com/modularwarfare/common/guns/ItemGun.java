@@ -39,7 +39,7 @@ public class ItemGun extends BaseItem {
 
 			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 			{
-				if(world.isRemote)
+				if(!world.isRemote)
 				{
 					Line line = Line.fromRaytrace(entityPlayer, 200);
 					line.spawnParticles2(world, 0.1, 10, 10, 0.01, 100);
