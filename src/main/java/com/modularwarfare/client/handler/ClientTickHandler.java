@@ -44,7 +44,25 @@ public class ClientTickHandler extends ForgeEvent {
 		}
 	}
 	
-	public void onClientTickStart(Minecraft minecraft)
+	@SubscribeEvent
+	public void renderTick(TickEvent.RenderTickEvent event)
+	{
+		switch(event.phase)
+		{
+			case START:
+			{
+				onRenderTickStart(Minecraft.getMinecraft(), event.renderTickTime);
+				break;
+			}
+			case END:
+			{
+				
+				break;
+			}
+		}
+	}
+	
+	public void onRenderTickStart(Minecraft minecraft, float renderTick)
 	{
 		if (minecraft.player == null || minecraft.world == null)
 			return;
@@ -54,11 +72,20 @@ public class ClientTickHandler extends ForgeEvent {
 		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
 			ModelGun model = ((ItemGun) player.getHeldItemMainhand().getItem()).type.model;
-			float smoothing = 1f;
-			float adsSpeed = 0.15f + model.adsSpeed;
+			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 		}
+	}
+	
+	public void onClientTickStart(Minecraft minecraft)
+	{
+		if (minecraft.player == null || minecraft.world == null)
+			return;
+		
+		EntityPlayerSP player = minecraft.player;
+		
+		
 	}
 	
 	public void onClientTickEnd(Minecraft minecraft)
