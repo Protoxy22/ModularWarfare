@@ -3,8 +3,10 @@ package com.modularwarfare.common.guns;
 import java.util.List;
 import java.util.Random;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
+import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
@@ -16,7 +18,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class ItemGun extends BaseItem {
@@ -26,6 +27,8 @@ public class ItemGun extends BaseItem {
 	public static boolean isSprinting = false;
 	public static boolean isCrouching = false;
 	public static float modelScale;
+	
+	public static boolean fireButtonHeld = false;
 	
 	public ItemGun(GunType type)
 	{
@@ -67,7 +70,13 @@ public class ItemGun extends BaseItem {
 	
 	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
 	{
-		
+		if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+		{
+			if(fireButtonHeld)
+			{
+				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
+			}
+		}
 	}
 	
 	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
@@ -81,7 +90,9 @@ public class ItemGun extends BaseItem {
 		
 		if(isOnShootCooldown(entityPlayer))
 			return;
-				
+		
+		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
+		
 		// Fire Code
 		Line line = Line.fromRaytrace(entityPlayer, 200);
 		List<Entity> entities = line.getEntities(world, Entity.class, false);
@@ -95,7 +106,6 @@ public class ItemGun extends BaseItem {
 		}
 		
 		// Cooldown's
-		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
 	}
 	
 	public static boolean isOnShootCooldown(EntityPlayer entityPlayer)

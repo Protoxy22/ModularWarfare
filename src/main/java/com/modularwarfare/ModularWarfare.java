@@ -24,6 +24,7 @@ import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
+import com.modularwarfare.common.network.NetworkHandler;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.type.ContentTypes;
 import com.modularwarfare.common.type.TypeEntry;
@@ -36,6 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -53,6 +55,8 @@ public class ModularWarfare {
 	
 	// Logger
 	public static Logger LOGGER;
+	// Network Handler
+	public static NetworkHandler NETWORK;
 	// The ModularWarfare directory
 	public static File MOD_DIR;
 	
@@ -60,6 +64,7 @@ public class ModularWarfare {
 	public static HashMap<String, ItemGun> gunTypes = new HashMap<String, ItemGun>();
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
+	
 
 	/**
 	 * Registers items, blocks, renders, etc
@@ -96,6 +101,18 @@ public class ModularWarfare {
 	@EventHandler
 	public void onInitialization(FMLInitializationEvent event) {
 		new ServerTickHandler();
+		
+		NETWORK = new NetworkHandler();
+		NETWORK.initialise();
+	}
+	
+	/**
+	 * Last loading things
+	 * @param event
+	 */
+	@EventHandler
+	public void onPostInitialization(FMLPostInitializationEvent event) {
+		NETWORK.postInitialise();
 	}
 
 	/**

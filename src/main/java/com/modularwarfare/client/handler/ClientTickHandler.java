@@ -2,6 +2,7 @@ package com.modularwarfare.client.handler;
 
 import org.lwjgl.input.Mouse;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
@@ -37,6 +38,7 @@ public class ClientTickHandler extends ForgeEvent {
 		{
 		case START :
 			onClientTickStart(Minecraft.getMinecraft());
+			ModularWarfare.NETWORK.handleClientPackets();
 			break;
 		case END :
 			onClientTickEnd(Minecraft.getMinecraft());
@@ -85,7 +87,7 @@ public class ClientTickHandler extends ForgeEvent {
 		
 		EntityPlayerSP player = minecraft.player;
 		
-		
+		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
 	
 	public void onClientTickEnd(Minecraft minecraft)
