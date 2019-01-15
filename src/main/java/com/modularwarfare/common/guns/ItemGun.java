@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
@@ -61,19 +62,42 @@ public class ItemGun extends BaseItem {
 		}
     }
 	
-	public void onUpdateClient(EntityPlayer player, World world, ItemStack itemStack, ItemGun itemGun)
+	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
 	{
 		
 	}
 	
-	public void onUpdateServer(EntityPlayer player, World world, ItemStack itemStack, ItemGun itemGun)
+	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
 	{
 		
 	}
 	
-	public void onGunFire(EntityPlayer player, World world, ItemStack itemStack, ItemGun itemGun)
+	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
 	{
+		GunType gunType = itemGun.type;
 		
+		if(isOnShootCooldown(entityPlayer))
+			return;
+		
+		// Fire Code
+		Line line = Line.fromRaytrace(entityPlayer, 200);
+		List<Entity> entities = line.getEntities(world, Entity.class, false);
+		for(Entity e : entities)
+		{
+			if(e instanceof EntityLiving)
+			{
+				EntityLiving targetLiving = (EntityLiving) e;
+				targetLiving.setHealth(gunType.gunDamage/** * ammoType.damageMultiplier */);
+			}
+		}
+		
+		// Cooldown's
+		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
+	}
+	
+	public static boolean isOnShootCooldown(EntityPlayer entityPlayer)
+	{
+		return ServerTickHandler.playerShootCooldown.containsKey(entityPlayer.getUniqueID());
 	}
 	
 	@Override
@@ -104,17 +128,7 @@ public class ItemGun extends BaseItem {
 			if(entityLiving instanceof EntityPlayer)
 			{
 				EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
-				Line line = Line.fromRaytrace(entityPlayer, 200);
-				line.spawnParticles2(world, 0.1, 10, 10, 0.01, 100);
-				List<Entity> entities = line.getEntities(world, Entity.class, false);
-				for(Entity e : entities)
-				{
-					if(e instanceof EntityLiving)
-					{
-						EntityLiving targetLiving = (EntityLiving) e;
-						targetLiving.setHealth(0f);
-					}
-				}
+				
 			}
 		}	
         return true;
