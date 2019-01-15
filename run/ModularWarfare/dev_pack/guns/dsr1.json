@@ -2,6 +2,7 @@
   "internalName": "mwp.dsr1",
   "iconName": "mwp.dsr1",
   "gunDamage": 5,
+  "roundsPerMin": 60,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.dsr1",
   "shootSound": "shoot.mwp.smg1",

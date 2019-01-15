@@ -2,6 +2,7 @@
   "internalName": "mwp.akm",
   "iconName": "mwp.akm",
   "gunDamage": 5,
+  "roundsPerMin": 600,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.akm",
   "shootSound": "shoot.mwp.smg1",

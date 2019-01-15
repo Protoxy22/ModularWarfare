@@ -2,6 +2,7 @@
   "internalName": "mwp.stf12",
   "iconName": "mwp.stf12",
   "gunDamage": 5,
+  "roundsPerMin": 85,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.stf12",
   "shootSound": "shoot.mwp.smg1",
