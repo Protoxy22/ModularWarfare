@@ -75,8 +75,8 @@ public class m45a1 extends ModelGun //Same as Filename
         rightArmReloadPos = new Vector3f(0.17F, -0.62F, 0.06F);
         rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -100.0F);
         
-        rightHandAmmo = false;
         leftHandAmmo = true;
+        
         rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
         leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
 		//RecoilSlideDistance = 0.1F;

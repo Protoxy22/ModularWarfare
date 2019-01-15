@@ -80,7 +80,6 @@ rightArmReloadRot = new Vector3f(-30.0F, 0.0F, -80.0F);
 rightArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
 leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
 
-rightHandAmmo = false;
 leftHandAmmo = true;
 
 //RecoilSlideDistance = 0.05F;

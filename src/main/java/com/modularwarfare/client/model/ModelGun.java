@@ -15,16 +15,6 @@ public class ModelGun extends ModelBase
 	
 	//The scale of the gun model
 	public float modelScale = 1.0F;
-	//Allows you to select a render preset for change the position of the gun in hand (1-3, default 1)
-	public int renderPreset = 1;
-	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
-	public Vector3f rotateCarryPosition = new Vector3f(0F, 0F, 0F);
-	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
-	public Vector3f translateCarryPosition = new Vector3f(0F, 0F, 0F);
-	public Vector3f sprintTranslate = new Vector3f(0F, 0F, 0F);
-	public Vector3f sprintRotate = new Vector3f(0F, 0F, 0F);
-	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)
-	public float adsSpeed = 0.00F;
 	
 	//These first 7 models are static with no animation
 	public ModelRendererTurbo[] gunModel = new ModelRendererTurbo[0];
@@ -62,36 +52,57 @@ public class ModelGun extends ModelBase
 	public Vector3f pumpAttachPoint = new Vector3f();
 	public Vector3f accessoryAttachPoint = new Vector3f();
 
-	//Muzzle flash models
+	//Arm rendering variables DEFAULT, RELOADING, CHARGING
+	public boolean hasArms = false;
+	public boolean leftHandAmmo = true;
+	public Vector3f leftArmScale = new Vector3f(0.8F,0.8F,0.8F);
+	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);	
+	public Vector3f leftArmPos = new Vector3f(0,0,0);
+	public Vector3f leftArmRot = new Vector3f(0,0,0);
+	public Vector3f rightArmPos = new Vector3f(0,0,0);
+	public Vector3f rightArmRot = new Vector3f(0,0,0);
+	public Vector3f leftArmReloadPos = new Vector3f(0,0,0);
+	public Vector3f leftArmReloadRot = new Vector3f(0,0,0);
+	public Vector3f rightArmReloadPos = new Vector3f(0,0,0);
+	public Vector3f rightArmReloadRot = new Vector3f(0,0,0);
+	public Vector3f leftArmChargePos = new Vector3f(0,0,0);
+	public Vector3f leftArmChargeRot = new Vector3f(0,0,0);
+	public Vector3f rightArmChargePos = new Vector3f(0,0,0);
+	public Vector3f rightArmChargeRot = new Vector3f(0,0,0);
+	/** If true, move the hands with the pump action */
+	public boolean lefthandPump = false;
+	public boolean righthandPump = false;
+	/** If true, move the hands with the charge action */
+	public boolean rightHandCharge = false;
+	public boolean leftHandCharge = false;
+	/** If true, move the hands with the bolt action */
+	public boolean rightHandBolt = false;
+	public boolean leftHandBolt = false;
+	public float pumpModifier = 4F;
+	public Vector3f chargeModifier = new Vector3f(8F, 4F, 4F);
+
+	//Stance variables
+	/**If true, gun will translate when equipped with a sight attachment */
+	public float gunOffset = 0F;
+	//Zoom/translate the gun model towards player when crouching
+	public float crouchZoom = 0F;
+	//Enable or disable stances
+	public boolean fancyStance = false;
+	//Allows you to select a render preset for change the position of the gun in hand (1-3, default 1)
+	public int renderPreset = 1;
+	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
+	public Vector3f rotateCarryPosition = new Vector3f(0F, 0F, 0F);
+	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
+	public Vector3f translateCarryPosition = new Vector3f(0F, 0F, 0F);
+	public Vector3f sprintTranslate = new Vector3f(0F, 0F, 0F);
+	public Vector3f sprintRotate = new Vector3f(0F, 0F, 0F);
+	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)
+	public float adsSpeed = 0.00F;
+	
+	//Muzzle flash variables
 	public boolean hasFlash = false;
 	public float flashScale = 1F;
 	public Vector3f muzzleFlashPoint = new Vector3f(0,0,0);
-
-	//Arms rendering
-	public boolean hasArms = false;
-	//TODO; Any reason this cant be a single boolean with left true as default?
-	public boolean leftHandAmmo = false;
-	public boolean rightHandAmmo = false;
-	public Vector3f leftArmScale = new Vector3f(0.8F,0.8F,0.8F);
-	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);	
-	/** Position/Rotation of the LEFT arm when not reloading */
-	public Vector3f leftArmPos = new Vector3f(0,0,0);
-	public Vector3f leftArmRot = new Vector3f(0,0,0);
-	/** Position/Rotation of the RIGHT arm when not reloading */
-	public Vector3f rightArmPos = new Vector3f(0,0,0);
-	public Vector3f rightArmRot = new Vector3f(0,0,0);
-	/** Position/Rotation of the LEFT arm when reloading */
-	public Vector3f leftArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f leftArmReloadRot = new Vector3f(0,0,0);
-	/** Position/Rotation of the RIGHT arm when reloading */
-	public Vector3f rightArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f rightArmReloadRot = new Vector3f(0,0,0);
-	/** Position/Rotation of the LEFT arm when charging(cocking) */
-	public Vector3f leftArmChargePos = new Vector3f(0,0,0);
-	public Vector3f leftArmChargeRot = new Vector3f(0,0,0);
-	/** Position/Rotation of the RIGHT arm when charging(cocking) */
-	public Vector3f rightArmChargePos = new Vector3f(0,0,0);
-	public Vector3f rightArmChargeRot = new Vector3f(0,0,0);
 
 	//Model based recoil variables
 	public float gunSlideDistance = 1F / 4F;
@@ -103,7 +114,7 @@ public class ModelGun extends ModelBase
 	/** Adds a left-right model shaking motion when firing, default 0.5 */
 	public float modelShake = 0.5F;
 
-	// Casing and muzzle flash parameters
+	//Casing ejection variables
 	/** Total distance to translate the casing model, effects speed */
     public Vector3f casingAnimDistance = new Vector3f(0, 0, 16);
     /** The amount by which the casing may random deviate from the default path */
@@ -122,7 +133,7 @@ public class ModelGun extends ModelBase
     // Charge handle distance/delay/time
     public float chargeHandleDistance = 0F;
     public int chargeDelay = 0, chargeDelayAfterReload = 0, chargeTime = 1;
-
+    
 	/**
 	 * Bullet Counter Models. Can be used to display bullet count in-game interface.
 	 * Each part is represented by number of rounds remaining per magazine.
@@ -139,7 +150,7 @@ public class ModelGun extends ModelBase
 	/** Toggle the counters active. Saves render performance. */
 	public boolean isBulletCounterActive, isAdvBulletCounterActive = false;
 
-    
+    //Reload animation variables
 	//public EnumAnimationType animationType = EnumAnimationType.NONE;
 	//public EnumMeleeAnimation meleeAnimation = EnumMeleeAnimation.DEFAULT;
 	public float tiltGunTime = 0.15F, unloadClipTime = 0.35F, loadClipTime = 0.35F, untiltGunTime = 0.15F;
@@ -188,23 +199,6 @@ public class ModelGun extends ModelBase
 	public boolean isSingleAction = false;
 	/** If true, lock the slide when the last bullet is fired */
 	public boolean slideLockOnEmpty = false;
-	/** If true, move the hands with the pump action */
-	public boolean lefthandPump = false;
-	public boolean righthandPump = false;
-	/** If true, move the hands with the charge action */
-	public boolean rightHandCharge = false;
-	public boolean leftHandCharge = false;
-	/** If true, move the hands with the bolt action */
-	public boolean rightHandBolt = false;
-	public boolean leftHandBolt = false;
-	public float pumpModifier = 4F;
-	public Vector3f chargeModifier = new Vector3f(8F, 4F, 4F);
-	/**If true, gun will translate when equipped with a sight attachment */
-	public float gunOffset = 0F;
-	public float crouchZoom = 0F;
-	public boolean fancyStance = false;
-
-
 
 	/** Custom reload Parameters. If Enum.CUSTOM is set, these parameters can build an animation within the gun model classes */
 	//Gun movement variables

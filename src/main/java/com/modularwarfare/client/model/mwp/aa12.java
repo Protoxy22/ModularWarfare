@@ -83,7 +83,6 @@ public class aa12 extends ModelGun //Same as Filename
         rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
         leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
  
-        rightHandAmmo = false;
         leftHandAmmo = true;
         
 		//RecoilSlideDistance = 0.1F;

@@ -69,8 +69,8 @@ public class glock18 extends ModelGun //Same as Filename
         rightArmReloadPos = new Vector3f(0.13F, -0.64F, 0.06F);
         rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -100.0F);
         
-        rightHandAmmo = false;
         leftHandAmmo = true;
+        
         rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
         leftArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
 		//RecoilSlideDistance = 0.1F;

@@ -81,7 +81,6 @@ public class stf12 extends ModelGun //Same as Filename
         rightArmReloadPos = new Vector3f(0.16F, -0.60F, 0.04F);
         rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
  
-        rightHandAmmo = false;
         leftHandAmmo = true;
         
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);

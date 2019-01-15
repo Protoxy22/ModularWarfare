@@ -58,7 +58,6 @@ public class ump45complete extends ModelGun //Same as Filename
         rightArmScale = new Vector3f(10.8F, 10.8F, 10.8F);
         leftArmScale = new Vector3f(10.8F, 11.0F, 10.8F);
  
-        rightHandAmmo = false;
         leftHandAmmo = true;
 
 

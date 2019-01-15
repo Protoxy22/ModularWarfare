@@ -154,7 +154,6 @@ public class ItemGun extends BaseItem {
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
     {
 		modelScale = type.model.modelScale;
-		System.out.println(modelScale);
     	boolean result = !oldStack.equals(newStack);
     	if(result)
     	{

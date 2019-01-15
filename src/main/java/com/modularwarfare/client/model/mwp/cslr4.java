@@ -71,7 +71,6 @@ public class cslr4 extends ModelGun //Same as Filename
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);
         leftArmScale = new Vector3f(0.7F, 1.0F, 0.7F);
  
-        rightHandAmmo = false;
         leftHandAmmo = true;
         
 		//RecoilSlideDistance = 0.16F;
