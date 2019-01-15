@@ -15,6 +15,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 
 public class ItemGun extends BaseItem {
@@ -79,7 +81,7 @@ public class ItemGun extends BaseItem {
 		
 		if(isOnShootCooldown(entityPlayer))
 			return;
-		
+				
 		// Fire Code
 		Line line = Line.fromRaytrace(entityPlayer, 200);
 		List<Entity> entities = line.getEntities(world, Entity.class, false);
@@ -88,7 +90,7 @@ public class ItemGun extends BaseItem {
 			if(e instanceof EntityLiving)
 			{
 				EntityLiving targetLiving = (EntityLiving) e;
-				targetLiving.setHealth(gunType.gunDamage/** * ammoType.damageMultiplier */);
+				targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), (gunType.gunDamage /** * ammoType.damageMultiplier */));
 			}
 		}
 		
@@ -129,7 +131,10 @@ public class ItemGun extends BaseItem {
 			if(entityLiving instanceof EntityPlayer)
 			{
 				EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
-				
+				if(stack != null && stack.getItem() instanceof ItemGun)
+				{
+					onGunFire(entityPlayer, entityPlayer.world, stack, (ItemGun)stack.getItem());
+				}
 			}
 		}	
         return true;

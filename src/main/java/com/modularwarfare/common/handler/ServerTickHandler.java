@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.modularwarfare.utility.event.ForgeEvent;
 
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
@@ -19,7 +20,7 @@ public class ServerTickHandler extends ForgeEvent {
 		for(UUID uuid : playerShootCooldown.keySet())
 		{
 			int value = playerShootCooldown.get(uuid) - 1;
-			if(value < 0)
+			if(value <= 0)
 			{
 				playerShootCooldown.remove(uuid);
 			} else
