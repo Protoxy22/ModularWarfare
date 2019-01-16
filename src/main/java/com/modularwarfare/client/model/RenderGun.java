@@ -58,6 +58,7 @@ public class RenderGun implements CustomItemRenderer {
 			switch (renderType) {
 
 			case ENTITY: {
+				//GL11.glRotatef(180F, 0F, 1F, 0F);
 				GL11.glTranslatef(-0.45F + model.itemFrameOffset.x, -0.05F + model.itemFrameOffset.y, model.itemFrameOffset.z);
 				break;
 			}
