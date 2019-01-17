@@ -6,8 +6,17 @@
   "roundsPerMin": 60,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.dsr1",
-  "shootSound": "shoot.mwp.sniper2",
-  "reloadSound": "reload.mwp.g.70",
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.sniper2"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.g.70"
+    }
+  ],
   "weaponSkins": [
     {
       "internalName": "mwp.default",

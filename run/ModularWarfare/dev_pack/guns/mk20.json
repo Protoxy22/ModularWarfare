@@ -6,8 +6,17 @@
   "roundsPerMin": 600,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.mk20",
-  "shootSound": "shoot.mwp.dmr3",
-  "reloadSound": "reload.mwp.g.65",
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.dmr3"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.g.65"
+    }
+  ],
   "weaponSkins": [
     {
       "internalName": "mwp.default",

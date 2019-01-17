@@ -6,8 +6,17 @@
   "roundsPerMin": 85,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.stf12",
-  "shootSound": "shoot.mwp.sg1",
-  "reloadSound": "reload.mwp.7pump",
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.sg1"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.7pump"
+    }
+  ],
   "weaponSkins": [
     {
       "internalName": "mwp.default",

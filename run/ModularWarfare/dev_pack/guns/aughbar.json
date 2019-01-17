@@ -6,8 +6,17 @@
   "roundsPerMin": 700,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.aughbar",
-  "shootSound": "shoot.mwp.mg1",
-  "reloadSound": "reload.mwp.f.90",
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.mg1"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.f.90"
+    }
+  ],
   "weaponSkins": [
     {
       "internalName": "mwp.default",
