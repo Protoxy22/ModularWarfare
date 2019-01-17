@@ -5,8 +5,8 @@
   "roundsPerMin": 1200,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.glock18",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.glock18",
+  "shootSound": "shoot.mwp.pistol3",
+  "reloadSound": "reload.mwp.b.45",
   "weaponSkins": [
     {
       "internalName": "mwp.default",

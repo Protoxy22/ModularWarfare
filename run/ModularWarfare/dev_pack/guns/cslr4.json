@@ -5,8 +5,8 @@
   "roundsPerMin": 20,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.cslr4",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.cslr4",
+  "shootSound": "shoot.mwp.sniper1",
+  "reloadSound": "reload.mwp.g.60",
   "weaponSkins": [
     {
       "internalName": "mwp.default",

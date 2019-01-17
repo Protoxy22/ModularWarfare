@@ -5,8 +5,8 @@
   "roundsPerMin": 360,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.aa12",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.aa12",
+  "shootSound": "shoot.mwp.asg1",
+  "reloadSound": "reload.mwp.f.85",
   "weaponSkins": [
     {
       "internalName": "mwp.default",

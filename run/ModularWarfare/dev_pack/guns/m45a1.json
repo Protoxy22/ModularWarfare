@@ -5,8 +5,8 @@
   "roundsPerMin": 720,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.m45a1",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.m45a1",
+  "shootSound": "shoot.mwp.pistol1",
+  "reloadSound": "reload.mwp.b.35",
   "weaponSkins": [
     {
       "internalName": "mwp.default",

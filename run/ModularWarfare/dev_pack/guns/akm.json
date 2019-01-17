@@ -5,8 +5,8 @@
   "roundsPerMin": 600,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.akm",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.akm",
+  "shootSound": "shoot.mwp.ak1",
+  "reloadSound": "reload.mwp.g.60",
   "weaponSkins": [
     {
       "internalName": "mwp.default",
