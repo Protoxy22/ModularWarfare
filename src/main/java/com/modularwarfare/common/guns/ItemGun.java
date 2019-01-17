@@ -12,6 +12,7 @@ import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -76,7 +77,7 @@ public class ItemGun extends BaseItem {
 	{
 		if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
-			if(fireButtonHeld)
+			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
 			}
