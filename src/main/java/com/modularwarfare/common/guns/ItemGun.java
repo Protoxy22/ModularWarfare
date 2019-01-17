@@ -94,7 +94,6 @@ public class ItemGun extends BaseItem {
 		GunType gunType = itemGun.type;
 		
 		if(isOnShootCooldown(entityPlayer)) {
-			System.out.println("can't shoot");
 			return;
 		}
 		
