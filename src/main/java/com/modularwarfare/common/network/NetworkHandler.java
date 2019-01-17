@@ -184,6 +184,7 @@ public class NetworkHandler extends MessageToMessageCodec<FMLProxyPacket, Packet
 		channels = NetworkRegistry.INSTANCE.newChannel("ModularWarfare", this);
 		
 		registerPacket(PacketGunFire.class);
+		registerPacket(PacketPlaySound.class);
 	}
 	
 	/**

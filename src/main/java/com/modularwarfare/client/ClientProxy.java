@@ -18,10 +18,16 @@ import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.utility.MWSound;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.MetadataCollection;
@@ -30,6 +36,7 @@ import net.minecraftforge.fml.common.discovery.ContainerType;
 import net.minecraftforge.fml.common.discovery.ModCandidate;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @EventBusSubscriber(value = Side.CLIENT)
 public class ClientProxy extends CommonProxy {
@@ -37,6 +44,7 @@ public class ClientProxy extends CommonProxy {
 	public List<File> contentPacks;
 	public static String modelDir = "com.modularwarfare.client.model.";
 	public static RenderGun gunRenderer;
+	public static HashMap<String, SoundEvent> modSounds = new HashMap<String, SoundEvent>();
 	
 	@Override
 	public void load() 
@@ -190,6 +198,36 @@ public class ClientProxy extends CommonProxy {
 		ItemModelExport exportedModel = new ItemModelExport();
 		exportedModel.setBaseLayer(type.iconName != null ? type.iconName : type.internalName);
 		return exportedModel;
+	}
+	
+	@Override
+	public void playSound(MWSound sound)
+	{
+		SoundEvent soundEvent = modSounds.get(sound.soundName);
+		if(soundEvent == null)
+		{
+			ModularWarfare.LOGGER.error(String.format("The sound named '%s' does not exist. Skipping playSound", sound.soundName));
+			return;
+		}
+		Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player, sound.blockPos, soundEvent, SoundCategory.PLAYERS, sound.volume, sound.pitch);
+	}
+	
+	@Override
+	public void registerSound(String soundName)
+	{
+		ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID, soundName);
+		modSounds.put(soundName, new SoundEvent(resourceLocation).setRegistryName(resourceLocation));
+	}
+	
+	@SubscribeEvent
+	public void registerSounds(RegistryEvent.Register<SoundEvent> event)
+	{
+		IForgeRegistry<SoundEvent> registry = event.getRegistry();
+		for(SoundEvent soundEvent : modSounds.values())
+		{
+			registry.register(soundEvent);
+			System.out.println("called");
+		}
 	}
 	
 }

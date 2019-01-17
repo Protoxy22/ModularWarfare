@@ -8,8 +8,10 @@ import java.util.regex.Pattern;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.utility.MWSound;
+import com.modularwarfare.utility.event.ForgeEvent;
 
-public class CommonProxy {
+public class CommonProxy extends ForgeEvent {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
 	
@@ -31,19 +33,14 @@ public class CommonProxy {
 		return contentPacks;
 	}
 	
-	public <T> T loadModel(String s, String shortName, Class<T> typeClass)
-	{
-		return null;
-	}
+	public <T> T loadModel(String s, String shortName, Class<T> typeClass) {return null;}
 	
-	public void reloadModels(boolean reloadSkins)
-	{
-		
-	}
+	public void reloadModels(boolean reloadSkins) {}
 	
-	public void generateJsonModels(ArrayList<BaseType> types)
-	{
-		
-	}
+	public void generateJsonModels(ArrayList<BaseType> types) {}
+	
+	public void playSound(MWSound sound) {}
+	
+	public void registerSound(String soundName) {}
 
 }

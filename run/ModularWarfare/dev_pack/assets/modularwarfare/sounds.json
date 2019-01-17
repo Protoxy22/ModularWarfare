@@ -1,0 +1,7 @@
+{
+    "shoot.mwp.smg1": {
+        "category": "player",
+        "subtitle": "Pew Pew Pew",
+        "sounds": ["modularwarfare:shoot.mwp.smg1"]
+    }
+}

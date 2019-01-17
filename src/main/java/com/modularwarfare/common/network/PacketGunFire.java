@@ -34,7 +34,6 @@ public class PacketGunFire extends PacketBase {
 	@Override
 	public void handleClientSide(EntityPlayer entityPlayer) {
 		// UNUSED
-		System.out.println("called packet handle client");
 	}
 
 }

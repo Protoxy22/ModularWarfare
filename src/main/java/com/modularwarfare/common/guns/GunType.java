@@ -107,6 +107,9 @@ public class GunType extends BaseType {
 		reloadModel();
 		
 		fireTickDelay = 1200 / roundsPerMin;
+		
+		if(shootSound != null)
+			ModularWarfare.PROXY.registerSound(shootSound);
 	}
 	
 	@Override

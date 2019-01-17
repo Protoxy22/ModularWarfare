@@ -29,8 +29,8 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.type.ContentTypes;
 import com.modularwarfare.common.type.TypeEntry;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,7 +48,7 @@ public class ModularWarfare {
 	public static final String MOD_ID = "modularwarfare";
 	public static final String MOD_NAME = "Modular Warfare";
 	public static final String MOD_VERSION = "1.0.0";
-	public static CreativeTabs MOD_TAB = new MWTab();
+	public static MWTab MOD_TAB = new MWTab();
 
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
@@ -127,11 +127,18 @@ public class ModularWarfare {
 	@SubscribeEvent
 	public void registerItems(RegistryEvent.Register<Item> event) 
 	{
-		for(ItemGun itemGun : gunTypes.values())
+		List<Item> tabOrder = new ArrayList<Item>();
+		for(ItemGun itemGun : gunTypes.values()) 
+		{
 			event.getRegistry().register(itemGun);
-	
-	    for(ItemAmmo itemAmmo : ammoTypes.values())
+			tabOrder.add(itemGun);
+		}	
+	    for(ItemAmmo itemAmmo : ammoTypes.values()) 
+	    {
 	    	event.getRegistry().register(itemAmmo);
+	    	tabOrder.add(itemAmmo);
+	    }
+	    MOD_TAB.preInitialize(tabOrder);
 	}
 	
 	/**

@@ -7,6 +7,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketGunFire;
+import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
@@ -15,10 +16,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class ItemGun extends BaseItem {
 	
@@ -35,7 +39,7 @@ public class ItemGun extends BaseItem {
 		super(type);
 		this.type = type;
 		this.setMaxStackSize(1);
-		this.setNoRepair();
+		this.setNoRepair();		
 	}
 	
 	@Override
@@ -88,8 +92,10 @@ public class ItemGun extends BaseItem {
 	{
 		GunType gunType = itemGun.type;
 		
-		if(isOnShootCooldown(entityPlayer))
+		if(isOnShootCooldown(entityPlayer)) {
+			System.out.println("can't shoot");
 			return;
+		}
 		
 		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
 		
@@ -103,6 +109,12 @@ public class ItemGun extends BaseItem {
 				EntityLiving targetLiving = (EntityLiving) e;
 				targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), (gunType.gunDamage /** * ammoType.damageMultiplier */));
 			}
+		}
+		
+		if(gunType.shootSound != null)
+		{
+			// TODO: add distances and all that
+			ModularWarfare.NETWORK.sendTo(new PacketPlaySound(entityPlayer.getPosition(), gunType.shootSound, 1f, 1f), (EntityPlayerMP) entityPlayer);
 		}
 		
 		// Cooldown's
@@ -135,7 +147,7 @@ public class ItemGun extends BaseItem {
     public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
     {
 		// SEMI-AUTO GUN FIRING
-		World world = entityLiving.world;
+		/*World world = entityLiving.world;
 		if(!world.isRemote)
 		{
 			if(entityLiving instanceof EntityPlayer)
@@ -146,7 +158,7 @@ public class ItemGun extends BaseItem {
 					onGunFire(entityPlayer, entityPlayer.world, stack, (ItemGun)stack.getItem());
 				}
 			}
-		}	
+		}*/	
         return true;
     }
 	
