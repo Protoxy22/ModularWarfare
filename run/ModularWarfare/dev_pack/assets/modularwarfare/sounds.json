@@ -1,7 +1,5 @@
 {
-    "shoot.mwp.smg1": {
-        "category": "player",
-        "subtitle": "Pew Pew Pew",
-        "sounds": ["modularwarfare:shoot.mwp.smg1"]
-    }
+"reload.mwp.akm":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:reload.mwp.akm"]},
+"shoot.mwp.akm":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.akm"]},
+"shoot.mwp.akm_distant":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.akm_distant"]}
 }

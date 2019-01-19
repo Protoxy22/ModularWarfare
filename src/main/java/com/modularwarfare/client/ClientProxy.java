@@ -3,7 +3,12 @@ package com.modularwarfare.client;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,9 +20,12 @@ import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.CommonProxy;
+import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.objects.SoundEntry;
+import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
@@ -59,13 +67,11 @@ public class ClientProxy extends CommonProxy {
 	{
 		for(ItemGun itemGun : ModularWarfare.gunTypes.values())
 		{
-			//MinecraftForgeClient.registerItemRenderer(itemGun, gunRenderer);
 			ModelLoader.setCustomModelResourceLocation(itemGun, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemGun.type.internalName));
 		}
 		
 		for(ItemAmmo itemAmmo : ModularWarfare.ammoTypes.values())
 		{
-			//MinecraftForgeClient.registerItemRenderer(itemAmmo, ammoRenderer);
 			ModelLoader.setCustomModelResourceLocation(itemAmmo, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemAmmo.type.internalName));
 		}
 	}
@@ -73,7 +79,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void forceReload()
 	{
-		// OLD: Minecraft.getMinecraft().refreshResources();
 		FMLClientHandler.instance().refreshResources();
 	}
 	
@@ -108,7 +113,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	/** Helper method that sorts out packages with model name input
-	 * For example, the model class "com.flansmod.client.model.mw.ModelMP5"
+	 * For example, the model class "com.modularwarfare.client.model.mw.ModelMP5"
 	 * is referenced in the type file by the string "mw.MP5" */
 	private String getModelName(String in)
 	{
@@ -193,6 +198,129 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 	
+	@Override
+	public void generateJsonSounds(Collection<ItemGun> types, boolean replace)
+	{
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		HashMap<String, ArrayList<String>> cpSounds = new HashMap<String, ArrayList<String>>();
+		
+		for(ItemGun itemGun : types)
+		{
+			GunType type = itemGun.type;
+			if(type.contentPack == null)
+				continue;
+			
+			String contentPack = type.contentPack;
+			
+			if(!cpSounds.containsKey(contentPack))
+				cpSounds.put(contentPack, new ArrayList<String>());
+			
+			for(WeaponSoundType weaponSoundType : type.weaponSoundMap.keySet())
+			{
+				ArrayList<SoundEntry> soundEntries = type.weaponSoundMap.get(weaponSoundType);
+				for(SoundEntry soundEntry : soundEntries)
+				{
+					if(soundEntry.soundName != null && !cpSounds.get(contentPack).contains(soundEntry.soundName))
+						cpSounds.get(contentPack).add(soundEntry.soundName);
+					
+					if(soundEntry.soundNameDistant != null && !cpSounds.get(contentPack).contains(soundEntry.soundNameDistant))
+						cpSounds.get(contentPack).add(soundEntry.soundNameDistant);
+				}
+			}
+		}
+		
+		for(String contentPack : cpSounds.keySet())
+		{
+			try
+			{
+				File contentPackDir = new File(ModularWarfare.MOD_DIR, contentPack);
+				if(contentPackDir.exists() && contentPackDir.isDirectory())
+				{
+					ArrayList<String> soundEntries = cpSounds.get(contentPack);
+					if(soundEntries != null && !soundEntries.isEmpty())
+					{
+						Path assetsDir = Paths.get(ModularWarfare.MOD_DIR.getAbsolutePath() + "/" + contentPack + "/assets/modularwarfare/");
+						if(!Files.exists(assetsDir))
+							Files.createDirectories(assetsDir);
+						Path soundsFile = Paths.get(assetsDir + "/sounds.json");
+						
+						boolean soundsExists = Files.exists(soundsFile);
+						boolean shouldCreate = soundsExists ? replace : true;
+						if(shouldCreate)
+						{
+							if(!soundsExists)
+								Files.createFile(soundsFile);
+							
+							ArrayList<String> jsonEntries = new ArrayList<String>();
+							String format = "\"%s\":{\"category\": \"player\",\"subtitle\": \"MW Sound\",\"sounds\": [\"modularwarfare:%s\"]}";
+							jsonEntries.add("{");
+							for(int i = 0; i < soundEntries.size(); i++)
+							{
+								if(i + 1 < soundEntries.size())
+								{
+									// add comma
+									jsonEntries.add(format.replaceAll("%s", soundEntries.get(i)) + ",");
+								} else
+								{
+									// no comma
+									jsonEntries.add(format.replaceAll("%s", soundEntries.get(i)));
+								}
+							}
+							jsonEntries.add("}");
+							Files.write(soundsFile, jsonEntries, Charset.forName("UTF-8"));
+						}
+					}
+				}
+			} catch(Exception exception)
+			{
+				if(ModularWarfare.DEV_ENV)
+				{
+					exception.printStackTrace();
+				} else
+				{
+					ModularWarfare.LOGGER.error(String.format("Failed to create sounds.json for content pack '%s'", contentPack));
+				}
+			}
+		}
+		
+		/*for(ItemGun itemGun : types)
+		{
+			GunType type = itemGun.type;
+			if(type.contentPack == null)
+				continue;
+			
+			File contentPackDir = new File(ModularWarfare.MOD_DIR, type.contentPack);
+			if(contentPackDir.exists() && contentPackDir.isDirectory())
+			{
+				File assetsDir = new File(contentPackDir, "/assets/modularwarfare/");
+				if(!assetsDir.exists())
+					assetsDir.mkdirs();
+				
+				File soundsFile = new File(assetsDir, type.internalName + ".json");
+				
+				if(!typeModel.exists())
+				{
+					try {
+						FileWriter fileWriter = new FileWriter(typeModel);
+						gson.toJson(createJson(type), fileWriter);
+						fileWriter.flush();
+						fileWriter.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}	
+			}
+		}
+		
+		/*String jsonString = "";
+		for()
+		{
+			String soundEntry = String.format("{%s}", args);
+		}*/
+		
+		//String finalJsonString = String.format("{%s}", args);
+	}
+	
 	private ItemModelExport createJson(BaseType type)
 	{
 		ItemModelExport exportedModel = new ItemModelExport();
@@ -209,6 +337,7 @@ public class ClientProxy extends CommonProxy {
 			ModularWarfare.LOGGER.error(String.format("The sound named '%s' does not exist. Skipping playSound", sound.soundName));
 			return;
 		}
+
 		Minecraft.getMinecraft().world.playSound(Minecraft.getMinecraft().player, sound.blockPos, soundEvent, SoundCategory.PLAYERS, sound.volume, sound.pitch);
 	}
 	
@@ -226,7 +355,6 @@ public class ClientProxy extends CommonProxy {
 		for(SoundEvent soundEvent : modSounds.values())
 		{
 			registry.register(soundEvent);
-			System.out.println("called");
 		}
 	}
 	

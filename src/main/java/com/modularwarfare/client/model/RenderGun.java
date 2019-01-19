@@ -1,7 +1,5 @@
 package com.modularwarfare.client.model;
 
-import java.util.Random;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -10,6 +8,7 @@ import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -46,6 +45,7 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, GunType gunType, Object... data) {
 
 		ModelGun model = gunType.model;
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -141,7 +141,7 @@ public class RenderGun implements CustomItemRenderer {
 				}
 				//Apply rotation and translation to model, based on renderPreset and player state
 				//Applies a special position if player is sprinting and not ADS
-				if(ItemGun.isSprinting && adsSwitch <= 0.5)
+				if(player.isSprinting() && adsSwitch <= 0.5)
 				{	
 					GL11.glRotatef(rotateX + sprintRotate.x, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 					GL11.glRotatef(rotateY + sprintRotate.y, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
@@ -150,7 +150,7 @@ public class RenderGun implements CustomItemRenderer {
 				break;	
 				}
 				//Applies a special position if player is crouching and ADS
-				else if(ItemGun.isCrouching && crouchZoom != 0 && adsSwitch >= 0.5)
+				else if(player.isSneaking() && crouchZoom != 0 && adsSwitch >= 0.5)
 				{
 					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT

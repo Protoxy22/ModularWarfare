@@ -10,6 +10,7 @@ import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
 
 import net.minecraft.client.Minecraft;
@@ -29,8 +30,6 @@ public class ItemGun extends BaseItem {
 	
 	public GunType type;
 	public boolean isAiming = false;
-	public static boolean isSprinting = false;
-	public static boolean isCrouching = false;
 	public static float modelScale = 0;
 	
 	public static boolean fireButtonHeld = false;
@@ -64,11 +63,6 @@ public class ItemGun extends BaseItem {
 					onUpdateClient(entityPlayer, world, itemStack, itemGun);
 				else
 					onUpdateServer(entityPlayer, world, itemStack, itemGun);
-				
-				//If crouching, set true
-				isCrouching = entityPlayer.isSneaking();
-				//If running, set true
-				isSprinting = entityPlayer.isSprinting();
 			}	
 		}
     }
@@ -93,11 +87,9 @@ public class ItemGun extends BaseItem {
 	{
 		GunType gunType = itemGun.type;
 		
-		if(isOnShootCooldown(entityPlayer)) {
+		// Can fire checks
+		if(isOnShootCooldown(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting())) 
 			return;
-		}
-		
-		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
 		
 		// Fire Code
 		Line line = Line.fromRaytrace(entityPlayer, 200);
@@ -111,13 +103,11 @@ public class ItemGun extends BaseItem {
 			}
 		}
 		
-		if(gunType.shootSound != null)
-		{
-			// TODO: add distances and all that
-			ModularWarfare.NETWORK.sendTo(new PacketPlaySound(entityPlayer.getPosition(), gunType.shootSound, 1f, 1f), (EntityPlayerMP) entityPlayer);
-		}
+		// Sound
+		gunType.playSound(entityPlayer, WeaponSoundType.Fire);
 		
-		// Cooldown's
+		// Fire Delay
+		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
 	}
 	
 	public static boolean isOnShootCooldown(EntityPlayer entityPlayer)

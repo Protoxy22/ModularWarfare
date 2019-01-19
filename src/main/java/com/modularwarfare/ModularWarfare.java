@@ -30,7 +30,7 @@ import com.modularwarfare.common.type.ContentTypes;
 import com.modularwarfare.common.type.TypeEntry;
 
 import net.minecraft.item.Item;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -53,6 +53,8 @@ public class ModularWarfare {
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
 	
+	// Development Environment
+	public static boolean DEV_ENV = false;
 	// Logger
 	public static Logger LOGGER;
 	// Network Handler
@@ -64,7 +66,6 @@ public class ModularWarfare {
 	public static HashMap<String, ItemGun> gunTypes = new HashMap<String, ItemGun>();
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
-	
 
 	/**
 	 * Registers items, blocks, renders, etc
@@ -72,6 +73,7 @@ public class ModularWarfare {
 	 */
 	@EventHandler
 	public void onPreInitialization(FMLPreInitializationEvent event) {
+		DEV_ENV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 		LOGGER = event.getModLog();
 		
 		// Creates directory if doesn't exist
@@ -182,7 +184,11 @@ public class ModularWarfare {
 			}
 		}
 		
-		PROXY.generateJsonModels(baseTypes);
+		if(DEV_ENV)
+		{
+			PROXY.generateJsonModels(baseTypes);
+			PROXY.generateJsonSounds(gunTypes.values(), false);
+		}
 	}
 	
 	/**

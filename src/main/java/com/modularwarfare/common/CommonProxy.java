@@ -3,10 +3,12 @@ package com.modularwarfare.common;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.MWSound;
 import com.modularwarfare.utility.event.ForgeEvent;
@@ -38,6 +40,8 @@ public class CommonProxy extends ForgeEvent {
 	public void reloadModels(boolean reloadSkins) {}
 	
 	public void generateJsonModels(ArrayList<BaseType> types) {}
+	
+	public void generateJsonSounds(Collection<ItemGun> types, boolean replace) {}
 	
 	public void playSound(MWSound sound) {}
 	

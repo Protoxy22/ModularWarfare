@@ -23,7 +23,11 @@ public class KeyInputHandler extends ForgeEvent {
 		keyBinds = new ArrayList<KeyEntry>();
 		keyBinds.add(new KeyEntry(KeyType.GunReload));
 		keyBinds.add(new KeyEntry(KeyType.ClientReload));
-		keyBinds.add(new KeyEntry(KeyType.DebugMode));
+		
+		if(ModularWarfare.DEV_ENV)
+		{
+			keyBinds.add(new KeyEntry(KeyType.DebugMode));
+		}
 		
 		for(KeyEntry keyEntry : keyBinds)
 		{

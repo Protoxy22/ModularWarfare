@@ -5,14 +5,25 @@
   "roundsPerMin": 600,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.akm",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.akm",
   "weaponSkins": [
     {
       "internalName": "mwp.default",
       "displayName": "Default",
       "skinAsset": "akm_default",
       "requiredItems": ["dyeBlack/1"]
+    }
+  ],
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.akm",
+      "soundNameDistant": "shoot.mwp.akm_distant",
+      "soundRange": 64,
+      "soundMaxRange": 500
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.akm"
     }
   ]
 }
