@@ -1,12 +1,22 @@
 {
+  "displayName": "Glock 18",
   "internalName": "mwp.glock18",
   "iconName": "mwp.glock18",
   "gunDamage": 5,
   "roundsPerMin": 1200,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
   "modelName": "mwp.glock18",
-  "shootSound": "shoot.mwp.smg1",
-  "reloadSound": "reload.mwp.glock18",
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.pistol3"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.b.45"
+    }
+  ],
   "weaponSkins": [
     {
       "internalName": "mwp.default",

@@ -30,8 +30,6 @@ public class GunType extends BaseType {
 	 */
 	
 	//Visual variables
-	/** Gun name, only used for dev mode .lang generation */
-	public String gunName;
 	/** The model file for this gun */
 	public String modelName;
 	/** Weapon model skins/textures */

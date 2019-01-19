@@ -67,14 +67,14 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glRotatef(0F, 1F, 0F, 0F);
 				GL11.glRotatef(-90F, 0F, 1F, 0F);
 				GL11.glRotatef(90F, 0F, 0F, 1F);
-				GL11.glTranslatef(0.25F, 0F, 0F);
+				GL11.glTranslatef(0.25F, 0F, -0.05F);
 				GL11.glScalef(1F, 1F, 1F);
 				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y, model.thirdPersonOffset.z);
 				break;
 			}
 
 			case EQUIPPED_FIRST_PERSON: {
-				
+								
 				/*boolean debugAiming = false;
 				
 				if(debugAiming)
@@ -120,7 +120,7 @@ public class RenderGun implements CustomItemRenderer {
 					rotateX = 0; //ROLL LEFT-RIGHT (0 Total ADS Default)
 					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT (45 Total ADS Default)
 					rotateZ = 1 + (-1.0F * adsSwitch); //ANGLE UP-DOWN (0 Total ADS Default)
-					translateXYZ = new Vector3f(0.05F + -1.35F, 0.835F - -0.065F * adsSwitch, -1.05F - 0.35F * adsSwitch); //(-1.3F, 0.9F, -1.4F Total ADS Defaults)
+					translateXYZ = new Vector3f(0.05F + -1.35F, 0.834F - -0.064F * adsSwitch, -1.05F - 0.35F * adsSwitch); //(-1.3F, 0.898F, -1.4F Total ADS Defaults)
 				}
 				//TODO; Create preset
 				else if(model.renderPreset == 2)
@@ -129,7 +129,7 @@ public class RenderGun implements CustomItemRenderer {
 					rotateX = (0 + randomRotateOffset) - (randomRotateOffset * adsSwitch);
 					rotateY = (46F + randomRotateOffset) - (1F + randomRotateOffset) * adsSwitch;
 					rotateZ = (1 + randomRotateOffset) - (1.0F + randomRotateOffset) * adsSwitch;
-					translateXYZ = new Vector3f((-1.3F + randomOffset) - (0 + randomOffset) * adsSwitch, (0.835F + randomOffset) - (-0.065F + randomOffset) * adsSwitch, (-1.05F + randomOffset) - (0.35F + randomOffset) * adsSwitch);
+					translateXYZ = new Vector3f((-1.3F + randomOffset) - (0 + randomOffset) * adsSwitch, (0.834F + randomOffset) - (-0.064F + randomOffset) * adsSwitch, (-1.05F + randomOffset) - (0.35F + randomOffset) * adsSwitch);
 				}
 				//Custom render, modified through gun model with rotateCarryPosition & translateCarryPosition
 				else//(3)
@@ -137,7 +137,7 @@ public class RenderGun implements CustomItemRenderer {
 					rotateX = (0 + customRotation.x) - (customRotation.x * adsSwitch);
 					rotateY = (46F + customRotation.y) - (1F + customRotation.y) * adsSwitch;
 					rotateZ = (1 + customRotation.z) - (1.0F + customRotation.z) * adsSwitch;
-					translateXYZ = new Vector3f((-1.3F + customTranslate.x) - (0 + customTranslate.x) * adsSwitch, (0.835F + customTranslate.y) - (-0.065F + customTranslate.y) * adsSwitch, (-1.05F + customTranslate.z) - (0.35F + customTranslate.z) * adsSwitch);
+					translateXYZ = new Vector3f((-1.3F + customTranslate.x) - (0 + customTranslate.x) * adsSwitch, (0.834F + customTranslate.y) - (-0.064F + customTranslate.y) * adsSwitch, (-1.05F + customTranslate.z) - (0.35F + customTranslate.z) * adsSwitch);
 				}
 				//Apply rotation and translation to model, based on renderPreset and player state
 				//Applies a special position if player is sprinting and not ADS

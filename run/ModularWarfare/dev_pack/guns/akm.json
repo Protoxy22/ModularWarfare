@@ -1,4 +1,5 @@
 {
+  "displayName": "AKM",
   "internalName": "mwp.akm",
   "iconName": "mwp.akm",
   "gunDamage": 5,
@@ -19,7 +20,7 @@
       "soundName": "shoot.mwp.akm",
       "soundNameDistant": "shoot.mwp.akm_distant",
       "soundRange": 64,
-      "soundMaxRange": 500
+      "soundMaxRange": 50
     },
     {
       "soundEvent": "weaponReload",

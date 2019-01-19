@@ -6,6 +6,8 @@ import com.modularwarfare.client.model.ModelGun;
 public class BaseType {
 	
 	public String internalName;
+	/** Used to generate .lang files automatically */
+	public String displayName;
 	public String iconName;
 	public transient int id;
 	public transient String contentPack;
