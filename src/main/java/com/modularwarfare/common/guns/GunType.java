@@ -177,12 +177,12 @@ public class GunType extends BaseType {
 							{
 								// For distant sound range
 								soundName = soundEntry.soundNameDistant;
-								//volume =
+								volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundFarVolumeMultiplier);
 							} else
 							{
 								// For non distant
 								soundName = soundEntry.soundName;
-								//volume =
+								volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundVolumeMultiplier);
 							}							
 							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, volume, soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
 						}
