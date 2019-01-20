@@ -12,6 +12,7 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
 import com.modularwarfare.objects.WeaponSoundType;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -167,9 +168,22 @@ public class GunType extends BaseType {
 						int maxSoundRange = soundEntry.soundMaxRange;
 						for(EntityPlayer hearingPlayer : world.getEntities(EntityPlayer.class, e -> e.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ()) <= maxSoundRange))
 						{
-							double distance = hearingPlayer.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ());							
-							float volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundVolumeMultiplier);
-							String soundName = distance > soundRange & distance <= maxSoundRange ? soundEntry.soundNameDistant : soundEntry.soundName;
+							//float volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundVolumeMultiplier);
+							double distance = hearingPlayer.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ());
+							float volume = 0f;
+							String soundName = "";
+
+							if(distance > soundRange & distance <= maxSoundRange)
+							{
+								// For distant sound range
+								soundName = soundEntry.soundNameDistant;
+								//volume =
+							} else
+							{
+								// For non distant
+								soundName = soundEntry.soundName;
+								//volume =
+							}							
 							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, volume, soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
 						}
 					} else 
