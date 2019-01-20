@@ -85,12 +85,14 @@ public class ModelGun extends TurboBase
 	public float crouchZoom = 0F;
 	//Enable or disable stances
 	public boolean fancyStance = false;
-	//Allows you to select a render preset for change the position of the gun in hand (1-3, default 1)
-	public int renderPreset = 1;
 	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
-	public Vector3f rotateCarryPosition = new Vector3f(0F, 0F, 0F);
+	public Vector3f rotateHipPosition = new Vector3f(0F, 0F, 0F);
 	//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
-	public Vector3f translateCarryPosition = new Vector3f(0F, 0F, 0F);
+	public Vector3f translateHipPosition = new Vector3f(0F, 0F, 0F);
+	//Advanced configuration - Allows you to change how the gun is held while aiming
+	public Vector3f rotateAimPosition = new Vector3f(0F, 0F, 0F);
+	//Advanced configuration - Allows you to change how the gun is held while aiming
+	public Vector3f translateAimPosition = new Vector3f(0F, 0F, 0F);
 	public Vector3f sprintTranslate = new Vector3f(0F, 0F, 0F);
 	public Vector3f sprintRotate = new Vector3f(0F, 0F, 0F);
 	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)

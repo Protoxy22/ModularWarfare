@@ -160,9 +160,9 @@ public class ItemGun extends BaseItem {
     	if(result)
     	{
     		// RUN CODE FOR REEQUIP ANIMATION
-			Random random = new Random();
-			RenderGun.randomOffset = random.nextFloat() / 10 * modelScale;
-			RenderGun.randomRotateOffset = random.nextFloat() * 5 * modelScale;
+			//Random random = new Random();
+			//RenderGun.randomOffset = random.nextFloat() / 10 * modelScale;
+			//RenderGun.randomRotateOffset = random.nextFloat() * 5 * modelScale;
     	}
         return result; 
     }

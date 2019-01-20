@@ -22,7 +22,8 @@ public class ump9mag extends ModelAmmo //Same as Filename
 		ammoModel = new ModelRendererTurbo[23];
 
 		initammoModel_1();
-
+		
+		modelScale = 0.12F;
 		translateAll(0F, -10.5F, -0.1F);
 
 

@@ -18,8 +18,6 @@ public class RenderGun implements CustomItemRenderer {
 
 	private static TextureManager renderEngine;
 	public static float smoothing;
-	public static float randomOffset;
-	public static float randomRotateOffset;
 
 	public static float adsSwitch = 0f;
 	private int direction = 0;
@@ -64,12 +62,13 @@ public class RenderGun implements CustomItemRenderer {
 			}
 
 			case EQUIPPED: {
+				float crouchOffset = player.isSneaking() ? -0.18f : 0.0f;
 				GL11.glRotatef(0F, 1F, 0F, 0F);
 				GL11.glRotatef(-90F, 0F, 1F, 0F);
 				GL11.glRotatef(90F, 0F, 0F, 1F);
 				GL11.glTranslatef(0.25F, 0F, -0.05F);
 				GL11.glScalef(1F, 1F, 1F);
-				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y, model.thirdPersonOffset.z);
+				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y + crouchOffset, model.thirdPersonOffset.z);
 				break;
 			}
 
@@ -108,65 +107,31 @@ public class RenderGun implements CustomItemRenderer {
 				float rotateZ = 0;
 				float crouchZoom = model.crouchZoom;
 				Vector3f translateXYZ;
-				//Stores the model settings as local variables to reduce calls
-				Vector3f customRotation = new Vector3f(model.rotateCarryPosition.x, model.rotateCarryPosition.y, model.rotateCarryPosition.z);
-				Vector3f customTranslate = new Vector3f(model.translateCarryPosition.x, model.translateCarryPosition.y, model.translateCarryPosition.z);
+				int isSprinting = player.isSprinting() ? 1 : 0;
+				int isCrouching = player.isSneaking() ? 1 : 0;
+				
+				//Store the model settings as local variables to reduce calls
+				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x, model.rotateHipPosition.y, model.rotateHipPosition.z);
+				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x, model.translateHipPosition.y, model.translateHipPosition.z);
+				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
+				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 				Vector3f sprintRotate = new Vector3f(model.sprintRotate.x, model.sprintRotate.y, model.sprintRotate.z);
 				Vector3f sprintTranslate = new Vector3f(model.sprintTranslate.x, model.sprintTranslate.y, model.sprintTranslate.z);
 				
-				//Default render calculation, set up to be compatible with existing gun configuration
-				if(model.renderPreset == 1)
-				{
-					rotateX = 0; //ROLL LEFT-RIGHT (0 Total ADS Default)
-					rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT (45 Total ADS Default)
-					rotateZ = 1 + (-1.0F * adsSwitch); //ANGLE UP-DOWN (0 Total ADS Default)
-					translateXYZ = new Vector3f(0.05F + -1.35F, 0.834F - -0.064F * adsSwitch, -1.05F - 0.35F * adsSwitch); //(-1.3F, 0.898F, -1.4F Total ADS Defaults)
-				}
-				//TODO; Create preset
-				else if(model.renderPreset == 2)
-				{
-					//Should probably just remove/replace this system if we add sway in hand
-					rotateX = (0 + randomRotateOffset) - (randomRotateOffset * adsSwitch);
-					rotateY = (46F + randomRotateOffset) - (1F + randomRotateOffset) * adsSwitch;
-					rotateZ = (1 + randomRotateOffset) - (1.0F + randomRotateOffset) * adsSwitch;
-					translateXYZ = new Vector3f((-1.3F + randomOffset) - (0 + randomOffset) * adsSwitch, (0.834F + randomOffset) - (-0.064F + randomOffset) * adsSwitch, (-1.05F + randomOffset) - (0.35F + randomOffset) * adsSwitch);
-				}
-				//Custom render, modified through gun model with rotateCarryPosition & translateCarryPosition
-				else//(3)
-				{
-					rotateX = (0 + customRotation.x) - (customRotation.x * adsSwitch);
-					rotateY = (46F + customRotation.y) - (1F + customRotation.y) * adsSwitch;
-					rotateZ = (1 + customRotation.z) - (1.0F + customRotation.z) * adsSwitch;
-					translateXYZ = new Vector3f((-1.3F + customTranslate.x) - (0 + customTranslate.x) * adsSwitch, (0.834F + customTranslate.y) - (-0.064F + customTranslate.y) * adsSwitch, (-1.05F + customTranslate.z) - (0.35F + customTranslate.z) * adsSwitch);
-				}
-				//Apply rotation and translation to model, based on renderPreset and player state
-				//Applies a special position if player is sprinting and not ADS
-				if(player.isSprinting() && adsSwitch <= 0.5)
-				{	
-					GL11.glRotatef(rotateX + sprintRotate.x, 1F, 0F, 0F); //ROLL LEFT-RIGHT
-					GL11.glRotatef(rotateY + sprintRotate.y, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
-					GL11.glRotatef(rotateZ + sprintRotate.z, 0F, 0F, 1F); //ANGLE UP-DOWN
-					GL11.glTranslatef(translateXYZ.x + sprintTranslate.x, translateXYZ.y + sprintTranslate.y, translateXYZ.z + sprintTranslate.z);
+				//Default render position calculation, set up to be compatible with existing gun configuration
+				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
+				rotateY = (46F + customHipRotation.y) - (1F + customAimRotation.y + customHipRotation.y) * adsSwitch;
+				rotateZ = (1 + customHipRotation.z) - (1.0F + customAimRotation.z + customHipRotation.z) * adsSwitch;
+				translateXYZ = new Vector3f((-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch, (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch, (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch);
+
+				//Position calls and apply a special position if player is sprinting or crouching
+				GL11.glRotatef(rotateX + (sprintRotate.x * isSprinting), 1F, 0F, 0F); //ROLL LEFT-RIGHT
+				GL11.glRotatef(rotateY + (sprintRotate.y * isSprinting), 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+				GL11.glRotatef(rotateZ + (sprintRotate.z * isSprinting), 0F, 0F, 1F); //ANGLE UP-DOWN
+				GL11.glTranslatef(translateXYZ.x + (sprintTranslate.x * isSprinting) + (crouchZoom * isCrouching), 0F, 0F);
+				GL11.glTranslatef(0F, translateXYZ.y + (sprintTranslate.y * isSprinting), 0F);
+				GL11.glTranslatef(0F, 0F, translateXYZ.z + (sprintTranslate.z * isSprinting));
 				break;	
-				}
-				//Applies a special position if player is crouching and ADS
-				else if(player.isSneaking() && crouchZoom != 0 && adsSwitch >= 0.5)
-				{
-					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
-					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
-					GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
-					GL11.glTranslatef(translateXYZ.x + crouchZoom, translateXYZ.y, translateXYZ.z);
-					break;	
-				}
-				//Default position
-				else
-				{
-					GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
-					GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
-					GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
-					GL11.glTranslatef(translateXYZ.x, translateXYZ.y, translateXYZ.z);
-					break;	
-				}
 			}
 
 			default:
