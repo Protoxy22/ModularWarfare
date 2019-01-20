@@ -54,14 +54,8 @@ public class ItemGun extends BaseItem {
 		this.type = (GunType) type;
 	}
 	
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-    {
-    	
-    }
-	
 	@Override
-    public void onUpdate(ItemStack itemStack, World world, Entity holdingEntity, int intI, boolean flag)
+    public void onUpdate(ItemStack heldStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
 		if(holdingEntity instanceof EntityPlayer)
 		{
@@ -72,21 +66,21 @@ public class ItemGun extends BaseItem {
 				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
 				
 				if(world.isRemote)
-					onUpdateClient(entityPlayer, world, itemStack, itemGun, itemGun.type);
+					onUpdateClient(entityPlayer, world, heldStack, itemGun, itemGun.type);
 				else
-					onUpdateServer(entityPlayer, world, itemStack, itemGun, itemGun.type);
+					onUpdateServer(entityPlayer, world, heldStack, itemGun, itemGun.type);
 			}	
 		}
     }
 	
-	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun, GunType gunType)
+	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, GunType gunType)
 	{
 		if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
-			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.hasFireMode(WeaponFireMode.FULL))
+			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.FULL)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
-			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus)
+			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.SEMI)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
 			}
@@ -94,18 +88,18 @@ public class ItemGun extends BaseItem {
 		}
 	}
 	
-	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun, GunType gunType)
+	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, GunType gunType)
 	{
-		// Create default nbt data
-		if(itemStack.getTagCompound() == null)
+		// Create default NBT data
+		if(heldStack.getTagCompound() == null)
 		{
 			NBTTagCompound nbtTagCompound = new NBTTagCompound();
 			nbtTagCompound.setString("firemode", gunType.fireModes[0].name());
-			itemStack.setTagCompound(nbtTagCompound);
+			heldStack.setTagCompound(nbtTagCompound);
 		}
 	}
 	
-	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun, WeaponFireMode fireMode)
+	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
 	{
 		GunType gunType = itemGun.type;
 		
@@ -118,10 +112,14 @@ public class ItemGun extends BaseItem {
 		List<Entity> entities = line.getEntities(world, Entity.class, false);
 		for(Entity e : entities)
 		{
-			if(e instanceof EntityLiving)
+			if(e instanceof EntityLivingBase)
 			{
-				EntityLiving targetLiving = (EntityLiving) e;
-				targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), (gunType.gunDamage /** * ammoType.damageMultiplier */));
+				EntityLivingBase targetLiving = (EntityLivingBase) e;
+				if(targetLiving != entityPlayer)
+				{
+					// TODO: do a hacky fix to stop any damage penetration reduction for going through host player
+					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), (gunType.gunDamage /** * ammoType.damageMultiplier */));
+				}
 			}
 		}
 		
@@ -132,10 +130,32 @@ public class ItemGun extends BaseItem {
 		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
 	}
 	
+	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
+	{	
+		GunType.setFireMode(heldStack, fireMode);
+		
+		GunType gunType = itemGun.type;
+		gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);		
+	}
+	
+	/**
+	 * 
+	 * @param entityPlayer
+	 * @return 
+	 */
 	public static boolean isOnShootCooldown(EntityPlayer entityPlayer)
 	{
 		return ServerTickHandler.playerShootCooldown.containsKey(entityPlayer.getUniqueID());
 	}
+	
+	/**
+	 * Minecraft Overrides
+	 */
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	
+    }
 	
 	@Override
     public boolean getShareTag()
@@ -158,23 +178,6 @@ public class ItemGun extends BaseItem {
 	@Override
     public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack stack)
     {
-		// SEMI-AUTO GUN FIRING
-		/*World world = entityLiving.world;
-		if(!world.isRemote)
-		{
-			if(entityLiving instanceof EntityPlayer)
-			{
-				EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
-				if(stack != null && stack.getItem() instanceof ItemGun)
-				{
-					ItemGun itemGun = (ItemGun)stack.getItem();
-					if(itemGun.type.hasFireMode(WeaponFireMode.SEMI))
-					{
-						onGunFire(entityPlayer, entityPlayer.world, stack, itemGun, false);
-					}
-				}
-			}
-		}*/
         return true;
     }
 	
@@ -185,10 +188,7 @@ public class ItemGun extends BaseItem {
     	boolean result = !oldStack.equals(newStack);
     	if(result)
     	{
-    		// RUN CODE FOR REEQUIP ANIMATION
-			Random random = new Random();
-			RenderGun.randomOffset = random.nextFloat() / 10 * modelScale;
-			RenderGun.randomRotateOffset = random.nextFloat() * 5 * modelScale;
+    		// TODO: Requip animation
     	}
         return result; 
     }

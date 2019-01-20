@@ -6,6 +6,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.network.PacketGunSwitchMode;
 import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.client.Minecraft;
@@ -23,6 +24,7 @@ public class KeyInputHandler extends ForgeEvent {
 		keyBinds = new ArrayList<KeyEntry>();
 		keyBinds.add(new KeyEntry(KeyType.GunReload));
 		keyBinds.add(new KeyEntry(KeyType.ClientReload));
+		keyBinds.add(new KeyEntry(KeyType.FireMode));
 		
 		if(ModularWarfare.DEV_ENV)
 		{
@@ -50,46 +52,49 @@ public class KeyInputHandler extends ForgeEvent {
 	
 	public void handleKeyInput(KeyType keyType)
 	{
-		switch(keyType)
+		if(Minecraft.getMinecraft().player != null)
 		{
-		// F9 Reloads Models /// SHIFT + F9 Reloads Textures & Icons
-		case ClientReload:
-			if(Minecraft.getMinecraft().player != null)
+			EntityPlayerSP entityPlayer = Minecraft.getMinecraft().player;
+			
+			switch(keyType)
 			{
-				if(Minecraft.getMinecraft().player.isSneaking())
+			// F9 Reloads Models /// SHIFT + F9 Reloads Textures & Icons
+			case ClientReload:
+				if(entityPlayer.isSneaking())
 				{
 					ModularWarfare.PROXY.reloadModels(true);
 				} else
 				{
 					ModularWarfare.PROXY.reloadModels(false);
 				}
-			}
-			break;
-			
-		case GunReload:
-			if(Minecraft.getMinecraft().player != null)
-			{
-				EntityPlayerSP player = Minecraft.getMinecraft().player;
-				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
+				break;
+				
+			case FireMode:
+				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+				{
+					ModularWarfare.NETWORK.sendToServer(new PacketGunSwitchMode());
+				}
+				break;
+				
+			case GunReload:
+				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 				{
 					// TODO: TRIGGER RELOAD
 				}
-			}
-			break;
-		case DebugMode:
-			if(Minecraft.getMinecraft().player != null)
-			{
-				if(Minecraft.getMinecraft().player.isSneaking())
+				break;
+				
+			case DebugMode:
+				if(entityPlayer.isSneaking())
 				{
 					ModularWarfare.loadContentPacks(true);
 					ModularWarfare.PROXY.reloadModels(true);
 				}
+				break;	
+				
+			default:
+				ModularWarfare.LOGGER.warn("Default case called on handleKeyInput for " + keyType.toString());
+				break;
 			}
-			break;
-			
-		default:
-			ModularWarfare.LOGGER.warn("Default case called on handleKeyInput for " + keyType.toString());
-			break;
 		}
 	}
 

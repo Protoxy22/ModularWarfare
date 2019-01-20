@@ -221,5 +221,15 @@ public class GunType extends BaseType {
 		}	
 		return null;
 	}
+	
+	public static void setFireMode(ItemStack heldStack, WeaponFireMode fireMode)
+	{
+		if(heldStack.getTagCompound() != null)
+		{
+			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+			nbtTagCompound.setString("firemode", fireMode.name().toLowerCase());
+			heldStack.setTagCompound(nbtTagCompound);
+		}	
+	}
 		
 }
