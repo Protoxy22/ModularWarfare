@@ -90,8 +90,8 @@ public class akm extends ModelGun //Same as Filename
 	    
 		crouchZoom = -0.25F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(40.0F, 0.0F, -0.0F);
-		sprintTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
+		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
+		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 		
 	    chargeHandleDistance = 0.9F;
 	    chargeDelay = 0;
