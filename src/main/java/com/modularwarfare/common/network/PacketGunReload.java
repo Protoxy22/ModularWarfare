@@ -41,13 +41,14 @@ public class PacketGunReload extends PacketBase {
 				ItemStack itemStack = inventory.getStackInSlot(i);
 				if(itemStack != null && itemStack.getItem() instanceof ItemAmmo)
 				{
+					System.out.println(itemStack.getDisplayName());
 					ItemAmmo itemAmmo = (ItemAmmo) itemStack.getItem();
 					for(String ammoName : gunType.acceptedAmmo)
 					{
 						if(ammoName.equalsIgnoreCase(itemAmmo.baseType.internalName))
 						{
 							// found stack
-							
+							System.out.println("suitable ammo found " + itemAmmo.baseType.internalName);
 						}
 					}
 				} else

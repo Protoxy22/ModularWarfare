@@ -186,6 +186,7 @@ public class NetworkHandler extends MessageToMessageCodec<FMLProxyPacket, Packet
 		registerPacket(PacketGunFire.class);
 		registerPacket(PacketPlaySound.class);
 		registerPacket(PacketGunSwitchMode.class);
+		registerPacket(PacketGunReload.class);
 	}
 	
 	/**

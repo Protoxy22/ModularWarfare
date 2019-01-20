@@ -6,6 +6,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.network.PacketGunReload;
 import com.modularwarfare.common.network.PacketGunSwitchMode;
 import com.modularwarfare.utility.event.ForgeEvent;
 
@@ -79,7 +80,7 @@ public class KeyInputHandler extends ForgeEvent {
 			case GunReload:
 				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 				{
-					// TODO: TRIGGER RELOAD
+					ModularWarfare.NETWORK.sendToServer(new PacketGunReload());
 				}
 				break;
 				
