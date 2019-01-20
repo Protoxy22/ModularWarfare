@@ -19,8 +19,8 @@
       "soundEvent": "weaponFire",
       "soundName": "shoot.mwp.akm",
       "soundNameDistant": "shoot.mwp.akm_distant",
-      "soundRange": 64,
-      "soundMaxRange": 50
+      "soundRange": 50,
+      "soundMaxRange": 64
     },
     {
       "soundEvent": "weaponReload",
