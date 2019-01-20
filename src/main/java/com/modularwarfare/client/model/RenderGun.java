@@ -107,8 +107,8 @@ public class RenderGun implements CustomItemRenderer {
 				float rotateZ = 0;
 				float crouchZoom = model.crouchZoom;
 				Vector3f translateXYZ;
-				int isSprinting = player.isSprinting() ? 1 : 0;
-				int isCrouching = player.isSneaking() ? 1 : 0;
+				int isSprinting = player.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
+				int isCrouching = player.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x, model.rotateHipPosition.y, model.rotateHipPosition.z);
