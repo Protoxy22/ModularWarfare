@@ -21,7 +21,10 @@ public enum WeaponSoundType {
 	ReloadEmpty("weaponReloadEmpty", 16),
 	
 	/** The sound to play upon charging */
-	Charge("weaponCharge", 16);
+	Charge("weaponCharge", 16),
+	
+	/** The sound to play upon switching fire modes */
+	ModeSwitch("weaponModeSwitch", 8);
 	
 	public String eventName;
 	public Integer defaultRange;
