@@ -63,12 +63,13 @@ public class RenderAmmo implements CustomItemRenderer {
 			}
 
 			case EQUIPPED: {
-				GL11.glRotatef(0F, 1F, 0F, 0F);
+				float crouchOffset = player.isSneaking() ? 0.2f : 0.0f;
+				GL11.glRotatef(-10F, 1F, 0F, 0F);
 				GL11.glRotatef(-90F, 0F, 1F, 0F);
 				GL11.glRotatef(90F, 0F, 0F, 1F);
-				GL11.glTranslatef(0.25F, 0F, -0.05F);
+				GL11.glTranslatef(-0.15F, 0.15F, -0.025F);
 				GL11.glScalef(1F, 1F, 1F);
-				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y, model.thirdPersonOffset.z);
+				GL11.glTranslatef(model.thirdPersonOffset.x + crouchOffset, model.thirdPersonOffset.y, model.thirdPersonOffset.z);
 				break;
 			}
 

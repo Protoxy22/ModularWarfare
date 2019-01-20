@@ -26,7 +26,6 @@ public class m45a1 extends ModelGun //Same as Filename
 		slideModel = new ModelRendererTurbo[169];
 
 		modelScale = 0.07F;
-		renderPreset = 3;
 				//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
 				//public Vector3f rotateCarryPosition = new Vector3f(-80F, -36F, 40F);
 				//Advanced configuration - Allows you to change how the gun is held without effecting the sight alignment
