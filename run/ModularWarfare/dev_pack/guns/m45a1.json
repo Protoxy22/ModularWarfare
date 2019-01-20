@@ -2,6 +2,8 @@
   "displayName": "M45A1",
   "internalName": "mwp.m45a1",
   "iconName": "mwp.m45a1",
+  "weaponType": "pistol",
+  "fireModes": ["semi"],
   "gunDamage": 5,
   "roundsPerMin": 720,
   "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],

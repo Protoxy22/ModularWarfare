@@ -16,6 +16,8 @@ import com.modularwarfare.objects.WeaponType;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,11 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class GunType extends BaseType {
 	
-	//Weapon Classification for later use with default animations etc
-	//TODO Set this up
-	/** enum weaponType
-	 * CUSTOM, PISTOL, MP, SMG, CARBINE, RIFLE, AR, DMR, SNIPER, SHOTGUN, etc 
-	 */
+	/** Weapon Classification for later use with default animations etc */
 	public WeaponType weaponType;
 	
 	//Visual variables
@@ -71,7 +69,7 @@ public class GunType extends BaseType {
 	public float randomRecoilYaw = 0.5F;
 	
 	/** The firing modes of the gun. SEMI, FULL, BURST */
-	public WeaponFireMode[] fireModes;
+	public WeaponFireMode[] fireModes = new WeaponFireMode[] {WeaponFireMode.SEMI};
 	
 	//Ammo Override variables
 	/** If true, numBullets determined by loaded ammo type */
@@ -111,7 +109,7 @@ public class GunType extends BaseType {
 		{
 			for(SoundEntry soundEntry : weaponSounds)
 			{
-				WeaponSoundType weaponSoundType = WeaponSoundType.fromEventName(soundEntry.soundEvent);
+				WeaponSoundType weaponSoundType = soundEntry.soundEvent;
 				if(weaponSoundType != null)
 				{
 					if(soundEntry.soundName != null)
@@ -135,19 +133,6 @@ public class GunType extends BaseType {
 				{
 					ModularWarfare.LOGGER.error(String.format("Sound event '%s' is not a valid weapon sound event for type '%s'", soundEntry.soundEvent != null ? soundEntry.soundEvent : "null", internalName));
 				}
-			}
-		}
-		
-		if(weaponType != null)
-		{
-			ModularWarfare.LOGGER.info(weaponType.name());
-		}
-		
-		if(fireModes != null)
-		{
-			for(int i = 0; i < fireModes.length; i++)
-			{
-				ModularWarfare.LOGGER.info(fireModes[i].name());
 			}
 		}
 	}
@@ -182,7 +167,6 @@ public class GunType extends BaseType {
 						int maxSoundRange = soundEntry.soundMaxRange;
 						for(EntityPlayer hearingPlayer : world.getEntities(EntityPlayer.class, e -> e.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ()) <= maxSoundRange))
 						{
-							//float volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundVolumeMultiplier);
 							double distance = hearingPlayer.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ());
 							float volume = 0f;
 							String soundName = "";
@@ -210,6 +194,31 @@ public class GunType extends BaseType {
 				}
 			}
 		}
+	}
+	
+	public boolean hasFireMode(WeaponFireMode fireMode)
+	{
+		if(fireModes != null)
+		{
+			for(int i = 0; i < fireModes.length; i++)
+			{
+				if(fireModes[i] == fireMode)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public static WeaponFireMode getFireMode(ItemStack heldStack)
+	{
+		if(heldStack.getTagCompound() != null)
+		{
+			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+			return nbtTagCompound.hasKey("firemode") ? WeaponFireMode.fromString(nbtTagCompound.getString("firemode")) : null;
+		}	
+		return null;
 	}
 		
 }

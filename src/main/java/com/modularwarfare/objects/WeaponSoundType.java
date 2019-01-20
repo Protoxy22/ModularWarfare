@@ -1,27 +1,29 @@
 package com.modularwarfare.objects;
 
+import com.google.gson.annotations.SerializedName;
+
 public enum WeaponSoundType {
 	
 	/** The sound played upon dry firing */
-	DryFire("weaponDryFire", 8),
+	@SerializedName("weaponDryFire") DryFire("weaponDryFire", 8),
 	
 	/** The sound played upon shooting */
-	Fire("weaponFire", 64),
+	@SerializedName("weaponFire") Fire("weaponFire", 64),
 	
 	/** The sound played upon shooting with a silencer */
-	FireSuppressed("weaponFireSuppressed", 32),
+	@SerializedName("weaponFireSuppressed") FireSuppressed("weaponFireSuppressed", 32),
 	
 	/** The sound to play upon shooting on last round */
-	FireLast("weaponFireLast", 16),
+	@SerializedName("weaponFireLast") FireLast("weaponFireLast", 16),
 	
 	/** The sound to play upon reloading */
-	Reload("weaponReload", 16),
+	@SerializedName("weaponReload") Reload("weaponReload", 16),
 	
 	/** The sound to play upon reloading when empty */ 
-	ReloadEmpty("weaponReloadEmpty", 16),
+	@SerializedName("weaponReloadEmpty") ReloadEmpty("weaponReloadEmpty", 16),
 	
 	/** The sound to play upon charging */
-	Charge("weaponCharge", 16);
+	@SerializedName("weaponCharge") Charge("weaponCharge", 16);
 	
 	public String eventName;
 	public Integer defaultRange;
@@ -30,21 +32,6 @@ public enum WeaponSoundType {
 	{
 		this.eventName = eventName;
 		this.defaultRange = defaultRange;
-	}
-	
-	public static WeaponSoundType fromEventName(String eventName)
-	{
-		if(eventName != null)
-		{
-			for(WeaponSoundType soundType : values())
-			{
-				if(soundType.eventName.equalsIgnoreCase(eventName))
-				{
-					return soundType;
-				}
-			}
-		}
-		return null;
 	}
 	
 }

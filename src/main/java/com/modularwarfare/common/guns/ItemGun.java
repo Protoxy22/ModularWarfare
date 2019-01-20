@@ -3,28 +3,33 @@ package com.modularwarfare.common.guns;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketGunFire;
-import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.objects.WeaponFireMode;
 import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemGun extends BaseItem {
 	
@@ -33,6 +38,7 @@ public class ItemGun extends BaseItem {
 	public static float modelScale = 0;
 	
 	public static boolean fireButtonHeld = false;
+	public static boolean lastFireButtonHeld = false;
 	
 	public ItemGun(GunType type)
 	{
@@ -48,6 +54,12 @@ public class ItemGun extends BaseItem {
 		this.type = (GunType) type;
 	}
 	
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+    	
+    }
+	
 	@Override
     public void onUpdate(ItemStack itemStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
@@ -60,37 +72,47 @@ public class ItemGun extends BaseItem {
 				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
 				
 				if(world.isRemote)
-					onUpdateClient(entityPlayer, world, itemStack, itemGun);
+					onUpdateClient(entityPlayer, world, itemStack, itemGun, itemGun.type);
 				else
-					onUpdateServer(entityPlayer, world, itemStack, itemGun);
+					onUpdateServer(entityPlayer, world, itemStack, itemGun, itemGun.type);
 			}	
 		}
     }
 	
-	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
+	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun, GunType gunType)
 	{
 		if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
-			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus)
+			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.hasFireMode(WeaponFireMode.FULL))
+			{
+				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
+			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
 			}
+			lastFireButtonHeld = fireButtonHeld;
 		}
 	}
 	
-	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
+	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun, GunType gunType)
 	{
-		
+		// Create default nbt data
+		if(itemStack.getTagCompound() == null)
+		{
+			NBTTagCompound nbtTagCompound = new NBTTagCompound();
+			nbtTagCompound.setString("firemode", gunType.fireModes[0].name());
+			itemStack.setTagCompound(nbtTagCompound);
+		}
 	}
 	
-	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun)
+	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack itemStack, ItemGun itemGun, WeaponFireMode fireMode)
 	{
 		GunType gunType = itemGun.type;
 		
 		// Can fire checks
-		if(isOnShootCooldown(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting())) 
+		if(isOnShootCooldown(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
 			return;
-		
+				
 		// Fire Code
 		Line line = Line.fromRaytrace(entityPlayer, 200);
 		List<Entity> entities = line.getEntities(world, Entity.class, false);
@@ -145,10 +167,14 @@ public class ItemGun extends BaseItem {
 				EntityPlayer entityPlayer = (EntityPlayer) entityLiving;
 				if(stack != null && stack.getItem() instanceof ItemGun)
 				{
-					onGunFire(entityPlayer, entityPlayer.world, stack, (ItemGun)stack.getItem());
+					ItemGun itemGun = (ItemGun)stack.getItem();
+					if(itemGun.type.hasFireMode(WeaponFireMode.SEMI))
+					{
+						onGunFire(entityPlayer, entityPlayer.world, stack, itemGun, false);
+					}
 				}
 			}
-		}*/	
+		}*/
         return true;
     }
 	
@@ -166,5 +192,36 @@ public class ItemGun extends BaseItem {
     	}
         return result; 
     }
+	
+	@Override
+	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player)
+	{
+		World world = player.world;
+		if(!world.isRemote)
+		{
+			// Client will still render block break if player is in creative so update block state
+			IBlockState state = world.getBlockState(pos);
+			world.notifyBlockUpdate(pos, state, state, 3);
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean canHarvestBlock(IBlockState state, ItemStack stack)
+	{
+		return false;
+	}
+	
+	@Override
+	public boolean canItemEditBlocks()
+	{
+		return false;
+	}
+	
+	@Override
+	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
+	{
+		return false;
+	}
 
 }
