@@ -24,6 +24,7 @@ public class ump45mag extends ModelAmmo
 		initAmmoModel();
 		initFullAmmoModel();
 
+		modelScale = 0.12F;
 		translateAll(0F, -10.5F, -0.1F);
 
 		flipAll();

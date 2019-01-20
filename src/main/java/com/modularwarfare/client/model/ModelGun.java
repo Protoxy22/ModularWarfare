@@ -10,11 +10,8 @@ import com.modularwarfare.client.tmt.ModelRendererTurbo;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.OpenGlHelper;
 
-public class ModelGun extends ModelBase
+public class ModelGun extends TurboBase
 {
-	
-	//The scale of the gun model
-	public float modelScale = 1.0F;
 	
 	//These first 7 models are static with no animation
 	public ModelRendererTurbo[] gunModel = new ModelRendererTurbo[0];
@@ -133,22 +130,6 @@ public class ModelGun extends ModelBase
     // Charge handle distance/delay/time
     public float chargeHandleDistance = 0F;
     public int chargeDelay = 0, chargeDelayAfterReload = 0, chargeTime = 1;
-    
-	/**
-	 * Bullet Counter Models. Can be used to display bullet count in-game interface.
-	 * Each part is represented by number of rounds remaining per magazine.
-	 *
-	 * - Simple counter will loop through each part. Allows flexibility for bullet counter UI design.
-	 *
-	 * - Adv counter used for counting mags of more than 10, to reduce texture parts. Divides count into digits.
-	 *	 Less flexibility as it requires 10 textures parts at maximum (numbers 0-9).
-	 */
-	public ModelRendererTurbo[] bulletCounterModel = new ModelRendererTurbo[0];
-	public ModelRendererTurbo[][] advBulletCounterModel = new ModelRendererTurbo[0][0];
-	/** For Adv Bullet Counter. Reads in numbers from left hand side when false */
-	public boolean countOnRightHandSide = false;
-	/** Toggle the counters active. Saves render performance. */
-	public boolean isBulletCounterActive, isAdvBulletCounterActive = false;
 
     //Reload animation variables
 	//public EnumAnimationType animationType = EnumAnimationType.NONE;
@@ -211,13 +192,6 @@ public class ModelGun extends ModelBase
 	public float rotateClipHorizontal = 0F;
 	public float tiltClip = 0F;
 	public Vector3f translateClip = new Vector3f(0F, 0F, 0F);
-	
-
-	/** This offsets the render position for third person */
-	public Vector3f thirdPersonOffset = new Vector3f();
-
-	/** This offsets the render position for item frames */
-	public Vector3f itemFrameOffset = new Vector3f();
 
 	//lighting stuff
 	private static float lightmapLastX;
@@ -362,58 +336,8 @@ public class ModelGun extends ModelBase
 		render(althammerModel, f);
 	}
 
-	public void renderBulletCounter(float f, int k)
-	{
-		for(int i = 0; i < bulletCounterModel.length; i++)
-		{
-			if(i == k)
-			{
-				glowOn();
-				bulletCounterModel[i].render(f);
-				glowOff();
-			}
-		}
-	}
-
-	public void renderAdvBulletCounter(float f, int k, boolean rhs)
-	{
-		//Divide the ammo count into array of ints
-		char[] count = String.valueOf(k).toCharArray();
-		int[] digits = new int[count.length];
-
-		for(int i = 0; i < count.length ; i++)
-		{
-			if(!rhs)
-				digits[i] = count[i] - 48;						//read digits left hand side
-			else
-				digits[digits.length - 1 - i] = count[i] - 48;	//read digits right hand side
-		}
-
-		//Loop though the array, and manage ammo count render.
-		for(int i = 0; i < digits.length ; i++)
-		{
-			for(int j = 0; j < advBulletCounterModel[i].length; j++)
-			{
-				if (digits[i] == j)
-				{
-					glowOn();
-					advBulletCounterModel[i][j].render(f);
-					glowOff();
-				}
-			}
-		}
-	}
-
-
-	/** For renderering models simply */
-	protected void render(ModelRendererTurbo[] models, float f)
-	{
-		for(ModelRendererTurbo model : models)
-			if(model != null)
-				model.render(f);
-	}
-
 	/** Flips the model. Generally only for backwards compatibility */
+	@Override
 	public void flipAll()
 	{
 		flip(gunModel);
@@ -435,21 +359,9 @@ public class ModelGun extends ModelBase
 		flip(altbreakActionModel);
 		flip(hammerModel);
 		flip(althammerModel);
-		flip(bulletCounterModel);
-		for(ModelRendererTurbo[] mod : advBulletCounterModel)
-			flip(mod);
 	}
 
-	protected void flip(ModelRendererTurbo[] model)
-	{
-		for(ModelRendererTurbo part : model)
-		{
-			part.doMirror(false, true, true);
-			part.setRotationPoint(part.rotationPointX, - part.rotationPointY, - part.rotationPointZ);
-		}
-	}
-
-	/** Translates the model */
+	@Override
 	public void translateAll(float x, float y, float z)
 	{
     	{
@@ -472,20 +384,7 @@ public class ModelGun extends ModelBase
     		translate(altbreakActionModel, x, y, z);
     		translate(hammerModel, x, y, z);
     		translate(althammerModel, x, y, z);
-			translate(bulletCounterModel, x, y, z);
-			for(ModelRendererTurbo[] mod : advBulletCounterModel)
-				translate(mod, x, y, z);
     	}
-	}
-
-	protected void translate(ModelRendererTurbo[] model, float x, float y, float z)
-	{
-		for(ModelRendererTurbo mod : model)
-		{
-			mod.rotationPointX += x;
-			mod.rotationPointY += y;
-			mod.rotationPointZ += z;
-		}
 	}
 	
 }

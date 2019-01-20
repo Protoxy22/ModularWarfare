@@ -1,10 +1,21 @@
 package com.modularwarfare.client.model;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 import net.minecraft.client.model.ModelBase;
 
 public class TurboBase extends ModelBase {
+	
+	/** This models overall scale for rendering */
+	public float modelScale = 1.0F;
+	
+	/** This offsets the render position for third person */
+	public Vector3f thirdPersonOffset = new Vector3f();
+
+	/** This offsets the render position for item frames */
+	public Vector3f itemFrameOffset = new Vector3f();
 	
 	protected void render(ModelRendererTurbo[] models, float f)
 	{

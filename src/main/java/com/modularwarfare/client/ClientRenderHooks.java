@@ -5,8 +5,10 @@ import org.lwjgl.util.glu.Project;
 import com.modularwarfare.client.model.CustomItemRenderType;
 import com.modularwarfare.client.model.CustomItemRenderer;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
@@ -28,6 +30,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -51,6 +54,7 @@ public class ClientRenderHooks extends ForgeEvent {
 		mc = Minecraft.getMinecraft();
 		
 		customRenderers[0] = ClientProxy.gunRenderer = new RenderGun();
+		customRenderers[1] = new RenderAmmo();
 	}
 	
 	@SubscribeEvent
@@ -76,10 +80,11 @@ public class ClientRenderHooks extends ForgeEvent {
 	@SubscribeEvent
 	public void renderItemFrame(RenderItemInFrameEvent event)
 	{
-		if(event.getItem().getItem() instanceof ItemGun)
+		Item item = event.getItem().getItem();
+		if(item instanceof BaseItem)
 		{
-			GunType type = ((ItemGun)event.getItem().getItem()).type;
-			if(type.model != null)
+			BaseType type = ((BaseItem)event.getItem().getItem()).baseType;
+			if(type.hasModel())
 			{
 				event.setCanceled(true);
 				
@@ -91,7 +96,7 @@ public class ClientRenderHooks extends ForgeEvent {
 				float scale = 0.75F;
 				GlStateManager.scale(scale, scale, scale);
 				GlStateManager.translate(0.15F, -0.15F, 0F);
-				customRenderers[0].renderItem(CustomItemRenderType.ENTITY, EnumHand.MAIN_HAND, event.getItem());
+				customRenderers[type.id].renderItem(CustomItemRenderType.ENTITY, EnumHand.MAIN_HAND, event.getItem());
 				GlStateManager.popMatrix();
 			}
 		}
@@ -110,10 +115,6 @@ public class ClientRenderHooks extends ForgeEvent {
 			
 			case CROSSHAIRS:
 				event.setCanceled(true);
-				/*if(RenderGun.adsSwitch > 0.5)
-				{
-					event.setCanceled(true);
-				}*/
 				break;
 			
 			default:
@@ -127,11 +128,17 @@ public class ClientRenderHooks extends ForgeEvent {
 	public void renderHeldItem(RenderSpecificHandEvent event)
 	{
 		EntityPlayer player = mc.player;
-		
 		ItemStack stack = event.getItemStack();
+			
 		if(stack != null && stack.getItem() instanceof BaseItem)
 		{
 			BaseType type = ((BaseItem)stack.getItem()).baseType;
+			
+			if(event.getHand() != EnumHand.MAIN_HAND)
+			{
+				event.setCanceled(true);
+				return;
+			}
 			
 			if(customRenderers[type.id] != null && type.hasModel())
 			{
@@ -207,7 +214,6 @@ public class ClientRenderHooks extends ForgeEvent {
 					GlStateManager.rotate(f11 * -80.0F, 1.0F, 0.0F, 0.0F);
 					GlStateManager.scale(0.4F, 0.4F, 0.4F);
 					
-					//ClientProxy.gunRenderer.renderItem(CustomItemRenderType.EQUIPPED_FIRST_PERSON, stack, mc.world, mc.player);
 					customRenderers[type.id].renderItem(CustomItemRenderType.EQUIPPED_FIRST_PERSON, event.getHand(), stack, mc.world, mc.player);
 					
 					GlStateManager.popMatrix();
@@ -243,17 +249,16 @@ public class ClientRenderHooks extends ForgeEvent {
 		ModelBase mainModel = event.getRenderer().getMainModel();
 		EntityLivingBase entity = event.getEntity();
 		
-		for(int i = 0; i < 2; i++)
+		for(int i = 0; i < 1; i++)
 		{
 			EnumHand hand = EnumHand.values()[i];
-			if(entity.getHeldItem(hand) != null && entity.getHeldItem(hand).getItem() instanceof ItemGun && mainModel instanceof ModelBiped)
+			if(entity.getHeldItem(hand) != null && entity.getHeldItem(hand).getItem() instanceof BaseItem && mainModel instanceof ModelBiped)
 			{
 				ModelBiped biped = (ModelBiped)mainModel;
 				ItemStack stack = entity.getHeldItem(hand);
-				GunType type = ((ItemGun)stack.getItem()).type;
-				if(type.model == null)
+				BaseType type = ((BaseItem)stack.getItem()).baseType;
+				if(!type.hasModel())
 					return;
-				ModelGun gunModel = type.model;
 				
 				GlStateManager.pushMatrix();
 				GlStateManager.disableCull();
@@ -272,9 +277,7 @@ public class ClientRenderHooks extends ForgeEvent {
 				if(Math.abs(entity.prevRotationYawHead - entity.rotationYawHead) > 30F)
 					f3 = entity.rotationYawHead;
 				f4 = f3 - f2;
-				
-				//FlansMod.log.debug(entity.prevRenderYawOffset + "     " + entity.renderYawOffset);
-				
+								
 				if(entity.isRiding() && entity.getRidingEntity() instanceof EntityLivingBase)
 				{
 					EntityLivingBase entitylivingbase1 = (EntityLivingBase)entity.getRidingEntity();
@@ -306,11 +309,9 @@ public class ClientRenderHooks extends ForgeEvent {
 				GlStateManager.translate(event.getX(), event.getY(), event.getZ());
 				
 				f5 = entity.ticksExisted + partialTicks;
-				//this.rotateCorpse(entity, f5, f2, partialTicks);
 				GlStateManager.rotate(180.0F - f2, 0.0F, 1.0F, 0.0F);
 				GlStateManager.enableRescaleNormal();
 				GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-				//this.preRenderCallback(entity, partialTicks);
 				float f6 = 0.0625F;
 				GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
 				float f7 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
@@ -328,19 +329,20 @@ public class ClientRenderHooks extends ForgeEvent {
 				
 				GlStateManager.enableAlpha();
 				
-				//biped.isSneak = false;
-				biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+				if(type.id == 0)
+					biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+					
 				biped.setLivingAnimations(entity, f8, f7, partialTicks);
 				biped.setRotationAngles(f8, f7, f5, f4, f9, 0.0625F, entity);
 				
-				//Render main hand gun
+				//Render main hand item
 				{
 					GlStateManager.pushMatrix();
 					if(hand == EnumHand.MAIN_HAND)
 					{
 						biped.bipedRightArm.postRender(0.0625F);
 						GlStateManager.translate(-0.05F, 0.4F, 0.05F);
-						ClientProxy.gunRenderer.renderItem(CustomItemRenderType.EQUIPPED, hand, stack, mc.world, entity);
+						customRenderers[type.id].renderItem(CustomItemRenderType.EQUIPPED, hand, stack, mc.world, entity);
 					}
 					GlStateManager.popMatrix();
 				}

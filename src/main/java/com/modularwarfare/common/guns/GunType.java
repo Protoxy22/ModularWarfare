@@ -3,22 +3,21 @@ package com.modularwarfare.common.guns;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.function.Predicate;
+import java.util.Random;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
+import com.modularwarfare.objects.WeaponFireMode;
 import com.modularwarfare.objects.WeaponSoundType;
+import com.modularwarfare.objects.WeaponType;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -29,6 +28,7 @@ public class GunType extends BaseType {
 	/** enum weaponType
 	 * CUSTOM, PISTOL, MP, SMG, CARBINE, RIFLE, AR, DMR, SNIPER, SHOTGUN, etc 
 	 */
+	public WeaponType weaponType;
 	
 	//Visual variables
 	/** The model file for this gun */
@@ -71,8 +71,7 @@ public class GunType extends BaseType {
 	public float randomRecoilYaw = 0.5F;
 	
 	/** The firing modes of the gun. SEMI, FULL, BURST */
-	//TODO; Deltric
-	public String[] fireModes;
+	public WeaponFireMode[] fireModes;
 	
 	//Ammo Override variables
 	/** If true, numBullets determined by loaded ammo type */
@@ -138,6 +137,19 @@ public class GunType extends BaseType {
 				}
 			}
 		}
+		
+		if(weaponType != null)
+		{
+			ModularWarfare.LOGGER.info(weaponType.name());
+		}
+		
+		if(fireModes != null)
+		{
+			for(int i = 0; i < fireModes.length; i++)
+			{
+				ModularWarfare.LOGGER.info(fireModes[i].name());
+			}
+		}
 	}
 	
 	@Override
@@ -160,6 +172,8 @@ public class GunType extends BaseType {
 			{
 				BlockPos originPos = entityPlayer.getPosition();
 				World world = entityPlayer.world;
+				Random random = new Random();
+				
 				for(SoundEntry soundEntry : weaponSoundMap.get(weaponSoundType))
 				{
 					int soundRange = soundEntry.soundRange != null ? soundEntry.soundRange : weaponSoundType.defaultRange;
@@ -190,7 +204,7 @@ public class GunType extends BaseType {
 					{
 						for(EntityPlayer hearingPlayer : world.getEntities(EntityPlayer.class, e -> e.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ()) <= soundRange))
 						{
-							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundEntry.soundName, (soundRange / 16) * soundEntry.soundVolumeMultiplier, soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
+							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundEntry.soundName, (soundRange / 16) * soundEntry.soundVolumeMultiplier, (random.nextFloat() / 10) + soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
 						}
 					}
 				}
