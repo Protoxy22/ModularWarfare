@@ -23,7 +23,10 @@ public enum WeaponSoundType {
 	@SerializedName("weaponReloadEmpty") ReloadEmpty("weaponReloadEmpty", 16),
 	
 	/** The sound to play upon charging */
-	@SerializedName("weaponCharge") Charge("weaponCharge", 16);
+	@SerializedName("weaponCharge") Charge("weaponCharge", 16),
+	
+	/** The sound to play upon switching fire modes */
+	@SerializedName("weaponModeSwitch") ModeSwitch("weaponModeSwitch", 8);
 	
 	public String eventName;
 	public Integer defaultRange;
