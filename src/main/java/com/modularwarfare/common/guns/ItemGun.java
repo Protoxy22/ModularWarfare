@@ -55,7 +55,7 @@ public class ItemGun extends BaseItem {
 	}
 	
 	@Override
-    public void onUpdate(ItemStack heldStack, World world, Entity holdingEntity, int intI, boolean flag)
+    public void onUpdate(ItemStack unused, World world, Entity holdingEntity, int intI, boolean flag)
     {
 		if(holdingEntity instanceof EntityPlayer)
 		{
@@ -63,12 +63,21 @@ public class ItemGun extends BaseItem {
 
 			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 			{
-				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
+				ItemStack heldStack = entityPlayer.getHeldItemMainhand();
+				ItemGun itemGun = (ItemGun) heldStack.getItem();
+				GunType gunType = itemGun.type;
 				
 				if(world.isRemote)
-					onUpdateClient(entityPlayer, world, heldStack, itemGun, itemGun.type);
+					onUpdateClient(entityPlayer, world, heldStack, itemGun, gunType);
 				else
-					onUpdateServer(entityPlayer, world, heldStack, itemGun, itemGun.type);
+					onUpdateServer(entityPlayer, world, heldStack, itemGun, gunType);
+				
+				if(heldStack.getTagCompound() == null)
+				{
+					NBTTagCompound nbtTagCompound = new NBTTagCompound();
+					nbtTagCompound.setString("firemode", gunType.fireModes[0].name().toLowerCase());
+					heldStack.setTagCompound(nbtTagCompound);
+				}
 			}	
 		}
     }
@@ -90,13 +99,7 @@ public class ItemGun extends BaseItem {
 	
 	public void onUpdateServer(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, GunType gunType)
 	{
-		// Create default NBT data
-		if(heldStack.getTagCompound() == null)
-		{
-			NBTTagCompound nbtTagCompound = new NBTTagCompound();
-			nbtTagCompound.setString("firemode", gunType.fireModes[0].name());
-			heldStack.setTagCompound(nbtTagCompound);
-		}
+		
 	}
 	
 	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
