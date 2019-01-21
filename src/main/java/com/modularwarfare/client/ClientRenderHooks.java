@@ -2,6 +2,7 @@ package com.modularwarfare.client;
 
 import org.lwjgl.util.glu.Project;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.CustomItemRenderType;
 import com.modularwarfare.client.model.CustomItemRenderer;
 import com.modularwarfare.client.model.ModelGun;
@@ -30,6 +31,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -114,7 +116,19 @@ public class ClientRenderHooks extends ForgeEvent {
 			{
 			
 			case CROSSHAIRS:
-				event.setCanceled(true);
+				if(!ModularWarfare.DEV_ENV)
+				{
+					event.setCanceled(true);
+				} else
+				{
+					if(player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET)
+					{
+						event.setCanceled(false);
+					} else
+					{
+						event.setCanceled(true);
+					}
+				}
 				break;
 			
 			default:
