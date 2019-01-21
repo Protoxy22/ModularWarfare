@@ -1,4 +1,13 @@
-itemGroup.modularwarfareTab=Modular Warfare
-item.ar15.name=AR-15
-item.ump45.name=UMP-45
-item.ump45ammo.name=UMP-45 Ammo
+item.mwp.aa12.name=AA-12
+item.mwp.akm.name=AKM
+item.mwp.aughbar.name=AUG HBAR
+item.mwp.cslr4.name=CS-LR4
+item.mwp.dsr1.name=DSR-1
+item.mwp.glock18.name=Glock 18
+item.mwp.m45a1.name=M45A1
+item.mwp.mk20.name=MK20 SSR
+item.mwp.mp5sd.name=MP5SD
+item.mwp.stf12.name=STF 12
+item.mwp.ump45.name=UMP45
+item.mwp.ump45ammo.name=UMP45 Mag
+item.mwp.ump9ammo.name=UMP9 Mag

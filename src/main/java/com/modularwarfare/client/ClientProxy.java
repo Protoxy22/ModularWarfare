@@ -282,43 +282,72 @@ public class ClientProxy extends CommonProxy {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void generateLangFiles(ArrayList<BaseType> types, boolean replace)
+	{
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		HashMap<String, ArrayList<BaseType>> langEntryMap = new HashMap<String, ArrayList<BaseType>>();
 		
-		/*for(ItemGun itemGun : types)
+		for(BaseType baseType : types)
 		{
-			GunType type = itemGun.type;
-			if(type.contentPack == null)
+			if(baseType.contentPack == null)
 				continue;
 			
-			File contentPackDir = new File(ModularWarfare.MOD_DIR, type.contentPack);
-			if(contentPackDir.exists() && contentPackDir.isDirectory())
-			{
-				File assetsDir = new File(contentPackDir, "/assets/modularwarfare/");
-				if(!assetsDir.exists())
-					assetsDir.mkdirs();
-				
-				File soundsFile = new File(assetsDir, type.internalName + ".json");
-				
-				if(!typeModel.exists())
-				{
-					try {
-						FileWriter fileWriter = new FileWriter(typeModel);
-						gson.toJson(createJson(type), fileWriter);
-						fileWriter.flush();
-						fileWriter.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}	
-			}
+			String contentPack = baseType.contentPack;
+			
+			if(!langEntryMap.containsKey(contentPack))
+				langEntryMap.put(contentPack, new ArrayList<BaseType>());
+			
+			if(baseType.displayName != null && !langEntryMap.get(contentPack).contains(baseType))
+				langEntryMap.get(contentPack).add(baseType);
 		}
 		
-		/*String jsonString = "";
-		for()
+		for(String contentPack : langEntryMap.keySet())
 		{
-			String soundEntry = String.format("{%s}", args);
-		}*/
-		
-		//String finalJsonString = String.format("{%s}", args);
+			try
+			{
+				File contentPackDir = new File(ModularWarfare.MOD_DIR, contentPack);
+				if(contentPackDir.exists() && contentPackDir.isDirectory())
+				{
+					ArrayList<BaseType> langEntries = langEntryMap.get(contentPack);
+					if(langEntries != null && !langEntries.isEmpty())
+					{
+						Path langDir = Paths.get(ModularWarfare.MOD_DIR.getAbsolutePath() + "/" + contentPack + "/assets/modularwarfare/lang/");
+						if(!Files.exists(langDir))
+							Files.createDirectories(langDir);
+						Path langPath = Paths.get(langDir + "/en_US.lang");
+						
+						boolean soundsExists = Files.exists(langPath);
+						boolean shouldCreate = soundsExists ? replace : true;
+						if(shouldCreate)
+						{
+							if(!soundsExists)
+								Files.createFile(langPath);
+							
+							ArrayList<String> jsonEntries = new ArrayList<String>();
+							String format = "item.%s.name=%s";
+							for(int i = 0; i < langEntries.size(); i++)
+							{
+								BaseType type = langEntries.get(i);
+								jsonEntries.add(String.format(format, type.internalName, type.displayName));
+							}
+							Files.write(langPath, jsonEntries, Charset.forName("UTF-8"));
+						}
+					}
+				}
+			} catch(Exception exception)
+			{
+				if(ModularWarfare.DEV_ENV)
+				{
+					exception.printStackTrace();
+				} else
+				{
+					ModularWarfare.LOGGER.error(String.format("Failed to create sounds.json for content pack '%s'", contentPack));
+				}
+			}
+		}
 	}
 	
 	private ItemModelExport createJson(BaseType type)

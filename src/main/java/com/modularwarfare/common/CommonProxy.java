@@ -43,6 +43,8 @@ public class CommonProxy extends ForgeEvent {
 	
 	public void generateJsonSounds(Collection<ItemGun> types, boolean replace) {}
 	
+	public void generateLangFiles(ArrayList<BaseType> types, boolean replace) {}
+	
 	public void playSound(MWSound sound) {}
 	
 	public void registerSound(String soundName) {}

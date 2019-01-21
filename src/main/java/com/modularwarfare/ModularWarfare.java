@@ -188,6 +188,7 @@ public class ModularWarfare {
 		{
 			PROXY.generateJsonModels(baseTypes);
 			PROXY.generateJsonSounds(gunTypes.values(), false);
+			PROXY.generateLangFiles(baseTypes, false);
 		}
 	}
 	
