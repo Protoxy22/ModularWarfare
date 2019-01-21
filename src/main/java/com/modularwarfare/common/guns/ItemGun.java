@@ -224,7 +224,7 @@ public class ItemGun extends BaseItem {
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity)
 	{
-		return false;
+		return true;
 	}
 
 }
