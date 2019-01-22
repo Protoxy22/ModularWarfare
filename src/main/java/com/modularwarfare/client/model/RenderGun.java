@@ -5,11 +5,13 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -26,7 +28,7 @@ public class RenderGun implements CustomItemRenderer {
 	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
 		if (!(item.getItem() instanceof ItemGun))
 			return;
-
+		
 		GunType gunType = ((ItemGun) item.getItem()).type;
 		if (gunType == null)
 			return;
@@ -43,8 +45,9 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, GunType gunType, Object... data) {
 
 		ModelGun model = gunType.model;
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
-
+		//EntityPlayerSP player = Minecraft.getMinecraft().player;
+		EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
+		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
 
@@ -62,7 +65,7 @@ public class RenderGun implements CustomItemRenderer {
 			}
 
 			case EQUIPPED: {
-				float crouchOffset = player.isSneaking() ? -0.18f : 0.0f;
+				float crouchOffset = entityLivingBase.isSneaking() ? -0.18f : 0.0f;
 				GL11.glRotatef(0F, 1F, 0F, 0F);
 				GL11.glRotatef(-90F, 0F, 1F, 0F);
 				GL11.glRotatef(90F, 0F, 0F, 1F);
@@ -73,42 +76,14 @@ public class RenderGun implements CustomItemRenderer {
 			}
 
 			case EQUIPPED_FIRST_PERSON: {
-								
-				/*boolean debugAiming = false;
-				
-				if(debugAiming)
-				{
-					float smoothing = 1f;
-					float adsSpeed = 0.05f + model.adsSpeed;
-									
-					if(adsSwitch - adsSpeed*smoothing >= 0f && direction == 0)
-					{
-						adsSwitch -= adsSpeed*smoothing;
-					} else if(!(adsSwitch - adsSpeed*smoothing >= 0f) && direction == 0)
-					{
-						direction = 1;
-					} 
-					
-					if(adsSwitch + adsSpeed*smoothing <= 1f && direction == 1)
-					{
-						adsSwitch += adsSpeed*smoothing;
-					} else if(!(adsSwitch + adsSpeed*smoothing <= 1f) && direction == 1)
-					{
-						direction = 0;
-					}
-				} else
-				{
-					adsSwitch = 1f;
-				}*/
-
 				float modelScale = model.modelScale;
 				float rotateX = 0;
 				float rotateY = 0;
 				float rotateZ = 0;
 				float crouchZoom = model.crouchZoom;
 				Vector3f translateXYZ;
-				int isSprinting = player.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
-				int isCrouching = player.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
+				int isSprinting = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
+				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x, model.rotateHipPosition.y, model.rotateHipPosition.z);
@@ -148,9 +123,6 @@ public class RenderGun implements CustomItemRenderer {
 						"skins/" + gunType.weaponSkins[0].getSkin(gunType) + ".png"));
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
-				// GL11.glRotatef(25F - 5F * 1f, 0F, 0F, 1F);
-				// GL11.glRotatef(-5F, 0F, 1F, 0F);
-				// GL11.glTranslatef(3.5f, -0.3f, 0);
 
 				model.renderGun(f);
 				model.renderDefaultScope(f);
@@ -159,6 +131,12 @@ public class RenderGun implements CustomItemRenderer {
 				model.renderDefaultGrip(f);
 				model.renderDefaultGadget(f);
 				model.renderSlide(f);
+				
+				if(ItemGun.hasAmmoLoaded(item))
+				{
+					ItemAmmo itemAmmo = (ItemAmmo) new ItemStack(item.getTagCompound().getCompoundTag("ammo")).getItem();
+					itemAmmo.type.model.renderAmmo(f);
+				}
 
 				// TODO ARM RENDER CALL
 

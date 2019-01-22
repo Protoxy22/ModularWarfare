@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class PacketGunReload extends PacketBase {
 	
@@ -31,6 +32,7 @@ public class PacketGunReload extends PacketBase {
 	public void handleServerSide(EntityPlayerMP entityPlayer) {
 		if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
+			ItemStack heldStack = entityPlayer.getHeldItemMainhand();
 			ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
 			GunType gunType = itemGun.type;
 			InventoryPlayer inventory = entityPlayer.inventory;
@@ -49,6 +51,13 @@ public class PacketGunReload extends PacketBase {
 						{
 							// found stack
 							System.out.println("suitable ammo found " + itemAmmo.baseType.internalName);
+							
+							NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+							if(nbtTagCompound.hasKey("ammo"))
+							{
+								ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
+							}
+							nbtTagCompound.setTag("ammo", itemStack.writeToNBT(new NBTTagCompound()));
 						}
 					}
 				} else

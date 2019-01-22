@@ -166,6 +166,7 @@ public class ModularWarfare {
 		{
 			for(BaseType baseType : baseTypes)
 			{
+				baseType.loadExtraValues();
 				switch(baseType.id)
 				{
 					case 0: {gunTypes.get(baseType.internalName).setType((GunType) baseType); break;}
@@ -187,6 +188,9 @@ public class ModularWarfare {
 		if(DEV_ENV)
 		{
 			PROXY.generateJsonModels(baseTypes);
+			// TODO: Fix content pack file reload
+			if(reload)
+				return;
 			PROXY.generateJsonSounds(gunTypes.values(), false);
 			PROXY.generateLangFiles(baseTypes, false);
 		}

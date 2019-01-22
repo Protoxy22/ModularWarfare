@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketGunFire;
@@ -27,6 +28,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -109,28 +111,44 @@ public class ItemGun extends BaseItem {
 		// Can fire checks
 		if(isOnShootCooldown(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
 			return;
-				
-		// Fire Code
-		Line line = Line.fromRaytrace(entityPlayer, 200);
+		
+		if(!hasNextShot(heldStack))
+		{
+			// play out of ammo click
+			return;
+		}
+		
+		// Weapon pre fire event
+		WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
+		if(preFireEvent.isCanceled())
+			return;
+		
+		// Raytrace
+		Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
 		List<Entity> entities = line.getEntities(world, Entity.class, false);
-		for(Entity e : entities)
+		
+		// Weapon post fire event
+		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
+		
+		for(Entity e : postFireEvent.getAffectedEntities())
 		{
 			if(e instanceof EntityLivingBase)
 			{
 				EntityLivingBase targetLiving = (EntityLivingBase) e;
 				if(targetLiving != entityPlayer)
 				{
-					// TODO: do a hacky fix to stop any damage penetration reduction for going through host player
-					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), (gunType.gunDamage /** * ammoType.damageMultiplier */));
+					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
 				}
 			}
 		}
+		
+		consumeShot(heldStack);
 		
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire);
 		
 		// Fire Delay
-		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), gunType.fireTickDelay);
+		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 	}
 	
 	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
@@ -142,13 +160,46 @@ public class ItemGun extends BaseItem {
 	}
 	
 	/**
-	 * 
+	 * If the player is on a shoot cooldown
 	 * @param entityPlayer
-	 * @return 
+	 * @return shoot cooldown
 	 */
 	public static boolean isOnShootCooldown(EntityPlayer entityPlayer)
 	{
 		return ServerTickHandler.playerShootCooldown.containsKey(entityPlayer.getUniqueID());
+	}
+	
+	public static boolean hasAmmoLoaded(ItemStack gunStack)
+	{
+		return gunStack.hasTagCompound() ? gunStack.getTagCompound().hasKey("ammo") ? gunStack.getTagCompound().getTag("ammo") != null : false : false;
+	}
+	
+	public static boolean hasNextShot(ItemStack gunStack)
+	{
+		if(hasAmmoLoaded(gunStack))
+		{
+			ItemStack ammoStack = new ItemStack(gunStack.getTagCompound().getCompoundTag("ammo"));
+			if(ammoStack.getTagCompound() != null)
+			{
+				int ammoCount = ammoStack.getTagCompound().getInteger("ammocount") - 1;
+				return ammoCount >= 0;
+			}
+		}
+		return false;
+	}
+	
+	public static void consumeShot(ItemStack gunStack)
+	{
+		if(hasAmmoLoaded(gunStack))
+		{
+			ItemStack ammoStack = new ItemStack(gunStack.getTagCompound().getCompoundTag("ammo"));
+			if(ammoStack.getTagCompound() != null)
+			{
+				NBTTagCompound nbtTagCompound = ammoStack.getTagCompound();
+				nbtTagCompound.setInteger("ammocount", nbtTagCompound.getInteger("ammocount") - 1);
+				gunStack.getTagCompound().setTag("ammo", ammoStack.writeToNBT(new NBTTagCompound()));
+			}
+		}
 	}
 	
 	/**
@@ -157,7 +208,24 @@ public class ItemGun extends BaseItem {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-    	
+    	if(hasAmmoLoaded(stack))
+    	{
+    		ItemStack ammoStack = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
+			ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
+			
+	    	int currentAmmoCount = 0;
+	    	if(ammoStack.getTagCompound() != null)
+	    	{
+	    		NBTTagCompound tag = ammoStack.getTagCompound();
+	    		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
+	    	}
+	    	
+	    	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
+	    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+	    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+	    	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
+	    	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, itemAmmo.type.ammoCapacity));
+    	}
     }
 	
 	@Override

@@ -56,7 +56,7 @@ public class ClientRenderHooks extends ForgeEvent {
 		mc = Minecraft.getMinecraft();
 		
 		customRenderers[0] = ClientProxy.gunRenderer = new RenderGun();
-		customRenderers[1] = new RenderAmmo();
+		customRenderers[1] = ClientProxy.ammoRenderer = new RenderAmmo();
 	}
 	
 	@SubscribeEvent

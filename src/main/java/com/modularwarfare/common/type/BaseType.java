@@ -1,7 +1,6 @@
 package com.modularwarfare.common.type;
 
-import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.model.ModelGun;
+import java.util.Map;
 
 public class BaseType {
 	
@@ -11,6 +10,7 @@ public class BaseType {
 	public String iconName;
 	public transient int id;
 	public transient String contentPack;
+	public Map<String, Object> customVariables;
 	
 	/**
 	 * Method for sub types to use for loading extra values

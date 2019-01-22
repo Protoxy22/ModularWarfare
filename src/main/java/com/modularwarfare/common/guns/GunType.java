@@ -37,6 +37,10 @@ public class GunType extends BaseType {
 	//Munition variables
 	/** Damage inflicted per bullet. Multiplied by the bullet damage value. */
 	public float gunDamage = 0;
+	/** Weapon block range */
+	public int weaponMaxRange = 100;
+	/** Weapon effective max block range */
+	public int weaponEffectiveRange = 50;
 	/** The number of bullet entities created by each shot */
 	public int numBullets = 1;
 	/** The speed of bullets upon leaving this gun */

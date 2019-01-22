@@ -15,6 +15,8 @@ public class AmmoType extends BaseType {
 	//Ammo Override variables
 	/** The number of bullet entities created by each shot */
 	public int numBullets = 1;
+	/** Ammo Capacity Amount */
+	public int ammoCapacity = 30;
 	/** The amount that bullets spread out when fired from this gun */
 	public float bulletSpread;
 	/** The time (in seconds) it takes to reload this gun */

@@ -18,6 +18,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.export.ItemModelExport;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
+import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.guns.GunType;
@@ -52,6 +53,7 @@ public class ClientProxy extends CommonProxy {
 	public List<File> contentPacks;
 	public static String modelDir = "com.modularwarfare.client.model.";
 	public static RenderGun gunRenderer;
+	public static RenderAmmo ammoRenderer;
 	public static HashMap<String, SoundEvent> modSounds = new HashMap<String, SoundEvent>();
 	
 	@Override
