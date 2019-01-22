@@ -39,7 +39,8 @@ public class ump45complete extends ModelGun //Same as Filename
 		initbackpackModel_1();
 		
 		translateAll(0F, -10.5F, -0.1F);//forward/down/right
-
+		thirdPersonOffset = new Vector3f(-0.1F, -.08F, 0F);//forward/up/?
+		
 		hasFlash = false;
         hasArms = true;
         
