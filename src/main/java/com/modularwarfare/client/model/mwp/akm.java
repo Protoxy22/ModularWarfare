@@ -35,7 +35,9 @@ public class akm extends ModelGun //Same as Filename
 		gripAttachPoint = new Vector3f(55 /16F, 16F /16F, 0F /16F);
 
 		modelScale = 0.18F;
-		translateAll(0F, -12.0F, -0.1F);//forward/down/right
+		translateAll(0F, -12.0F, 0.0F);//forward/down/right
+		rotateAimPosition = new Vector3f(0F, 0F, 0F);
+		translateAimPosition = new Vector3f(0.25F, 0F, 0F);
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
 
 		gunSlideDistance = .75F;
