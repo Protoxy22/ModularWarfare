@@ -66,7 +66,7 @@ public class ClientRenderHooks extends ForgeEvent {
 		{
 			case START:
 			{
-				//RenderGun.smoothing = event.renderTickTime;
+				RenderGun.smoothing = event.renderTickTime;
 				//FlansModClient.UpdateCameraZoom(event.renderTickTime);
 				SetPartialTick(event.renderTickTime);
 				break;
