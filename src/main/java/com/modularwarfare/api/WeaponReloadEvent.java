@@ -30,12 +30,14 @@ public class WeaponReloadEvent extends WeaponEvent {
 	public static class Pre extends WeaponReloadEvent
 	{
 		private final boolean offhandReload;
+		private final boolean multiMagReload;
 		private int reloadTime;
 		
-		public Pre(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload) 
+		public Pre(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload) 
 		{
 			super(entityPlayer, stackWeapon, itemWeapon);
 			this.offhandReload = offhandReload;
+			this.multiMagReload = multiMagReload;
 			
 			GunType type = itemWeapon.type;
 			this.reloadTime = (int) (offhandReload ? type.offhandReloadTime != null ? (int) type.offhandReloadTime * 0.8f  : type.reloadTime : type.reloadTime);
@@ -55,6 +57,11 @@ public class WeaponReloadEvent extends WeaponEvent {
 		{
 			return offhandReload;
 		}
+		
+		public boolean isMultiMagReload()
+		{
+			return multiMagReload;
+		}
 	}
 	
     /** WeaponReloadEvent.Post is fired once the weapon has started reloading.<br>
@@ -66,16 +73,23 @@ public class WeaponReloadEvent extends WeaponEvent {
 	public static class Post extends WeaponReloadEvent
 	{
 		private final boolean offhandReload;
+		private final boolean multiMagReload;
 		
-		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload) 
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload) 
 		{
 			super(entityPlayer, stackWeapon, itemWeapon);
 			this.offhandReload = offhandReload;
+			this.multiMagReload = multiMagReload;
 		}
 		
 		public boolean isOffhandReload()
 		{
 			return offhandReload;
+		}
+		
+		public boolean isMultiMagReload()
+		{
+			return multiMagReload;
 		}
 	}
 

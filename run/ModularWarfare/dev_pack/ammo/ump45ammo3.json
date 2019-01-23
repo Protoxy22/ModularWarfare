@@ -1,0 +1,9 @@
+{
+  "displayName": "UMP45 Mag 3",
+  "internalName": "mwp.ump45ammo3",
+  "iconName": "mwp.ump45ammo",
+  "modelName": "mwp.ammo.ump45mag",
+  "skinAsset": "default",
+  "magazineCount": 3,
+  "ammoCapacity": 25
+}

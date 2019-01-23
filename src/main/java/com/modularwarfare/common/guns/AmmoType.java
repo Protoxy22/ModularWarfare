@@ -21,7 +21,7 @@ public class AmmoType extends BaseType {
 	/** Max stack size */
 	public int maxStackSize = 4;
 	/** Magazine Count */
-	public int magazineCount = 1;
+	public Integer magazineCount;
 	/** The amount that bullets spread out when fired from this gun */
 	public float bulletSpread;
 	/** The time (in seconds) it takes to reload this gun */
