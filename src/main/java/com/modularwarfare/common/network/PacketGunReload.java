@@ -61,7 +61,7 @@ public class PacketGunReload extends PacketBase {
 					NBTTagCompound ammoTag = ammo.getTagCompound();
 					if(ammoTag.hasKey("magcount"))
 					{
-						int magazine = ammoTag.getInteger("magcount") < ammoItem.type.magazineCount ? ammoTag.getInteger("magcount") + 1 : ammoItem.type.magazineCount;
+						int magazine = ammoTag.getInteger("magcount") < ammoItem.type.magazineCount ? ammoTag.getInteger("magcount") + 1 : 1;
 						ammoTag.setInteger("magcount", magazine);
 						ammo.setTagCompound(ammoTag);
 						bestAmmoStack = ammo;

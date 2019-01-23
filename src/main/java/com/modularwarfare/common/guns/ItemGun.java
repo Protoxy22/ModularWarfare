@@ -239,13 +239,14 @@ public class ItemGun extends BaseItem {
 	        	{
 	    			String baseDisplayLine = "%bMag Ammo %s: %g%s%dg/%g%s";
 	            	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
-	            	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+	            	//baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
 	            	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
 	            	
 	            	for(int i = 1; i < itemAmmo.type.magazineCount+1; i++)
 	    			{
 	            		NBTTagCompound tag = ammoStack.getTagCompound();
-	                	tooltip.add(String.format(baseDisplayLine, i, tag.getInteger("ammocount" + i), itemAmmo.type.ammoCapacity));
+	            		String displayLine = baseDisplayLine.replaceAll("%g", i == tag.getInteger("magcount") ? TextFormatting.YELLOW.toString() : TextFormatting.GRAY.toString());
+	                	tooltip.add(String.format(displayLine, i, tag.getInteger("ammocount" + i), itemAmmo.type.ammoCapacity));
 	    			}
 	        	} 
 			}
