@@ -1,0 +1,9 @@
+{
+  "displayName": "Triple UMP9 Mag",
+  "internalName": "mwp.tripleump9ammo",
+  "iconName": "mwp.ump9ammo",
+  "modelName": "mwp.ammo.tripleump9mag",
+  "skinAsset": "default",
+  "magazineCount": 3,
+  "ammoCapacity": 30
+}

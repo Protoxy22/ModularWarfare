@@ -1,6 +1,6 @@
 {
-  "displayName": "Coupled UMP9 Mags",
-  "internalName": "mwp.coupledump9ammo",
+  "displayName": "Double UMP9 Mag",
+  "internalName": "mwp.doubleump9ammo",
   "iconName": "mwp.ump9ammo",
   "modelName": "mwp.ammo.doubleump9mag",
   "skinAsset": "default",
