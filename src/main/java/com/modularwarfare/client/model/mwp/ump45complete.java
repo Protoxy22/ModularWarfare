@@ -62,7 +62,7 @@ public class ump45complete extends ModelGun //Same as Filename
  
         leftHandAmmo = true;
         
-        //ammoMap.put("mwp.ump9ammo", new RenderVariables(new Vector3f(0.10F, 0.35F, 0F), 0.12F));
+        ammoMap.put("mwp.tripleump9ammo", new RenderVariables(new Vector3f(0F, 0F, 0F), 0.12F));
 
 
 		flipAll();

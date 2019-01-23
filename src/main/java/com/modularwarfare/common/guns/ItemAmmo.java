@@ -45,7 +45,7 @@ public class ItemAmmo extends BaseItem {
 			nbtTagCompound.setInteger("ammocount", itemAmmo.type.ammoCapacity);
 			if(itemAmmo.type.magazineCount != null)
 			{
-				nbtTagCompound.setInteger("magcount", itemAmmo.type.magazineCount);
+				nbtTagCompound.setInteger("magcount", 1);
 				for(int i = 1; i < itemAmmo.type.magazineCount+1; i++)
 				{
 					nbtTagCompound.setInteger("ammocount" + i, itemAmmo.type.ammoCapacity);

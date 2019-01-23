@@ -219,18 +219,36 @@ public class ItemGun extends BaseItem {
     		ItemStack ammoStack = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
 			ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
 			
-	    	int currentAmmoCount = 0;
-	    	if(ammoStack.getTagCompound() != null)
-	    	{
-	    		NBTTagCompound tag = ammoStack.getTagCompound();
-	    		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
-	    	}
-	    	
-	    	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
-	    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
-	    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
-	    	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
-	    	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, itemAmmo.type.ammoCapacity));
+			if(itemAmmo.type.magazineCount == null)
+			{
+				int currentAmmoCount = 0;
+		    	if(ammoStack.getTagCompound() != null)
+		    	{
+		    		NBTTagCompound tag = ammoStack.getTagCompound();
+		    		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
+		    	}
+		    	
+		    	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
+		    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+		    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+		    	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
+		    	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, itemAmmo.type.ammoCapacity));
+			} else
+			{
+				if(stack.getTagCompound() != null)
+	        	{
+	    			String baseDisplayLine = "%bMag Ammo %s: %g%s%dg/%g%s";
+	            	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+	            	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+	            	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
+	            	
+	            	for(int i = 1; i < itemAmmo.type.magazineCount+1; i++)
+	    			{
+	            		NBTTagCompound tag = ammoStack.getTagCompound();
+	                	tooltip.add(String.format(baseDisplayLine, i, tag.getInteger("ammocount" + i), itemAmmo.type.ammoCapacity));
+	    			}
+	        	} 
+			}
     	}
     }
 	

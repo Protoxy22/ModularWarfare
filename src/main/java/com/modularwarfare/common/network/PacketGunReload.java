@@ -57,19 +57,15 @@ public class PacketGunReload extends PacketBase {
 				if(nbtTagCompound.hasKey("ammo"))
 				{
 					ItemStack ammo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
+					ItemAmmo ammoItem = (ItemAmmo) ammo.getItem();
 					NBTTagCompound ammoTag = ammo.getTagCompound();
 					if(ammoTag.hasKey("magcount"))
 					{
-						if(ammoTag.getInteger("magcount") > 1)
-						{
-							ItemAmmo ammoItem = (ItemAmmo) ammo.getItem();
-							int magsLeft = ammoTag.getInteger("magcount") - 1;
-							ammoTag.setInteger("magcount", magsLeft);
-							ammoTag.setInteger("ammocount", ammoItem.type.ammoCapacity);
-							ammo.setTagCompound(ammoTag);
-							bestAmmoStack = ammo;
-							multiMagReload = true;
-						}
+						int magazine = ammoTag.getInteger("magcount") < ammoItem.type.magazineCount ? ammoTag.getInteger("magcount") + 1 : ammoItem.type.magazineCount;
+						ammoTag.setInteger("magcount", magazine);
+						ammo.setTagCompound(ammoTag);
+						bestAmmoStack = ammo;
+						multiMagReload = true;
 					}
 				}
 						

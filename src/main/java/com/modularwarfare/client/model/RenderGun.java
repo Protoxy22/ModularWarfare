@@ -138,29 +138,48 @@ public class RenderGun implements CustomItemRenderer {
 				model.renderDefaultGadget(f);
 				model.renderSlide(f);
 				
-				if(ItemGun.hasAmmoLoaded(item))
+				GL11.glPushMatrix();
 				{
-					ItemAmmo itemAmmo = (ItemAmmo) new ItemStack(item.getTagCompound().getCompoundTag("ammo")).getItem();
-					AmmoType ammoType = itemAmmo.type;
-					
-					if(gunType.dynamicAmmo && ammoType.model != null)
+					if(ItemGun.hasAmmoLoaded(item))
 					{
-						if(model.ammoMap.containsKey(ammoType.internalName))
+						ItemStack stackAmmo =  new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
+						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
+						AmmoType ammoType = itemAmmo.type;
+						
+						if(gunType.dynamicAmmo && ammoType.model != null)
 						{
-							Vector3f ammoOffset = model.ammoMap.get(ammoType.internalName).offset;
-							Vector3f ammoScale = model.ammoMap.get(ammoType.internalName).scale;
-							
-							GL11.glTranslatef(ammoOffset.x, ammoOffset.y, ammoOffset.z);
-							Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
-							GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+							if(model.ammoMap.containsKey(ammoType.internalName))
+							{
+								Vector3f ammoOffset = model.ammoMap.get(ammoType.internalName).offset;
+								Vector3f ammoScale = model.ammoMap.get(ammoType.internalName).scale;
+								
+								GL11.glTranslatef(ammoOffset.x, ammoOffset.y, ammoOffset.z);
+								if(ammoType.magazineCount != null)
+								{
+									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
+									if(ammoType.model.magCountOffset.containsKey(magCount))
+									{
+										RenderVariables magRenderVar = ammoType.model.magCountOffset.get(magCount);
+										Vector3f magOffset = magRenderVar.offset;
+										Vector3f magRotate = magRenderVar.rotation;
+										GL11.glTranslatef(magOffset.x, magOffset.y, magOffset.z);
+										if(magRotate != null && magRenderVar.angle != null)
+										{
+											GL11.glRotatef(magRenderVar.angle, magRotate.x, magRotate.y, magRotate.z);
+										}
+									}
+								}
+								Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
+								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+							}
+							ammoType.model.renderAmmo(f);
+						} else
+						{
+							model.renderAmmo(f);
 						}
-						ammoType.model.renderAmmo(f);
-					} else
-					{
-						model.renderAmmo(f);
 					}
 				}
-
+				GL11.glPopMatrix();
 				/*
 				 * TODO: Arm render call
 				 * if (renderType == ItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {

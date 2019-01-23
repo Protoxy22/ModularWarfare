@@ -1,5 +1,7 @@
 package com.modularwarfare.client.model;
 
+import java.util.HashMap;
+
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
@@ -15,6 +17,8 @@ public class ModelAmmo extends TurboBase {
 	public int attachedMagCount = 0;
 	/** Offset by this amount */
 	public Vector3f attachedMagOffset = new Vector3f();
+	
+	public HashMap<Integer, RenderVariables> magCountOffset = new HashMap<Integer, RenderVariables>();
 	
 	public void renderAmmo(float f)
 	{
