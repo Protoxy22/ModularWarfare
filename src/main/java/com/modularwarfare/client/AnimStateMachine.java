@@ -15,9 +15,14 @@ public class AnimStateMachine {
 			gunRecoil *= 0.5F;
 	}
 	
-	public void doShoot()
+	public void triggerShoot()
 	{
 		lastGunRecoil = gunRecoil = 1F;
+	}
+	
+	public void triggerReload()
+	{
+		
 	}
 
 }

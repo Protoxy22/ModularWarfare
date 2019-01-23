@@ -99,6 +99,9 @@ public class ClientTickHandler extends ForgeEvent {
 		if (playerRecoilPitch > 0)
 			playerRecoilPitch *= 0.8F;
 		
+		if (playerRecoilYaw > 0)
+			playerRecoilYaw *= 0.8F;
+		
 		player.rotationPitch -= playerRecoilPitch;
 		player.rotationYaw -= playerRecoilYaw;
 		antiRecoilPitch += playerRecoilPitch;

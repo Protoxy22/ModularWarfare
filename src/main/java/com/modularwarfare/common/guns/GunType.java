@@ -67,9 +67,9 @@ public class GunType extends BaseType {
 	
 	//Recoil Variables
 	/** Base value for Upwards cursor/view recoil */
-	public float recoilPitch = 0.0F;
+	public float recoilPitch = 10.0F;
 	/** Base value for Left/Right cursor/view recoil */
-	public float recoilYaw = 0.0F;
+	public float recoilYaw = 1.0F;
 	/** Modifier for setting the maximum pitch divergence when randomizing recoil (Recoil 2 + rndRecoil 0.5 == 1.5-2.5 Recoil range) */
 	public float randomRecoilPitch = 0.5F;
 	/** Modifier for setting the maximum yaw divergence when randomizing recoil (Recoil 2 + rndRecoil 0.5 == 1.5-2.5 Recoil range) */
