@@ -113,9 +113,6 @@ public class RenderGun implements CustomItemRenderer {
 				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;
 				
-				// Recoil
-				//animations.gunRecoil && animations.lastGunRecoil
-				
 				//Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
@@ -125,14 +122,11 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
 				//Recoil
-					GL11.glTranslatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);
-					GL11.glRotatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
-					GL11.glRotatef((float) ((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * smoothing * model.recoilShake), (float) 0.0f, (float) 1.0f, (float) 0.0f);
-		            GL11.glRotatef((float) ((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * smoothing * model.recoilShake), (float) 1.0f, (float) 0.0f, (float) 0.0f);
-		            //System.out.println(((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * smoothing * model.recoilShake));
-		            //System.out.println(model.modelRecoilUpwards);
-		            System.out.println(model.modelRecoilBackwards);
-				
+				GL11.glTranslatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);
+				GL11.glRotatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
+				GL11.glRotatef(((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 0.0f, 1.0f, 0.0f);
+		        GL11.glRotatef(((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 1.0f, 0.0f, 0.0f);
+
 				break;	
 			}
 
@@ -140,13 +134,6 @@ public class RenderGun implements CustomItemRenderer {
 				break;
 
 			}
-
-			GL11.glPushMatrix();
-			{
-				GL11.glTranslatef(10F, 0F, 0F);
-			}
-			GL11.glPopMatrix();
-			
 			
 			GL11.glPushMatrix();
 			{

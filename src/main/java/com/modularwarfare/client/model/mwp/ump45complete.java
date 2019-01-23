@@ -42,8 +42,9 @@ public class ump45complete extends ModelGun //Same as Filename
 		translateAll(0F, -10.5F, -0.1F);//forward/down/right
 		thirdPersonOffset = new Vector3f(-0.1F, -.08F, 0F);//forward/up/?
 		
-		modelRecoilBackwards = 0.2F;
-		modelRecoilUpwards = -1.0F;
+		modelRecoilBackwards = 0.15F;
+		modelRecoilUpwards = -0.35F;
+		modelRecoilShake = 0.25F;
 		
 		hasFlash = false;
         hasArms = true;
