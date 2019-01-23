@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.util.vector.Vector3f;
-
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.common.handler.ServerTickHandler;
@@ -15,7 +13,6 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.WeaponFireMode;
 import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
-import com.modularwarfare.utility.RaytraceHelper.Position;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -23,9 +20,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -177,7 +173,7 @@ public class ItemGun extends BaseItem {
 	
 	public static boolean hasAmmoLoaded(ItemStack gunStack)
 	{
-		return gunStack.hasTagCompound() ? gunStack.getTagCompound().hasKey("ammo") ? gunStack.getTagCompound().getTag("ammo") != null : false : false;
+		return !(gunStack.getItem() instanceof ItemAir) ? gunStack.hasTagCompound() ? gunStack.getTagCompound().hasKey("ammo") ? gunStack.getTagCompound().getTag("ammo") != null : false : false : false;
 	}
 	
 	public static boolean hasNextShot(ItemStack gunStack)
