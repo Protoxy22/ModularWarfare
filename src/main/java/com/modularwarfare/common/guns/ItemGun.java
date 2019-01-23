@@ -181,9 +181,11 @@ public class ItemGun extends BaseItem {
 		if(hasAmmoLoaded(gunStack))
 		{
 			ItemStack ammoStack = new ItemStack(gunStack.getTagCompound().getCompoundTag("ammo"));
+			ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
 			if(ammoStack.getTagCompound() != null)
 			{
-				int ammoCount = ammoStack.getTagCompound().getInteger("ammocount") - 1;
+				String key = itemAmmo.type.magazineCount != null ? "ammocount" + ammoStack.getTagCompound().getInteger("magcount") : "ammocount";
+				int ammoCount = ammoStack.getTagCompound().getInteger(key) - 1;
 				return ammoCount >= 0;
 			}
 		}
@@ -195,10 +197,12 @@ public class ItemGun extends BaseItem {
 		if(hasAmmoLoaded(gunStack))
 		{
 			ItemStack ammoStack = new ItemStack(gunStack.getTagCompound().getCompoundTag("ammo"));
+			ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
 			if(ammoStack.getTagCompound() != null)
 			{
 				NBTTagCompound nbtTagCompound = ammoStack.getTagCompound();
-				nbtTagCompound.setInteger("ammocount", nbtTagCompound.getInteger("ammocount") - 1);
+				String key = itemAmmo.type.magazineCount != null ? "ammocount" + nbtTagCompound.getInteger("magcount") : "ammocount";
+				nbtTagCompound.setInteger(key, nbtTagCompound.getInteger(key) - 1);
 				gunStack.getTagCompound().setTag("ammo", ammoStack.writeToNBT(new NBTTagCompound()));
 			}
 		}

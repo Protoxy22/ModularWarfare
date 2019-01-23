@@ -46,6 +46,10 @@ public class ItemAmmo extends BaseItem {
 			if(itemAmmo.type.magazineCount != null)
 			{
 				nbtTagCompound.setInteger("magcount", itemAmmo.type.magazineCount);
+				for(int i = 1; i < itemAmmo.type.magazineCount+1; i++)
+				{
+					nbtTagCompound.setInteger("ammocount" + i, itemAmmo.type.ammoCapacity);
+				}
 			}
 			heldStack.setTagCompound(nbtTagCompound);
 		}
@@ -56,22 +60,41 @@ public class ItemAmmo extends BaseItem {
 	 */
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-    {	
-    	int currentAmmoCount = 0;
-    	if(stack.getTagCompound() != null)
+    {	    	
+    	if(type.magazineCount == null)
     	{
-    		NBTTagCompound tag = stack.getTagCompound();
-    		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
-    	} else
-    	{
-    		currentAmmoCount = type.ammoCapacity;
-    	}
+        	int currentAmmoCount = 0;
     		
-    	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
-    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
-    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
-    	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
-    	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, type.ammoCapacity));
+    		if(stack.getTagCompound() != null)
+        	{
+        		NBTTagCompound tag = stack.getTagCompound();
+        		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
+        	} else
+        	{
+        		currentAmmoCount = type.ammoCapacity;
+        	}
+        		
+        	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
+        	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+        	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+        	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
+        	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, type.ammoCapacity));
+    	} else
+    	{    		
+    		if(stack.getTagCompound() != null)
+        	{
+    			String baseDisplayLine = "%bMag Ammo %s: %g%s%dg/%g%s";
+            	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+            	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+            	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
+            	
+            	for(int i = 1; i < type.magazineCount+1; i++)
+    			{
+            		NBTTagCompound tag = stack.getTagCompound();
+                	tooltip.add(String.format(baseDisplayLine, i, tag.getInteger("ammocount" + i), type.ammoCapacity));
+    			}
+        	} 
+    	}
     }
     
 	@Override
