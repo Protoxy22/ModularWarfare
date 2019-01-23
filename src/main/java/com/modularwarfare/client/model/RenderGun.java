@@ -42,7 +42,7 @@ public class RenderGun implements CustomItemRenderer {
 		if (model == null)
 			return;
 		{
-			AnimStateMachine animations = data.length >= 2 ? (EntityLivingBase) data[1] instanceof EntityPlayer ? ClientRenderHooks.getAnimations((EntityPlayer) data[1]) : new AnimStateMachine() : new AnimStateMachine();
+			AnimStateMachine animations = (EntityLivingBase) data[1] instanceof EntityPlayer ? ClientRenderHooks.getAnimations((EntityPlayer) data[1]) : new AnimStateMachine();
 			renderGun(type, item, animations, gunType, data);
 		}
 	}
@@ -50,10 +50,10 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine animations, GunType gunType, Object... data) {
 
 		ModelGun model = gunType.model;
-		float min = -1.5f;
-        float max = 1.5f;
+		float min = -0.5f;
+        float max = 0.5f;
         float randomNum = new Random().nextFloat();
-        float randomShake = min + (randomNum * (max - min));
+        float result = min + (randomNum * (max - min));
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -114,7 +114,7 @@ public class RenderGun implements CustomItemRenderer {
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;
 				
 				// Recoil
-				//animations.gunRecoil && animations.lastGunRecoil
+				// animations.gunRecoil && animations.lastGunRecoil
 				
 				//Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
@@ -123,16 +123,6 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glTranslatef(translateX + (crouchZoom * isCrouching), 0F, 0F);
 				GL11.glTranslatef(0F, translateY, 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
-				
-				//Recoil
-					GL11.glTranslatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);
-					GL11.glRotatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
-					GL11.glRotatef((float) ((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * smoothing * model.recoilShake), (float) 0.0f, (float) 1.0f, (float) 0.0f);
-		            GL11.glRotatef((float) ((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * smoothing * model.recoilShake), (float) 1.0f, (float) 0.0f, (float) 0.0f);
-		            //System.out.println(((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * smoothing * model.recoilShake));
-		            //System.out.println(model.modelRecoilUpwards);
-		            System.out.println(model.modelRecoilBackwards);
-				
 				break;	
 			}
 
@@ -141,13 +131,6 @@ public class RenderGun implements CustomItemRenderer {
 
 			}
 
-			GL11.glPushMatrix();
-			{
-				GL11.glTranslatef(10F, 0F, 0F);
-			}
-			GL11.glPopMatrix();
-			
-			
 			GL11.glPushMatrix();
 			{
 				float f = 1F / 16F;

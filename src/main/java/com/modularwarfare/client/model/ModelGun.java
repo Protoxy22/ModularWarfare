@@ -78,6 +78,7 @@ public class ModelGun extends TurboBase
 	public float pumpModifier = 4F;
 	public Vector3f chargeModifier = new Vector3f(8F, 4F, 4F);
 	
+	public float shakeDistance = 0.5f;
 
 	//Stance variables
 	/**If true, gun will translate when equipped with a sight attachment */
@@ -108,11 +109,11 @@ public class ModelGun extends TurboBase
 	public float gunSlideDistance = 1F / 4F;
 	public float altgunSlideDistance = 1F / 4F;
 	/** Adds backwards recoil translations to the gun model when firing  */
-	public float modelRecoilBackwards = 1.0F;
+	public float modelRecoilBackwards = 1F / 16F;
 	/** Adds upwards/downwards recoil translations to the gun model when firing  */
-	public float modelRecoilUpwards = -20.5F;
+	public float modelRecoilUpwards = -1.5F;
 	/** Adds a left-right model shaking motion when firing, default 0.5 */
-	public float recoilShake = 0.25F;
+	public float modelShake = 0.5F;
 
 	//Casing ejection variables
 	/** Total distance to translate the casing model, effects speed */
