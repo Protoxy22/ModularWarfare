@@ -149,8 +149,10 @@ public class RenderGun implements CustomItemRenderer {
 						{
 							Vector3f ammoOffset = model.ammoMap.get(ammoType.internalName).offset;
 							Vector3f ammoScale = model.ammoMap.get(ammoType.internalName).scale;
+							
 							GL11.glTranslatef(ammoOffset.x, ammoOffset.y, ammoOffset.z);
-							GL11.glScalef(ammoScale.x, ammoScale.y, ammoScale.z);
+							Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
+							GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 						}
 						ammoType.model.renderAmmo(f);
 					} else

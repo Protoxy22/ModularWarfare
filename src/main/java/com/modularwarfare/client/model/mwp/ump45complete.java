@@ -13,6 +13,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class ump45complete extends ModelGun //Same as Filename
@@ -60,6 +61,8 @@ public class ump45complete extends ModelGun //Same as Filename
         leftArmScale = new Vector3f(10.8F, 11.0F, 10.8F);
  
         leftHandAmmo = true;
+        
+        //ammoMap.put("mwp.ump9ammo", new RenderVariables(new Vector3f(0.10F, 0.35F, 0F), 0.12F));
 
 
 		flipAll();
