@@ -45,6 +45,7 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, GunType gunType, Object... data) {
 
 		ModelGun model = gunType.model;
+		//EntityPlayerSP player = Minecraft.getMinecraft().player;
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -79,14 +80,17 @@ public class RenderGun implements CustomItemRenderer {
 				float rotateX = 0;
 				float rotateY = 0;
 				float rotateZ = 0;
+				float translateX= 0;
+				float translateY = 0;
+				float translateZ = 0;
 				float crouchZoom = model.crouchZoom;
-				Vector3f translateXYZ;
+				//Vector3f translateXYZ;
 				int isSprinting = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				
 				//Store the model settings as local variables to reduce calls
-				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x, model.rotateHipPosition.y, model.rotateHipPosition.z);
-				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x, model.translateHipPosition.y, model.translateHipPosition.z);
+				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * isSprinting), model.rotateHipPosition.y + (model.sprintRotate.y * isSprinting), model.rotateHipPosition.z + (model.sprintRotate.z * isSprinting));
+				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * isSprinting), model.translateHipPosition.y + (model.sprintTranslate.y * isSprinting), model.translateHipPosition.z + (model.sprintTranslate.z * isSprinting));
 				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 				Vector3f sprintRotate = new Vector3f(model.sprintRotate.x, model.sprintRotate.y, model.sprintRotate.z);
@@ -96,15 +100,18 @@ public class RenderGun implements CustomItemRenderer {
 				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
 				rotateY = (46F + customHipRotation.y) - (1F + customAimRotation.y + customHipRotation.y) * adsSwitch;
 				rotateZ = (1 + customHipRotation.z) - (1.0F + customAimRotation.z + customHipRotation.z) * adsSwitch;
-				translateXYZ = new Vector3f((-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch, (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch, (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch);
-
+				//translateXYZ = new Vector3f((-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch, (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch, (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch);
+				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch;
+				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;
+				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;
+				
 				//Position calls and apply a special position if player is sprinting or crouching
-				GL11.glRotatef(rotateX + (sprintRotate.x * isSprinting), 1F, 0F, 0F); //ROLL LEFT-RIGHT
-				GL11.glRotatef(rotateY + (sprintRotate.y * isSprinting), 0F, 1F, 0F); //ANGLE LEFT-RIGHT
-				GL11.glRotatef(rotateZ + (sprintRotate.z * isSprinting), 0F, 0F, 1F); //ANGLE UP-DOWN
-				GL11.glTranslatef(translateXYZ.x + (sprintTranslate.x * isSprinting) + (crouchZoom * isCrouching), 0F, 0F);
-				GL11.glTranslatef(0F, translateXYZ.y + (sprintTranslate.y * isSprinting), 0F);
-				GL11.glTranslatef(0F, 0F, translateXYZ.z + (sprintTranslate.z * isSprinting));
+				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+				GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
+				GL11.glTranslatef(translateX + (crouchZoom * isCrouching), 0F, 0F);
+				GL11.glTranslatef(0F, translateY, 0F);
+				GL11.glTranslatef(0F, 0F, translateZ);
 				break;	
 			}
 

@@ -38,6 +38,8 @@ public class akm extends ModelGun //Same as Filename
 		translateAll(0F, -12.0F, 0.0F);//forward/down/right
 		rotateAimPosition = new Vector3f(0F, 0F, 0F);
 		translateAimPosition = new Vector3f(0.25F, 0F, 0F);
+		//rotateHipPosition = new Vector3f(-20.0F, 30.0F, -0.0F);
+		//translateHipPosition = new Vector3f(0.5F, -0.10F, -0.65F);
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
 
 		gunSlideDistance = .75F;
