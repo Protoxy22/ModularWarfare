@@ -45,8 +45,6 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, GunType gunType, Object... data) {
 
 		ModelGun model = gunType.model;
-		//EntityPlayerSP player = Minecraft.getMinecraft().player;
-		EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -59,12 +57,12 @@ public class RenderGun implements CustomItemRenderer {
 			switch (renderType) {
 
 			case ENTITY: {
-				//GL11.glRotatef(180F, 0F, 1F, 0F);
 				GL11.glTranslatef(-0.45F + model.itemFrameOffset.x, -0.05F + model.itemFrameOffset.y, model.itemFrameOffset.z);
 				break;
 			}
 
 			case EQUIPPED: {
+				EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
 				float crouchOffset = entityLivingBase.isSneaking() ? -0.18f : 0.0f;
 				GL11.glRotatef(0F, 1F, 0F, 0F);
 				GL11.glRotatef(-90F, 0F, 1F, 0F);
@@ -76,6 +74,7 @@ public class RenderGun implements CustomItemRenderer {
 			}
 
 			case EQUIPPED_FIRST_PERSON: {
+				EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
 				float modelScale = model.modelScale;
 				float rotateX = 0;
 				float rotateY = 0;

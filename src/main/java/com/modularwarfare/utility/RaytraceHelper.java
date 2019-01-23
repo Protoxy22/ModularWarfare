@@ -3,9 +3,14 @@ package com.modularwarfare.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector3f;
+
+import com.modularwarfare.ModularWarfare;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -212,7 +217,7 @@ public class RaytraceHelper {
 		 */
 		public static Line fromRaytrace(Entity entity, double lenght){
 			Position pos1 = new Position(entity.posX, entity.height * 0.8 + entity.getEntityBoundingBox().minY, entity.posZ);
-			Position pos2 = new Position(entity.getLookVec());
+			Position pos2 = new Position(entity.getLookVec().add(new Vec3d(0, 0.025, 0)));
 			Vec3d v3 = new Vec3d(pos1.x, pos1.y, pos1.z);
 			Position pos4 = new Position(v3.addVector(pos2.x * lenght, pos2.y * lenght, pos2.z * lenght));
 			Position pos3 = new Position(entity.posX * pos2.x, (entity.height * 0.8 + entity.getEntityBoundingBox().minY) * pos2.y, entity.posZ * pos2.z);
@@ -334,6 +339,7 @@ public class RaytraceHelper {
 			double x = position1.x;
 			double y = position1.y;
 			double z = position1.z;
+
 			while (times <= maxTimes){
 				IBlockState blockstate = world.getBlockState(new BlockPos((int) x, (int) y, (int) z));
 				if(acceptWeakBlocks || blockstate.getBlock().getBlockHardness(blockstate, world, new BlockPos((int) x, (int) y, (int) z)) != 0){

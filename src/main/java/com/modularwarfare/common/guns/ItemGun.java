@@ -1,13 +1,13 @@
 package com.modularwarfare.common.guns;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
-import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.type.BaseItem;
@@ -15,14 +15,16 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.WeaponFireMode;
 import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
+import com.modularwarfare.utility.RaytraceHelper.Position;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -138,11 +140,19 @@ public class ItemGun extends BaseItem {
 				if(targetLiving != entityPlayer)
 				{
 					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
+					targetLiving.hurtResistantTime = 0;
 				}
 			}
 		}
 		
-		consumeShot(heldStack);
+		
+		if(entityPlayer.capabilities.isCreativeMode && entityPlayer.inventory.armorItemInSlot(3) != null && entityPlayer.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET)
+		{
+			
+		} else
+		{
+			consumeShot(heldStack);
+		}
 		
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire);

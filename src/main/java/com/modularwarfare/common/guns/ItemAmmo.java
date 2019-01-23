@@ -25,6 +25,8 @@ public class ItemAmmo extends BaseItem {
 	{
 		super(type);
 		this.type = type;
+		this.setMaxStackSize(type.maxStackSize);
+		this.setMaxDamage(type.ammoCapacity);
 	}
 	
 	@Override
@@ -50,7 +52,7 @@ public class ItemAmmo extends BaseItem {
 	 */
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
-    {
+    {	
     	int currentAmmoCount = 0;
     	if(stack.getTagCompound() != null)
     	{
@@ -60,14 +62,14 @@ public class ItemAmmo extends BaseItem {
     	{
     		currentAmmoCount = type.ammoCapacity;
     	}
-    	
+    		
     	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
     	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
     	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
     	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
     	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, type.ammoCapacity));
     }
-	
+    
 	@Override
     public boolean getShareTag()
     {

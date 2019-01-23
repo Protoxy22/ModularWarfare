@@ -51,6 +51,8 @@ public class GunType extends BaseType {
 	public int numPrimaryAmmoItems = 1;
 	/** The time (in ticks) it takes to reload this gun */
 	public int reloadTime;
+	/** The time (in ticks) it takes to offhand reload this gun */
+	public Integer offhandReloadTime;
 	/** The fire rate of the gun in RPM, 1200 = MAX */
 	public int roundsPerMin = 1;
 	/** For when RPM is converted to ticks - Do not use */

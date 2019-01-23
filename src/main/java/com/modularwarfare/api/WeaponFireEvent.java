@@ -13,32 +13,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-public class WeaponFireEvent extends Event {
-	
-	private final EntityPlayer entityPlayer;
-	private final ItemStack stackWeapon;
-	private final ItemGun itemWeapon;
+public class WeaponFireEvent extends WeaponEvent {
 	
 	public WeaponFireEvent(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon)
 	{
-		this.entityPlayer = entityPlayer;
-		this.stackWeapon = stackWeapon;
-		this.itemWeapon = itemWeapon;
-	}
-	
-	public EntityPlayer getShooter()
-	{
-		return entityPlayer;
-	}
-	
-	public ItemStack getWeaponStack()
-	{
-		return stackWeapon;
-	}
-	
-	public ItemGun getWeaponItem()
-	{
-		return itemWeapon;
+		super(entityPlayer, stackWeapon, itemWeapon);
 	}
 	
     /** WeaponFireEvent.Pre is fired before the weapon actually fires. Canceling this event will stop the weapon firing.<br>
@@ -69,7 +48,7 @@ public class WeaponFireEvent extends Event {
 		}
 	}
 	
-    /** WeaponFireEvent.Pre is fired once the weapon has fired with a list of affected objects. These lists can be modified to change the outcome.<br>
+    /** WeaponFireEvent.Post is fired once the weapon has fired with a list of affected objects. These lists can be modified to change the outcome.<br>
      * <br>
      * This event is not {@link Cancelable}.<br>
      * This event does not use {@link HasResult}.<br>

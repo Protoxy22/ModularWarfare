@@ -41,6 +41,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
 
 @Mod(modid = ModularWarfare.MOD_ID, name = ModularWarfare.MOD_NAME, version = ModularWarfare.MOD_VERSION)
 public class ModularWarfare {
@@ -141,6 +142,12 @@ public class ModularWarfare {
 	    	tabOrder.add(itemAmmo);
 	    }
 	    MOD_TAB.preInitialize(tabOrder);
+	}
+	
+	@SubscribeEvent
+	public void registerEntities(RegistryEvent.Register<EntityEntry> event)
+	{
+		
 	}
 	
 	/**
