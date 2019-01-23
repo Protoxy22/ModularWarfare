@@ -5,7 +5,8 @@ public enum KeyType {
 	GunReload("Reload Gun", 0x13), // R
 	ClientReload("Reload Client", 0x43), // F9
 	DebugMode("Debug Mode", 0x44), // F10
-	FireMode("Fire Mode", 0x2F); // V 
+	FireMode("Fire Mode", 0x2F), // V 
+	GunUnload("Unload Key", 0x16); // U
 	
 	//Keyboard
 	public String displayName;

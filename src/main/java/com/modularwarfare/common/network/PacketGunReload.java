@@ -20,16 +20,22 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class PacketGunReload extends PacketBase {
 	
+	public boolean unload = false;
+	
 	public PacketGunReload() {}
+	
+	public PacketGunReload(boolean unload) {
+		this.unload = unload;
+	}
 		
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf data) {
-		
+		data.writeBoolean(unload);
 	}
 
 	@Override
 	public void decodeInto(ChannelHandlerContext ctx, ByteBuf data) {
-		
+		unload = data.readBoolean();
 	}
 
 	@Override
@@ -41,33 +47,16 @@ public class PacketGunReload extends PacketBase {
 			GunType gunType = itemGun.type;
 			InventoryPlayer inventory = entityPlayer.inventory;
 			
-			ItemStack bestAmmoStack = null;
-			int bestAmmoCount = 0;
-			int bestSlot = 0;
-			boolean isOffhandReload = false;
+			if(!unload)
+			{
+				ItemStack bestAmmoStack = null;
+				int bestAmmoCount = 0;
+				int bestSlot = 0;
+				boolean isOffhandReload = false;
 						
-			if(inventory.offHandInventory.get(0) != ItemStack.EMPTY)
-			{
-				ItemStack itemStack = inventory.offHandInventory.get(0);
-				if(itemStack != null && itemStack.getItem() instanceof ItemAmmo)
+				if(inventory.offHandInventory.get(0) != ItemStack.EMPTY)
 				{
-					ItemAmmo itemAmmo = (ItemAmmo) itemStack.getItem();
-					for(String ammoName : gunType.acceptedAmmo)
-					{
-						if(ammoName.equalsIgnoreCase(itemAmmo.baseType.internalName))
-						{
-							isOffhandReload = true;
-							bestAmmoStack = itemStack;
-						}
-					}
-				}
-			}
-			
-			if(!isOffhandReload)
-			{
-				for(int i = 0; i < inventory.getSizeInventory(); i++)
-				{
-					ItemStack itemStack = inventory.getStackInSlot(i);
+					ItemStack itemStack = inventory.offHandInventory.get(0);
 					if(itemStack != null && itemStack.getItem() instanceof ItemAmmo)
 					{
 						ItemAmmo itemAmmo = (ItemAmmo) itemStack.getItem();
@@ -75,83 +64,113 @@ public class PacketGunReload extends PacketBase {
 						{
 							if(ammoName.equalsIgnoreCase(itemAmmo.baseType.internalName))
 							{
-								if(bestAmmoStack != null)
+								isOffhandReload = true;
+								bestAmmoStack = itemStack;
+							}
+						}
+					}
+				}
+				
+				if(!isOffhandReload)
+				{
+					for(int i = 0; i < inventory.getSizeInventory(); i++)
+					{
+						ItemStack itemStack = inventory.getStackInSlot(i);
+						if(itemStack != null && itemStack.getItem() instanceof ItemAmmo)
+						{
+							ItemAmmo itemAmmo = (ItemAmmo) itemStack.getItem();
+							for(String ammoName : gunType.acceptedAmmo)
+							{
+								if(ammoName.equalsIgnoreCase(itemAmmo.baseType.internalName))
 								{
-									int ammoCount = itemStack.getTagCompound().getInteger("ammocount");
-									if(ammoCount > bestAmmoCount)
+									if(bestAmmoStack != null)
+									{
+										int ammoCount = itemStack.getTagCompound().getInteger("ammocount");
+										if(ammoCount > bestAmmoCount)
+										{
+											bestAmmoStack = itemStack;
+											bestAmmoCount = ammoCount;
+											bestSlot = i;	
+										}
+									} else
 									{
 										bestAmmoStack = itemStack;
-										bestAmmoCount = ammoCount;
-										bestSlot = i;	
+										bestSlot = i;
 									}
-								} else
-								{
-									bestAmmoStack = itemStack;
-									bestSlot = i;
 								}
 							}
 						}
 					}
 				}
-			}
-			
-			WeaponReloadEvent.Pre preReloadEvent = new WeaponReloadEvent.Pre(entityPlayer, heldStack, itemGun, isOffhandReload);
-			MinecraftForge.EVENT_BUS.post(preReloadEvent);
-			if(preReloadEvent.isCanceled())
-				return;
-			
-			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();	
-			if(nbtTagCompound.hasKey("ammo"))
-			{
-				ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
-				ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();
-				inventory.addItemStackToInventory(oldAmmo);
-				nbtTagCompound.removeTag("ammo");
-			}
-			
-			if(bestAmmoStack != null)
-			{
-				if(!isOffhandReload)
+				
+				WeaponReloadEvent.Pre preReloadEvent = new WeaponReloadEvent.Pre(entityPlayer, heldStack, itemGun, isOffhandReload);
+				MinecraftForge.EVENT_BUS.post(preReloadEvent);
+				if(preReloadEvent.isCanceled())
+					return;
+				
+				NBTTagCompound nbtTagCompound = heldStack.getTagCompound();	
+				if(nbtTagCompound.hasKey("ammo"))
 				{
-					if(bestAmmoStack.getCount() > 1)
+					ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
+					ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();
+					inventory.addItemStackToInventory(oldAmmo);
+					nbtTagCompound.removeTag("ammo");
+				}
+				
+				if(bestAmmoStack != null)
+				{
+					if(!isOffhandReload)
 					{
-						ItemStack loadingItemStack = bestAmmoStack.copy();
-						loadingItemStack.setCount(1);
-						nbtTagCompound.setTag("ammo", loadingItemStack.writeToNBT(new NBTTagCompound()));
-						
-						bestAmmoStack.setCount(bestAmmoStack.getCount()-1);
-						inventory.setInventorySlotContents(bestSlot, bestAmmoStack);
+						if(bestAmmoStack.getCount() > 1)
+						{
+							ItemStack loadingItemStack = bestAmmoStack.copy();
+							loadingItemStack.setCount(1);
+							nbtTagCompound.setTag("ammo", loadingItemStack.writeToNBT(new NBTTagCompound()));
+							
+							bestAmmoStack.setCount(bestAmmoStack.getCount()-1);
+							inventory.setInventorySlotContents(bestSlot, bestAmmoStack);
+						} else
+						{
+							nbtTagCompound.setTag("ammo", bestAmmoStack.writeToNBT(new NBTTagCompound()));
+							inventory.setInventorySlotContents(bestSlot, ItemStack.EMPTY);
+						}
 					} else
 					{
-						nbtTagCompound.setTag("ammo", bestAmmoStack.writeToNBT(new NBTTagCompound()));
-						inventory.setInventorySlotContents(bestSlot, ItemStack.EMPTY);
+						if(bestAmmoStack.getCount() > 1)
+						{
+							ItemStack loadingItemStack = bestAmmoStack.copy();
+							loadingItemStack.setCount(1);
+							nbtTagCompound.setTag("ammo", loadingItemStack.writeToNBT(new NBTTagCompound()));
+							
+							bestAmmoStack.setCount(bestAmmoStack.getCount()-1);
+							inventory.offHandInventory.set(bestSlot, bestAmmoStack);
+						} else
+						{
+							nbtTagCompound.setTag("ammo", bestAmmoStack.writeToNBT(new NBTTagCompound()));
+							inventory.offHandInventory.set(bestSlot, ItemStack.EMPTY);
+						}
 					}
 				} else
 				{
-					if(bestAmmoStack.getCount() > 1)
-					{
-						ItemStack loadingItemStack = bestAmmoStack.copy();
-						loadingItemStack.setCount(1);
-						nbtTagCompound.setTag("ammo", loadingItemStack.writeToNBT(new NBTTagCompound()));
-						
-						bestAmmoStack.setCount(bestAmmoStack.getCount()-1);
-						inventory.offHandInventory.set(bestSlot, bestAmmoStack);
-					} else
-					{
-						nbtTagCompound.setTag("ammo", bestAmmoStack.writeToNBT(new NBTTagCompound()));
-						inventory.offHandInventory.set(bestSlot, ItemStack.EMPTY);
-					}
+					return;
 				}
+				
+				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, heldStack, itemGun, isOffhandReload);
+				MinecraftForge.EVENT_BUS.post(postReloadEvent);
+				
+				gunType.playSound(entityPlayer, WeaponSoundType.Reload);
+				ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 			} else
 			{
-				return;
+				NBTTagCompound nbtTagCompound = heldStack.getTagCompound();	
+				if(nbtTagCompound.hasKey("ammo"))
+				{
+					ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
+					ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();
+					inventory.addItemStackToInventory(oldAmmo);
+					nbtTagCompound.removeTag("ammo");
+				}
 			}
-			
-			WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, heldStack, itemGun, isOffhandReload);
-			MinecraftForge.EVENT_BUS.post(postReloadEvent);
-			
-			gunType.playSound(entityPlayer, WeaponSoundType.Reload);
-			ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 		}
 	}
 

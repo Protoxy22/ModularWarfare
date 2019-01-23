@@ -26,6 +26,7 @@ public class KeyInputHandler extends ForgeEvent {
 		keyBinds.add(new KeyEntry(KeyType.GunReload));
 		keyBinds.add(new KeyEntry(KeyType.ClientReload));
 		keyBinds.add(new KeyEntry(KeyType.FireMode));
+		keyBinds.add(new KeyEntry(KeyType.GunUnload));
 		
 		if(ModularWarfare.DEV_ENV)
 		{
@@ -81,6 +82,13 @@ public class KeyInputHandler extends ForgeEvent {
 				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 				{
 					ModularWarfare.NETWORK.sendToServer(new PacketGunReload());
+				}
+				break;
+				
+			case GunUnload:
+				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+				{
+					ModularWarfare.NETWORK.sendToServer(new PacketGunReload(true));
 				}
 				break;
 				
