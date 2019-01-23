@@ -32,6 +32,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -122,6 +123,7 @@ public class ItemGun extends BaseItem {
 		
 		// Weapon pre fire event
 		WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
+		MinecraftForge.EVENT_BUS.post(preFireEvent);
 		if(preFireEvent.isCanceled())
 			return;
 		
@@ -131,6 +133,7 @@ public class ItemGun extends BaseItem {
 		
 		// Weapon post fire event
 		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
+		MinecraftForge.EVENT_BUS.post(postFireEvent);
 		
 		for(Entity e : postFireEvent.getAffectedEntities())
 		{
@@ -145,14 +148,7 @@ public class ItemGun extends BaseItem {
 			}
 		}
 		
-		
-		if(entityPlayer.capabilities.isCreativeMode && entityPlayer.inventory.armorItemInSlot(3) != null && entityPlayer.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET)
-		{
-			
-		} else
-		{
-			consumeShot(heldStack);
-		}
+		consumeShot(heldStack);
 		
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire);

@@ -151,7 +151,7 @@ public class PacketGunReload extends PacketBase {
 			MinecraftForge.EVENT_BUS.post(postReloadEvent);
 			
 			gunType.playSound(entityPlayer, WeaponSoundType.Reload);
-			//ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
+			ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 		}
 	}
 

@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -50,7 +51,7 @@ public class GunType extends BaseType {
 	/** # of items to load - used for guns with internal storage / singular ammo items such as shotguns */
 	public int numPrimaryAmmoItems = 1;
 	/** The time (in ticks) it takes to reload this gun */
-	public int reloadTime;
+	public int reloadTime = 60;
 	/** The time (in ticks) it takes to offhand reload this gun */
 	public Integer offhandReloadTime;
 	/** The fire rate of the gun in RPM, 1200 = MAX */
@@ -106,7 +107,10 @@ public class GunType extends BaseType {
 	@Override
 	public void loadExtraValues()
 	{
-		reloadModel();
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		{
+			reloadModel();
+		}
 		
 		fireTickDelay = 1200 / roundsPerMin;
 		

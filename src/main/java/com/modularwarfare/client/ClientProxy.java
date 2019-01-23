@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.export.ItemModelExport;
 import com.modularwarfare.client.handler.ClientTickHandler;
+import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
@@ -38,7 +39,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -60,9 +60,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void load() 
 	{
-		new ClientTickHandler();
 		new KeyInputHandler();
 		new ClientRenderHooks();
+		new ClientTickHandler();
+		new ClientWeaponHandler();
 	}
 	
 	@SubscribeEvent

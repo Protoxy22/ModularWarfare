@@ -47,7 +47,7 @@ public class WeaponFireEvent extends WeaponEvent {
 			this.weaponRange = updatedRange;
 		}
 	}
-	
+		
     /** WeaponFireEvent.Post is fired once the weapon has fired with a list of affected objects. These lists can be modified to change the outcome.<br>
      * <br>
      * This event is not {@link Cancelable}.<br>

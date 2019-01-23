@@ -29,7 +29,6 @@ public class ServerTickHandler extends ForgeEvent {
 			for(UUID uuid : playerShootCooldown.keySet())
 			{
 				i += 1;
-				//System.out.println("i " + i);
 				int value = playerShootCooldown.get(uuid) - 1;
 				if(value <= 0)
 				{

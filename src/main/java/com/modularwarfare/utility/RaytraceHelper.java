@@ -217,7 +217,7 @@ public class RaytraceHelper {
 		 */
 		public static Line fromRaytrace(Entity entity, double lenght){
 			Position pos1 = new Position(entity.posX, entity.height * 0.8 + entity.getEntityBoundingBox().minY, entity.posZ);
-			Position pos2 = new Position(entity.getLookVec().add(new Vec3d(0, 0.025, 0)));
+			Position pos2 = new Position(entity.getLookVec());
 			Vec3d v3 = new Vec3d(pos1.x, pos1.y, pos1.z);
 			Position pos4 = new Position(v3.addVector(pos2.x * lenght, pos2.y * lenght, pos2.z * lenght));
 			Position pos3 = new Position(entity.posX * pos2.x, (entity.height * 0.8 + entity.getEntityBoundingBox().minY) * pos2.y, entity.posZ * pos2.z);

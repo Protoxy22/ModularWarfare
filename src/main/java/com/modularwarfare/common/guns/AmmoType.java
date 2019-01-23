@@ -4,6 +4,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.common.type.BaseType;
 
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -46,7 +47,10 @@ public class AmmoType extends BaseType {
 	@Override
 	public void loadExtraValues()
 	{
-		reloadModel();
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		{
+			reloadModel();
+		}
 	}
 	
 	@Override

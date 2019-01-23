@@ -4,12 +4,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -141,12 +141,26 @@ public class RenderGun implements CustomItemRenderer {
 				if(ItemGun.hasAmmoLoaded(item))
 				{
 					ItemAmmo itemAmmo = (ItemAmmo) new ItemStack(item.getTagCompound().getCompoundTag("ammo")).getItem();
-					itemAmmo.type.model.renderAmmo(f);
+					AmmoType ammoType = itemAmmo.type;
+					
+					if(gunType.dynamicAmmo && ammoType.model != null)
+					{
+						if(model.ammoMap.containsKey(ammoType.internalName))
+						{
+							Vector3f ammoOffset = model.ammoMap.get(ammoType.internalName).offset;
+							Vector3f ammoScale = model.ammoMap.get(ammoType.internalName).scale;
+							GL11.glTranslatef(ammoOffset.x, ammoOffset.y, ammoOffset.z);
+							GL11.glScalef(ammoScale.x, ammoScale.y, ammoScale.z);
+						}
+						ammoType.model.renderAmmo(f);
+					} else
+					{
+						model.renderAmmo(f);
+					}
 				}
 
-				// TODO ARM RENDER CALL
-
 				/*
+				 * TODO: Arm render call
 				 * if (renderType == ItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {
 				 * Minecraft mc = Minecraft.getMinecraft(); renderAnimArm(mc.thePlayer, model,
 				 * renderType, animations); }

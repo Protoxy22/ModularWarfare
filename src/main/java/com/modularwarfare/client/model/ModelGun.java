@@ -200,7 +200,7 @@ public class ModelGun extends TurboBase
     private static float lightmapLastY;
 	private static boolean optifineBreak = false;
 	
-	public HashMap<String, Vector3f> ammoMap = new HashMap<String, Vector3f>();
+	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
 
 	public static void glowOn()
 	{
