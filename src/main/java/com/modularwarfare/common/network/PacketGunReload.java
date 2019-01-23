@@ -212,7 +212,7 @@ public class PacketGunReload extends PacketBase {
 					return;
 				}
 				
-				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, heldStack, itemGun, offhandReload, multiMagReload);
+				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, heldStack, itemGun, offhandReload, multiMagReload, preReloadEvent.getReloadTime());
 				MinecraftForge.EVENT_BUS.post(postReloadEvent);
 				
 				gunType.playSound(entityPlayer, WeaponSoundType.Reload);
