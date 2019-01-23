@@ -11,6 +11,10 @@ public class ModelAmmo extends TurboBase {
 	public ModelRendererTurbo[] ammoModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] fullAmmoModel = new ModelRendererTurbo[0];
 	public Vector3f thirdPersonOffset = new Vector3f();
+	/** The amount of attached mags, 0 default, 1 = 1+1 (default + extra) */
+	public int attachedMagCount = 0;
+	/** Offset by this amount */
+	public Vector3f attachedMagOffset = new Vector3f();
 	
 	public void renderAmmo(float f)
 	{

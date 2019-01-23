@@ -4,9 +4,10 @@
   "iconName": "mwp.ump45",
   "gunDamage": 5,
   "roundsPerMin": 600,
-  "acceptedAmmo": ["mwp.ump9ammo", "mwp.ump45ammo"],
+  "acceptedAmmo": ["mwp.ump9ammo", "mwp.ump45ammo", "mwp.coupledump9ammo"],
   "fireModes": ["full", "semi"],
   "modelName": "mwp.ump45complete",
+  "dynamicAmmo": true,
   "weaponSounds": 
   [
     {
