@@ -1,15 +1,14 @@
 package com.modularwarfare.client;
 
+import java.util.HashMap;
+
 import org.lwjgl.util.glu.Project;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.CustomItemRenderType;
 import com.modularwarfare.client.model.CustomItemRenderer;
-import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
-import com.modularwarfare.common.guns.GunType;
-import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
@@ -46,6 +45,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ClientRenderHooks extends ForgeEvent {
 	
+	public static HashMap<EntityLivingBase, AnimStateMachine> gunAnimations = new HashMap<EntityLivingBase, AnimStateMachine>();
 	private Minecraft mc;
 	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[2];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
@@ -403,6 +403,20 @@ public class ClientRenderHooks extends ForgeEvent {
 		}
 		
 		return x + dT * f3;
+	}
+	
+	public static AnimStateMachine getAnimations(EntityPlayer entityPlayer)
+	{
+		AnimStateMachine animation = null;
+		if(gunAnimations.containsKey(entityPlayer))
+		{
+			animation = gunAnimations.get(entityPlayer);
+		} else
+		{
+			animation = new AnimStateMachine();
+			gunAnimations.put(entityPlayer, animation);
+		}
+		return animation;
 	}
 
 }

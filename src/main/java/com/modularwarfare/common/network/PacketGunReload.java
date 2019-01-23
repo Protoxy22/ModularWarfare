@@ -57,15 +57,37 @@ public class PacketGunReload extends PacketBase {
 				if(nbtTagCompound.hasKey("ammo"))
 				{
 					ItemStack ammo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
-					ItemAmmo ammoItem = (ItemAmmo) ammo.getItem();
+					ItemAmmo itemAmmo = (ItemAmmo) ammo.getItem();
 					NBTTagCompound ammoTag = ammo.getTagCompound();
 					if(ammoTag.hasKey("magcount"))
 					{
-						int magazine = ammoTag.getInteger("magcount") < ammoItem.type.magazineCount ? ammoTag.getInteger("magcount") + 1 : 1;
-						ammoTag.setInteger("magcount", magazine);
-						ammo.setTagCompound(ammoTag);
-						bestAmmoStack = ammo;
-						multiMagReload = true;
+						int magazine = ammoTag.getInteger("magcount") < itemAmmo.type.magazineCount ? ammoTag.getInteger("magcount") + 1 : 1;
+						boolean shouldContinue = true;
+						
+						if(magazine == 1)
+						{
+							shouldContinue = false;
+							for(int j = 1; j < itemAmmo.type.magazineCount+1; j++)
+							{
+								int ammoCount = ammo.getTagCompound().getInteger("ammocount" + j);
+								if(ammoCount == itemAmmo.type.magazineCount)
+								{
+									shouldContinue = true;
+								}
+							}
+						}
+						
+
+						if(shouldContinue)
+						{
+							ammoTag.setInteger("magcount", magazine);
+							ammo.setTagCompound(ammoTag);
+							bestAmmoStack = ammo;
+							multiMagReload = true;
+						} else
+						{
+//							nbtTagCompound.setTag("ammo", ammo.writeToNBT(new NBTTagCompound()));
+						}
 					}
 				}
 						
@@ -100,12 +122,26 @@ public class PacketGunReload extends PacketBase {
 								{
 									if(bestAmmoStack != null)
 									{
-										int ammoCount = itemStack.getTagCompound().getInteger("ammocount");
-										if(ammoCount > bestAmmoCount)
+										if(itemAmmo.type.magazineCount != null)
 										{
-											bestAmmoStack = itemStack;
-											bestAmmoCount = ammoCount;
-											bestSlot = i;	
+											for(int j = 1; j < itemAmmo.type.magazineCount+1; j++)
+											{
+												int ammoCount = itemStack.getTagCompound().getInteger("ammocount" + j);
+												if(ammoCount == itemAmmo.type.magazineCount)
+												{
+													bestAmmoStack = itemStack;
+													break;
+												}
+											}
+										} else
+										{
+											int ammoCount = itemStack.getTagCompound().getInteger("ammocount");
+											if(ammoCount > bestAmmoCount)
+											{
+												bestAmmoStack = itemStack;
+												bestAmmoCount = ammoCount;
+												bestSlot = i;	
+											}
 										}
 									} else
 									{
@@ -123,13 +159,14 @@ public class PacketGunReload extends PacketBase {
 				if(preReloadEvent.isCanceled())
 					return;
 				
-				System.out.println(offhandReload);
-				System.out.println(multiMagReload);
-				
 				if(!multiMagReload && nbtTagCompound.hasKey("ammo"))
 				{
 					ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
 					ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();
+					if(oldAmmo.getTagCompound().hasKey("magcount"))
+					{
+						oldAmmo.getTagCompound().setInteger("magcount", 1);
+					}
 					inventory.addItemStackToInventory(oldAmmo);
 					nbtTagCompound.removeTag("ammo");
 				}
@@ -187,6 +224,10 @@ public class PacketGunReload extends PacketBase {
 				{
 					ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
 					ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();
+					if(oldAmmo.getTagCompound().hasKey("magcount"))
+					{
+						oldAmmo.getTagCompound().setInteger("magcount", 1);
+					}
 					inventory.addItemStackToInventory(oldAmmo);
 					nbtTagCompound.removeTag("ammo");
 				}

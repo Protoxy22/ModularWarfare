@@ -1,9 +1,13 @@
 package com.modularwarfare.client.model;
 
+import java.util.Random;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.AnimStateMachine;
+import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
@@ -12,6 +16,7 @@ import com.modularwarfare.common.guns.ItemGun;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -36,16 +41,19 @@ public class RenderGun implements CustomItemRenderer {
 		ModelGun model = gunType.model;
 		if (model == null)
 			return;
-
 		{
-			renderGun(type, item, gunType, data);
+			AnimStateMachine animations = (EntityLivingBase) data[1] instanceof EntityPlayer ? ClientRenderHooks.getAnimations((EntityPlayer) data[1]) : new AnimStateMachine();
+			renderGun(type, item, animations, gunType, data);
 		}
 	}
 
-	private void renderGun(CustomItemRenderType renderType, ItemStack item, GunType gunType, Object... data) {
+	private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine animations, GunType gunType, Object... data) {
 
 		ModelGun model = gunType.model;
-		//EntityPlayerSP player = Minecraft.getMinecraft().player;
+		float min = -0.5f;
+        float max = 0.5f;
+        float randomNum = new Random().nextFloat();
+        float result = min + (randomNum * (max - min));
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -104,6 +112,9 @@ public class RenderGun implements CustomItemRenderer {
 				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch;
 				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;
+				
+				// Recoil
+				// animations.gunRecoil && animations.lastGunRecoil
 				
 				//Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT

@@ -144,7 +144,7 @@ public class ItemGun extends BaseItem {
 			}
 		}
 		
-		consumeShot(heldStack);
+		//consumeShot(heldStack);
 		
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire);

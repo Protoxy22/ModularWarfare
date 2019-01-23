@@ -4,6 +4,7 @@ import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.AnimStateMachine;
+import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.ItemGun;
@@ -15,9 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ClientTickHandler extends ForgeEvent {
-	
-	private static AnimStateMachine gunAnimations;
-	
+		
 	// Recoil variables
 	/** The recoil applied to the player view by shooting */
 	public static float playerRecoilPitch;
@@ -111,10 +110,10 @@ public class ClientTickHandler extends ForgeEvent {
 		antiRecoilYaw *= 0.8F;
 		
 		// Gun Animation State Machine
-		if(gunAnimations == null)
-			gunAnimations = AnimStateMachine.defaultStateMachine;
-		
-		gunAnimations.onUpdate();
+		for(AnimStateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
+		{
+			gunAnimation.onUpdate();
+		}		
 	}
 
 }
