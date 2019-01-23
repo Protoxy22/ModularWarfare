@@ -1,5 +1,7 @@
 package com.modularwarfare.client.handler;
 
+import java.util.Random;
+
 import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;

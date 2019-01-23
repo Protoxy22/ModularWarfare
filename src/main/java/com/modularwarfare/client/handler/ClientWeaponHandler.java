@@ -1,11 +1,12 @@
 package com.modularwarfare.client.handler;
 
+import java.util.Random;
+
 import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.api.WeaponReloadEvent;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.utility.event.ForgeEvent;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -15,8 +16,8 @@ public class ClientWeaponHandler extends ForgeEvent {
 	public void onWeaponFire(WeaponFireEvent.Post event)
 	{
 		ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerShoot();
-		ClientTickHandler.playerRecoilPitch += event.getRecoilPitch();
-		ClientTickHandler.playerRecoilYaw += event.getRecoilYaw();
+		ClientTickHandler.playerRecoilPitch += 2 * new Random().nextFloat();
+		ClientTickHandler.playerRecoilYaw += 2 * new Random().nextFloat();
 	}
 	
 	@SubscribeEvent
