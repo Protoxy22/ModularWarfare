@@ -97,6 +97,8 @@ public class GunType extends BaseType {
 	
 	public boolean allowSprintFiring = true;
 	
+	public boolean allowDefaultSounds = true;
+	
 	//Sound Variables
 	private SoundEntry[] weaponSounds;
 	public HashMap<WeaponSoundType, ArrayList<SoundEntry>> weaponSoundMap;
@@ -202,6 +204,23 @@ public class GunType extends BaseType {
 							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundEntry.soundName, (soundRange / 16) * soundEntry.soundVolumeMultiplier, (random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
 						}
 					}
+				}
+			} else
+			{
+				if(allowDefaultSounds && weaponSoundType.defaultSound != null)
+				{
+					BlockPos originPos = entityPlayer.getPosition();
+					World world = entityPlayer.world;
+					Random random = new Random();
+					
+					String soundName = weaponSoundType.defaultSound;
+					float soundRange = weaponSoundType.defaultRange;
+					
+					for(EntityPlayer hearingPlayer : world.getEntities(EntityPlayer.class, e -> e.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ()) <= soundRange))
+					{
+						//Send sound packet for simple sounds (no distant sound effect)
+						ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, (soundRange / 16) * 1f, (random.nextFloat() / 5) + 1), (EntityPlayerMP) hearingPlayer);
+					}					
 				}
 			}
 		}

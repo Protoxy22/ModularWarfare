@@ -393,6 +393,15 @@ public class ClientProxy extends CommonProxy {
 		{
 			registry.register(soundEvent);
 		}
+		
+		for(WeaponSoundType weaponSoundType : WeaponSoundType.values())
+		{
+			if(weaponSoundType.defaultSound != null)
+			{
+				registerSound(weaponSoundType.defaultSound);
+				registry.register(modSounds.get(weaponSoundType.defaultSound));
+			}
+		}
 	}
 	
 }
