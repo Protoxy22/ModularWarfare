@@ -9,7 +9,15 @@ public enum WeaponType {
 	 */
 	@SerializedName("custom") Custom("custom"),
 	@SerializedName("pistol") Pistol("pistol"),
-	@SerializedName("mp") MP("mp");
+	@SerializedName("mp") MP("mp"),
+	@SerializedName("smg") SMG("smg"),
+	@SerializedName("carbine") Carbine("carbine"),
+	@SerializedName("rifle") RIFLE("rifle"),
+	@SerializedName("ar") AR("ar"),
+	@SerializedName("dmr") DMR("dmr"),
+	@SerializedName("sniper") Sniper("sniper"),
+	@SerializedName("shotgun") Shotgun("shotgun");
+	
 	
 	public String typeName;
 	
