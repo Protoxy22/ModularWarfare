@@ -187,6 +187,9 @@ public class RenderGun implements CustomItemRenderer {
 								if(ammoType.magazineCount != null)
 								{
 									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
+									float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress + (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
+									if(animations.reloading && effectiveReloadAnimationProgress < 0.5f)
+										 magCount -= 1;
 									if(ammoType.model.magCountOffset.containsKey(magCount))
 									{
 										RenderVariables magRenderVar = ammoType.model.magCountOffset.get(magCount);
