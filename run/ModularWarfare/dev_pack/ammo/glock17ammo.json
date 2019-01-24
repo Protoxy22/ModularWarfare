@@ -1,0 +1,7 @@
+{
+  "displayName": "Glock Mag",
+  "internalName": "mwp.glock17ammo",
+  "iconName": "mwp.glock17ammo",
+  "skinAsset": "default",
+  "ammoCapacity": 17
+}

@@ -4,7 +4,8 @@
   "iconName": "mwp.mp5sd",
   "gunDamage": 5,
   "roundsPerMin": 800,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.mp5ammo"],
+  "fireModes": ["full", "semi", "burst"],
   "modelName": "mwp.mp5sd",
   "weaponSounds": 
   [

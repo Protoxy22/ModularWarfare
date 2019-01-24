@@ -4,7 +4,7 @@
   "iconName": "mwp.cslr4",
   "gunDamage": 5,
   "roundsPerMin": 20,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.cslr4ammo"],
   "modelName": "mwp.cslr4",
   "weaponSounds": 
   [

@@ -156,7 +156,7 @@ public class PacketGunReload extends PacketBase {
 				if(preReloadEvent.isCanceled())
 					return;
 				
-				if(!multiMagReload && nbtTagCompound.hasKey("ammo") && bestAmmoStack != null)
+				if(!multiMagReload && nbtTagCompound.hasKey("ammo"))
 				{
 					ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
 					ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();

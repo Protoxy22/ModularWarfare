@@ -5,6 +5,7 @@
   "gunDamage": 5,
   "roundsPerMin": 600,
   "acceptedAmmo": ["mwp.akmammo"],
+  "fireModes": ["full", "semi"],
   "modelName": "mwp.akm",
   "weaponSkins": [
     {

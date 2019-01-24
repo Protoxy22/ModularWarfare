@@ -6,7 +6,7 @@
   "fireModes": ["full", "semi"],
   "gunDamage": 5,
   "roundsPerMin": 1200,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.glock17ammo"],
   "modelName": "mwp.glock18",
   "weaponSounds": 
   [
