@@ -84,9 +84,6 @@ public class PacketGunReload extends PacketBase {
 							ammo.setTagCompound(ammoTag);
 							bestAmmoStack = ammo;
 							multiMagReload = true;
-						} else
-						{
-//							nbtTagCompound.setTag("ammo", ammo.writeToNBT(new NBTTagCompound()));
 						}
 					}
 				}
@@ -159,7 +156,7 @@ public class PacketGunReload extends PacketBase {
 				if(preReloadEvent.isCanceled())
 					return;
 				
-				if(!multiMagReload && nbtTagCompound.hasKey("ammo"))
+				if(!multiMagReload && nbtTagCompound.hasKey("ammo") && bestAmmoStack != null)
 				{
 					ItemStack oldAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
 					ItemAmmo oldAmmoItem = (ItemAmmo) oldAmmo.getItem();
