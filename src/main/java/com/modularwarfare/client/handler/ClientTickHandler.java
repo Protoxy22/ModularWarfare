@@ -78,6 +78,10 @@ public class ClientTickHandler extends ForgeEvent {
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
+			
+			float sprintSpeed = (0.15f) * renderTick;
+			float sprintValue = player.isSprinting() ? RenderGun.sprintSwitch + sprintSpeed : RenderGun.sprintSwitch - sprintSpeed;
+			RenderGun.sprintSwitch = Math.max(0, Math.min(1, sprintValue));;
 		}
 	}
 	

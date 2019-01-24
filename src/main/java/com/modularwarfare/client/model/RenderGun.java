@@ -28,6 +28,7 @@ public class RenderGun implements CustomItemRenderer {
 	public static float smoothing;
 
 	public static float adsSwitch = 0f;
+	public static float sprintSwitch = 0f;
 	private int direction = 0;
 	
 	@Override
