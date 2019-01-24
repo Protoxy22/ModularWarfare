@@ -1,0 +1,7 @@
+{
+  "displayName": "MK20 Mag",
+  "internalName": "mwp.mk20ammo",
+  "iconName": "mwp.mk20ammo",
+  "skinAsset": "default",
+  "ammoCapacity": 20
+}

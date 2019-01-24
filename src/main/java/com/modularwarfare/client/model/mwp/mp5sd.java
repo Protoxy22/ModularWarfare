@@ -78,8 +78,8 @@ public class mp5sd extends ModelGun //Same as Filename
 	    
 		crouchZoom = -0.15F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(60.0F, -0.0F, 10.0F);
-		sprintTranslate = new Vector3f(0.7F, -0.0F, 0.25F);
+		sprintRotate = new Vector3f(-10.0F, 60.0F, 10.0F);
+		sprintTranslate = new Vector3f(1.9F, -0.2F, -0.9F);
 
 
 		flipAll();

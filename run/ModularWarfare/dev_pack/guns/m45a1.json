@@ -6,7 +6,7 @@
   "fireModes": ["semi"],
   "gunDamage": 5,
   "roundsPerMin": 720,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.m45a1ammo"],
   "modelName": "mwp.m45a1",
   "weaponSounds": 
   [

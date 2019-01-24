@@ -4,7 +4,7 @@
   "iconName": "mwp.mk20",
   "gunDamage": 5,
   "roundsPerMin": 600,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.mk20ammo"],
   "modelName": "mwp.mk20",
   "weaponSounds": 
   [
