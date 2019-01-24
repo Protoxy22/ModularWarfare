@@ -96,21 +96,7 @@ public class RenderGun implements CustomItemRenderer {
 				int isSprinting = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				
-				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					float reloadRotate = 0F;
-					float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress
-							+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
-					reloadRotate = 1F;
-					if (effectiveReloadAnimationProgress < model.tiltGunTime)
-						reloadRotate = effectiveReloadAnimationProgress / model.tiltGunTime;
-					if (effectiveReloadAnimationProgress > model.tiltGunTime + model.unloadClipTime
-							+ model.loadClipTime)
-						reloadRotate = 1F - (effectiveReloadAnimationProgress
-								- (model.tiltGunTime + model.unloadClipTime + model.loadClipTime))
-								/ model.untiltGunTime;
-					
-					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(reloadRotate);
-				}
+
 				
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * isSprinting), model.rotateHipPosition.y + (model.sprintRotate.y * isSprinting), model.rotateHipPosition.z + (model.sprintRotate.z * isSprinting));
@@ -125,9 +111,10 @@ public class RenderGun implements CustomItemRenderer {
 				rotateY = (46F + customHipRotation.y) - (1F + customAimRotation.y + customHipRotation.y) * adsSwitch;
 				rotateZ = (1 + customHipRotation.z) - (1.0F + customAimRotation.z + customHipRotation.z) * adsSwitch;
 				//translateXYZ = new Vector3f((-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch, (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch, (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch);
-				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch;
-				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;
-				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;
+				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch; //-1.3
+				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;//0.898
+				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
+			
 				
 				//Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
@@ -136,6 +123,22 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glTranslatef(translateX + (crouchZoom * isCrouching), 0F, 0F);
 				GL11.glTranslatef(0F, translateY, 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
+				
+				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+					float reloadRotate = 0F;
+					float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress
+							+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
+					reloadRotate = 1F;
+					if (effectiveReloadAnimationProgress < model.tiltGunTime)
+						reloadRotate = effectiveReloadAnimationProgress / model.tiltGunTime;
+					if (effectiveReloadAnimationProgress > model.tiltGunTime + model.unloadClipTime
+							+ model.loadClipTime)
+						reloadRotate = 1F - (effectiveReloadAnimationProgress
+								- (model.tiltGunTime + model.unloadClipTime + model.loadClipTime))
+								/ model.untiltGunTime;
+					
+					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(reloadRotate, adsSwitch);
+				}
 				
 				//Recoil
 				GL11.glTranslatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);

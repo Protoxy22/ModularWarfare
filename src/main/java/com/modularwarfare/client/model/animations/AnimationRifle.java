@@ -11,11 +11,21 @@ import net.minecraft.util.math.MathHelper;
 public class AnimationRifle extends WeaponAnimation {
 	
 	@Override
-	public void onGunAnimation(float reloadRotate)
+	public void onGunAnimation(float reloadRotate, float adsSwitch)
 	{
-		GL11.glRotatef(30F * reloadRotate, 0F, 0F, 1F);
-		GL11.glRotatef(-30F * reloadRotate * 1, 1F, 0F, 0F);
-		GL11.glTranslatef(0.5F * reloadRotate, 0F, -0.5F * reloadRotate);
+		//Translate X - Forwards/Backwards
+		GL11.glTranslatef(0.0F * reloadRotate, 0F, 0F);
+		//Translate Y - Up/Down
+		GL11.glTranslatef(0F, 0.0F * reloadRotate + (-0.064F * adsSwitch * reloadRotate), 0F);
+		//Translate Z - Left/Right
+		GL11.glTranslatef(0F, 0F, -0.2F * reloadRotate + (0.35F * adsSwitch * reloadRotate));
+		//Rotate X axis - Rolls Left/Right
+		GL11.glRotatef(10F * reloadRotate, 1F, 0F, 0F);
+		//Rotate Y axis - Angle Left/Right
+		GL11.glRotatef(-10F * reloadRotate + (1.0F * adsSwitch * reloadRotate), 0F, 1F, 0F);
+		//Rotate Z axis - Angle Up/Down
+		GL11.glRotatef(20F * reloadRotate + (1.0F * adsSwitch * reloadRotate), 0F, 0F, 1F);
+
 	}
 	
 	@Override
@@ -24,10 +34,20 @@ public class AnimationRifle extends WeaponAnimation {
 		float ammoPosition = clipPosition * 1/*getNumBulletsInReload(animations, gripAttachment, type, item)*/;
 		int bulletNum = MathHelper.floor(ammoPosition);
 		float bulletProgress = ammoPosition - bulletNum;
+		
+		//Translate X - Forwards/Backwards
+		GL11.glTranslatef(bulletProgress * -0.75F, 0F, 0F);
+		//Translate Y - Up/Down
+		GL11.glTranslatef(0F, bulletProgress * -8F, 0F);
+		//Translate Z - Left/Right
+		GL11.glTranslatef(0F, 0F, bulletProgress * 0F);
+		//Rotate X axis - Rolls Left/Right
+		GL11.glRotatef(30F * clipPosition, 1F, 0F, 0F);
+		//Rotate Y axis - Angle Left/Right
+		GL11.glRotatef(0F * clipPosition, 0F, 1F, 0F);
+		//Rotate Z axis - Angle Up/Down
+		GL11.glRotatef(-90F * clipPosition, 0F, 0F, 1F);
 
-		GL11.glRotatef(bulletProgress * 15F, 0F, 1F, 0F);
-		GL11.glRotatef(bulletProgress * 15F, 0F, 0F, 1F);
-		GL11.glTranslatef(bulletProgress * -1F * 1 / gunModel.modelScale, 0F, bulletProgress * 0.5F * 1 / gunModel.modelScale);
 	}
 
 }
