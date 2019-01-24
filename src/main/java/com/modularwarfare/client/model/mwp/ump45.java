@@ -17,12 +17,12 @@ import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
-public class ump45complete extends ModelGun //Same as Filename
+public class ump45 extends ModelGun //Same as Filename
 {
 	int textureX = 1024;
 	int textureY = 1024;
 
-	public ump45complete() //Same as Filename
+	public ump45() //Same as Filename
 	{
 		modelScale = 0.12F;
 		gunModel = new ModelRendererTurbo[736];

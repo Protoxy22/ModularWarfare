@@ -6,7 +6,7 @@
   "roundsPerMin": 600,
   "acceptedAmmo": ["mwp.ump9ammo", "mwp.ump45ammo", "mwp.doubleump9ammo", "mwp.tripleump9ammo"],
   "fireModes": ["full", "semi"],
-  "modelName": "mwp.ump45complete",
+  "modelName": "mwp.ump45",
   "dynamicAmmo": true,
   "weaponSounds": 
   [

@@ -158,9 +158,16 @@ public class ItemGun extends BaseItem {
 		GunType.setFireMode(heldStack, fireMode);
 		
 		GunType gunType = itemGun.type;
-		gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);		
+		if(WeaponSoundType.ModeSwitch != null) 
+		{
+		gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);	
+		System.out.println("not null");
+		}
+		else
+		{
+		//modeswitch_default
+		}
 	}
-	
 	/**
 	 * If the player is on a shoot cooldown
 	 * @param entityPlayer
