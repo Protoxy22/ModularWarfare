@@ -26,7 +26,7 @@ public class AnimStateMachine {
 			isGunEmpty = false;
 		if(reloading && reloadAnimationProgress >= 1F)
 			reloading = false;
-		
+				
 		//Recoil model
 		lastGunRecoil = gunRecoil;
 		if (gunRecoil > 0)

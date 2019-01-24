@@ -11,7 +11,10 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.animations.AnimationCustom;
+import com.modularwarfare.client.model.animations.AnimationRifle;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class akm extends ModelGun //Same as Filename
@@ -43,22 +46,7 @@ public class akm extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
 
 		gunSlideDistance = .75F;
-		//animationType = EnumAnimationType.CUSTOM;
-
-		rotateGunVertical = 20F;
-		rotateGunHorizontal = 1F;
-		tiltGun = 20F;
-		tiltGunTime = 0.15F;
-		unloadClipTime = 0.35F;
-		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
-		translateGun = new Vector3f(1 /16F, 1F /16F, -1F /16F);
-		rotateClipVertical = -80F;
-		rotateClipHorizontal = 1F;
-		tiltClip = 0F;
-		translateClip = new Vector3f(-5 /16F, -30F /16F, 5F /16F);
 		
-
 		hasFlash = false;
         hasArms = true;
         
@@ -101,8 +89,23 @@ public class akm extends ModelGun //Same as Filename
 	    rightHandCharge = true;
 	    chargeModifier = new Vector3f (16.0F, 8.0F, 16.0F);
 
-
-
+//		rotateGunVertical = 20F;
+//		rotateGunHorizontal = 1F;
+//		tiltGun = 20F;
+//		tiltGunTime = 0.15F;
+//		unloadClipTime = 0.35F;
+//		loadClipTime = 0.35F;
+//		untiltGunTime = 0.15F;
+//		translateGun = new Vector3f(1 /16F, 1F /16F, -1F /16F);
+//		rotateClipVertical = -80F;
+//		rotateClipHorizontal = 1F;
+//		tiltClip = 0F;
+//		translateClip = new Vector3f(-5 /16F, -30F /16F, 5F /16F);
+		
+//		AnimationCustom customAnimation = new AnimationCustom();
+//		customAnimation.setGunRotation(new Vector3f(20f, 0f, 1f));
+//	    WeaponAnimations.registerAnimation("akm_reload", customAnimation);	    	    
+	    
 		flipAll();
 	}
 

@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.common.guns.AmmoType;
@@ -92,9 +93,24 @@ public class RenderGun implements CustomItemRenderer {
 				float translateY = 0;
 				float translateZ = 0;
 				float crouchZoom = model.crouchZoom;
-				//Vector3f translateXYZ;
 				int isSprinting = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
+				
+				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+					float reloadRotate = 0F;
+					float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress
+							+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
+					reloadRotate = 1F;
+					if (effectiveReloadAnimationProgress < model.tiltGunTime)
+						reloadRotate = effectiveReloadAnimationProgress / model.tiltGunTime;
+					if (effectiveReloadAnimationProgress > model.tiltGunTime + model.unloadClipTime
+							+ model.loadClipTime)
+						reloadRotate = 1F - (effectiveReloadAnimationProgress
+								- (model.tiltGunTime + model.unloadClipTime + model.loadClipTime))
+								/ model.untiltGunTime;
+					
+					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(reloadRotate);
+				}
 				
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * isSprinting), model.rotateHipPosition.y + (model.sprintRotate.y * isSprinting), model.rotateHipPosition.z + (model.sprintRotate.z * isSprinting));
@@ -160,6 +176,28 @@ public class RenderGun implements CustomItemRenderer {
 						ItemStack stackAmmo =  new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
 						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
 						AmmoType ammoType = itemAmmo.type;
+						
+						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+							float reloadRotate = 0F;
+							float tiltGunTime = model.tiltGunTime, unloadClipTime = model.unloadClipTime, loadClipTime = model.loadClipTime;
+							float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress
+									+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
+							reloadRotate = 1F;
+							if (effectiveReloadAnimationProgress < model.tiltGunTime)
+								reloadRotate = effectiveReloadAnimationProgress / model.tiltGunTime;
+							if (effectiveReloadAnimationProgress > model.tiltGunTime + model.unloadClipTime
+									+ model.loadClipTime)
+								reloadRotate = 1F - (effectiveReloadAnimationProgress
+										- (model.tiltGunTime + model.unloadClipTime + model.loadClipTime))
+										/ model.untiltGunTime;
+							float clipPosition = 0F;
+							if (effectiveReloadAnimationProgress > tiltGunTime && effectiveReloadAnimationProgress < tiltGunTime + unloadClipTime)
+								clipPosition = (effectiveReloadAnimationProgress - tiltGunTime) / unloadClipTime;
+							if (effectiveReloadAnimationProgress >= tiltGunTime + unloadClipTime && effectiveReloadAnimationProgress < tiltGunTime + unloadClipTime + loadClipTime)
+								clipPosition = 1F - (effectiveReloadAnimationProgress - (tiltGunTime + unloadClipTime)) / loadClipTime;
+							float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((effectiveReloadAnimationProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, reloadRotate);
+						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)
 						{

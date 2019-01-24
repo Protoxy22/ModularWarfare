@@ -15,12 +15,14 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.export.ItemModelExport;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.client.model.animations.AnimationRifle;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
@@ -64,6 +66,8 @@ public class ClientProxy extends CommonProxy {
 		new ClientRenderHooks();
 		new ClientTickHandler();
 		new ClientWeaponHandler();
+		
+		WeaponAnimations.registerAnimation("rifle", new AnimationRifle());
 	}
 	
 	@SubscribeEvent

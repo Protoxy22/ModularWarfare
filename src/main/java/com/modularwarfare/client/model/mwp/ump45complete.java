@@ -12,6 +12,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
@@ -67,6 +68,7 @@ public class ump45complete extends ModelGun //Same as Filename
         leftHandAmmo = true;
         
         ammoMap.put("mwp.tripleump9ammo", new RenderVariables(new Vector3f(0F, 0F, 0F), 0.12F));
+	    reloadAnimation = WeaponAnimations.RIFLE;
 
 		flipAll();
 	}

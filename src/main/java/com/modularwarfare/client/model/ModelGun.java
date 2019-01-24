@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 import net.minecraft.client.model.ModelBase;
@@ -200,6 +201,8 @@ public class ModelGun extends TurboBase
 	private static float lightmapLastX;
     private static float lightmapLastY;
 	private static boolean optifineBreak = false;
+	
+	public static String reloadAnimation;
 	
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
 
