@@ -82,6 +82,10 @@ public class ClientTickHandler extends ForgeEvent {
 			float sprintSpeed = (0.15f) * renderTick;
 			float sprintValue = player.isSprinting() ? RenderGun.sprintSwitch + sprintSpeed : RenderGun.sprintSwitch - sprintSpeed;
 			RenderGun.sprintSwitch = Math.max(0, Math.min(1, sprintValue));;
+			
+			float crouchSpeed = (0.15f) * renderTick;
+			float crouchValue = player.isSneaking() ? RenderGun.crouchSwitch + crouchSpeed : RenderGun.crouchSwitch - crouchSpeed;
+			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));;
 		}
 	}
 	

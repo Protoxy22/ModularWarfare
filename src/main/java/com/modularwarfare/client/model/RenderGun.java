@@ -29,6 +29,7 @@ public class RenderGun implements CustomItemRenderer {
 
 	public static float adsSwitch = 0f;
 	public static float sprintSwitch = 0f;
+	public static float crouchSwitch = 0f;
 	private int direction = 0;
 	
 	@Override
@@ -94,14 +95,14 @@ public class RenderGun implements CustomItemRenderer {
 				float translateY = 0;
 				float translateZ = 0;
 				float crouchZoom = model.crouchZoom;
-				int isSprinting = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
+				//int sprintSwitch = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				
 
 				
 				//Store the model settings as local variables to reduce calls
-				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * isSprinting), model.rotateHipPosition.y + (model.sprintRotate.y * isSprinting), model.rotateHipPosition.z + (model.sprintRotate.z * isSprinting));
-				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * isSprinting), model.translateHipPosition.y + (model.sprintTranslate.y * isSprinting), model.translateHipPosition.z + (model.sprintTranslate.z * isSprinting));
+				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch));
+				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch));
 				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 				Vector3f sprintRotate = new Vector3f(model.sprintRotate.x, model.sprintRotate.y, model.sprintRotate.z);
@@ -111,7 +112,6 @@ public class RenderGun implements CustomItemRenderer {
 				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
 				rotateY = (46F + customHipRotation.y) - (1F + customAimRotation.y + customHipRotation.y) * adsSwitch;
 				rotateZ = (1 + customHipRotation.z) - (1.0F + customAimRotation.z + customHipRotation.z) * adsSwitch;
-				//translateXYZ = new Vector3f((-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch, (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch, (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch);
 				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch; //-1.3
 				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;//0.898
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
@@ -121,7 +121,7 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
 				GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
-				GL11.glTranslatef(translateX + (crouchZoom * isCrouching), 0F, 0F);
+				GL11.glTranslatef(translateX + (crouchZoom * crouchSwitch), 0F, 0F);
 				GL11.glTranslatef(0F, translateY, 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
 				

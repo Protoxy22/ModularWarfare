@@ -42,7 +42,7 @@ public class AnimStateMachine {
 	{
 		reloading = true;
 		lastReloadAnimationProgress = reloadAnimationProgress = 0F;
-		reloadAnimationTime = 100;
+		reloadAnimationTime = reloadTime;
 	}
 	
 	public void triggerEmpty()

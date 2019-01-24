@@ -15,6 +15,7 @@ public class AnimationRifle extends WeaponAnimation {
 	{
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * reloadRotate, 0F, 0F);
+		//System.out.println(0.0F * reloadRotate);
 		//Translate Y - Up/Down
 		GL11.glTranslatef(0F, 0.0F * reloadRotate + (-0.064F * adsSwitch * reloadRotate), 0F);
 		//Translate Z - Left/Right
@@ -22,9 +23,9 @@ public class AnimationRifle extends WeaponAnimation {
 		//Rotate X axis - Rolls Left/Right
 		GL11.glRotatef(10F * reloadRotate, 1F, 0F, 0F);
 		//Rotate Y axis - Angle Left/Right
-		GL11.glRotatef(-10F * reloadRotate + (1.0F * adsSwitch * reloadRotate), 0F, 1F, 0F);
+		GL11.glRotatef(-10F * reloadRotate + (1F * adsSwitch), 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
-		GL11.glRotatef(20F * reloadRotate + (1.0F * adsSwitch * reloadRotate), 0F, 0F, 1F);
+		GL11.glRotatef(15F * reloadRotate + (1F * adsSwitch), 0F, 0F, 1F);
 
 	}
 	
