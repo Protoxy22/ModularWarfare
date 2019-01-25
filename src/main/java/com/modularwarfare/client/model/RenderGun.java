@@ -40,6 +40,7 @@ public class RenderGun implements CustomItemRenderer {
 	public static float swayHorizontal = 0f;
 	public static Float swayVerticalEP;
 	public static Float swayHorizontalEP;
+	public static int shotState = 0;
 	
 	private int direction = 0;
 	
