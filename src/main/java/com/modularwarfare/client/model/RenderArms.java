@@ -3,6 +3,8 @@ package com.modularwarfare.client.model;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.client.AnimStateMachine;
+
 public class RenderArms {
 	
 	/*
@@ -15,7 +17,7 @@ public class RenderArms {
 	 */
 	
 	// right hand pump action animation
-	/*public static void renderArmPump(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
 	{
 		GL11.glTranslatef(-(armPosition.x
 				- Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) / model.pumpModifier),
@@ -25,7 +27,7 @@ public class RenderArms {
 	
 	// This moves the right hand if leftHandAmmo & handCharge are true (For left
 	// hand reload with right hand charge)
-	public static void renderArmCharge(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
 	{
 		GL11.glTranslatef(
 				-(armPosition.x
@@ -42,7 +44,7 @@ public class RenderArms {
 	
 	// This moves the right hand if leftHandAmmo & handBolt are true (For left hand
 	// reload with right hand bolt action)
-	public static void renderArmBolt(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
 	{
 		GL11.glTranslatef(
 				(armPosition.x + Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing)
@@ -56,13 +58,13 @@ public class RenderArms {
 		handleRotate(rotationPoint);
 	}
 	
-	public static void renderArmDefault(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmDefault(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
 	{
 		GL11.glTranslatef(armPosition.x, armPosition.y, armPosition.z);
 		handleRotate(rotationPoint);
 	}
 	
-	public static void renderArmReload(ModelGun model, GunAnimations anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
 	{
 		GL11.glTranslatef(armPosition.x, armPosition.y, armPosition.z);
 		handleRotate(rotationPoint);
@@ -73,6 +75,6 @@ public class RenderArms {
 		GL11.glRotatef(rotationPoint.y, 0F, 1F, 0F);
 		GL11.glRotatef(rotationPoint.z, 0F, 0F, 1F);
 		GL11.glRotatef(rotationPoint.x, 1F, 0F, 0F);
-	}*/
+	}
 
 }
