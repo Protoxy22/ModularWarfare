@@ -245,6 +245,7 @@ public class RenderGun implements CustomItemRenderer {
 			GL11.glPopMatrix();
 		}
 		GL11.glPopMatrix();
+		//gunType.reloadModel();
 	}
 	
 	private float getReloadAnimClipPos(float effectiveReloadAnimationProgress, ModelGun model) {
