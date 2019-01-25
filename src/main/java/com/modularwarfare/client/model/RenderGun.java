@@ -16,6 +16,7 @@ import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
@@ -126,7 +127,6 @@ public class RenderGun implements CustomItemRenderer {
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
 			
 				float bobModifier = !entityLivingBase.isSprinting() ? adsSwitch == 0F ? !animations.reloading ? 0.7F : 0.2F: 0F : !animations.reloading ? adsSwitch == 0 ? 0.75F : 0.15F : 0.4F;
-				System.out.println(bobModifier);
 				EntityPlayer entityplayer = (EntityPlayer)Minecraft.getMinecraft().getRenderViewEntity();
 				float f1 = (entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified) * bobModifier;
 				float f2 = -(entityplayer.distanceWalkedModified + f1 * smoothing) * bobModifier;
@@ -169,13 +169,13 @@ public class RenderGun implements CustomItemRenderer {
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
 
+				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms)
+					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
+				
 				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
 						"skins/" + gunType.weaponSkins[0].getSkin() + ".png"));
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
-
-				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms)
-					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
 				
 				model.renderGun(f);
 				model.renderDefaultScope(f);
@@ -239,7 +239,8 @@ public class RenderGun implements CustomItemRenderer {
 				}
 				GL11.glPopMatrix();
 				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {
-					 Minecraft mc = Minecraft.getMinecraft(); renderAnimArm(mc.player, model, gunType, animations); }
+					 Minecraft mc = Minecraft.getMinecraft(); renderAnimArm(mc.player, model, gunType, animations); 
+				}
 			}
 			GL11.glPopMatrix();
 		}
@@ -289,15 +290,16 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderFirstPersonArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelBiped modelBipedMain = new ModelBiped(0.0F);
-		mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 
 		float f = 1.0F;
 		GL11.glColor3f(f, f, f);
+		//System.out.println("called");
 		// TODO: find out if still needed?
 		//modelBipedMain.onGround = 0.0F;
 		
 		GL11.glPushMatrix();
 		{
+			mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 			if (!anim.reloading && model.righthandPump) {
 				RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
 			} 
@@ -348,7 +350,7 @@ public class RenderGun implements CustomItemRenderer {
 
 	private void renderAnimArm(EntityPlayer player, ModelGun model, GunType type, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
-		ModelBiped modelBipedMain = new ModelBiped(0.0F);
+		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 		GL11.glPushMatrix();
 		GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
@@ -373,11 +375,21 @@ public class RenderGun implements CustomItemRenderer {
 		}
 
 		GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-		modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-		modelBipedMain.bipedRightArm.offsetY = 0F;
+		GlStateManager.color(1.0F, 1.0F, 1.0F);
+		float f1 = 0.0625F;
+		GlStateManager.enableBlend();
+		modelplayer.swingProgress = 0.0F;
+		modelplayer.isSneak = false;
+		modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		modelplayer.bipedRightArm.rotateAngleX = 0.0F;
+		modelplayer.bipedRightArm.render(0.0625F);
+		modelplayer.bipedRightArmwear.rotateAngleX = 0.0F;
+		//modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		//modelBipedMain.bipedRightArm.offsetY = 0F;
 		if (!model.leftHandAmmo) {
-			modelBipedMain.bipedRightArm.render(0.0625F);
+			modelplayer.bipedRightArmwear.render(0.0625F);
 		}
+		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 
 		GL11.glPushMatrix();
@@ -397,9 +409,9 @@ public class RenderGun implements CustomItemRenderer {
 		}
 
 		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-		modelBipedMain.bipedLeftArm.offsetY = 0F;
+		modelplayer.bipedLeftArm.offsetY = 0F;
 		if (model.leftHandAmmo) {
-			modelBipedMain.bipedLeftArm.render(0.0625F);
+			modelplayer.bipedLeftArm.render(0.0625F);
 		}
 		GL11.glPopMatrix();
 
