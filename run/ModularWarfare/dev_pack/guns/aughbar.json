@@ -4,7 +4,7 @@
   "iconName": "mwp.aughbar",
   "gunDamage": 5,
   "roundsPerMin": 700,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.aughbarammo"],
   "modelName": "mwp.aughbar",
   "weaponSounds": 
   [

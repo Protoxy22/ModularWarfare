@@ -86,8 +86,8 @@ public class glock18 extends ModelGun //Same as Filename
 
 		crouchZoom = -0.10F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(-5.0F, 0.0F, 40.0F);
-		sprintTranslate = new Vector3f(0.4F, -0.2F, -0.1F);
+		sprintRotate = new Vector3f(0.0F, -5.0F, 50.0F);
+		sprintTranslate = new Vector3f(1.3F, 0.70F, 0.1F);
 		
 	    chargeHandleDistance = 0.5F;
 	    chargeDelay = 0;

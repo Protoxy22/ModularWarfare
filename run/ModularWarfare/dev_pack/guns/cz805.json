@@ -1,0 +1,28 @@
+{
+  "displayName": "CZ 805",
+  "internalName": "mwp.cz805",
+  "iconName": "mwp.cz805",
+  "gunDamage": 5,
+  "roundsPerMin": 600,
+  "acceptedAmmo": ["mwp.cz805ammo"],
+  "modelName": "mwp.cz805",
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.asg1"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.f.85"
+    }
+  ],
+  "weaponSkins": [
+    {
+      "internalName": "mwp.default",
+      "displayName": "Default",
+      "skinAsset": "cz805_default",
+      "requiredItems": ["dyeBlack/1"]
+    }
+  ]
+}
