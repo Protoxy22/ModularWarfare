@@ -98,8 +98,8 @@ public class ClientTickHandler extends ForgeEvent {
 			float maxHorizontal = 0.3f;
 			float maxVertical = 0.1f;
 			float swaySpeed = 0.0055f * renderTick;
-			if(RenderGun.swayHorizontalEP == null) NumberHelper.generateInRange(maxHorizontal);
-			if(RenderGun.swayVerticalEP == null) NumberHelper.generateInRange(maxVertical);
+			if(RenderGun.swayHorizontalEP == null) RenderGun.swayHorizontalEP = NumberHelper.generateInRange(maxHorizontal);
+			if(RenderGun.swayVerticalEP == null) RenderGun.swayVerticalEP = NumberHelper.generateInRange(maxVertical);
 			RenderGun.swayHorizontal = NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed);
 			RenderGun.swayVertical = NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2);
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
