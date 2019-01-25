@@ -9,6 +9,7 @@ import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.utility.NumberHelper;
 import com.modularwarfare.utility.event.ForgeEvent;
@@ -27,6 +28,9 @@ public class ClientTickHandler extends ForgeEvent {
 	/** The amount of compensation applied to recoil in order to bring it back to normal */
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
+	
+	private int tickCount = 0;
+	private int maxTickCount = 20;
 	
 	private final Random random;
 	
@@ -122,6 +126,23 @@ public class ClientTickHandler extends ForgeEvent {
 			return;
 		
 		EntityPlayerSP player = minecraft.player;
+		
+		if(ModularWarfare.DEV_ENV)
+		{
+			if(tickCount == maxTickCount)
+			{
+				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
+				{
+					GunType gunType = (GunType) ((ItemGun) player.getHeldItemMainhand().getItem()).type;
+					gunType.reloadModel();
+				}
+			}
+			
+			if(tickCount >= maxTickCount)
+				tickCount = 0;
+			else
+				tickCount++;
+		}
 		
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
