@@ -289,8 +289,7 @@ public class RenderGun implements CustomItemRenderer {
 	
 	private void renderFirstPersonArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
-		ModelBiped modelBipedMain = new ModelBiped(0.0F);
-
+		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float f = 1.0F;
 		GL11.glColor3f(f, f, f);
 		//System.out.println("called");
@@ -321,12 +320,27 @@ public class RenderGun implements CustomItemRenderer {
 				RenderArms.renderArmReload(model, anim, smoothing, model.rightArmReloadRot, model.rightArmReloadPos);
 			}
 			
+//			GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
+//			modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+//			modelBipedMain.bipedRightArm.offsetY = 0F;
+//			if (model.leftHandAmmo) {
+//				modelBipedMain.bipedRightArm.render(0.0625F);
+//			}
 			GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-			modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-			modelBipedMain.bipedRightArm.offsetY = 0F;
+			GlStateManager.color(1.0F, 1.0F, 1.0F);
+			float f1 = 0.0625F;
+			GlStateManager.enableBlend();
+			modelplayer.swingProgress = 0.0F;
+			modelplayer.isSneak = false;
+			modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+			modelplayer.bipedRightArm.rotateAngleX = 0.0F;
+			modelplayer.bipedRightArmwear.rotateAngleX = 0.0F;
+			//modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+			//modelBipedMain.bipedRightArm.offsetY = 0F;
 			if (model.leftHandAmmo) {
-				modelBipedMain.bipedRightArm.render(0.0625F);
+				modelplayer.bipedRightArm.render(0.0625F);
 			}
+			GlStateManager.disableBlend();
 		}
 		GL11.glPopMatrix();
 
@@ -350,11 +364,25 @@ public class RenderGun implements CustomItemRenderer {
 			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
 		}
 
+//		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+//		modelBipedMain.bipedLeftArm.offsetY = 0F;
+//		if (!model.leftHandAmmo) {
+//			modelBipedMain.bipedLeftArm.render(0.0625F);
+//		}
 		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-		modelBipedMain.bipedLeftArm.offsetY = 0F;
+		GlStateManager.color(1.0F, 1.0F, 1.0F);
+		GlStateManager.enableBlend();
+		modelplayer.swingProgress = 0.0F;
+		modelplayer.isSneak = false;
+		modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		modelplayer.bipedLeftArm.rotateAngleX = 0.0F;
+		modelplayer.bipedLeftArmwear.rotateAngleX = 0.0F;
+		//modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		//modelBipedMain.bipedRightArm.offsetY = 0F;
 		if (!model.leftHandAmmo) {
-			modelBipedMain.bipedLeftArm.render(0.0625F);
+			modelplayer.bipedLeftArm.render(0.0625F);
 		}
+		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 	}
 
@@ -425,11 +453,25 @@ public class RenderGun implements CustomItemRenderer {
 			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
 		}
 
-		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+		/*GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 		modelplayer.bipedLeftArm.offsetY = 0F;
 		if (model.leftHandAmmo) {
 			modelplayer.bipedLeftArm.render(0.0625F);
+		}*/
+		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+		GlStateManager.color(1.0F, 1.0F, 1.0F);
+		GlStateManager.enableBlend();
+		modelplayer.swingProgress = 0.0F;
+		modelplayer.isSneak = false;
+		modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		modelplayer.bipedLeftArm.rotateAngleX = 0.0F;
+		modelplayer.bipedLeftArmwear.rotateAngleX = 0.0F;
+		//modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+		//modelBipedMain.bipedRightArm.offsetY = 0F;
+		if (model.leftHandAmmo) {
+			modelplayer.bipedLeftArm.render(0.0625F);
 		}
+		GlStateManager.disableBlend();
 		GL11.glPopMatrix();
 
 		GL11.glPopMatrix();

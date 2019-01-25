@@ -90,10 +90,10 @@ public class ItemGun extends BaseItem {
 			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.FULL)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
-			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.SEMI)
+			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && (gunType.getFireMode(heldStack) == WeaponFireMode.SEMI || gunType.getFireMode(heldStack) == WeaponFireMode.BURST))
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
-			}
+			} 
 			lastFireButtonHeld = fireButtonHeld;
 		}
 	}
@@ -111,46 +111,50 @@ public class ItemGun extends BaseItem {
 		if(isOnShootCooldown(entityPlayer) || isReloading(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
 			return;
 		
-		if(!hasNextShot(heldStack))
+		int shotCount = fireMode == WeaponFireMode.BURST ? gunType.numBurstRounds : 1;
+		for(int i = 0; i < shotCount; i++)
 		{
-			// play out of ammo click
-			return;
-		}
-		
-		// Weapon pre fire event
-		WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
-		MinecraftForge.EVENT_BUS.post(preFireEvent);
-		if(preFireEvent.isCanceled())
-			return;
-		
-		// Raytrace
-		Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
-		List<Entity> entities = line.getEntities(world, Entity.class, false);
-		
-		// Weapon post fire event
-		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
-		MinecraftForge.EVENT_BUS.post(postFireEvent);
-		
-		for(Entity e : postFireEvent.getAffectedEntities())
-		{
-			if(e instanceof EntityLivingBase)
+			if(!hasNextShot(heldStack))
 			{
-				EntityLivingBase targetLiving = (EntityLivingBase) e;
-				if(targetLiving != entityPlayer)
+				// play out of ammo click
+				return;
+			}
+						
+			// Weapon pre fire event
+			WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
+			MinecraftForge.EVENT_BUS.post(preFireEvent);
+			if(preFireEvent.isCanceled())
+				return;
+			
+			// Raytrace
+			Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
+			List<Entity> entities = line.getEntities(world, Entity.class, false);
+			
+			// Weapon post fire event
+			WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
+			MinecraftForge.EVENT_BUS.post(postFireEvent);
+			
+			for(Entity e : postFireEvent.getAffectedEntities())
+			{
+				if(e instanceof EntityLivingBase)
 				{
-					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
-					targetLiving.hurtResistantTime = 0;
+					EntityLivingBase targetLiving = (EntityLivingBase) e;
+					if(targetLiving != entityPlayer)
+					{
+						targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
+						targetLiving.hurtResistantTime = 0;
+					}
 				}
 			}
+			
+			consumeShot(heldStack);
+			
+			// Sound
+			gunType.playSound(entityPlayer, WeaponSoundType.Fire);
+			
+			// Fire Delay
+			ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 		}
-		
-		consumeShot(heldStack);
-		
-		// Sound
-		gunType.playSound(entityPlayer, WeaponSoundType.Fire);
-		
-		// Fire Delay
-		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 	}
 	
 	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
@@ -230,6 +234,11 @@ public class ItemGun extends BaseItem {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
+    	GunType gunType = ((ItemGun) stack.getItem()).type;
+    	
+    	if(gunType == null)
+    		return;
+    	
     	if(hasAmmoLoaded(stack))
     	{
     		ItemStack ammoStack = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
@@ -267,6 +276,11 @@ public class ItemGun extends BaseItem {
 	        	} 
 			}
     	}
+    	
+    	String baseDisplayLine = "%bFire Mode: %g%s";
+    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+    	tooltip.add(String.format(baseDisplayLine, GunType.getFireMode(stack)));
     }
 	
 	@Override

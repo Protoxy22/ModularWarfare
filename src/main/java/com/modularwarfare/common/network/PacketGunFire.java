@@ -32,7 +32,6 @@ public class PacketGunFire extends PacketBase {
 			if(fireMode == null)
 				return;
 			
-			// TODO: add ammo check here to save time
 			itemGun.onGunFire(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun, fireMode);
 		}
 	}
