@@ -11,6 +11,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 //import com.flansmod.client.model.EnumAnimationType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
@@ -39,19 +40,19 @@ public class glock18 extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.15F, 0F);//forward/up/? 
 
 
-		gunSlideDistance = 0.5F;
-		//animationType = EnumAnimationType.CUSTOM;
-		tiltGunTime = 0.15F;
-		unloadClipTime = 0.35F;
-		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
-		rotateGunVertical = 20F;
-		rotateGunHorizontal = 10F;
-		tiltGun = 20F;
-		translateGun = new Vector3f(3 /16F, 2F /16F, 1F /16F);
-		rotateClipVertical = 1F;
-		rotateClipHorizontal = 1F;
-		tiltClip = 25F;
+		//gunSlideDistance = 0.5F;
+	    reloadAnimation = WeaponAnimations.PISTOL;
+		//tiltGunTime = 0.15F;
+		//unloadClipTime = 0.35F;
+		//loadClipTime = 0.35F;
+		//untiltGunTime = 0.15F;
+		//rotateGunVertical = 20F;
+		//rotateGunHorizontal = 10F;
+		//tiltGun = 20F;
+		//translateGun = new Vector3f(3 /16F, 2F /16F, 1F /16F);
+		//rotateClipVertical = 1F;
+		//rotateClipHorizontal = 1F;
+		//tiltClip = 25F;
 
 
 		translateClip = new Vector3f(-6 /16F, -20F /16F, 0F /16F);

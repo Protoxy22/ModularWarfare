@@ -8,7 +8,7 @@ import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.util.math.MathHelper;
 
-public class AnimationRifle extends WeaponAnimation {
+public class AnimationRifle2 extends WeaponAnimation {
 	
 	@Override
 	public void onGunAnimation(float reloadRotate, float adsSwitch)

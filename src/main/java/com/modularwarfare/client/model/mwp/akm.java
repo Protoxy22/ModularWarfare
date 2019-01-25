@@ -36,7 +36,7 @@ public class akm extends ModelGun //Same as Filename
 		initslideModel_1();
 
 		gripAttachPoint = new Vector3f(55 /16F, 16F /16F, 0F /16F);
-
+	    reloadAnimation = WeaponAnimations.RIFLE2;
 		modelScale = 0.18F;
 		translateAll(0F, -12.0F, 0.0F);//forward/down/right
 		rotateAimPosition = new Vector3f(0F, 0F, 0F);

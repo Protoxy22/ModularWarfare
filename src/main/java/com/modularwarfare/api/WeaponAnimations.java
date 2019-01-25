@@ -8,6 +8,8 @@ public class WeaponAnimations {
 	
 	// Prefabs
 	public static String RIFLE = "rifle";
+	public static String RIFLE2 = "rifle2";
+	public static String PISTOL = "pistol";
 	
 	public static String registerAnimation(String internalName, WeaponAnimation animation)
 	{
