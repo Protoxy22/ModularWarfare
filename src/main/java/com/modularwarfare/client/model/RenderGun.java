@@ -41,7 +41,7 @@ public class RenderGun implements CustomItemRenderer {
 		if (gunType == null)
 			return;
 
-		ModelGun model = gunType.model;
+		ModelGun model = (ModelGun) gunType.model;
 		if (model == null)
 			return;
 		{
@@ -52,7 +52,7 @@ public class RenderGun implements CustomItemRenderer {
 
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine animations, GunType gunType, Object... data) {
 
-		ModelGun model = gunType.model;
+		ModelGun model = (ModelGun) gunType.model;
 		float min = -1.5f;
         float max = 1.5f;
         float randomNum = new Random().nextFloat();
@@ -147,7 +147,7 @@ public class RenderGun implements CustomItemRenderer {
 				float modelScale = model.modelScale;
 
 				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-						"skins/" + gunType.weaponSkins[0].getSkin(gunType) + ".png"));
+						"skins/" + gunType.weaponSkins[0].getSkin() + ".png"));
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 
@@ -176,6 +176,7 @@ public class RenderGun implements CustomItemRenderer {
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)
 						{
+							ModelAmmo modelAmmo = (ModelAmmo) ammoType.model;
 							if(model.ammoMap.containsKey(ammoType.internalName))
 							{
 								Vector3f ammoOffset = model.ammoMap.get(ammoType.internalName).offset;
@@ -188,9 +189,9 @@ public class RenderGun implements CustomItemRenderer {
 									float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress + (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 									if(animations.reloading && effectiveReloadAnimationProgress < 0.5f)
 										 magCount -= 1;
-									if(ammoType.model.magCountOffset.containsKey(magCount))
+									if(modelAmmo.magCountOffset.containsKey(magCount))
 									{
-										RenderVariables magRenderVar = ammoType.model.magCountOffset.get(magCount);
+										RenderVariables magRenderVar = modelAmmo.magCountOffset.get(magCount);
 										Vector3f magOffset = magRenderVar.offset;
 										Vector3f magRotate = magRenderVar.rotation;
 										GL11.glTranslatef(magOffset.x, magOffset.y, magOffset.z);
@@ -203,7 +204,7 @@ public class RenderGun implements CustomItemRenderer {
 								Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 							}
-							ammoType.model.renderAmmo(f);
+							modelAmmo.renderAmmo(f);
 						} else
 						{
 							model.renderAmmo(f);

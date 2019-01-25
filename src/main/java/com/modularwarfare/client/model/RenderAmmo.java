@@ -34,7 +34,7 @@ public class RenderAmmo implements CustomItemRenderer {
 		if (ammoType == null)
 			return;
 
-		ModelAmmo model = ammoType.model;
+		ModelAmmo model = (ModelAmmo) ammoType.model;
 		if (model == null)
 			return;
 		{
@@ -44,7 +44,7 @@ public class RenderAmmo implements CustomItemRenderer {
 
 	private void renderAmmo(CustomItemRenderType renderType, ItemStack item, AmmoType ammoType, Object... data) {
 
-		ModelAmmo model = ammoType.model;
+		ModelAmmo model = (ModelAmmo) ammoType.model;
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
 		if (renderEngine == null)
@@ -95,7 +95,7 @@ public class RenderAmmo implements CustomItemRenderer {
 			{
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + ammoType.skinAsset + ".png"));
+				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + ammoType.weaponSkins[0].getSkin() + ".png"));
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				model.renderAmmo(f);
 			}

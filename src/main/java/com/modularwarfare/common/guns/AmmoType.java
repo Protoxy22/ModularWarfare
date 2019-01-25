@@ -9,10 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class AmmoType extends BaseType {
-	
-	public String modelName;
-	public String skinAsset;
-	
+		
 	//Ammo Override variables
 	/** The number of bullet entities created by each shot */
 	public int numBullets = 1;
@@ -42,29 +39,16 @@ public class AmmoType extends BaseType {
 	/** The ammo type(s) that can be loaded into this item */
 	public String[] subAmmo;
 	
-	
-	@SideOnly(Side.CLIENT)
-	public transient ModelAmmo model;
-
 	@Override
 	public void loadExtraValues()
 	{
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-		{
-			reloadModel();
-		}
+		loadBaseValues();
 	}
 	
 	@Override
 	public void reloadModel()
 	{
 		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelAmmo.class);
-	}
-	
-	@Override
-	public boolean hasModel()
-	{
-		return model != null;
 	}
 	
 }

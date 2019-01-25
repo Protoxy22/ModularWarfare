@@ -74,7 +74,7 @@ public class ClientTickHandler extends ForgeEvent {
 		
 		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
-			ModelGun model = ((ItemGun) player.getHeldItemMainhand().getItem()).type.model;
+			ModelGun model = (ModelGun) ((ItemGun) player.getHeldItemMainhand().getItem()).type.model;
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;

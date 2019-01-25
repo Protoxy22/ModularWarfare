@@ -7,6 +7,7 @@ import java.util.Random;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.mwp.akm;
 import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
@@ -28,12 +29,6 @@ public class GunType extends BaseType {
 	
 	/** Weapon Classification for later use with default animations etc */
 	public WeaponType weaponType;
-	
-	//Visual variables
-	/** The model file for this gun */
-	public String modelName;
-	/** Weapon model skins/textures */
-	public SkinType[] weaponSkins;
 	
 	//Munition variables
 	/** Damage inflicted per bullet. Multiplied by the bullet damage value. */
@@ -96,24 +91,16 @@ public class GunType extends BaseType {
 	public boolean dynamicAmmo = false;
 	
 	public boolean allowSprintFiring = true;
-	
 	public boolean allowDefaultSounds = true;
 	
 	//Sound Variables
 	private SoundEntry[] weaponSounds;
 	public HashMap<WeaponSoundType, ArrayList<SoundEntry>> weaponSoundMap;
 	
-	@SideOnly(Side.CLIENT)
-	public transient ModelGun model;
-	
 	@Override
 	public void loadExtraValues()
 	{
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-		{
-			reloadModel();
-		}
-		
+		loadBaseValues();
 		fireTickDelay = 1200 / roundsPerMin;
 		
 		weaponSoundMap = new HashMap<WeaponSoundType, ArrayList<SoundEntry>>();
@@ -146,19 +133,13 @@ public class GunType extends BaseType {
 					ModularWarfare.LOGGER.error(String.format("Sound event '%s' is not a valid weapon sound event for type '%s'", soundEntry.soundEvent != null ? soundEntry.soundEvent : "null", internalName));
 				}
 			}
-		}
+		}		
 	}
 	
 	@Override
 	public void reloadModel()
 	{
-		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelGun.class);
-	}
-	
-	@Override
-	public boolean hasModel()
-	{
-		return model != null;
+		model = ModularWarfare.PROXY.loadModel(modelName != null ? modelName : internalName, internalName, ModelGun.class);
 	}
 	
 	public void playSound(EntityPlayer entityPlayer, WeaponSoundType weaponSoundType)

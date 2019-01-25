@@ -11,8 +11,7 @@
     {
       "internalName": "mwp.default",
       "displayName": "Default",
-      "skinAsset": "akm_default",
-      "requiredItems": ["dyeBlack/1"]
+      "skinAsset": "akm_default"
     }
   ],
   "weaponSounds": [

@@ -108,7 +108,7 @@ public class ItemGun extends BaseItem {
 		GunType gunType = itemGun.type;
 		
 		// Can fire checks
-		if(isOnShootCooldown(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
+		if(isOnShootCooldown(entityPlayer) || isReloading(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
 			return;
 		
 		if(!hasNextShot(heldStack))
@@ -160,12 +160,11 @@ public class ItemGun extends BaseItem {
 		GunType gunType = itemGun.type;
 		if(WeaponSoundType.ModeSwitch != null) 
 		{
-		gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);	
-		System.out.println("not null");
+			gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);	
 		}
 		else
 		{
-		//modeswitch_default
+			//modeswitch_default
 		}
 	}
 	/**
@@ -176,6 +175,16 @@ public class ItemGun extends BaseItem {
 	public static boolean isOnShootCooldown(EntityPlayer entityPlayer)
 	{
 		return ServerTickHandler.playerShootCooldown.containsKey(entityPlayer.getUniqueID());
+	}
+	
+	/**
+	 * If the player is on a reload cooldown
+	 * @param entityPlayer
+	 * @return reload cooldown
+	 */
+	public static boolean isReloading(EntityPlayer entityPlayer)
+	{
+		return ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID());
 	}
 	
 	public static boolean hasAmmoLoaded(ItemStack gunStack)

@@ -2,8 +2,20 @@ package com.modularwarfare.common.type;
 
 import java.util.Map;
 
+import com.modularwarfare.client.model.TurboBase;
+import com.modularwarfare.common.guns.SkinType;
+
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 public class BaseType {
 	
+	/** The model file for this gun */
+	public String modelName;
+	public TurboBase model;
+	/** Weapon model skins/textures */
+	public SkinType[] weaponSkins;
 	public String internalName;
 	/** Used to generate .lang files automatically */
 	public String displayName;
@@ -20,6 +32,20 @@ public class BaseType {
 		
 	}
 	
+	public void loadBaseValues()
+	{
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		{
+			reloadModel();
+		}
+		
+		if(weaponSkins == null)
+		{
+			System.out.println(internalName);
+			weaponSkins = new SkinType[]{SkinType.getDefaultSkin(this)};
+		}
+	}
+	
 	/**
 	 * Method for sub types to use for handling model reloading
 	 */
@@ -33,7 +59,7 @@ public class BaseType {
 	 */
 	public boolean hasModel()
 	{
-		return false;
+		return model != null;
 	}
 	
 	/**
@@ -43,6 +69,12 @@ public class BaseType {
 	public String toString()
 	{
 		return internalName;
+	}
+	
+	@SideOnly(value=Side.CLIENT)
+	public static BaseType fromModel(TurboBase model)
+	{
+		return null;
 	}
 
 }
