@@ -90,7 +90,7 @@ public class GunType extends BaseType {
 	/** If true && != null, ammo model will be set by ammo type used. Used built-in ammo model by default */
 	public boolean dynamicAmmo = false;
 	
-	public boolean allowSprintFiring = true;
+	public boolean allowSprintFiring = false;
 	public boolean allowDefaultSounds = true;
 	
 	//Sound Variables

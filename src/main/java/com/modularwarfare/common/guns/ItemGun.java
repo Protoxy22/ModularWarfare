@@ -90,10 +90,22 @@ public class ItemGun extends BaseItem {
 			if(fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.FULL)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
-			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && (gunType.getFireMode(heldStack) == WeaponFireMode.SEMI || gunType.getFireMode(heldStack) == WeaponFireMode.BURST))
+			} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.SEMI)
 			{
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
-			} 
+			}  else if(gunType.getFireMode(heldStack) == WeaponFireMode.BURST)
+			{
+				NBTTagCompound tagCompound = heldStack.getTagCompound();
+				boolean canFire = true;
+				if(tagCompound.hasKey("shotsremaining") && tagCompound.getInteger("shotsremaining") > 0)
+				{
+					ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
+					canFire = false;
+				} else if(fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && canFire)
+				{
+					ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
+				}
+			}
 			lastFireButtonHeld = fireButtonHeld;
 		}
 	}
@@ -111,50 +123,55 @@ public class ItemGun extends BaseItem {
 		if(isOnShootCooldown(entityPlayer) || isReloading(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
 			return;
 		
-		int shotCount = fireMode == WeaponFireMode.BURST ? gunType.numBurstRounds : 1;
-		for(int i = 0; i < shotCount; i++)
+		int shotCount = fireMode == WeaponFireMode.BURST ? heldStack.getTagCompound().getInteger("shotsremaining") > 0 ? heldStack.getTagCompound().getInteger("shotsremaining") : gunType.numBurstRounds: 1;
+		if(!hasNextShot(heldStack))
 		{
-			if(!hasNextShot(heldStack))
+			// play out of ammo click
+			if(fireMode == WeaponFireMode.BURST) heldStack.getTagCompound().setInteger("shotsremaining", 0);
+			return;
+		} 
+					
+		// Weapon pre fire event
+		WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
+		MinecraftForge.EVENT_BUS.post(preFireEvent);
+		if(preFireEvent.isCanceled())
+			return;
+		
+		// Raytrace
+		Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
+		List<Entity> entities = line.getEntities(world, Entity.class, false);
+		
+		// Weapon post fire event
+		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
+		MinecraftForge.EVENT_BUS.post(postFireEvent);
+		
+		for(Entity e : postFireEvent.getAffectedEntities())
+		{
+			if(e instanceof EntityLivingBase)
 			{
-				// play out of ammo click
-				return;
-			}
-						
-			// Weapon pre fire event
-			WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
-			MinecraftForge.EVENT_BUS.post(preFireEvent);
-			if(preFireEvent.isCanceled())
-				return;
-			
-			// Raytrace
-			Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
-			List<Entity> entities = line.getEntities(world, Entity.class, false);
-			
-			// Weapon post fire event
-			WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
-			MinecraftForge.EVENT_BUS.post(postFireEvent);
-			
-			for(Entity e : postFireEvent.getAffectedEntities())
-			{
-				if(e instanceof EntityLivingBase)
+				EntityLivingBase targetLiving = (EntityLivingBase) e;
+				if(targetLiving != entityPlayer)
 				{
-					EntityLivingBase targetLiving = (EntityLivingBase) e;
-					if(targetLiving != entityPlayer)
-					{
-						targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
-						targetLiving.hurtResistantTime = 0;
-					}
+					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
+					targetLiving.hurtResistantTime = 0;
 				}
 			}
-			
-			consumeShot(heldStack);
-			
-			// Sound
-			gunType.playSound(entityPlayer, WeaponSoundType.Fire);
-			
-			// Fire Delay
-			ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 		}
+		
+		consumeShot(heldStack);
+		
+		// Sound
+		gunType.playSound(entityPlayer, WeaponSoundType.Fire);
+		
+		// Burst Stuff
+		if(fireMode == WeaponFireMode.BURST)
+		{
+			shotCount = shotCount - 1;
+			heldStack.getTagCompound().setInteger("shotsremaining", shotCount);
+		}
+		
+		// Fire Delay
+		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 	}
 	
 	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
