@@ -56,7 +56,7 @@ public class akm extends ModelGun //Same as Filename
         leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);
         
  
-        rightArmPos = new Vector3f(-0.20F, 0.2F, 0.0F);
+        rightArmPos = new Vector3f(-0.70F, -0.1F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmReloadPos = new Vector3f(-0.70F, -0.1F, 0.0F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);

@@ -55,13 +55,13 @@ public class mp5sd extends ModelGun //Same as Filename
         
         leftArmPos = new Vector3f(0.00F, -0.3F, -0.21F);
         leftArmRot = new Vector3f(40.0F, 35.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.20F, -0.35F, 0.26F);
+        leftArmReloadPos = new Vector3f(-0.30F, -0.35F, 0.0F);
         leftArmReloadRot = new Vector3f(60.0F, 65.0F, -0.0F);
  
-        rightArmPos = new Vector3f(-0.23F, -0.0F, 0.0F);
+        rightArmPos = new Vector3f(-0.40F, -0.15F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.23F, -0.55F, 0.05F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(-0.40F, -0.15F, 0.02F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         
         rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
         leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);
