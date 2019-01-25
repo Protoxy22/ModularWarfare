@@ -9,11 +9,14 @@ public class NumberHelper {
 	public static boolean isNegative(float val)
 	{
 		if(val < 0)
+		{
 			return true;
+		}
+		
 		return false;
 	}
 	
-	public static boolean isTargetMet(float target, float current)
+	public static boolean isTargetMet(final float target, float current)
 	{
 		if(isNegative(target))
 		{
@@ -38,6 +41,17 @@ public class NumberHelper {
 	public static float generateInRange(float val)
 	{
 		return (float) ((Math.random() * val) - val/2);
+	}
+	
+	public static float determineValue(boolean bool, float value)
+	{
+		if(bool)
+		{
+			return -value;
+		} else
+		{
+			return value;
+		}
 	}
 
 }
