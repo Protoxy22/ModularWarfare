@@ -116,8 +116,8 @@ public class RenderGun implements CustomItemRenderer {
 				
 				//Default render position calculation, set up to be compatible with existing gun configuration
 				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
-				rotateY = (46F + customHipRotation.y) - (1F + customAimRotation.y + customHipRotation.y) * adsSwitch;
-				rotateZ = (1 + customHipRotation.z) - (1.0F + customAimRotation.z + customHipRotation.z) * adsSwitch;
+				rotateY = (46F + customHipRotation.y + swayVertical) - (1F + customAimRotation.y + customHipRotation.y + swayVertical) * adsSwitch;
+				rotateZ = (1 + customHipRotation.z + swayHorizontal) - (1.0F + customAimRotation.z + customHipRotation.z + swayHorizontal) * adsSwitch;
 				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch; //-1.3
 				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;//0.898
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4

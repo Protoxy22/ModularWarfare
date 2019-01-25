@@ -95,15 +95,16 @@ public class ClientTickHandler extends ForgeEvent {
 			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 			
-			RenderGun.swayHorizontalEP = (RenderGun.swayHorizontalEP == null ? (float) ((Math.random() * 2) - 1) : RenderGun.swayHorizontalEP);
-			RenderGun.swayVerticalEP = (RenderGun.swayVerticalEP == null ? (float) ((Math.random() * 2) - 1) : RenderGun.swayVerticalEP);
-			float swaySpeed = 0.15f * renderTick;
+			RenderGun.swayHorizontalEP = (RenderGun.swayHorizontalEP == null ? (float) ((Math.random() * 0.3F) - 0.15F) : RenderGun.swayHorizontalEP);
+			RenderGun.swayVerticalEP = (RenderGun.swayVerticalEP == null ? (float) ((Math.random() * 0.1F) - 0.05F) : RenderGun.swayVerticalEP);
+			float swaySpeed = 0.0055f * renderTick;
 			float swayValueH = NumberHelper.isNegative(RenderGun.swayHorizontalEP) ? RenderGun.swayHorizontal - swaySpeed : RenderGun.swayHorizontal + swaySpeed;
-			float swayValueV = NumberHelper.isNegative(RenderGun.swayVerticalEP) ? RenderGun.swayVertical - swaySpeed : RenderGun.swayVertical + swaySpeed;
+			float swayValueV = NumberHelper.isNegative(RenderGun.swayVerticalEP) ? RenderGun.swayVertical - swaySpeed / 2 : RenderGun.swayVertical + swaySpeed / 2;
 			RenderGun.swayHorizontal = swayValueH;
 			RenderGun.swayVertical = swayValueV;
-			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, swayValueH) ? (float) ((Math.random() * 2) - 1) : RenderGun.swayHorizontalEP;
-			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, swayValueV) ? (float) ((Math.random() * 2) - 1) : RenderGun.swayHorizontalEP;
+			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, swayValueH) ? (float) ((Math.random() * 0.3F) - 0.15F) : RenderGun.swayHorizontalEP;
+			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, swayValueV) ? (float) ((Math.random() * 0.1F) - 0.05F) : RenderGun.swayVerticalEP;
+			
 		} else
 		{
 			RenderGun.swayHorizontal = 0f;
