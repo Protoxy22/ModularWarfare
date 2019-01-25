@@ -11,6 +11,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -43,7 +44,7 @@ public class aughbar extends ModelGun //Same as Filename
 
 		gunSlideDistance = 1F;
 		altgunSlideDistance = 0F;
-		//animationType = EnumAnimationType.CUSTOM;
+		reloadAnimation = WeaponAnimations.RIFLE3;
 
 		rotateGunVertical = 35F;
 		rotateGunHorizontal = -15F;
