@@ -10,6 +10,7 @@ import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.utility.NumberHelper;
 import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.client.Minecraft;
@@ -27,9 +28,12 @@ public class ClientTickHandler extends ForgeEvent {
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
 	
+	private final Random random;
+	
 	public ClientTickHandler()
 	{
 		super();
+		random = new Random();
 	}
 	
 	@SubscribeEvent
@@ -79,17 +83,27 @@ public class ClientTickHandler extends ForgeEvent {
 			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
-			float sprintSpeed = (0.15f) * renderTick;
+			float sprintSpeed = 0.15f * renderTick;
 			float sprintValue = player.isSprinting() ? RenderGun.sprintSwitch + sprintSpeed : RenderGun.sprintSwitch - sprintSpeed;
 			RenderGun.sprintSwitch = Math.max(0, Math.min(1, sprintValue));;
 			
-			float crouchSpeed = (0.15f) * renderTick;
+			float crouchSpeed = 0.15f * renderTick;
 			float crouchValue = player.isSneaking() ? RenderGun.crouchSwitch + crouchSpeed : RenderGun.crouchSwitch - crouchSpeed;
 			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));;
 			
-			float reloadSpeed = (0.15f) * renderTick;
+			float reloadSpeed = 0.15f * renderTick;
 			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
+			
+			RenderGun.swayHorizontalEP = (RenderGun.swayHorizontalEP == null ? (float) ((Math.random() * 2) - 1) : RenderGun.swayHorizontalEP);
+			RenderGun.swayVerticalEP = (RenderGun.swayVerticalEP == null ? (float) ((Math.random() * 2) - 1) : RenderGun.swayVerticalEP);
+			float swaySpeed = 0.15f * renderTick;
+			float swayValueH = NumberHelper.isNegative(RenderGun.swayHorizontalEP) ? RenderGun.swayHorizontal - swaySpeed : RenderGun.swayHorizontal + swaySpeed;
+			float swayValueV = NumberHelper.isNegative(RenderGun.swayVerticalEP) ? RenderGun.swayVertical - swaySpeed : RenderGun.swayVertical + swaySpeed;
+			RenderGun.swayHorizontal = swayValueH;
+			RenderGun.swayVertical = swayValueV;
+			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, swayValueH) ? (float) ((Math.random() * 2) - 1) : RenderGun.swayHorizontalEP;
+			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, swayValueV) ? (float) ((Math.random() * 2) - 1) : RenderGun.swayHorizontalEP;
 		} else
 		{
 			RenderGun.swayHorizontal = 0f;
