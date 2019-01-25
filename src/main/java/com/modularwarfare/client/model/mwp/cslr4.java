@@ -39,7 +39,7 @@ public class cslr4 extends ModelGun //Same as Filename
 
 		gunSlideDistance = 0F;
 		//animationType = EnumAnimationType.CUSTOM;
-
+		translateAimPosition = new Vector3f(0.25F, 0F, 0F);
 		rotateGunVertical = 05F;
 		rotateGunHorizontal = 21F;
 		tiltGun = -05F;
@@ -61,11 +61,11 @@ public class cslr4 extends ModelGun //Same as Filename
         leftArmReloadPos = new Vector3f(-0.23F, -0.48F, 0.11F);
         leftArmReloadRot = new Vector3f(60.0F, 65.0F, 0.0F);
  
-        rightArmPos = new Vector3f(-0.23F, -0.3F, 0.02F);
-        rightArmRot = new Vector3f(-30.0F, 0.0F, -80.0F);
+        rightArmPos = new Vector3f(-0.43F, -0.31F, 0.19F);
+        rightArmRot = new Vector3f(-20.0F, 0.0F, -80.0F);
         rightArmReloadPos = new Vector3f(0.23F, -0.65F, -0.07F);
         rightArmReloadRot = new Vector3f(-30.0F, 0.0F, -80.0F);
-        rightArmChargePos = new Vector3f(0.11F, -0.58F, 0.12F);
+        rightArmChargePos = new Vector3f(0.11F, -0.38F, 0.12F);
         rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
         
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);
@@ -85,10 +85,10 @@ public class cslr4 extends ModelGun //Same as Filename
 		rightHandBolt = true;
 	    chargeModifier = new Vector3f (16.0F, 8.0F, 4.0F);
 		
-		crouchZoom = -0.25F;
+		crouchZoom = -0.05F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(40.0F, 0.0F, -0.0F);
-		sprintTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
+		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
+		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
 
 		flipAll();
