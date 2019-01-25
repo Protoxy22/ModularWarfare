@@ -13,6 +13,7 @@ import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.utility.NumberHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -95,12 +96,12 @@ public class RenderGun implements CustomItemRenderer {
 				float translateY = 0;
 				float translateZ = 0;
 				float crouchZoom = model.crouchZoom;
-				//int sprintSwitch = entityLivingBase.isSprinting() && adsSwitch <= 0.5F ? 1 : 0;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
-				
+				float hipRecover = NumberHelper.clamp(1f-animations.reloadAnimationProgress*5f, 0f, 1f);
+
 				//Store the model settings as local variables to reduce calls
-				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch));
-				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch));
+				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
+				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
 				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 				

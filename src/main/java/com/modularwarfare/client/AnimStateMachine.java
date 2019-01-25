@@ -25,8 +25,10 @@ public class AnimStateMachine {
 		if(reloading && reloadAnimationProgress >= 0.9F)	//reset if slide locked
 			isGunEmpty = false;
 		if(reloading && reloadAnimationProgress >= 1F)
+		{
 			reloading = false;
-				
+			lastReloadAnimationProgress = reloadAnimationProgress = 0;
+		}		
 		//Recoil model
 		lastGunRecoil = gunRecoil;
 		if (gunRecoil > 0)

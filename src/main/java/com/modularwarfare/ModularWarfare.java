@@ -198,8 +198,8 @@ public class ModularWarfare {
 			// TODO: Fix content pack file reload
 			if(reload)
 				return;
-			PROXY.generateJsonSounds(gunTypes.values(), false);
-			PROXY.generateLangFiles(baseTypes, false);
+			PROXY.generateJsonSounds(gunTypes.values(), DEV_ENV);
+			PROXY.generateLangFiles(baseTypes, DEV_ENV);
 		}
 	}
 	
