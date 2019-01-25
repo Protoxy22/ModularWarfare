@@ -58,20 +58,20 @@ public class cz805 extends ModelGun //Same as Filename
 		hasFlash = false;
         hasArms = true;
              
-        leftArmPos = new Vector3f(-0.21F, 0.21F, 0.10F);
-        leftArmRot = new Vector3f(20.0F, 45.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.16F, -0.43F, 0.30F);
-        leftArmReloadRot = new Vector3f(60.0F, 55.0F, -0.0F);
+        leftArmPos = new Vector3f(0.05F, -0.37F, -0.14F);
+        leftArmRot = new Vector3f(40.0F, 45.0F, 0.0F);
+        leftArmReloadPos = new Vector3f(0.05F, -0.37F, -0.14F);
+        leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);
         leftArmChargePos = new Vector3f(0.18F, 0.45F, 0.06F);
         leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
  
-        rightArmPos = new Vector3f(0.08F, -0.55F, 0.0F);
+        rightArmPos = new Vector3f(-0.37F, -0.20F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.28F, -0.55F, 0.05F);
+        rightArmReloadPos = new Vector3f(-0.47F, -0.20F, 0.0F);
         rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
         
-        rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
-        leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
+        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);
  
         leftHandAmmo = true;
         
@@ -84,7 +84,7 @@ public class cz805 extends ModelGun //Same as Filename
 		slideLockOnEmpty = true;
 
 		crouchZoom = -0.10F;
-		fancyStance = true;
+		//fancyStance = true;
 		//stanceRotate = new Vector3f(40.0F, 0.0F, -20.0F);
 		//stanceTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
 		
