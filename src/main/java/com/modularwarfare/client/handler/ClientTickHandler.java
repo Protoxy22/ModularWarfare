@@ -90,6 +90,14 @@ public class ClientTickHandler extends ForgeEvent {
 			float reloadSpeed = (0.15f) * renderTick;
 			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
+		} else
+		{
+			RenderGun.swayHorizontal = 0f;
+			RenderGun.swayVertical = 0f;
+			RenderGun.reloadSwitch = 0f;
+			RenderGun.sprintSwitch = 0f;
+			RenderGun.adsSwitch = 0f;
+			RenderGun.crouchSwitch = 0f;
 		}
 	}
 	

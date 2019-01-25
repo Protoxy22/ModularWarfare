@@ -33,6 +33,9 @@ public class RenderGun implements CustomItemRenderer {
 	public static float crouchSwitch = 0f;
 	public static float reloadSwitch = 1f;
 	
+	public static float swayVertical = 0f;
+	public static float swayHorizontal = 0f;
+	
 	private int direction = 0;
 	
 	private float lastReloadProgress = 0f;
