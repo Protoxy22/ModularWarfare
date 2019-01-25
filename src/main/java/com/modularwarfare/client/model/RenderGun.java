@@ -124,11 +124,13 @@ public class RenderGun implements CustomItemRenderer {
 				translateY = (0.834F + customAimTranslate.y + customHipTranslate.y) - (-0.064F + customHipTranslate.y) * adsSwitch;//0.898
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
 			
+				float bobModifier = !entityLivingBase.isSprinting() ? adsSwitch == 0F ? !animations.reloading ? 0.7F : 0.2F: 0F : !animations.reloading ? adsSwitch == 0 ? 0.75F : 0.15F : 0.4F;
+				System.out.println(bobModifier);
 				EntityPlayer entityplayer = (EntityPlayer)Minecraft.getMinecraft().getRenderViewEntity();
-				float f1 = entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified;
-				float f2 = -(entityplayer.distanceWalkedModified + f1 * smoothing);
-				float f3 = entityplayer.prevCameraYaw + (entityplayer.cameraYaw - entityplayer.prevCameraYaw) * smoothing;
-				float f4 = entityplayer.prevCameraPitch + (entityplayer.cameraPitch - entityplayer.prevCameraPitch) * smoothing;
+				float f1 = (entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified) * bobModifier;
+				float f2 = -(entityplayer.distanceWalkedModified + f1 * smoothing) * bobModifier;
+				float f3 = (entityplayer.prevCameraYaw + (entityplayer.cameraYaw - entityplayer.prevCameraYaw) * smoothing) * bobModifier;
+				float f4 = (entityplayer.prevCameraPitch + (entityplayer.cameraPitch - entityplayer.prevCameraPitch) * smoothing) * bobModifier;
 				GlStateManager.translate(MathHelper.sin(f2 * (float)Math.PI) * f3 * 0.5F, -Math.abs(MathHelper.cos(f2 * (float)Math.PI) * f3), 0.0F);
 				GlStateManager.rotate(MathHelper.sin(f2 * (float)Math.PI) * f3 * 3.0F, 0.0F, 0.0F, 1.0F);
 				GlStateManager.rotate(Math.abs(MathHelper.cos(f2 * (float)Math.PI - 0.2F) * f3) * 5.0F, 1.0F, 0.0F, 0.0F);
