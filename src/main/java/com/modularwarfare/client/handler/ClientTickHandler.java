@@ -95,15 +95,15 @@ public class ClientTickHandler extends ForgeEvent {
 			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 			
-			RenderGun.swayHorizontalEP = (RenderGun.swayHorizontalEP == null ? (float) ((Math.random() * 0.3F) - 0.15F) : RenderGun.swayHorizontalEP);
-			RenderGun.swayVerticalEP = (RenderGun.swayVerticalEP == null ? (float) ((Math.random() * 0.1F) - 0.05F) : RenderGun.swayVerticalEP);
+			float maxHorizontal = 0.3f;
+			float maxVertical = 0.1f;
 			float swaySpeed = 0.0055f * renderTick;
-			float swayValueH = NumberHelper.isNegative(RenderGun.swayHorizontalEP) ? RenderGun.swayHorizontal - swaySpeed : RenderGun.swayHorizontal + swaySpeed;
-			float swayValueV = NumberHelper.isNegative(RenderGun.swayVerticalEP) ? RenderGun.swayVertical - swaySpeed / 2 : RenderGun.swayVertical + swaySpeed / 2;
-			RenderGun.swayHorizontal = swayValueH;
-			RenderGun.swayVertical = swayValueV;
-			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, swayValueH) ? (float) ((Math.random() * 0.3F) - 0.15F) : RenderGun.swayHorizontalEP;
-			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, swayValueV) ? (float) ((Math.random() * 0.1F) - 0.05F) : RenderGun.swayVerticalEP;
+			if(RenderGun.swayHorizontalEP == null) NumberHelper.generateInRange(maxHorizontal);
+			if(RenderGun.swayVerticalEP == null) NumberHelper.generateInRange(maxVertical);
+			RenderGun.swayHorizontal = NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed);
+			RenderGun.swayVertical = NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2);
+			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
+			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
 			
 		} else
 		{
