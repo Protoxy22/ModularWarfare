@@ -79,6 +79,12 @@ public class ClientTickHandler extends ForgeEvent {
 		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
 		{
 			ModelGun model = (ModelGun) ((ItemGun) player.getHeldItemMainhand().getItem()).type.model;
+			if(!RenderGun.lastModel.equalsIgnoreCase(model.getClass().getName()))
+			{
+				RenderGun.resetRenderMods();
+				RenderGun.lastModel = model.getClass().getName(); 
+			}
+			
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
@@ -104,15 +110,9 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.swayVertical = NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2);
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
-			
 		} else
 		{
-			RenderGun.swayHorizontal = 0f;
-			RenderGun.swayVertical = 0f;
-			RenderGun.reloadSwitch = 0f;
-			RenderGun.sprintSwitch = 0f;
-			RenderGun.adsSwitch = 0f;
-			RenderGun.crouchSwitch = 0f;
+			RenderGun.resetRenderMods();
 		}
 	}
 	

@@ -28,11 +28,11 @@ public class RenderGun implements CustomItemRenderer {
 	private static TextureManager renderEngine;
 	public static float smoothing;
 
+	public static String lastModel = "";
 	public static float adsSwitch = 0f;
 	public static float sprintSwitch = 0f;
 	public static float crouchSwitch = 0f;
 	public static float reloadSwitch = 1f;
-	
 	public static float swayVertical = 0f;
 	public static float swayHorizontal = 0f;
 	public static Float swayVerticalEP;
@@ -107,7 +107,7 @@ public class RenderGun implements CustomItemRenderer {
 				float crouchZoom = model.crouchZoom;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				float hipRecover = reloadSwitch;
-				
+								
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
 				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
@@ -115,6 +115,7 @@ public class RenderGun implements CustomItemRenderer {
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 				
 				//Default render position calculation, set up to be compatible with existing gun configuration
+				adsSwitch = animations.reloading ? 0f : adsSwitch;
 				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
 				rotateY = (46F + customHipRotation.y + swayVertical) - (1F + customAimRotation.y + customHipRotation.y + swayVertical) * adsSwitch;
 				rotateZ = (1 + customHipRotation.z + swayHorizontal) - (1.0F + customAimRotation.z + customHipRotation.z + swayHorizontal) * adsSwitch;
@@ -259,6 +260,18 @@ public class RenderGun implements CustomItemRenderer {
 	private float getEffectiveReloadAnimProgress(AnimStateMachine animations) {
 		return animations.lastReloadAnimationProgress
 				+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
+	}
+	
+	public static void resetRenderMods()
+	{
+		RenderGun.swayHorizontal = 0f;
+		RenderGun.swayVertical = 0f;
+		RenderGun.swayHorizontalEP = 0f;
+		RenderGun.swayVerticalEP = 0f;
+		RenderGun.reloadSwitch = 0f;
+		RenderGun.sprintSwitch = 0f;
+		RenderGun.adsSwitch = 0f;
+		RenderGun.crouchSwitch = 0f;
 	}
 
 }
