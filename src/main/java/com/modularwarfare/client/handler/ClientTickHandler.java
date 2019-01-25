@@ -86,6 +86,10 @@ public class ClientTickHandler extends ForgeEvent {
 			float crouchSpeed = (0.15f) * renderTick;
 			float crouchValue = player.isSneaking() ? RenderGun.crouchSwitch + crouchSpeed : RenderGun.crouchSwitch - crouchSpeed;
 			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));;
+			
+			float reloadSpeed = (0.15f) * renderTick;
+			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
+			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 		}
 	}
 	

@@ -31,7 +31,11 @@ public class RenderGun implements CustomItemRenderer {
 	public static float adsSwitch = 0f;
 	public static float sprintSwitch = 0f;
 	public static float crouchSwitch = 0f;
+	public static float reloadSwitch = 1f;
+	
 	private int direction = 0;
+	
+	private float lastReloadProgress = 0f;
 	
 	@Override
 	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
@@ -97,7 +101,8 @@ public class RenderGun implements CustomItemRenderer {
 				float translateZ = 0;
 				float crouchZoom = model.crouchZoom;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
-				float hipRecover = NumberHelper.clamp((1f-animations.reloadAnimationProgress), 0f, 1f);
+				float hipRecover = reloadSwitch;
+				
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
 				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
@@ -132,7 +137,6 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glRotatef(-(animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
 				GL11.glRotatef(((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 0.0f, 1.0f, 0.0f);
 		        GL11.glRotatef(((-animations.lastGunRecoil + (animations.gunRecoil - animations.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 1.0f, 0.0f, 0.0f);
-
 				break;	
 			}
 
