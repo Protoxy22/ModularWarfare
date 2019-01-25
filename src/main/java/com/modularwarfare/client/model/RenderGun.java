@@ -317,7 +317,7 @@ public class RenderGun implements CustomItemRenderer {
 			GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
 			modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
 			modelBipedMain.bipedRightArm.offsetY = 0F;
-			if (!model.rightHandAmmo) {
+			if (!model.leftHandAmmo) {
 				modelBipedMain.bipedRightArm.render(0.0625F);
 			}
 		}
@@ -359,10 +359,10 @@ public class RenderGun implements CustomItemRenderer {
 		float effectiveReloadAnimationProgress = anim.lastReloadAnimationProgress
 				+ (anim.reloadAnimationProgress - anim.lastReloadAnimationProgress) * smoothing;
 
-		if (anim.charged < 0.9 && model.rightHandCharge && model.rightHandAmmo && anim.charged != -1.0F) {
+		if (anim.charged < 0.9 && model.rightHandCharge && !model.leftHandAmmo && anim.charged != -1.0F) {
 			RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
 		}
-		else if (anim.pumped < 0.9 && model.rightHandBolt && model.rightHandAmmo) {
+		else if (anim.pumped < 0.9 && model.rightHandBolt && !model.leftHandAmmo) {
 			RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
 		}
 		else if (!anim.reloading) {
@@ -375,7 +375,7 @@ public class RenderGun implements CustomItemRenderer {
 		GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
 		modelBipedMain.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
 		modelBipedMain.bipedRightArm.offsetY = 0F;
-		if (model.rightHandAmmo) {
+		if (!model.leftHandAmmo) {
 			modelBipedMain.bipedRightArm.render(0.0625F);
 		}
 		GL11.glPopMatrix();
@@ -392,11 +392,7 @@ public class RenderGun implements CustomItemRenderer {
 		else if (!anim.reloading) {
 			RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 		}
-		else if (effectiveReloadAnimationProgress < 0.5 && model.stagedleftArmReloadPos.x != 0) {
-			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
-		} else if (effectiveReloadAnimationProgress > 0.5 && model.stagedleftArmReloadPos.x != 0) {
-			RenderArms.renderArmReload(model, anim, smoothing, model.stagedleftArmReloadRot, model.stagedleftArmReloadPos);
-		} else {
+		else {
 			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
 		}
 
