@@ -97,8 +97,7 @@ public class RenderGun implements CustomItemRenderer {
 				float translateZ = 0;
 				float crouchZoom = model.crouchZoom;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
-				float hipRecover = NumberHelper.clamp(1f-animations.reloadAnimationProgress*5f, 0f, 1f);
-
+				float hipRecover = NumberHelper.clamp((1f-animations.reloadAnimationProgress), 0f, 1f);
 				//Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
 				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
