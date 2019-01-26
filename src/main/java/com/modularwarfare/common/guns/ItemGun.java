@@ -10,8 +10,6 @@ import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
-import com.modularwarfare.objects.WeaponFireMode;
-import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.RaytraceHelper.Line;
 
 import net.minecraft.block.state.IBlockState;

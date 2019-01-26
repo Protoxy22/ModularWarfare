@@ -2,7 +2,7 @@ package com.modularwarfare.common.network;
 
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
-import com.modularwarfare.objects.WeaponFireMode;
+import com.modularwarfare.common.guns.WeaponFireMode;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

@@ -147,6 +147,7 @@ public class ClientRenderHooks extends ForgeEvent {
 		if(stack != null && stack.getItem() instanceof BaseItem)
 		{
 			BaseType type = ((BaseItem)stack.getItem()).baseType;
+			BaseItem item = ((BaseItem)stack.getItem());
 			
 			if(event.getHand() != EnumHand.MAIN_HAND)
 			{
@@ -154,7 +155,7 @@ public class ClientRenderHooks extends ForgeEvent {
 				return;
 			}
 			
-			if(customRenderers[type.id] != null && type.hasModel())
+			if(item.render3d && customRenderers[type.id] != null && type.hasModel())
 			{
 				//Cancel the hand render event so that we can do our own.
 				event.setCanceled(true);

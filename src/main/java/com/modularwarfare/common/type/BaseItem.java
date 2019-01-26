@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 public class BaseItem extends Item {
 	
 	public BaseType baseType;
+	public boolean render3d = true;
 	
 	public BaseItem(BaseType type)
 	{

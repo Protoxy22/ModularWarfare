@@ -29,10 +29,11 @@ import com.modularwarfare.client.model.animations.AnimationRifle3;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
+import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.guns.WeaponSoundType;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
-import com.modularwarfare.objects.WeaponSoundType;
 import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
@@ -87,6 +88,11 @@ public class ClientProxy extends CommonProxy {
 		for(ItemAmmo itemAmmo : ModularWarfare.ammoTypes.values())
 		{
 			ModelLoader.setCustomModelResourceLocation(itemAmmo, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemAmmo.type.internalName));
+		}
+		
+		for(ItemAttachment itemAttachment : ModularWarfare.attachmentTypes.values())
+		{
+			ModelLoader.setCustomModelResourceLocation(itemAttachment, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemAttachment.type.internalName));
 		}
 	}
 	

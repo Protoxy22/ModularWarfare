@@ -1,5 +1,7 @@
 package com.modularwarfare.objects;
 
+import com.modularwarfare.common.guns.WeaponSoundType;
+
 public class SoundEntry {
 	
 	public WeaponSoundType soundEvent;

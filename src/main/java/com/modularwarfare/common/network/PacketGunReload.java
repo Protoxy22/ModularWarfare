@@ -4,8 +4,8 @@ import com.modularwarfare.api.WeaponReloadEvent;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.guns.WeaponSoundType;
 import com.modularwarfare.common.handler.ServerTickHandler;
-import com.modularwarfare.objects.WeaponSoundType;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

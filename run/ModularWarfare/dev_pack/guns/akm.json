@@ -9,7 +9,7 @@
   "modelName": "mwp.akm",
   "weaponSkins": [
     {
-      "internalName": "mwp.default",
+      "internalName": "mwp.akm",
       "displayName": "Default",
       "skinAsset": "akm_default"
     }
@@ -27,5 +27,9 @@
       "soundEvent": "weaponReload",
       "soundName": "reload.mwp.akm"
     }
-  ]
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  }
 }

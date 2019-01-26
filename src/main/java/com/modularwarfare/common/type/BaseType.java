@@ -35,15 +35,16 @@ public class BaseType {
 	public void loadBaseValues()
 	{
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-		{
 			reloadModel();
-		}
 		
 		if(weaponSkins == null)
-		{
-			System.out.println(internalName);
 			weaponSkins = new SkinType[]{SkinType.getDefaultSkin(this)};
-		}
+		
+		if(modelName == null)
+			modelName = internalName;
+		
+		if(iconName == null)
+			iconName = internalName;
 	}
 	
 	/**

@@ -20,8 +20,10 @@ import com.google.gson.stream.JsonReader;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.guns.AmmoType;
+import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
+import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.NetworkHandler;
@@ -66,6 +68,7 @@ public class ModularWarfare {
 	// Arrays for the varied types
 	public static HashMap<String, ItemGun> gunTypes = new HashMap<String, ItemGun>();
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
+	public static HashMap<String, ItemAttachment> attachmentTypes = new HashMap<String, ItemAttachment>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
 	/**
@@ -141,6 +144,12 @@ public class ModularWarfare {
 	    	event.getRegistry().register(itemAmmo);
 	    	tabOrder.add(itemAmmo);
 	    }
+	    
+	    for(ItemAttachment itemAttachment : attachmentTypes.values()) 
+	    {
+	    	event.getRegistry().register(itemAttachment);
+	    	tabOrder.add(itemAttachment);
+	    }
 	    MOD_TAB.preInitialize(tabOrder);
 	}
 	
@@ -178,6 +187,7 @@ public class ModularWarfare {
 				{
 					case 0: {gunTypes.get(baseType.internalName).setType((GunType) baseType); break;}
 					case 1: {ammoTypes.get(baseType.internalName).setType((AmmoType) baseType); break;}
+					case 2: {attachmentTypes.get(baseType.internalName).setType((AttachmentType) baseType); break;}
 				}
 			}
 		} else
@@ -188,6 +198,7 @@ public class ModularWarfare {
 				{
 					case 0: {gunTypes.put(baseType.internalName, new ItemGun((GunType) baseType));break;}
 					case 1: {ammoTypes.put(baseType.internalName, new ItemAmmo((AmmoType) baseType));break;}
+					case 2: {attachmentTypes.put(baseType.internalName, new ItemAttachment((AttachmentType) baseType));break;}
 				}
 			}
 		}

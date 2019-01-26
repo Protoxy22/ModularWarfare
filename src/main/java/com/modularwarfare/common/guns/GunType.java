@@ -11,9 +11,6 @@ import com.modularwarfare.client.model.mwp.akm;
 import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
-import com.modularwarfare.objects.WeaponFireMode;
-import com.modularwarfare.objects.WeaponSoundType;
-import com.modularwarfare.objects.WeaponType;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -72,6 +69,9 @@ public class GunType extends BaseType {
 	
 	/** The firing modes of the gun. SEMI, FULL, BURST */
 	public WeaponFireMode[] fireModes = new WeaponFireMode[] {WeaponFireMode.SEMI};
+	
+	/** Attachment Types */
+	public HashMap<AttachmentEnum, ArrayList<String>> acceptedAttachments = new HashMap<AttachmentEnum, ArrayList<String>>();
 	
 	//Ammo Override variables
 	/** If true, numBullets determined by loaded ammo type */

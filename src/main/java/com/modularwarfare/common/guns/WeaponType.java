@@ -1,4 +1,4 @@
-package com.modularwarfare.objects;
+package com.modularwarfare.common.guns;
 
 import com.google.gson.annotations.SerializedName;
 
