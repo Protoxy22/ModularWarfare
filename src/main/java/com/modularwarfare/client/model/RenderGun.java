@@ -170,7 +170,7 @@ public class RenderGun implements CustomItemRenderer {
 			
 			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
 				 Minecraft mc = Minecraft.getMinecraft(); 
-				 renderFirstPersonArm(mc.player, model, animations); 
+				 renderStaticArm(mc.player, model, animations); 
 			}
 			
 			GL11.glPushMatrix();
@@ -269,7 +269,7 @@ public class RenderGun implements CustomItemRenderer {
 				
 				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
 					 Minecraft mc = Minecraft.getMinecraft(); 
-					 renderAnimArm(mc.player, model, gunType, animations); 
+					 renderMovingArm(mc.player, model, gunType, animations); 
 				}
 				GL11.glPopMatrix();
 			}
@@ -370,7 +370,8 @@ public class RenderGun implements CustomItemRenderer {
 		RenderGun.crouchSwitch = 0f;
 	}
 	
-	private void renderFirstPersonArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
+	//Renders the static left or right hand that does not move with the ammo depending on leftHandAmmo setting
+	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float f = 1.0F;
@@ -436,7 +437,8 @@ public class RenderGun implements CustomItemRenderer {
 		GL11.glPopMatrix();
 	}
 
-	private void renderAnimArm(EntityPlayer player, ModelGun model, GunType type, AnimStateMachine anim) {
+	//Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
+	private void renderMovingArm(EntityPlayer player, ModelGun model, GunType type, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		mc.renderEngine.bindTexture(mc.player.getLocationSkin());
