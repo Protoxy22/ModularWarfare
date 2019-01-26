@@ -15,7 +15,7 @@ public class BaseType {
 	public String modelName;
 	public TurboBase model;
 	/** Weapon model skins/textures */
-	public SkinType[] weaponSkins;
+	public SkinType[] modelSkins;
 	public String internalName;
 	/** Used to generate .lang files automatically */
 	public String displayName;
@@ -37,8 +37,8 @@ public class BaseType {
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
 			reloadModel();
 		
-		if(weaponSkins == null)
-			weaponSkins = new SkinType[]{SkinType.getDefaultSkin(this)};
+		if(modelSkins == null)
+			modelSkins = new SkinType[]{SkinType.getDefaultSkin(this)};
 		
 		if(modelName == null)
 			modelName = internalName;

@@ -95,7 +95,7 @@ public class RenderAmmo implements CustomItemRenderer {
 			{
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + ammoType.weaponSkins[0].getSkin() + ".png"));
+				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + ammoType.modelSkins[0].getSkin() + ".png"));
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				model.renderAmmo(f);
 			}

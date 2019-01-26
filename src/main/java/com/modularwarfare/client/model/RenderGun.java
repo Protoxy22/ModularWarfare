@@ -10,6 +10,7 @@ import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.common.guns.AmmoType;
+import com.modularwarfare.common.guns.AttachmentEnum;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
@@ -174,7 +175,7 @@ public class RenderGun implements CustomItemRenderer {
 					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
 				
 				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-						"skins/" + gunType.weaponSkins[0].getSkin() + ".png"));
+						"skins/" + gunType.modelSkins[0].getSkin() + ".png"));
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				
@@ -265,6 +266,9 @@ public class RenderGun implements CustomItemRenderer {
 								Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 							}
+							
+							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
+									"skins/" + ammoType.modelSkins[0].getSkin() + ".png"));
 							modelAmmo.renderAmmo(f);
 						} else
 						{
@@ -273,9 +277,22 @@ public class RenderGun implements CustomItemRenderer {
 					}
 				}
 				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {
-					 Minecraft mc = Minecraft.getMinecraft(); renderAnimArm(mc.player, model, gunType, animations); 
+					 Minecraft mc = Minecraft.getMinecraft(); 
+					 renderAnimArm(mc.player, model, gunType, animations); 
 				}
 				GL11.glPopMatrix();
+				
+				for(AttachmentEnum attachment : AttachmentEnum.values())
+				{
+					if(GunType.getAttachment(item, attachment) != null)
+					{
+						GL11.glPushMatrix();
+						{
+							
+						}
+						GL11.glPopMatrix();
+					}
+				}
 			}
 			GL11.glPopMatrix();
 		}
