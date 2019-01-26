@@ -37,7 +37,7 @@ public class mk20 extends ModelGun //Same as Filename
 //		gripAttachPoint = new Vector3f(165 /16F, 54F /16F, 0F /16F);
 //		scopeAttachPoint = new Vector3f(10 /16F, 87F /16F, 0F /16F);
 
-		translateAll(-0.5F, -18F, -0.7F);//forward/down/right
+		translateAll(-0.5F, -18.75F, -0.5F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.07F, 0F);//forward/up/?
 
 		gunSlideDistance = 3F;
@@ -60,18 +60,20 @@ public class mk20 extends ModelGun //Same as Filename
         hasArms = true;
         
         
-        leftArmPos = new Vector3f(0.01F, -0.31F, 0.08F);
-        leftArmRot = new Vector3f(60.0F, 45.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.22F, -0.5F, 0.22F);
-        leftArmReloadRot = new Vector3f(60.0F, 55.0F, -0.0F);
+        leftArmPos = new Vector3f(-0.15F, -0.2F, -0.13F);
+        leftArmRot = new Vector3f(60.0F, 55.0F, 0.0F);
+        leftArmReloadPos = new Vector3f(-0.25F, -0.55F, -0.10F);
+        leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);
+        leftArmChargePos = new Vector3f(0.18F, 0.45F, 0.06F);
+        leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
  
-        rightArmPos = new Vector3f(0.28F, -0.55F, 0.0F);
+        rightArmPos = new Vector3f(-0.37F, -0.20F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.28F, -0.55F, 0.05F);
+        rightArmReloadPos = new Vector3f(-0.37F, -0.20F, 0.03F);
         rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
         
-        rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
-        leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
+        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);
  
         leftHandAmmo = true;
         
@@ -89,8 +91,8 @@ public class mk20 extends ModelGun //Same as Filename
 
 		crouchZoom = -0.15F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(40.0F, 0.0F, -20.0F);
-		sprintTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
+		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
+		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
 
 		flipAll();
