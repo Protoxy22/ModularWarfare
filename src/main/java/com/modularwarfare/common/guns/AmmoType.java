@@ -51,4 +51,10 @@ public class AmmoType extends BaseType {
 		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelAmmo.class);
 	}
 	
+	@Override
+	public String getAssetDir()
+	{
+		return "ammo";
+	}
+	
 }

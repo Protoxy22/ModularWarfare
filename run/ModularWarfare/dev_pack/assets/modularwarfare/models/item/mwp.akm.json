@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modularwarfare:items/mwp.akm"
+    "layer0": "modularwarfare:items/guns/mwp.akm"
   },
   "display": {
     "thirdperson_lefthand": {

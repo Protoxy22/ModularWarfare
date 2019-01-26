@@ -376,7 +376,7 @@ public class ClientProxy extends CommonProxy {
 	private ItemModelExport createJson(BaseType type)
 	{
 		ItemModelExport exportedModel = new ItemModelExport();
-		exportedModel.setBaseLayer(type.iconName != null ? type.iconName : type.internalName);
+		exportedModel.setBaseLayer(type.getAssetDir() + "/" + (type.iconName != null ? type.iconName : type.internalName));
 		return exportedModel;
 	}
 	

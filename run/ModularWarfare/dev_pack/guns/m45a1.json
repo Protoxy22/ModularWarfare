@@ -18,13 +18,5 @@
       "soundEvent": "weaponReload",
       "soundName": "reload.mwp.b.35"
     }
-  ],
-  "modelSkins": [
-    {
-      "internalName": "mwp.default",
-      "displayName": "Default",
-      "skinAsset": "m45a1_default",
-      "requiredItems": ["dyeBlack/1"]
-    }
   ]
 }

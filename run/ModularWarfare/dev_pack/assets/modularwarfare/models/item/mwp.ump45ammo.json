@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modularwarfare:items/mwp.ump45ammo"
+    "layer0": "modularwarfare:items/ammo/mwp.ump45ammo"
   },
   "display": {
     "thirdperson_lefthand": {

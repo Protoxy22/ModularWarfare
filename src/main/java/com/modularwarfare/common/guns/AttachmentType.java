@@ -17,5 +17,11 @@ public class AttachmentType extends BaseType {
 	{
 		model = ModularWarfare.PROXY.loadModel(modelName != null ? modelName : internalName, internalName, ModelAttachment.class);
 	}
+	
+	@Override
+	public String getAssetDir()
+	{
+		return "attachments";
+	}
 
 }

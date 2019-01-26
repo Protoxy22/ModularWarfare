@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modularwarfare:items/mwp.dsr1ammo"
+    "layer0": "modularwarfare:items/ammo/mwp.dsr1ammo"
   },
   "display": {
     "thirdperson_lefthand": {

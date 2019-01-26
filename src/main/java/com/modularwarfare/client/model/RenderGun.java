@@ -23,6 +23,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -176,7 +177,7 @@ public class RenderGun implements CustomItemRenderer {
 					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
 				
 				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-						"skins/" + gunType.modelSkins[0].getSkin() + ".png"));
+						"skins/guns/" + gunType.modelSkins[0].getSkin() + ".png"));
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				
@@ -269,7 +270,7 @@ public class RenderGun implements CustomItemRenderer {
 							}
 							
 							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-									"skins/" + ammoType.modelSkins[0].getSkin() + ".png"));
+									"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
 							modelAmmo.renderAmmo(f);
 						} else
 						{
@@ -285,15 +286,15 @@ public class RenderGun implements CustomItemRenderer {
 				
 				for(AttachmentEnum attachment : AttachmentEnum.values())
 				{
-					if(GunType.getAttachment(item, attachment) != null)
+					ItemStack itemStack = GunType.getAttachment(item, attachment);
+					if(itemStack != null && itemStack.getItem() != Items.AIR)
 					{
-						ItemStack itemStack = GunType.getAttachment(item, attachment);
 						AttachmentType attachmentType = ((ItemAttachment)itemStack.getItem()).type;
 						ModelAttachment attachmentModel = (ModelAttachment) attachmentType.model;
 						GL11.glPushMatrix();
 						{
 							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-									"skins/" + attachmentType.modelSkins[0].getSkin() + ".png"));
+									"skins/attachments/" + attachmentType.modelSkins[0].getSkin() + ".png"));
 							Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
 							Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale / modelScale, attachmentModel.modelScale / modelScale, attachmentModel.modelScale / modelScale);
 							GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);

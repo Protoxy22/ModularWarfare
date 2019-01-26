@@ -7,13 +7,6 @@
   "acceptedAmmo": ["mwp.akmammo"],
   "fireModes": ["full", "semi"],
   "modelName": "mwp.akm",
-  "modelSkins": [
-    {
-      "internalName": "mwp.akm",
-      "displayName": "Default",
-      "skinAsset": "akm_default"
-    }
-  ],
   "weaponSounds": [
     {
       "soundEvent": "weaponFire",

@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modularwarfare:items/mwp.cz805ammo"
+    "layer0": "modularwarfare:items/ammo/mwp.cz805ammo"
   },
   "display": {
     "thirdperson_lefthand": {
