@@ -230,6 +230,7 @@ public class RenderGun implements CustomItemRenderer {
 						ItemStack stackAmmo =  new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
 						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
 						AmmoType ammoType = itemAmmo.type;
+						boolean shouldNormalRender = true;
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 							float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
@@ -249,29 +250,48 @@ public class RenderGun implements CustomItemRenderer {
 								GL11.glTranslatef(ammoOffset.x, ammoOffset.y, ammoOffset.z);
 								if(ammoType.magazineCount != null)
 								{
+									// TODO: Investigate mag count in animation
 									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
 									float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress + (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 									if(animations.reloading && effectiveReloadAnimationProgress < 0.5f)
 										 magCount -= 1;
 									if(modelAmmo.magCountOffset.containsKey(magCount))
 									{
-										RenderVariables magRenderVar = modelAmmo.magCountOffset.get(magCount);
-										Vector3f magOffset = magRenderVar.offset;
-										Vector3f magRotate = magRenderVar.rotation;
-										GL11.glTranslatef(magOffset.x, magOffset.y, magOffset.z);
-										if(magRotate != null && magRenderVar.angle != null)
+										shouldNormalRender = false;
+										GL11.glPushMatrix();
 										{
-											GL11.glRotatef(magRenderVar.angle, magRotate.x, magRotate.y, magRotate.z);
+											RenderVariables magRenderVar = modelAmmo.magCountOffset.get(magCount);
+											Vector3f magOffset = magRenderVar.offset;
+											Vector3f magRotate = magRenderVar.rotation;
+											GL11.glTranslatef(magOffset.x, magOffset.y, magOffset.z);
+											if(magRotate != null && magRenderVar.angle != null)
+											{
+												GL11.glRotatef(magRenderVar.angle, magRotate.x, magRotate.y, magRotate.z);
+											}
+											
+											Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
+											GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+											renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
+													"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
+											modelAmmo.renderAmmo(f);
 										}
+										GL11.glPopMatrix();
 									}
 								}
-								Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
-								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+								
+								if(shouldNormalRender)
+								{
+									Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
+									GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+								}
 							}
 							
-							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-									"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
-							modelAmmo.renderAmmo(f);
+							if(shouldNormalRender)
+							{
+								renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
+										"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
+								modelAmmo.renderAmmo(f);
+							}
 						} else
 						{
 							model.renderAmmo(f);
