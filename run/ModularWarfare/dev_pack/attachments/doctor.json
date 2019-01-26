@@ -1,4 +1,5 @@
 {
     "displayName": "Docter Sight",
-    "internalName": "mwp.attachments.docter"
+    "internalName": "mwp.attachments.docter",
+    "modelName": "mwp.attachments.docter"
 }

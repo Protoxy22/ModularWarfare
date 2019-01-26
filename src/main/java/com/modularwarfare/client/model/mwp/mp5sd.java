@@ -32,7 +32,7 @@ public class mp5sd extends ModelGun //Same as Filename
 		initammoModel_1();
 		initslideModel_1();
 
-		gripAttachPoint = new Vector3f(70 /16F, 30F /16F, 0F /16F);
+//		gripAttachPoint = new Vector3f(70 /16F, 30F /16F, 0F /16F);
 
 		translateAll(0F, -10.6F, -0.1F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.10F, 0F);//forward/up/? 

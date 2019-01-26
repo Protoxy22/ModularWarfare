@@ -251,5 +251,14 @@ public class GunType extends BaseType {
 		}
 		return null;
 	}
+	
+	public static void addAttachment(ItemStack heldStack, AttachmentEnum type, ItemStack attachment)
+	{
+		if(heldStack.getTagCompound() != null)
+		{
+			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+			nbtTagCompound.setTag("attachment_" + type.typeName, attachment.writeToNBT(new NBTTagCompound()));
+		}
+	}
 		
 }

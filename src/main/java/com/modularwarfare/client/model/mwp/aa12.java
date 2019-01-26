@@ -52,8 +52,8 @@ public class aa12 extends ModelGun //Same as Filename
 		tiltClip = 0F;
 		translateClip = new Vector3f(-0 /16F, -20F /16F, 01F /16F);
 
-		barrelAttachPoint = new Vector3f (143F /16F, 26F /16F, 0F /16F);
-		scopeAttachPoint = new Vector3f(-5F /16F, 45F /16F, 0.05F /16F);
+//		barrelAttachPoint = new Vector3f (143F /16F, 26F /16F, 0F /16F);
+//		scopeAttachPoint = new Vector3f(-5F /16F, 45F /16F, 0.05F /16F);
 		
 		hasFlash = false;
         hasArms = true;

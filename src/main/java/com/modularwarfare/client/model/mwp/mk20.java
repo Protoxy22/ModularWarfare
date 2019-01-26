@@ -33,9 +33,9 @@ public class mk20 extends ModelGun //Same as Filename
 		initammoModel_1();
 		initslideModel_1();
 
-		barrelAttachPoint = new Vector3f(290F /16F, 67F /16F, 0F /16F);
-		gripAttachPoint = new Vector3f(165 /16F, 54F /16F, 0F /16F);
-		scopeAttachPoint = new Vector3f(10 /16F, 87F /16F, 0F /16F);
+//		barrelAttachPoint = new Vector3f(290F /16F, 67F /16F, 0F /16F);
+//		gripAttachPoint = new Vector3f(165 /16F, 54F /16F, 0F /16F);
+//		scopeAttachPoint = new Vector3f(10 /16F, 87F /16F, 0F /16F);
 
 		translateAll(-0.5F, -18F, -0.7F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.07F, 0F);//forward/up/?

@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
+import com.modularwarfare.common.guns.AttachmentEnum;
 
 import net.minecraft.client.renderer.OpenGlHelper;
 
@@ -38,16 +39,6 @@ public class ModelGun extends TurboBase
 	public ModelRendererTurbo[] leverActionModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] hammerModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] althammerModel = new ModelRendererTurbo[0];
-
-	//These designate the locations of 3D attachment models on the gun
-	public Vector3f barrelAttachPoint = new Vector3f();
-	public Vector3f scopeAttachPoint = new Vector3f();
-	public Vector3f stockAttachPoint = new Vector3f();
-	public Vector3f gripAttachPoint = new Vector3f();
-	public Vector3f gadgetAttachPoint = new Vector3f();
-	public Vector3f slideAttachPoint = new Vector3f();
-	public Vector3f pumpAttachPoint = new Vector3f();
-	public Vector3f accessoryAttachPoint = new Vector3f();
 
 	//Arm rendering variables DEFAULT, RELOADING, CHARGING
 	public boolean hasArms = false;
@@ -204,6 +195,8 @@ public class ModelGun extends TurboBase
 	public String reloadAnimation = WeaponAnimations.RIFLE;
 	
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
+	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
+	public Vector3f gunRenderOffset = new Vector3f(0f, 0f, 0f);
 
 	public static void glowOn()
 	{

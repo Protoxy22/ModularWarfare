@@ -178,7 +178,10 @@ public class ClientProxy extends CommonProxy {
 	{
 		for(BaseType baseType : ModularWarfare.baseTypes)
 		{
-			baseType.reloadModel();
+			if(baseType.hasModel())
+			{
+				baseType.reloadModel();
+			}
 		}
 		if(reloadSkins)
 			forceReload();

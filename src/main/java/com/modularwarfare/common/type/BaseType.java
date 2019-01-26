@@ -40,9 +40,6 @@ public class BaseType {
 		if(modelSkins == null)
 			modelSkins = new SkinType[]{SkinType.getDefaultSkin(this)};
 		
-		if(modelName == null)
-			modelName = internalName;
-		
 		if(iconName == null)
 			iconName = internalName;
 	}

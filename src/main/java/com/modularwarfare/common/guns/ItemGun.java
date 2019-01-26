@@ -76,6 +76,7 @@ public class ItemGun extends BaseItem {
 					NBTTagCompound nbtTagCompound = new NBTTagCompound();
 					nbtTagCompound.setString("firemode", gunType.fireModes[0].name().toLowerCase());
 					heldStack.setTagCompound(nbtTagCompound);
+					GunType.addAttachment(heldStack, AttachmentEnum.Sight, new ItemStack(ModularWarfare.attachmentTypes.get("mwp.attachments.docter")));
 				}
 			}	
 		}

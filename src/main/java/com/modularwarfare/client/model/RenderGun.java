@@ -11,12 +11,13 @@ import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentEnum;
+import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
+import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -286,9 +287,18 @@ public class RenderGun implements CustomItemRenderer {
 				{
 					if(GunType.getAttachment(item, attachment) != null)
 					{
+						ItemStack itemStack = GunType.getAttachment(item, attachment);
+						AttachmentType attachmentType = ((ItemAttachment)itemStack.getItem()).type;
+						ModelAttachment attachmentModel = (ModelAttachment) attachmentType.model;
 						GL11.glPushMatrix();
 						{
-							
+							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
+									"skins/" + attachmentType.modelSkins[0].getSkin() + ".png"));
+							Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
+							GL11.glScalef(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
+							GL11.glTranslatef(attachmentVec.x * attachmentModel.modelScale, attachmentVec.y * attachmentModel.modelScale, attachmentVec.z * attachmentModel.modelScale);
+							if (attachmentModel != null)
+								attachmentModel.renderAttachment(f);
 						}
 						GL11.glPopMatrix();
 					}

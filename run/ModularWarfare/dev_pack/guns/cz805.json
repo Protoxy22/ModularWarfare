@@ -24,5 +24,9 @@
       "skinAsset": "cz805_default",
       "requiredItems": ["dyeBlack/1"]
     }
-  ]
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": ["mwp.attachments.docter"]
+  }
 }

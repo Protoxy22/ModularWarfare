@@ -33,10 +33,10 @@ public class stf12 extends ModelGun //Same as Filename
 		initammoModel_1();
 		initpumpModel_1();
 
-		barrelAttachPoint = new Vector3f(183F /16F, 40F /16F, 0F /16F);
-		stockAttachPoint = new Vector3f(0F /16F, 0F /16F, 0F /16F);
-		scopeAttachPoint = new Vector3f(18 /16F, 48F /16F, 0F /16F);
-		gripAttachPoint = new Vector3f(26 /16F, 40F /16F, 0F /16F);
+//		barrelAttachPoint = new Vector3f(183F /16F, 40F /16F, 0F /16F);
+//		stockAttachPoint = new Vector3f(0F /16F, 0F /16F, 0F /16F);
+//		scopeAttachPoint = new Vector3f(18 /16F, 48F /16F, 0F /16F);
+//		gripAttachPoint = new Vector3f(26 /16F, 40F /16F, 0F /16F);
 
 		translateAll(0F, -13F, -0.150F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/? 
