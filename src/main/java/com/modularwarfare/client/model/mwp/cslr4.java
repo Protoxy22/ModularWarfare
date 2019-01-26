@@ -58,14 +58,14 @@ public class cslr4 extends ModelGun //Same as Filename
         
         leftArmPos = new Vector3f(0.08F, -0.30F, -0.15F);
         leftArmRot = new Vector3f(50.0F, 45.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.23F, -0.48F, 0.11F);
-        leftArmReloadRot = new Vector3f(60.0F, 65.0F, 0.0F);
+        leftArmReloadPos = new Vector3f(-0.20F, -0.57F, -0.12F);
+        leftArmReloadRot = new Vector3f(30.0F, 35.0F, 0.0F);
  
         rightArmPos = new Vector3f(-0.43F, -0.31F, 0.19F);
         rightArmRot = new Vector3f(-20.0F, 0.0F, -80.0F);
-        rightArmReloadPos = new Vector3f(0.23F, -0.65F, -0.07F);
-        rightArmReloadRot = new Vector3f(-30.0F, 0.0F, -80.0F);
-        rightArmChargePos = new Vector3f(0.11F, -0.38F, 0.12F);
+        rightArmReloadPos = new Vector3f(-0.43F, -0.31F, 0.19F);
+        rightArmReloadRot = new Vector3f(-20.0F, 0.0F, -80.0F);
+        rightArmChargePos = new Vector3f(-0.31F, -0.38F, 0.12F);
         rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
         
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);
@@ -76,7 +76,7 @@ public class cslr4 extends ModelGun //Same as Filename
 		//RecoilSlideDistance = 0.16F;
 		//RotateSlideDistance = -1F;
 
-		pumpDelayAfterReload = 85;
+		pumpDelayAfterReload = 65;
 		pumpDelay = 10;
 		pumpTime = 20;
 		gripIsOnPump = false;

@@ -63,17 +63,17 @@ public class aughbar extends ModelGun //Same as Filename
 		hasFlash = false;
 		hasArms = true;
 
-		leftArmPos = new Vector3f(-0.06F, -0.37F, 0.07F);
-		leftArmRot = new Vector3f(60.0F, 45.0F, 0.0F);
-		leftArmReloadPos = new Vector3f(-0.45F, -0.83F, 0.10F);
+		leftArmPos = new Vector3f(-0.27F, -0.20F, -0.20F);
+		leftArmRot = new Vector3f(70.0F, 45.0F, 0.0F);
+		leftArmReloadPos = new Vector3f(-0.95F, -0.20F, 0.02F);
 		leftArmReloadRot = new Vector3f(80.0F, 60.0F, 0.0F);
 		leftArmChargePos = new Vector3f(0.20F, 0.50F, 0.15F);
 		leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
 
-		rightArmPos = new Vector3f(0.3F, -0.63F, 0.03F);
-		rightArmRot = new Vector3f(-30.0F, 0.0F, -80.0F);
-		rightArmReloadPos = new Vector3f(0.3F, -0.65F, 0.03F);
-		rightArmReloadRot = new Vector3f(-30.0F, 0.0F, -80.0F);
+		rightArmPos = new Vector3f(-0.53F, -0.28F, 0.33F);
+		rightArmRot = new Vector3f(-30.0F, 0.0F, -90.0F);
+		rightArmReloadPos = new Vector3f(-0.59F, -0.3F, 0.36F);
+		rightArmReloadRot = new Vector3f(-30.0F, 0.0F, -90.0F);
 
 		rightArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
 		leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
@@ -85,8 +85,8 @@ public class aughbar extends ModelGun //Same as Filename
 
 		crouchZoom = -0.10F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(60.0F, -0.0F, 10.0F);
-		sprintTranslate = new Vector3f(0.7F, -0.0F, 0.25F);
+		sprintRotate = new Vector3f(-10.0F, 60.0F, 10.0F);
+		sprintTranslate = new Vector3f(1.9F, -0.2F, -0.9F);
 
 		chargeHandleDistance = 1.6F;
 		chargeDelay = 0;

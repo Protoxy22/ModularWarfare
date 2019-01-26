@@ -335,23 +335,23 @@ public class RenderGun implements CustomItemRenderer {
 		{
 			mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 			if (!anim.reloading && model.righthandPump) {
-				System.out.println("1a");
+				//System.out.println("1a");
 				RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
 			} 
 			else if (anim.charged < 0.9 && model.leftHandAmmo && model.rightHandCharge && anim.charged != -1.0F) {
-				System.out.println("1b");
+				//System.out.println("1b");
 				RenderArms.renderArmCharge(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
 			}
 			else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
-				System.out.println("1c");
+				//System.out.println("1c");
 				RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
 			}
 			else if (!anim.reloading && !model.righthandPump) {
-				System.out.println("1d");
+				//System.out.println("1d");
 				RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
 			}
 			else {
-				System.out.println("1e");
+				//System.out.println("1e");
 				RenderArms.renderArmReload(model, anim, smoothing, model.rightArmReloadRot, model.rightArmReloadPos);
 			}
 			
@@ -381,21 +381,21 @@ public class RenderGun implements CustomItemRenderer {
 
 		GL11.glPushMatrix();
 		if (!anim.reloading && model.lefthandPump) {
-			System.out.println("2a");
+			//System.out.println("2a");
 			RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 		}
 		else if (anim.charged < 0.9 && model.rightHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-			System.out.println("2b");
+			//System.out.println("2b");
 			RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
 		}
 		else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
-			System.out.println("2c");
+			//System.out.println("2c");
 			RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
 		} else if (!anim.reloading && !model.lefthandPump) {
-			System.out.println("2d");
+			//System.out.println("2d");
 			RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 		} else {
-			System.out.println("2e");
+			//System.out.println("2e");
 			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
 		}
 
@@ -435,19 +435,19 @@ public class RenderGun implements CustomItemRenderer {
 				+ (anim.reloadAnimationProgress - anim.lastReloadAnimationProgress) * smoothing;
 
 		if (anim.charged < 0.9 && model.rightHandCharge && !model.leftHandAmmo && anim.charged != -1.0F) {
-			System.out.println("3a");
+			//System.out.println("3a");
 			RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
 		}
 		else if (anim.pumped < 0.9 && model.rightHandBolt && !model.leftHandAmmo) {
-			System.out.println("3b");
+			//System.out.println("3b");
 			RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
 		}
 		else if (!anim.reloading) {
-			System.out.println("3c");	
+			//System.out.println("3c");	
 			RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
 		}
 		else {
-			System.out.println("3d");
+			//System.out.println("3d");
 			RenderArms.renderArmReload(model, anim, smoothing, model.rightArmReloadRot, model.rightArmReloadPos);
 		}
 
@@ -470,21 +470,21 @@ public class RenderGun implements CustomItemRenderer {
 
 		GL11.glPushMatrix();
 		if (anim.charged < 0.9 && model.leftHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-			System.out.println("4a");
+			//System.out.println("4a");
 			RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
 		}
 
 		else if (!anim.reloading && model.lefthandPump) {
-			System.out.println("4b");
+			//System.out.println("4b");
 			RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 		}
 
 		else if (!anim.reloading) {
-			System.out.println("4c");
+			//System.out.println("4c");
 			RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 		}
 		else {
-			System.out.println("4d");
+			//System.out.println("4d");
 			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
 		}
 

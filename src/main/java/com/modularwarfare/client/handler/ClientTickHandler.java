@@ -105,9 +105,9 @@ public class ClientTickHandler extends ForgeEvent {
 			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 			
-			float maxHorizontal = 2.0f;
-			float maxVertical = 1.0f;
-			float swaySpeed = 0.006f * renderTick;
+			float maxHorizontal = 3.0f;
+			float maxVertical = 1.5f;
+			float swaySpeed = 0.003f * renderTick;
 			if(RenderGun.swayHorizontalEP == null) RenderGun.swayHorizontalEP = NumberHelper.generateInRange(maxHorizontal);
 			if(RenderGun.swayVerticalEP == null) RenderGun.swayVerticalEP = NumberHelper.generateInRange(maxVertical);
 			RenderGun.swayHorizontal = NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed);
