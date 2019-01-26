@@ -299,7 +299,7 @@ public class ItemGun extends BaseItem {
     	String baseDisplayLine = "%bFire Mode: %g%s";
     	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
     	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
-    	tooltip.add(String.format(baseDisplayLine, GunType.getFireMode(stack)));
+		tooltip.add(String.format(baseDisplayLine, GunType.getFireMode(stack) != null ? GunType.getFireMode(stack) : gunType.fireModes[0]));
     }
 	
 	@Override
