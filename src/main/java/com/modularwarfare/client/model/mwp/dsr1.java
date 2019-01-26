@@ -56,7 +56,6 @@ public class dsr1 extends ModelGun //Same as Filename
 		translateClip = new Vector3f(-4 /16F, -30F /16F, 1F /16F);
 
 		hasFlash = false;
-        hasArms = true;
         
         leftArmPos = new Vector3f(0.08F, -0.25F,- 0.03F);
         leftArmRot = new Vector3f(80.0F, 45.0F, 0.0F);

@@ -3,6 +3,7 @@ package com.modularwarfare.common.type;
 import java.util.Map;
 
 import com.modularwarfare.client.model.TurboBase;
+import com.modularwarfare.client.model.TurboBipedBase;
 import com.modularwarfare.common.guns.SkinType;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -14,6 +15,7 @@ public class BaseType {
 	/** The model file for this gun */
 	public String modelName;
 	public TurboBase model;
+	public TurboBipedBase bipedModel;
 	/** Weapon model skins/textures */
 	public SkinType[] modelSkins;
 	public String internalName;

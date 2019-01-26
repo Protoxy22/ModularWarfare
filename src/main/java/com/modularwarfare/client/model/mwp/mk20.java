@@ -57,8 +57,6 @@ public class mk20 extends ModelGun //Same as Filename
 		translateClip = new Vector3f(1 /16F, -40F /16F, 1F /16F);
 
 		hasFlash = false;
-        hasArms = true;
-        
         
         leftArmPos = new Vector3f(-0.15F, -0.2F, -0.13F);
         leftArmRot = new Vector3f(60.0F, 55.0F, 0.0F);

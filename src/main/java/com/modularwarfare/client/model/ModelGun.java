@@ -41,22 +41,21 @@ public class ModelGun extends TurboBase
 	public ModelRendererTurbo[] althammerModel = new ModelRendererTurbo[0];
 
 	//Arm rendering variables DEFAULT, RELOADING, CHARGING
-	public boolean hasArms = false;
 	public boolean leftHandAmmo = true;
 	public Vector3f leftArmScale = new Vector3f(0.8F,0.8F,0.8F);
 	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);	
-	public Vector3f leftArmPos = new Vector3f(0,0,0);
-	public Vector3f leftArmRot = new Vector3f(0,0,0);
-	public Vector3f rightArmPos = new Vector3f(0,0,0);
-	public Vector3f rightArmRot = new Vector3f(0,0,0);
-	public Vector3f leftArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f leftArmReloadRot = new Vector3f(0,0,0);
-	public Vector3f rightArmReloadPos = new Vector3f(0,0,0);
-	public Vector3f rightArmReloadRot = new Vector3f(0,0,0);
-	public Vector3f leftArmChargePos = new Vector3f(0,0,0);
-	public Vector3f leftArmChargeRot = new Vector3f(0,0,0);
-	public Vector3f rightArmChargePos = new Vector3f(0,0,0);
-	public Vector3f rightArmChargeRot = new Vector3f(0,0,0);
+	public Vector3f leftArmPos;
+	public Vector3f leftArmRot;
+	public Vector3f rightArmPos;
+	public Vector3f rightArmRot;
+	public Vector3f leftArmReloadPos;
+	public Vector3f leftArmReloadRot;
+	public Vector3f rightArmReloadPos;
+	public Vector3f rightArmReloadRot;
+	public Vector3f leftArmChargePos;
+	public Vector3f leftArmChargeRot;
+	public Vector3f rightArmChargePos;
+	public Vector3f rightArmChargeRot;
 	/** If true, move the hands with the pump action */
 	public boolean lefthandPump = false;
 	public boolean righthandPump = false;

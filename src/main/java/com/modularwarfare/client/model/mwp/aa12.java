@@ -56,7 +56,6 @@ public class aa12 extends ModelGun //Same as Filename
 //		scopeAttachPoint = new Vector3f(-5F /16F, 45F /16F, 0.05F /16F);
 		
 		hasFlash = false;
-        hasArms = true;
         
         leftArmPos = new Vector3f(0.05F, -0.28F, 0.09F);
         leftArmRot = new Vector3f(60.0F, 45.0F, 0.0F);

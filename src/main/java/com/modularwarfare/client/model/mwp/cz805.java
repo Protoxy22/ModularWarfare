@@ -58,9 +58,7 @@ public class cz805 extends ModelGun //Same as Filename
 		translateClip = new Vector3f(1 /16F, -20F /16F, 1F /16F);
 
 		hasFlash = false;
-        hasArms = true;
              
-        
 		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
 		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 		

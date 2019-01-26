@@ -48,7 +48,6 @@ public class akm extends ModelGun //Same as Filename
 		gunSlideDistance = .75F;
 		
 		hasFlash = false;
-        hasArms = true;
         
         leftArmPos = new Vector3f(0.00F, -0.30F, -0.13F);
         leftArmRot = new Vector3f(40.0F, 45.0F, 0.0F);

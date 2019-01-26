@@ -25,7 +25,6 @@ public class AnimationRifle extends WeaponAnimation {
 		GL11.glRotatef(-10F * reloadRotate + (1F * adsSwitch), 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
 		GL11.glRotatef(15F * reloadRotate + (1F * adsSwitch), 0F, 0F, 1F);
-
 	}
 	
 	@Override
@@ -47,7 +46,6 @@ public class AnimationRifle extends WeaponAnimation {
 		GL11.glRotatef(0F * clipPosition, 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
 		GL11.glRotatef(-90F * clipPosition, 0F, 0F, 1F);
-
 	}
 
 }
