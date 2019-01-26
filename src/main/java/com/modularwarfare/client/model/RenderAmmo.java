@@ -75,6 +75,7 @@ public class RenderAmmo implements CustomItemRenderer {
 
 			case EQUIPPED_FIRST_PERSON: {
 				float modelScale = model.modelScale;
+				//System.out.println(model.modelScale);
 				float rotateX = 0; //ROLL LEFT-RIGHT (0 Total ADS Default)
 				float rotateY = 46F - 1F * adsSwitch; //ANGLE LEFT-RIGHT (45 Total ADS Default)
 				float rotateZ = 1 + (-1.0F * adsSwitch); //ANGLE UP-DOWN (0 Total ADS Default)

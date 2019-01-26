@@ -70,6 +70,7 @@ public class ump45 extends ModelGun //Same as Filename
         leftHandAmmo = true;
         
         ammoMap.put("mwp.tripleump9ammo", new RenderVariables(new Vector3f(0F, 0F, 0F), 0.12F));
+        ammoMap.put("mwp.ump45doublemag", new RenderVariables(new Vector3f(0F, 0F, 0F), 0.12F));
 	    reloadAnimation = WeaponAnimations.RIFLE;
 
 		flipAll();
