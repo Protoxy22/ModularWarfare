@@ -17,14 +17,6 @@
       "soundName": "reload.mwp.f.85"
     }
   ],
-  "modelSkins": [
-    {
-      "internalName": "mwp.default",
-      "displayName": "Default",
-      "skinAsset": "cz805_default",
-      "requiredItems": ["dyeBlack/1"]
-    }
-  ],
   "acceptedAttachments": 
   {
     "sight": ["mwp.attachments.docter"]

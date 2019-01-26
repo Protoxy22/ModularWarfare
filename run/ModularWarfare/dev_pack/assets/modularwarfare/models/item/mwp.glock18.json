@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modularwarfare:items/mwp.glock18"
+    "layer0": "modularwarfare:items/guns/mwp.glock18"
   },
   "display": {
     "thirdperson_lefthand": {

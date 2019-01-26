@@ -74,5 +74,11 @@ public class BaseType {
 	{
 		return null;
 	}
+	
+	public String getAssetDir()
+	{
+		System.out.println("called");
+		return "";
+	}
 
 }

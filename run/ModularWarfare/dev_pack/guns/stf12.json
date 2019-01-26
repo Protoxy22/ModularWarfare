@@ -16,13 +16,5 @@
       "soundEvent": "weaponReload",
       "soundName": "reload.mwp.7pump"
     }
-  ],
-  "modelSkins": [
-    {
-      "internalName": "mwp.default",
-      "displayName": "Default",
-      "skinAsset": "stf12_default",
-      "requiredItems": ["dyeBlack/1"]
-    }
   ]
 }

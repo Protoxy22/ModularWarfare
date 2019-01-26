@@ -260,5 +260,11 @@ public class GunType extends BaseType {
 			nbtTagCompound.setTag("attachment_" + type.typeName, attachment.writeToNBT(new NBTTagCompound()));
 		}
 	}
+	
+	@Override
+	public String getAssetDir()
+	{
+		return "guns";
+	}
 		
 }

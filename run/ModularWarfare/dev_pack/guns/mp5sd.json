@@ -17,13 +17,5 @@
       "soundEvent": "weaponReload",
       "soundName": "reload.mwp.c.40"
     }
-  ],
-  "modelSkins": [
-    {
-      "internalName": "mwp.default",
-      "displayName": "Default",
-      "skinAsset": "mp5sd_default",
-      "requiredItems": ["dyeBlack/1"]
-    }
   ]
 }
