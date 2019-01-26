@@ -1,9 +1,7 @@
 {
   "displayName": "UMP45 Double Mag",
   "internalName": "mwp.ump45doublemag",
-  "iconName": "mwp.ump45doublemag",
   "modelName": "mwp.ammo.ump45doublemag",
-  "skinAsset": "mwp.ump45doublemag",
   "magazineCount": 2,
   "ammoCapacity": 25
 }
