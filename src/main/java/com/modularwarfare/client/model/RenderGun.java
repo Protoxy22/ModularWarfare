@@ -173,9 +173,6 @@ public class RenderGun implements CustomItemRenderer {
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
 
-				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms)
-					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
-				
 				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
 						"skins/guns/" + gunType.modelSkins[0].getSkin() + ".png"));
 
@@ -189,6 +186,32 @@ public class RenderGun implements CustomItemRenderer {
 				model.renderDefaultGadget(f);
 				model.renderSlide(f);
 				
+				if(!gunType.dynamicAmmo && ItemGun.hasAmmoLoaded(item))
+				{
+					ItemStack stackAmmo =  new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
+					ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
+					AmmoType ammoType = itemAmmo.type;
+					
+					if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+						float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
+						float reloadRotate = getReloadAnimRotate(effectiveReloadAnimationProgress, model);	
+						float clipPosition = getReloadAnimClipPos(effectiveReloadAnimationProgress, model);
+						WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, reloadRotate);
+					}
+					
+					model.renderAmmo(f);
+				}
+			}
+			GL11.glPopMatrix();
+			
+			GL11.glPushMatrix();
+			{
+				float f = 1F / 16F;
+				
+				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms)
+					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
+				
+				
 				ItemStack pumpAttachment = null;
 				if (pumpAttachment == null)
 				{
@@ -197,18 +220,6 @@ public class RenderGun implements CustomItemRenderer {
 						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						model.renderPump(f);
-						/*if (gripAttachment == null && model.gripIsOnPump)
-							model.renderDefaultGrip(f);
-						if (gadgetAttachment == null && model.gadgetIsOnPump)
-							model.renderDefaultGadget(f);
-						if(FlansModClient.shotState != -1 && -(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance != -0.0)
-						{
-							FlansModClient.shotState = -1;
-							if(type.actionSound != null)
-							{
-								Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(FlansModResourceHandler.getSound(type.actionSound), 1.0F));
-							}
-						}*/
 					}
 					GL11.glPopMatrix();
 				}
@@ -269,7 +280,7 @@ public class RenderGun implements CustomItemRenderer {
 												GL11.glRotatef(magRenderVar.angle, magRotate.x, magRotate.y, magRotate.z);
 											}
 											
-											Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
+											Vector3f adjustedScale = new Vector3f(ammoScale.x, ammoScale.y, ammoScale.z);
 											GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 											renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
 													"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
@@ -281,7 +292,7 @@ public class RenderGun implements CustomItemRenderer {
 								
 								if(shouldNormalRender)
 								{
-									Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
+									Vector3f adjustedScale = new Vector3f(ammoScale.x, ammoScale.y, ammoScale.z);
 									GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 								}
 							}
@@ -292,9 +303,6 @@ public class RenderGun implements CustomItemRenderer {
 										"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
 								modelAmmo.renderAmmo(f);
 							}
-						} else
-						{
-							model.renderAmmo(f);
 						}
 					}
 				}
@@ -316,7 +324,7 @@ public class RenderGun implements CustomItemRenderer {
 							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
 									"skins/attachments/" + attachmentType.modelSkins[0].getSkin() + ".png"));
 							Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
-							Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale / modelScale, attachmentModel.modelScale / modelScale, attachmentModel.modelScale / modelScale);
+							Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
 							GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 							GL11.glTranslatef(attachmentVec.x / attachmentModel.modelScale, attachmentVec.y / attachmentModel.modelScale, attachmentVec.z / attachmentModel.modelScale);
 							
@@ -376,13 +384,13 @@ public class RenderGun implements CustomItemRenderer {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float f = 1.0F;
-		GL11.glColor3f(f, f, f);
 		//System.out.println("called");
 		// TODO: find out if still needed?
 		//modelBipedMain.onGround = 0.0F;
 		
 		GL11.glPushMatrix();
 		{
+			GL11.glColor3f(f, f, f);
 			mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 			if (!anim.reloading && model.righthandPump) {
 				//System.out.println("1a");
