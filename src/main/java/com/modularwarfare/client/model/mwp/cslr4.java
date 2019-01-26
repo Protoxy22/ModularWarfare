@@ -54,7 +54,6 @@ public class cslr4 extends ModelGun //Same as Filename
 		translateClip = new Vector3f(-0 /16F, -20F /16F, 1F /16F);
 
 		hasFlash = false;
-        hasArms = true;
         
         leftArmPos = new Vector3f(0.08F, -0.30F, -0.15F);
         leftArmRot = new Vector3f(50.0F, 45.0F, 0.0F);

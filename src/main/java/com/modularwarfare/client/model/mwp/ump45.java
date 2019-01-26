@@ -50,7 +50,6 @@ public class ump45 extends ModelGun //Same as Filename
 		modelRecoilShake = 0.25F;
 		
 		hasFlash = false;
-        hasArms = true;
         
         leftArmPos = new Vector3f(-0.15F, -0.17F, -0.14F);
         leftArmRot = new Vector3f(60.0F, 55.0F, 0.0F);

@@ -61,7 +61,6 @@ public class aughbar extends ModelGun //Same as Filename
 		translateClip = new Vector3f(0 /16F, -25F /16F, 0F /16F);
 
 		hasFlash = false;
-		hasArms = true;
 
 		leftArmPos = new Vector3f(-0.27F, -0.20F, -0.20F);
 		leftArmRot = new Vector3f(70.0F, 45.0F, 0.0F);

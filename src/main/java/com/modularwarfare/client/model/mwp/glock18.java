@@ -56,7 +56,6 @@ public class glock18 extends ModelGun //Same as Filename
 
 
 		translateClip = new Vector3f(-6 /16F, -20F /16F, 0F /16F);
-		hasArms = true;
         //adsSpeed = -0.0F;
         leftArmPos = new Vector3f(-0.50F, 0.01F, -0.15F);
         leftArmRot = new Vector3f(60.0F, 35.0F, 0.0F);

@@ -207,8 +207,9 @@ public class RenderGun implements CustomItemRenderer {
 			GL11.glPushMatrix();
 			{
 				float f = 1F / 16F;
-				
-				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms)
+				//TODO RENDERFIRSTPERSONARM
+				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.leftArmPos != null)
+					//System.out.println("1");
 					renderFirstPersonArm(Minecraft.getMinecraft().player, model, animations);
 				
 				
@@ -306,12 +307,13 @@ public class RenderGun implements CustomItemRenderer {
 						}
 					}
 				}
-				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {
+				//TODO RENDERANIMARM
+				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.leftArmPos != null) {
+					//System.out.println("2");
 					 Minecraft mc = Minecraft.getMinecraft(); 
 					 renderAnimArm(mc.player, model, gunType, animations); 
 				}
 				GL11.glPopMatrix();
-				
 				for(AttachmentEnum attachment : AttachmentEnum.values())
 				{
 					ItemStack itemStack = GunType.getAttachment(item, attachment);
@@ -384,7 +386,6 @@ public class RenderGun implements CustomItemRenderer {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float f = 1.0F;
-		//System.out.println("called");
 		// TODO: find out if still needed?
 		//modelBipedMain.onGround = 0.0F;
 		

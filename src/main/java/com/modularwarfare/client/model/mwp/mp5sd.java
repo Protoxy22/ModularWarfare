@@ -51,7 +51,6 @@ public class mp5sd extends ModelGun //Same as Filename
 		translateClip = new Vector3f(1 /16F, -10F /16F, 1F /16F);
 
 		hasFlash = false;
-        hasArms = true;
         
         leftArmPos = new Vector3f(0.00F, -0.3F, -0.21F);
         leftArmRot = new Vector3f(40.0F, 35.0F, 0.0F);
