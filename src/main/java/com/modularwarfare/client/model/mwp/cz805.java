@@ -58,7 +58,11 @@ public class cz805 extends ModelGun //Same as Filename
 		hasFlash = false;
         hasArms = true;
              
-        leftArmPos = new Vector3f(0.05F, -0.37F, -0.14F);
+        
+		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
+		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
+		
+        leftArmPos = new Vector3f(0.05F, -0.38F, -0.14F);
         leftArmRot = new Vector3f(40.0F, 45.0F, 0.0F);
         leftArmReloadPos = new Vector3f(0.05F, -0.37F, -0.14F);
         leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);

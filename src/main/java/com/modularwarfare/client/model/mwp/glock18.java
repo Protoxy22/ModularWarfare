@@ -57,28 +57,28 @@ public class glock18 extends ModelGun //Same as Filename
 
 		translateClip = new Vector3f(-6 /16F, -20F /16F, 0F /16F);
 		hasArms = true;
-        
-        leftArmPos = new Vector3f(-0.40F, -0.55F, -0.19F);
-        leftArmRot = new Vector3f(80.0F, 35.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.40F, -0.55F, 0.1F);
-        leftArmReloadPos = new Vector3f(-0.45F, -0.55F, -0.05F);
-        leftArmChargePos = new Vector3f(0.40F, 0.53F, 0.31F);
-        leftArmChargeRot = new Vector3f(60.0F, 40.0F, 0.0F);
+        //adsSpeed = -0.0F;
+        leftArmPos = new Vector3f(-0.50F, 0.01F, -0.15F);
+        leftArmRot = new Vector3f(60.0F, 35.0F, 0.0F);
+        leftArmReloadPos = new Vector3f(-0.53F, -0.15F, -0.10F);
+        leftArmReloadRot = new Vector3f(60.0F, 35.0F, 0.0F);
+        leftArmChargePos = new Vector3f(-0.50F, 0.01F, -0.15F);
+        leftArmChargeRot = new Vector3f(60.0F, 35.0F, 0.0F);
  
-        rightArmPos = new Vector3f(0.13F, -0.60F, 0.00F);
+        rightArmPos = new Vector3f(-0.45F, -0.02F, 0.00F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.13F, -0.64F, 0.06F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -100.0F);
+        rightArmReloadPos = new Vector3f(-0.48F, -0.01F, 0.035F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         
         leftHandAmmo = true;
         
-        rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
-        leftArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
+        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
 		//RecoilSlideDistance = 0.1F;
 		//RotateSlideDistance = -2F;
 
-		scopeIsOnSlide = true;
-		slideLockOnEmpty = true;
+		//scopeIsOnSlide = true;
+		//slideLockOnEmpty = true;
 		
 		casingAnimDistance = new Vector3f(0, 1, 12);
 	    casingAnimSpread = new Vector3f(2, 2, 0);
@@ -90,13 +90,13 @@ public class glock18 extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(0.0F, -5.0F, 50.0F);
 		sprintTranslate = new Vector3f(1.3F, 0.70F, 0.1F);
 		
-	    chargeHandleDistance = 0.5F;
-	    chargeDelay = 0;
-	    chargeDelayAfterReload = 43;
-	    chargeTime = 8;
+	    //chargeHandleDistance = 0.5F;
+	    //chargeDelay = 0;
+	    //chargeDelayAfterReload = 43;
+	    //chargeTime = 8;
 	    
-	    leftHandCharge = true;
-	    chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
+	    //leftHandCharge = true;
+	    //chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
 
 
 		flipAll();

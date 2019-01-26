@@ -27,7 +27,7 @@ public class AnimStateMachine {
 	/** Delayed Reload Animations */
 	public int timeUntilPump = 0, timeToPumpFor = 0;
 	/** Delayed Reload Animations : -1, 1 = At rest, 0 = Mid Animation */
-	public float pumped = -1F, lastPumped = -1F;
+	public float pumped = 0.91F, lastPumped = 0.91F;
 	/** Delayed Reload Animations : Doing the delayed animation */
 	public boolean pumping = false;
 	/** Charge handle variables */
