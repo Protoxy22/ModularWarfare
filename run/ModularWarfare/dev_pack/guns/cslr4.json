@@ -17,7 +17,7 @@
       "soundName": "reload.mwp.g.60"
     }
   ],
-  "weaponSkins": [
+  "modelSkins": [
     {
       "internalName": "mwp.default",
       "displayName": "Default",

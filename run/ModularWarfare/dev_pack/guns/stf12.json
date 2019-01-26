@@ -17,7 +17,7 @@
       "soundName": "reload.mwp.7pump"
     }
   ],
-  "weaponSkins": [
+  "modelSkins": [
     {
       "internalName": "mwp.default",
       "displayName": "Default",

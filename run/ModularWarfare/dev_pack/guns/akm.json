@@ -7,7 +7,7 @@
   "acceptedAmmo": ["mwp.akmammo"],
   "fireModes": ["full", "semi"],
   "modelName": "mwp.akm",
-  "weaponSkins": [
+  "modelSkins": [
     {
       "internalName": "mwp.akm",
       "displayName": "Default",
