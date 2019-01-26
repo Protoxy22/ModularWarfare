@@ -60,22 +60,22 @@ public class m45a1 extends ModelGun //Same as Filename
 		translateClip = new Vector3f(-6 /16F, -20F /16F, 0F /16F);
 		hasArms = true;
         
-        leftArmPos = new Vector3f(-0.40F, -0.70F, -0.16F);
-        leftArmRot = new Vector3f(80.0F, 35.0F, 0.0F);
-        leftArmChargePos = new Vector3f(0.43F, 0.61F, 0.29F);
-        leftArmChargeRot = new Vector3f(60.0F, 40.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.40F, -0.55F, 0.1F);
-        leftArmReloadRot = new Vector3f(80.0F, 35.0F, 0.0F);
+        leftArmPos = new Vector3f(-0.50F, 0.01F, -2.15F);
+        leftArmRot = new Vector3f(60.0F, 35.0F, 0.0F);
+        leftArmReloadPos = new Vector3f(-0.53F, -0.15F, -0.10F);
+        leftArmReloadRot = new Vector3f(60.0F, 35.0F, 0.0F);
+        leftArmChargePos = new Vector3f(-0.50F, 0.01F, -0.15F);
+        leftArmChargeRot = new Vector3f(60.0F, 35.0F, 0.0F);
  
-        rightArmPos = new Vector3f(0.17F, -0.6F, 0.00F);
+        rightArmPos = new Vector3f(-0.850F, -0.03F, 0.00F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.17F, -0.62F, 0.06F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -100.0F);
+        rightArmReloadPos = new Vector3f(-0.850F, -0.03F, 0.00F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         
         leftHandAmmo = true;
         
-        rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
-        leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
+        rightArmScale = new Vector3f(0.6F, 1.2F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
 		//RecoilSlideDistance = 0.1F;
 		//RotateSlideDistance = -2F;
 
@@ -89,8 +89,8 @@ public class m45a1 extends ModelGun //Same as Filename
 
 		crouchZoom = -0.10F;
 		fancyStance = true;
-		//sprintRotate = new Vector3f(-5.0F, 0.0F, 40.0F);
-		//sprintTranslate = new Vector3f(0.4F, -0.2F, -0.1F);
+		sprintRotate = new Vector3f(0.0F, -5.0F, 50.0F);
+		sprintTranslate = new Vector3f(1.3F, 0.70F, 0.1F);
 		
 	    chargeHandleDistance = 1.6F;
 	    chargeDelay = 0;

@@ -8,6 +8,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.CustomItemRenderType;
 import com.modularwarfare.client.model.CustomItemRenderer;
 import com.modularwarfare.client.model.RenderAmmo;
+import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseItem;
@@ -47,7 +48,7 @@ public class ClientRenderHooks extends ForgeEvent {
 	
 	public static HashMap<EntityLivingBase, AnimStateMachine> gunAnimations = new HashMap<EntityLivingBase, AnimStateMachine>();
 	private Minecraft mc;
-	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[2];
+	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[3];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
 	private float partialTicks;
 	
@@ -57,6 +58,7 @@ public class ClientRenderHooks extends ForgeEvent {
 		
 		customRenderers[0] = ClientProxy.gunRenderer = new RenderGun();
 		customRenderers[1] = ClientProxy.ammoRenderer = new RenderAmmo();
+		customRenderers[2] = ClientProxy.attachmentRenderer = new RenderAttachment();
 	}
 	
 	@SubscribeEvent

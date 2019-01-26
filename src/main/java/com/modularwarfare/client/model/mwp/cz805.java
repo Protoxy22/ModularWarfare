@@ -66,14 +66,14 @@ public class cz805 extends ModelGun //Same as Filename
 		
         leftArmPos = new Vector3f(0.05F, -0.38F, -0.14F);
         leftArmRot = new Vector3f(40.0F, 45.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(0.05F, -0.37F, -0.14F);
+        leftArmReloadPos = new Vector3f(-0.15F, -0.7F, -0.14F);
         leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);
         leftArmChargePos = new Vector3f(0.18F, 0.45F, 0.06F);
         leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
  
         rightArmPos = new Vector3f(-0.37F, -0.20F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.47F, -0.20F, 0.0F);
+        rightArmReloadPos = new Vector3f(-0.37F, -0.20F, 0.03F);
         rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
         
         rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);

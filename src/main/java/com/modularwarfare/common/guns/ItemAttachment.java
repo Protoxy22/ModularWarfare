@@ -10,7 +10,7 @@ public class ItemAttachment extends BaseItem {
 	public ItemAttachment(AttachmentType type) {
 		super(type);
 		this.type = type;
-		this.render3d = false;
+		this.render3d = true;
 	}
 	
 }

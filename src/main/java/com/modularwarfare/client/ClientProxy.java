@@ -21,6 +21,7 @@ import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.model.RenderAmmo;
+import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.client.model.animations.AnimationPistol;
 import com.modularwarfare.client.model.animations.AnimationRifle;
@@ -61,6 +62,7 @@ public class ClientProxy extends CommonProxy {
 	public static String modelDir = "com.modularwarfare.client.model.";
 	public static RenderGun gunRenderer;
 	public static RenderAmmo ammoRenderer;
+	public static RenderAttachment attachmentRenderer;
 	public static HashMap<String, SoundEvent> modSounds = new HashMap<String, SoundEvent>();
 	
 	@Override
