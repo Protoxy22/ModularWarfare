@@ -168,7 +168,7 @@ public class RenderGun implements CustomItemRenderer {
 
 			}
 			
-			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {
+			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
 				 Minecraft mc = Minecraft.getMinecraft(); 
 				 renderFirstPersonArm(mc.player, model, animations); 
 			}
@@ -267,7 +267,7 @@ public class RenderGun implements CustomItemRenderer {
 					}
 				}
 				
-				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms) {
+				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
 					 Minecraft mc = Minecraft.getMinecraft(); 
 					 renderAnimArm(mc.player, model, gunType, animations); 
 				}
