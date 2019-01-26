@@ -186,6 +186,40 @@ public class RenderGun implements CustomItemRenderer {
 				model.renderDefaultGadget(f);
 				model.renderSlide(f);
 				
+				ItemStack pumpAttachment = null;
+				if (pumpAttachment == null)
+				{
+					GL11.glPushMatrix();
+					{
+						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
+						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
+						model.renderPump(f);
+						/*if (gripAttachment == null && model.gripIsOnPump)
+							model.renderDefaultGrip(f);
+						if (gadgetAttachment == null && model.gadgetIsOnPump)
+							model.renderDefaultGadget(f);
+						if(FlansModClient.shotState != -1 && -(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance != -0.0)
+						{
+							FlansModClient.shotState = -1;
+							if(type.actionSound != null)
+							{
+								Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.func_147674_a(FlansModResourceHandler.getSound(type.actionSound), 1.0F));
+							}
+						}*/
+					}
+					GL11.glPopMatrix();
+				}
+				
+				if (model.chargeHandleDistance != 0F)
+				{
+					GL11.glPushMatrix();
+					{
+						GL11.glTranslatef(-(1 - Math.abs(animations.lastCharged + (animations.charged - animations.lastCharged) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
+						model.renderCharge(f);
+					}
+					GL11.glPopMatrix();
+				}
+				
 				GL11.glPushMatrix();
 				{
 					if(ItemGun.hasAmmoLoaded(item))

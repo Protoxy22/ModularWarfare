@@ -192,7 +192,7 @@ public class AnimStateMachine {
 		lastReloadAnimationProgress = reloadAnimationProgress = 0F;
 		reloadAnimationTime = reloadTime;
 		
-		timeUntilPump = model.pumpDelay;
+		timeUntilPump = model.pumpDelayAfterReload;
 		timeToPumpFor = model.pumpTime;
 		timeUntilCharge = model.chargeDelay;
 		timeToChargeFor = model.chargeTime;
