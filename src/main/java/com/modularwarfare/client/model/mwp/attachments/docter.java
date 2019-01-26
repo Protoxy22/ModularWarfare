@@ -12,8 +12,10 @@ public class docter extends ModelAttachment //Same as Filename
 	int textureX = 512;
 	int textureY = 512;
 
+
 	public docter() //Same as Filename
 	{
+		modelScale = 0.02f;
 		attachmentModel = new ModelRendererTurbo[143];
 		attachmentModel[0] = new ModelRendererTurbo(this, 1, 1, textureX, textureY); // Box 0
 		attachmentModel[1] = new ModelRendererTurbo(this, 25, 1, textureX, textureY); // Box 0
@@ -588,7 +590,6 @@ public class docter extends ModelAttachment //Same as Filename
 		attachmentModel[142].addShapeBox(-2F, -20F, 18F, 3, 1, 1, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Box 0
 		attachmentModel[142].setRotationPoint(42F, 18F, -40.5F);
 
-		modelScale = 0.02f;
 		
 		flipAll();
 	}

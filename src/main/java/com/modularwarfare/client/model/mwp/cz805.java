@@ -35,9 +35,9 @@ public class cz805 extends ModelGun //Same as Filename
 		
 		modelScale = 0.05F;
 //		barrelAttachPoint = new Vector3f(325F /16F, 70F /16F, 0F /16F);
-//		scopeAttachPoint = new Vector3f(05F /16F, 103F /16F, 0.5F /16F);
+		//scopeAttachPoint = new Vector3f(05F /16F, 103F /16F, 0.5F /16F);
 //		gripAttachPoint = new Vector3f(195 /16F, 48F /16F, 0F /16F);
-		attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(05F /16F, 103F /16F, 0.5F /16F));
+		attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(0F /16F, 5F /16F, 0F /16F));
 
 		translateAll(2F, -9F, -0.225F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.06F, 0F);//forward/up/?

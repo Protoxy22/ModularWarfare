@@ -295,8 +295,10 @@ public class RenderGun implements CustomItemRenderer {
 							renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
 									"skins/" + attachmentType.modelSkins[0].getSkin() + ".png"));
 							Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
-							GL11.glScalef(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
-							GL11.glTranslatef(attachmentVec.x * attachmentModel.modelScale, attachmentVec.y * attachmentModel.modelScale, attachmentVec.z * attachmentModel.modelScale);
+							Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale / modelScale, attachmentModel.modelScale / modelScale, attachmentModel.modelScale / modelScale);
+							GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+							GL11.glTranslatef(attachmentVec.x / attachmentModel.modelScale, attachmentVec.y / attachmentModel.modelScale, attachmentVec.z / attachmentModel.modelScale);
+							
 							if (attachmentModel != null)
 								attachmentModel.renderAttachment(f);
 						}
