@@ -391,68 +391,71 @@ public class RenderGun implements CustomItemRenderer {
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		float f = 1.0F;
-		GL11.glPushMatrix();
+		
+		if (model.leftHandAmmo) 
 		{
-			GL11.glColor3f(f, f, f);
-			mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-			if (!anim.reloading && model.righthandPump) {
-				//System.out.println("1a");
-				RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-			} 
-			else if (anim.charged < 0.9 && model.leftHandAmmo && model.rightHandCharge && anim.charged != -1.0F) {
-				//System.out.println("1b");
-				RenderArms.renderArmCharge(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-			}
-			else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
-				//System.out.println("1c");
-				RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-			}
-			else if (!anim.reloading && !model.righthandPump) {
-				//System.out.println("1d");
-				RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-			}
-			else {
-				//System.out.println("1e");
-				RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
-			}
-			
-			GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-			modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-			modelplayer.bipedRightArm.offsetY = 0F;
-			if (model.leftHandAmmo) {
+			GL11.glPushMatrix();
+			{
+				GL11.glColor3f(f, f, f);
+				mc.renderEngine.bindTexture(mc.player.getLocationSkin());
+				if (!anim.reloading && model.righthandPump) {
+					//System.out.println("1a");
+					RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
+				} 
+				else if (anim.charged < 0.9 && model.leftHandAmmo && model.rightHandCharge && anim.charged != -1.0F) {
+					//System.out.println("1b");
+					RenderArms.renderArmCharge(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
+				}
+				else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
+					//System.out.println("1c");
+					RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
+				}
+				else if (!anim.reloading && !model.righthandPump) {
+					//System.out.println("1d");
+					RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
+				}
+				else {
+					//System.out.println("1e");
+					RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
+				}
+				
+				GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
+				//modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+				modelplayer.bipedRightArm.offsetY = 0F;
 				modelplayer.bipedRightArm.render(0.0625F);
 				renderRightSleeve(player, modelplayer);
 			}
-		}
-		GL11.glPopMatrix();
-
-		GL11.glPushMatrix();
-		if (!anim.reloading && model.lefthandPump) {
-			//System.out.println("2a");
-			RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-		}
-		else if (anim.charged < 0.9 && model.rightHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-			//System.out.println("2b");
-			RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-		}
-		else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
-			//System.out.println("2c");
-			RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-		} else if (!anim.reloading && !model.lefthandPump) {
-			//System.out.println("2d");
-			RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-		} else {
-			//System.out.println("2e");
-			RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
+			GL11.glPopMatrix();
 		}
 
-		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-		modelplayer.bipedLeftArm.offsetY = 0F;
-		if (!model.leftHandAmmo) {
+		if (!model.leftHandAmmo) 
+		{
+			GL11.glPushMatrix();
+			if (!anim.reloading && model.lefthandPump) {
+				//System.out.println("2a");
+				RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
+			}
+			else if (anim.charged < 0.9 && model.rightHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
+				//System.out.println("2b");
+				RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
+			}
+			else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
+				//System.out.println("2c");
+				RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
+			} else if (!anim.reloading && !model.lefthandPump) {
+				//System.out.println("2d");
+				RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
+			} else {
+				//System.out.println("2e");
+				RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
+			}
+
+			GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+			modelplayer.bipedLeftArm.offsetY = 0F;
 			modelplayer.bipedLeftArm.render(0.0625F);
 			renderLeftSleeve(player, modelplayer);
+			GL11.glPopMatrix();
 		}
-		GL11.glPopMatrix();
 	}
 
 	//Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
@@ -466,64 +469,66 @@ public class RenderGun implements CustomItemRenderer {
 		{
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
 			
-			GL11.glPushMatrix();
-			{			
-				if (anim.charged < 0.9 && model.rightHandCharge && !model.leftHandAmmo && anim.charged != -1.0F) {
-					//System.out.println("3a");
-					RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-				}
-				else if (anim.pumped < 0.9 && model.rightHandBolt && !model.leftHandAmmo) {
-					//System.out.println("3b");
-					RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-				}
-				else if (!anim.reloading) {
-					//System.out.println("3c");	
-					RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-				}
-				else {
-					//System.out.println("3d");
-					RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
-				}
+			if (!model.leftHandAmmo) 
+			{
+				GL11.glPushMatrix();
+				{			
+					if (anim.charged < 0.9 && model.rightHandCharge && !model.leftHandAmmo && anim.charged != -1.0F) {
+						//System.out.println("3a");
+						RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
+					}
+					else if (anim.pumped < 0.9 && model.rightHandBolt && !model.leftHandAmmo) {
+						//System.out.println("3b");
+						RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
+					}
+					else if (!anim.reloading) {
+						//System.out.println("3c");	
+						RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
+					}
+					else {
+						//System.out.println("3d");
+						RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
+					}
 
-				GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-				modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-				modelplayer.bipedRightArm.offsetY = 0F;
-				if (!model.leftHandAmmo) {
+					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
+					//modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+					modelplayer.bipedRightArm.offsetY = 0F;
 					modelplayer.bipedRightArm.render(0.0625F);
 					renderRightSleeve(player, modelplayer);
 				}
+				GL11.glPopMatrix();
 			}
-			GL11.glPopMatrix();
-
-			GL11.glPushMatrix();
+			
+			if (model.leftHandAmmo) 
 			{
-				if (anim.charged < 0.9 && model.leftHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-					//System.out.println("4a");
-					RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-				}
+				GL11.glPushMatrix();
+				{
+					if (anim.charged < 0.9 && model.leftHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
+						//System.out.println("4a");
+						RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
+					}
 
-				else if (!anim.reloading && model.lefthandPump) {
-					//System.out.println("4b");
-					RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-				}
+					else if (!anim.reloading && model.lefthandPump) {
+						//System.out.println("4b");
+						RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
+					}
 
-				else if (!anim.reloading) {
-					//System.out.println("4c");
-					RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-				}
-				else {
-					//System.out.println("4d");
-					RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
-				}
+					else if (!anim.reloading) {
+						//System.out.println("4c");
+						RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
+					}
+					else {
+						//System.out.println("4d");
+						RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
+					}
 
-				GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-				modelplayer.bipedLeftArm.offsetY = 0F;
-				if (model.leftHandAmmo) {
+					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+					modelplayer.bipedLeftArm.offsetY = 0F;
 					modelplayer.bipedLeftArm.render(0.0625F);
 					renderLeftSleeve(player, modelplayer);
 				}
+				GL11.glPopMatrix();
 			}
-			GL11.glPopMatrix();
 		}
 		GL11.glPopMatrix();
 	}

@@ -127,7 +127,7 @@ public class ModelGun extends TurboBase
     //Reload animation variables
 	//public EnumAnimationType animationType = EnumAnimationType.NONE;
 	//public EnumMeleeAnimation meleeAnimation = EnumMeleeAnimation.DEFAULT;
-	public float tiltGunTime = 0.45F, unloadClipTime = 0.05F, loadClipTime = 0.05F, untiltGunTime = 0.45F;
+	public float tiltGunTime = 0.15F, unloadClipTime = 0.35F, loadClipTime = 0.35F, untiltGunTime = 0.15F;
 	/** If true, then the scope attachment will move with the top slide */
 	public boolean scopeIsOnSlide = false;
 	/** If true, then the scope attachment will move with the break action. Can be combined with the above */

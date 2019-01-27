@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.AnimStateMachine;
+import com.modularwarfare.utility.NumberHelper;
 
 public class RenderArms {
 	
@@ -66,7 +67,9 @@ public class RenderArms {
 	
 	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos)
 	{
-		GL11.glTranslatef(reloadPos.x, reloadPos.y, reloadPos.z);
+		Vector3f offsetVector = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
+		GL11.glTranslatef(defaultPos.x + offsetVector.x, defaultPos.y + offsetVector.y, defaultPos.z + offsetVector.z);
+		
 		handleRotate(reloadRot);
 	}
 	
