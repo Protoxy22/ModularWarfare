@@ -11,20 +11,20 @@ import net.minecraft.util.math.MathHelper;
 public class AnimationRifle extends WeaponAnimation {
 	
 	@Override
-	public void onGunAnimation(float reloadRotate, float adsSwitch)
+	public void onGunAnimation(float tiltProgress, float adsSwitch)
 	{
 		//Translate X - Forwards/Backwards
-		GL11.glTranslatef(0.0F * reloadRotate, 0F, 0F);
+		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
 		//Translate Y - Up/Down
-		GL11.glTranslatef(0F, 0.0F * reloadRotate + (-0.064F * adsSwitch * reloadRotate), 0F);
+		GL11.glTranslatef(0F, 0.0F * tiltProgress + (-0.064F * adsSwitch * tiltProgress), 0F);
 		//Translate Z - Left/Right
-		GL11.glTranslatef(0F, 0F, -0.2F * reloadRotate + (0.35F * adsSwitch * reloadRotate));
+		GL11.glTranslatef(0F, 0F, -0.2F * tiltProgress + (0.35F * adsSwitch * tiltProgress));
 		//Rotate X axis - Rolls Left/Right
-		GL11.glRotatef(10F * reloadRotate, 1F, 0F, 0F);
+		GL11.glRotatef(10F * tiltProgress, 1F, 0F, 0F);
 		//Rotate Y axis - Angle Left/Right
-		GL11.glRotatef(-10F * reloadRotate + (1F * adsSwitch), 0F, 1F, 0F);
+		GL11.glRotatef(-10F * tiltProgress + (1F * adsSwitch), 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
-		GL11.glRotatef(15F * reloadRotate + (1F * adsSwitch), 0F, 0F, 1F);
+		GL11.glRotatef(15F * tiltProgress + (1F * adsSwitch), 0F, 0F, 1F);
 	}
 	
 	@Override

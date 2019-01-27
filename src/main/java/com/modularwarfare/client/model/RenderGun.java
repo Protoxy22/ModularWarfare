@@ -151,8 +151,8 @@ public class RenderGun implements CustomItemRenderer {
 				
 				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 					float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
-					float reloadRotate = getReloadAnimRotate(effectiveReloadAnimationProgress, model);					
-					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(reloadRotate, adsSwitch);
+					float tiltProgress = getReloadAnimRotate(effectiveReloadAnimationProgress, model);					
+					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, adsSwitch);
 				}
 				
 				//Recoil
@@ -202,9 +202,9 @@ public class RenderGun implements CustomItemRenderer {
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 							float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
-							float reloadRotate = getReloadAnimRotate(effectiveReloadAnimationProgress, model);	
+							float tiltProgress = getReloadAnimRotate(effectiveReloadAnimationProgress, model);	
 							float clipPosition = getReloadAnimClipPos(effectiveReloadAnimationProgress, model);
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, reloadRotate);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, tiltProgress);
 						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)
@@ -330,27 +330,41 @@ public class RenderGun implements CustomItemRenderer {
 		GL11.glPopMatrix();
 	}
 	
-	private float getReloadAnimClipPos(float effectiveReloadAnimationProgress, ModelGun model) {
-		float tiltGunTime = model.tiltGunTime, unloadClipTime = model.unloadClipTime, loadClipTime = model.loadClipTime;
+	private float getReloadAnimClipPos(float reloadProgress, ModelGun model) 
+	{
+		//These values must always add up to 1.0 and control which of the 4 states the reload animation is in by comparing their value to reloadProgress
+		float tiltGunTime = model.tiltGunTime, unloadClipTime = model.unloadClipTime, loadClipTime = model.loadClipTime, untiltGunTime = model.untiltGunTime;
 		float clipPosition = 0F;
-		if (effectiveReloadAnimationProgress > tiltGunTime && effectiveReloadAnimationProgress < tiltGunTime + unloadClipTime)
-			clipPosition = (effectiveReloadAnimationProgress - tiltGunTime) / unloadClipTime;
-		if (effectiveReloadAnimationProgress >= tiltGunTime + unloadClipTime && effectiveReloadAnimationProgress < tiltGunTime + unloadClipTime + loadClipTime)
-			clipPosition = 1F - (effectiveReloadAnimationProgress - (tiltGunTime + unloadClipTime)) / loadClipTime;
-		float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((effectiveReloadAnimationProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
+		//Unload half of animation (Starts moving after Progress passes tiltGunTime, moves until Progress reaches tiltGunTime + unloadClipTime)
+		if (reloadProgress > tiltGunTime && reloadProgress < tiltGunTime + unloadClipTime)
+			clipPosition = (reloadProgress - tiltGunTime) / unloadClipTime;
+		//Load half of animation (Starts moving after Progress passes tiltGunTime + unloadClipTime, moves until Progress reaches 1.0 - untileGunTime (Back to original position))
+		if (reloadProgress >= tiltGunTime + unloadClipTime && reloadProgress < 1 - untiltGunTime)
+			clipPosition = 1F - (reloadProgress - (tiltGunTime + unloadClipTime)) / loadClipTime;
+		
+		
+		
+		
+		float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((reloadProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
+		
+		
+		//System.out.println("if " + reloadProgress + " >=" + (tiltGunTime + unloadClipTime));
+		//System.out.println((reloadProgress - tiltGunTime) / unloadClipTime);
+		//System.out.println(effectiveReloadAnimationProgress);
+		//System.out.println(effectiveReloadAnimationProgress);
 		return clipPosition;
 	}
 
 	private float getReloadAnimRotate(float effectiveReloadAnimationProgress, ModelGun model) {
-		float reloadRotate = 1f;
+		float tiltProgress = 1f;
 		if (effectiveReloadAnimationProgress < model.tiltGunTime)
-			reloadRotate = effectiveReloadAnimationProgress / model.tiltGunTime;
+			tiltProgress = effectiveReloadAnimationProgress / model.tiltGunTime;
 		if (effectiveReloadAnimationProgress > model.tiltGunTime + model.unloadClipTime
 				+ model.loadClipTime)
-			reloadRotate = 1F - (effectiveReloadAnimationProgress
+			tiltProgress = 1F - (effectiveReloadAnimationProgress
 					- (model.tiltGunTime + model.unloadClipTime + model.loadClipTime))
 					/ model.untiltGunTime;
-		return reloadRotate;
+		return tiltProgress;
 	}
 
 	private float getEffectiveReloadAnimProgress(AnimStateMachine animations) {
@@ -478,21 +492,21 @@ public class RenderGun implements CustomItemRenderer {
 			GL11.glPushMatrix();
 			{
 				if (anim.charged < 0.9 && model.leftHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-					System.out.println("4a");
+					//System.out.println("4a");
 					RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
 				}
 
 				else if (!anim.reloading && model.lefthandPump) {
-					System.out.println("4b");
+					//System.out.println("4b");
 					RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 				}
 
 				else if (!anim.reloading) {
-					System.out.println("4c");
+					//System.out.println("4c");
 					RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 				}
 				else {
-					System.out.println("4d");
+					//System.out.println("4d");
 					RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
 				}
 
