@@ -330,26 +330,29 @@ public class RenderGun implements CustomItemRenderer {
 		GL11.glPopMatrix();
 	}
 	
+	//Calculates the ammo position during the unloadClip and loadClip stages of the reload
 	private float getReloadClipPosition(float reloadProgress, ModelGun model) 
 	{
+		float clipPosition = 0F;
 		//These values must always add up to 1.0 and control which of the 4 states the reload animation is in by comparing their value to reloadProgress
 		float tiltGunTime = model.tiltGunTime, unloadClipTime = model.unloadClipTime, loadClipTime = model.loadClipTime, untiltGunTime = model.untiltGunTime;
-		float clipPosition = 0F;
 		//Unload half of animation (Starts moving after Progress passes tiltGunTime, moves until Progress reaches tiltGunTime + unloadClipTime)
 		if (reloadProgress > tiltGunTime && reloadProgress < tiltGunTime + unloadClipTime)
-			//Moves the ammo down
+			//Moves the ammo down 0 to 2.4
 			clipPosition = (reloadProgress - tiltGunTime) / unloadClipTime;
-		//Load half of animation (Starts moving after Progress passes tiltGunTime + unloadClipTime, moves until Progress reaches 1.0 - untileGunTime (Back to original position))
+
+		//Load half of animation (Starts moving after Progress passes tiltGunTime + unloadClipTime, moves until Progress reaches 1.0 - untiltGunTime (Back to original position))
 		if (reloadProgress >= tiltGunTime + unloadClipTime && reloadProgress < 1 - untiltGunTime)
-			//Moves the ammo up
+			//Moves the ammo up -2.4 to 0
 			clipPosition = 1F - (reloadProgress - (tiltGunTime + unloadClipTime)) / loadClipTime;
-		
+
 		//WIP LOAD ONLY
 		float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((reloadProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
 		
 		return clipPosition;
 	}
-
+	
+	//Calculates the tilt and untilt at the start and end of the reload animation
 	private float getReloadTiltProgress(float effectiveReloadAnimationProgress, ModelGun model) {
 		float tiltProgress = 1f;
 		if (effectiveReloadAnimationProgress < model.tiltGunTime)

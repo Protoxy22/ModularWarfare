@@ -25,8 +25,6 @@ public class AnimationRifle2 extends WeaponAnimation {
 		GL11.glRotatef(-15F * tiltProgress, 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
 		GL11.glRotatef(25F * tiltProgress, 0F, 0F, 1F);
-		System.out.println(tiltProgress);
-
 	}
 	
 	@Override
