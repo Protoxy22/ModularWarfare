@@ -11,26 +11,24 @@ import net.minecraft.util.math.MathHelper;
 public class AnimationRifle2 extends WeaponAnimation {
 	
 	@Override
-	public void onGunAnimation(float tiltProgress, float adsSwitch)
+	public void onGunAnimation(float tiltProgress)
 	{
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
 		//Translate Y - Up/Down
-		GL11.glTranslatef(0F, 0.0F * tiltProgress + (-0.064F * adsSwitch * tiltProgress), 0F);
+		GL11.glTranslatef(0F, 0.0F * tiltProgress, 0F);
 		//Translate Z - Left/Right
-		GL11.glTranslatef(0F, 0F, 0.0F * tiltProgress + (0.35F * adsSwitch * tiltProgress));
+		GL11.glTranslatef(0F, 0F, 0.0F * tiltProgress);
 		//Rotate X axis - Rolls Left/Right
 		GL11.glRotatef(10F * tiltProgress, 1F, 0F, 0F);
 		//Rotate Y axis - Angle Left/Right
-		GL11.glRotatef(-15F * tiltProgress + (1F * adsSwitch), 0F, 1F, 0F);
+		GL11.glRotatef(-15F * tiltProgress, 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
-		GL11.glRotatef(25F * tiltProgress + (1F * adsSwitch), 0F, 0F, 1F);
-		System.out.println(tiltProgress);
-
+		GL11.glRotatef(25F * tiltProgress, 0F, 0F, 1F);
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float clipPosition, float reloadRotate)
+	public void onAmmoAnimation(ModelGun gunModel, float clipPosition)
 	{
 		float ammoPosition = clipPosition * 1/*getNumBulletsInReload(animations, gripAttachment, type, item)*/;
 		int bulletNum = MathHelper.floor(ammoPosition);
