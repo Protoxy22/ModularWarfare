@@ -108,7 +108,6 @@ public class ClientTickHandler extends ForgeEvent {
 			float triggerPullSpeed = 0.03f * renderTick;
 			float triggerPullValue = Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
 			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
-			System.out.println(model.triggerDistance);
 			
 			float maxHorizontal = 3.0f;
 			float maxVertical = 1.5f;

@@ -592,7 +592,6 @@ public class docter extends ModelAttachment //Same as Filename
 		attachmentModel[142].addShapeBox(-2F, -20F, 18F, 3, 1, 1, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F, -1F, 0F, 0F); // Box 0
 		attachmentModel[142].setRotationPoint(42F, 18F, -40.5F);
 
-		translateAll(0F, -150.5F, -0.1F);
 		flipAll();
 	}
 }
