@@ -69,5 +69,13 @@ public class NumberHelper {
 		resultVector = resultVector.sub(left, right, resultVector);
 		return resultVector;
 	}
+	
+	public static Vector3f multiplyVector(Vector3f vector, float amount)
+	{
+		vector.x *= amount;
+		vector.y *= amount;
+		vector.z *= amount;
+		return vector;
+	}
 
 }
