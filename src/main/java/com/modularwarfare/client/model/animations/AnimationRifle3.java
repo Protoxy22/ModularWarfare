@@ -29,7 +29,7 @@ public class AnimationRifle3 extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float clipPosition, float reloadRotate)
+	public void onAmmoAnimation(ModelGun gunModel, float clipPosition)
 	{
 		float ammoPosition = clipPosition * 1/*getNumBulletsInReload(animations, gripAttachment, type, item)*/;
 		int bulletNum = MathHelper.floor(ammoPosition);

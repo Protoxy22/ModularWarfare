@@ -9,7 +9,7 @@ public class WeaponAnimation {
 		
 	}
 	
-	public void onAmmoAnimation(ModelGun gunModel, float clipPosition, float reloadRotate)
+	public void onAmmoAnimation(ModelGun gunModel, float clipPosition)
 	{
 		
 	}
