@@ -9,6 +9,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
+import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentEnum;
 import com.modularwarfare.common.guns.AttachmentType;
@@ -18,6 +19,7 @@ import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -370,6 +372,7 @@ public class RenderGun implements CustomItemRenderer {
 				+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 	}
 	
+	// Resets render modifiers
 	public static void resetRenderMods()
 	{
 		RenderGun.swayHorizontal = 0f;
@@ -417,6 +420,7 @@ public class RenderGun implements CustomItemRenderer {
 			modelplayer.bipedRightArm.offsetY = 0F;
 			if (model.leftHandAmmo) {
 				modelplayer.bipedRightArm.render(0.0625F);
+				renderRightSleeve(player, modelplayer);
 			}
 		}
 		GL11.glPopMatrix();
@@ -445,6 +449,7 @@ public class RenderGun implements CustomItemRenderer {
 		modelplayer.bipedLeftArm.offsetY = 0F;
 		if (!model.leftHandAmmo) {
 			modelplayer.bipedLeftArm.render(0.0625F);
+			renderLeftSleeve(player, modelplayer);
 		}
 		GL11.glPopMatrix();
 	}
@@ -483,6 +488,7 @@ public class RenderGun implements CustomItemRenderer {
 				modelplayer.bipedRightArm.offsetY = 0F;
 				if (!model.leftHandAmmo) {
 					modelplayer.bipedRightArm.render(0.0625F);
+					renderRightSleeve(player, modelplayer);
 				}
 			}
 			GL11.glPopMatrix();
@@ -512,11 +518,52 @@ public class RenderGun implements CustomItemRenderer {
 				modelplayer.bipedLeftArm.offsetY = 0F;
 				if (model.leftHandAmmo) {
 					modelplayer.bipedLeftArm.render(0.0625F);
+					renderLeftSleeve(player, modelplayer);
 				}
 			}
 			GL11.glPopMatrix();
 		}
 		GL11.glPopMatrix();
+	}
+	
+	public void renderLeftSleeve(EntityPlayer player, ModelBiped modelplayer)
+	{
+		if(player.inventory.armorItemInSlot(2) != null)
+		{
+			ItemStack armorStack = player.inventory.armorItemInSlot(2);
+			if(armorStack.getItem() instanceof ItemMWArmor) {
+				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
+						"skins/armor/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin() + ".png"));
+				GL11.glPushMatrix();
+				{
+					float modelScale = modelArmor.modelScale;
+					GL11.glScalef(modelScale, modelScale, modelScale);
+					modelArmor.render(modelArmor.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
+				}
+				GL11.glPopMatrix();
+			}
+		}
+	}
+	
+	public void renderRightSleeve(EntityPlayer player, ModelBiped modelplayer)
+	{
+		if(player.inventory.armorItemInSlot(2) != null)
+		{
+			ItemStack armorStack = player.inventory.armorItemInSlot(2);
+			if(armorStack.getItem() instanceof ItemMWArmor) {
+				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
+						"skins/armor/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin() + ".png"));
+				GL11.glPushMatrix();
+				{
+					float modelScale = modelArmor.modelScale;
+					GL11.glScalef(modelScale, modelScale, modelScale);
+					modelArmor.render(modelArmor.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
+				}
+				GL11.glPopMatrix();
+			}
+		}
 	}
 
 }
