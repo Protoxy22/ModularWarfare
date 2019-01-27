@@ -73,11 +73,9 @@ public class RenderArms {
 		
 		//Rotation
 		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), tiltProgress);
-		//System.out.println(offsetRotation);
-		//GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
-		//GL11.glRotatef(defaultRot.y + offsetRotation.y, 0F, 1F, 0F);
-		//GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
-		handleRotate(reloadRot);
+		GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
+		GL11.glRotatef(defaultRot.y + offsetRotation.y, 0F, 1F, 0F);
+		GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
 	}
 	
 	private static void handleRotate(Vector3f reloadRot)

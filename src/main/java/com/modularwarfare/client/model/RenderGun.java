@@ -275,7 +275,7 @@ public class RenderGun implements CustomItemRenderer {
 				
 				if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
 					 Minecraft mc = Minecraft.getMinecraft(); 
-					 renderMovingArm(mc.player, model, gunType, animations); 
+					 renderMovingArm(mc.player, model, animations); 
 				}
 				GL11.glPopMatrix();
 			}
@@ -395,40 +395,23 @@ public class RenderGun implements CustomItemRenderer {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
-		float f = 1.0F;
 		
 		if (model.leftHandAmmo) 
 		{
 			GL11.glPushMatrix();
 			{
-				GL11.glColor3f(f, f, f);
 				if(mc.player.getSkinType() != "slim")
 					mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 				else
 					mc.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armSkin.png"));
-				if (!anim.reloading && model.righthandPump) {
-					//System.out.println("1a");
-					RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-				} 
-				else if (anim.charged < 0.9 && model.leftHandAmmo && model.rightHandCharge && anim.charged != -1.0F) {
-					//System.out.println("1b");
-					RenderArms.renderArmCharge(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-				}
-				else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
-					//System.out.println("1c");
-					RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-				}
-				else if (!anim.reloading && !model.righthandPump) {
-					//System.out.println("1d");
-					RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true);
-				}
-				else {
-					//System.out.println("1e");
-					RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
-				}
+				
+				if (!anim.reloading && model.righthandPump) {RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);} 
+				else if (anim.charged < 0.9 && model.rightHandCharge && anim.charged != -1.0F) {RenderArms.renderArmCharge(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);}
+				else if (anim.pumped < 0.9 && model.rightHandBolt) {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);}
+				else if (!anim.reloading && !model.righthandPump) {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true);}
+				else {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);}
 				
 				GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-				modelplayer.bipedRightArm.offsetY = 0F;
 				modelplayer.bipedRightArm.render(0.0625F);
 				renderRightSleeve(player, modelplayer);
 			}
@@ -438,44 +421,26 @@ public class RenderGun implements CustomItemRenderer {
 		if (!model.leftHandAmmo) 
 		{
 			GL11.glPushMatrix();
-			if (!anim.reloading && model.lefthandPump) {
-				//System.out.println("2a");
-				RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-			}
-			else if (anim.charged < 0.9 && model.rightHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-				//System.out.println("2b");
-				RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-			}
-			else if (anim.pumped < 0.9 && model.rightHandBolt && model.leftHandAmmo) {
-				//System.out.println("2c");
-				RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-			} else if (!anim.reloading && !model.lefthandPump) {
-				//System.out.println("2d");
-				RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, true);
-			} else {
-				//System.out.println("2e");
-				RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
-			}
+			{
+				if (!anim.reloading && model.lefthandPump) {RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);}
+				else if (anim.charged < 0.9 && model.rightHandCharge && anim.charged != -1.0F) {RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);}
+				else if (anim.pumped < 0.9 && model.rightHandBolt) {RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);} 
+				else if (!anim.reloading && !model.lefthandPump) {RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, true);} else {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
 
-			GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-			modelplayer.bipedLeftArm.offsetY = 0F;
-			modelplayer.bipedLeftArm.render(0.0625F);
-			renderLeftSleeve(player, modelplayer);
+				GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+				modelplayer.bipedLeftArm.render(0.0625F);
+				renderLeftSleeve(player, modelplayer);
+			}
 			GL11.glPopMatrix();
 		}
 	}
 
 	//Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
-	private void renderMovingArm(EntityPlayer player, ModelGun model, GunType type, AnimStateMachine anim) {
+	private void renderMovingArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
-		
-		if(mc.player.getSkinType() != "slim")
-			mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-		else
-			mc.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armSkin.png"));
-			
-		
+		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
+		else mc.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armSkin.png"));
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		
 		GL11.glPushMatrix();
@@ -486,25 +451,12 @@ public class RenderGun implements CustomItemRenderer {
 			{
 				GL11.glPushMatrix();
 				{			
-					if (anim.charged < 0.9 && model.rightHandCharge && !model.leftHandAmmo && anim.charged != -1.0F) {
-						//System.out.println("3a");
-						RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-					}
-					else if (anim.pumped < 0.9 && model.rightHandBolt && !model.leftHandAmmo) {
-						//System.out.println("3b");
-						RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-					}
-					else if (!anim.reloading) {
-						RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, false);
-					}
-					else {
-						//System.out.println("3d");
-						RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
-					}
+					if (anim.charged < 0.9 && model.rightHandCharge && anim.charged != -1.0F) {RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);}
+					else if (anim.pumped < 0.9 && model.rightHandBolt) {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);}
+					else if (!anim.reloading) {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, false);}
+					else {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);}
 
 					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-					//modelplayer.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-					modelplayer.bipedRightArm.offsetY = 0F;
 					modelplayer.bipedRightArm.render(0.0625F);
 					renderRightSleeve(player, modelplayer);
 				}
@@ -515,27 +467,12 @@ public class RenderGun implements CustomItemRenderer {
 			{
 				GL11.glPushMatrix();
 				{
-					if (anim.charged < 0.9 && model.leftHandCharge && model.leftHandAmmo && anim.charged != -1.0F) {
-						//System.out.println("4a");
-						RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-					}
-
-					else if (!anim.reloading && model.lefthandPump) {
-						//System.out.println("4b");
-						RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-					}
-
-					else if (!anim.reloading) {
-						//System.out.println("4c");
-						RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);
-					}
-					else {
-						//System.out.println("4d");
-						RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
-					}
+					if (anim.charged < 0.9 && model.leftHandCharge && anim.charged != -1.0F) {RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);}
+					else if (!anim.reloading && model.lefthandPump) {RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);}
+					else if (!anim.reloading) {RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);}
+					else {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-					modelplayer.bipedLeftArm.offsetY = 0F;
 					modelplayer.bipedLeftArm.render(0.0625F);
 					renderLeftSleeve(player, modelplayer);
 				}
