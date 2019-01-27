@@ -389,6 +389,7 @@ public class RenderGun implements CustomItemRenderer {
 	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
+		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		float f = 1.0F;
 		GL11.glPushMatrix();
 		{
@@ -412,7 +413,7 @@ public class RenderGun implements CustomItemRenderer {
 			}
 			else {
 				//System.out.println("1e");
-				RenderArms.renderArmReload(model, anim, smoothing, model.rightArmReloadRot, model.rightArmReloadPos);
+				RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
 			}
 			
 			GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
@@ -442,7 +443,7 @@ public class RenderGun implements CustomItemRenderer {
 			RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 		} else {
 			//System.out.println("2e");
-			RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
+			RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
 		}
 
 		GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
@@ -459,6 +460,7 @@ public class RenderGun implements CustomItemRenderer {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		mc.renderEngine.bindTexture(mc.player.getLocationSkin());
+		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		
 		GL11.glPushMatrix();
 		{
@@ -480,7 +482,7 @@ public class RenderGun implements CustomItemRenderer {
 				}
 				else {
 					//System.out.println("3d");
-					RenderArms.renderArmReload(model, anim, smoothing, model.rightArmReloadRot, model.rightArmReloadPos);
+					RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
 				}
 
 				GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
@@ -511,7 +513,7 @@ public class RenderGun implements CustomItemRenderer {
 				}
 				else {
 					//System.out.println("4d");
-					RenderArms.renderArmReload(model, anim, smoothing, model.leftArmReloadRot, model.leftArmReloadPos);
+					RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
 				}
 
 				GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
