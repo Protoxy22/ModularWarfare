@@ -28,6 +28,9 @@ import com.modularwarfare.client.model.animations.AnimationRifle;
 import com.modularwarfare.client.model.animations.AnimationRifle2;
 import com.modularwarfare.client.model.animations.AnimationRifle3;
 import com.modularwarfare.common.CommonProxy;
+import com.modularwarfare.common.armor.ArmorType;
+import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
+import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
@@ -95,6 +98,11 @@ public class ClientProxy extends CommonProxy {
 		for(ItemAttachment itemAttachment : ModularWarfare.attachmentTypes.values())
 		{
 			ModelLoader.setCustomModelResourceLocation(itemAttachment, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemAttachment.type.internalName));
+		}
+		
+		for(ItemMWArmor itemArmor : ModularWarfare.armorTypes.values())
+		{
+			ModelLoader.setCustomModelResourceLocation(itemArmor, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemArmor.internalName));
 		}
 	}
 	
@@ -210,13 +218,33 @@ public class ClientProxy extends CommonProxy {
 				
 				if(!typeModel.exists())
 				{
-					try {
-						FileWriter fileWriter = new FileWriter(typeModel);
-						gson.toJson(createJson(type), fileWriter);
-						fileWriter.flush();
-						fileWriter.close();
-					} catch (Exception e) {
-						e.printStackTrace();
+					if(type instanceof ArmorType)
+					{
+						ArmorType armorType = (ArmorType) type;
+						for(ArmorInfo armorInfo : armorType.armorInfoMap.values())
+						{
+							String newInternalName = type.internalName + "_" + armorInfo.armorType.toString();
+							typeModel = new File(itemModelsDir, newInternalName + ".json");
+
+							try {
+								FileWriter fileWriter = new FileWriter(typeModel);
+								gson.toJson(createJson(type, newInternalName), fileWriter);
+								fileWriter.flush();
+								fileWriter.close();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					} else
+					{
+						try {
+							FileWriter fileWriter = new FileWriter(typeModel);
+							gson.toJson(createJson(type), fileWriter);
+							fileWriter.flush();
+							fileWriter.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 					}
 				}	
 			}
@@ -356,7 +384,17 @@ public class ClientProxy extends CommonProxy {
 							for(int i = 0; i < langEntries.size(); i++)
 							{
 								BaseType type = langEntries.get(i);
-								jsonEntries.add(String.format(format, type.internalName, type.displayName));
+								if(type instanceof ArmorType)
+								{
+									ArmorType armorType = (ArmorType) type;
+									for(ArmorInfo armorInfo : armorType.armorInfoMap.values())
+									{
+										jsonEntries.add(String.format(format, type.internalName + "_" + armorInfo.armorType.toString(), armorInfo.displayName));
+									}
+								} else
+								{
+									jsonEntries.add(String.format(format, type.internalName, type.displayName));
+								}
 							}
 							Files.write(langPath, jsonEntries, Charset.forName("UTF-8"));
 						}
@@ -379,6 +417,13 @@ public class ClientProxy extends CommonProxy {
 	{
 		ItemModelExport exportedModel = new ItemModelExport();
 		exportedModel.setBaseLayer(type.getAssetDir() + "/" + (type.iconName != null ? type.iconName : type.internalName));
+		return exportedModel;
+	}
+	
+	private ItemModelExport createJson(BaseType type, String iconName)
+	{
+		ItemModelExport exportedModel = new ItemModelExport();
+		exportedModel.setBaseLayer(type.getAssetDir() + "/" + iconName);
 		return exportedModel;
 	}
 	

@@ -1,0 +1,23 @@
+{
+    "internalName": "usmcfr",
+    "modelName": "mwp.armor.usmcfr",
+    "displayName": "USMCFR Armor",
+    "armorTypes": [
+        {
+            "armorType": "head",
+            "displayName": "USMCFR Helmet"
+        },
+        {
+            "armorType": "chest",
+            "displayName": "USMCFR Body"
+        },
+        {
+            "armorType": "legs",
+            "displayName": "USMCFR Pants"
+        },
+        {
+            "armorType": "feet",
+            "displayName": "USMCFR Boots"
+        }
+    ]
+}

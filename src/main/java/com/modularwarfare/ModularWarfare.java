@@ -19,6 +19,9 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
+import com.modularwarfare.common.armor.ArmorType;
+import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
+import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.GunType;
@@ -31,6 +34,7 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.type.ContentTypes;
 import com.modularwarfare.common.type.TypeEntry;
 
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
@@ -69,6 +73,7 @@ public class ModularWarfare {
 	public static HashMap<String, ItemGun> gunTypes = new HashMap<String, ItemGun>();
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static HashMap<String, ItemAttachment> attachmentTypes = new HashMap<String, ItemAttachment>();
+	public static HashMap<String, ItemMWArmor> armorTypes = new HashMap<String, ItemMWArmor>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
 	/**
@@ -144,7 +149,11 @@ public class ModularWarfare {
 	    	event.getRegistry().register(itemAmmo);
 	    	tabOrder.add(itemAmmo);
 	    }
-	    
+	    for(ItemMWArmor itemArmor : armorTypes.values())
+	    {
+	    	event.getRegistry().register(itemArmor);
+	    	tabOrder.add(itemArmor);
+	    }
 	    for(ItemAttachment itemAttachment : attachmentTypes.values()) 
 	    {
 	    	event.getRegistry().register(itemAttachment);
@@ -188,6 +197,7 @@ public class ModularWarfare {
 					case 0: {gunTypes.get(baseType.internalName).setType((GunType) baseType); break;}
 					case 1: {ammoTypes.get(baseType.internalName).setType((AmmoType) baseType); break;}
 					case 2: {attachmentTypes.get(baseType.internalName).setType((AttachmentType) baseType); break;}
+					case 3: {armorTypes.get(baseType.internalName).setType((ArmorType) baseType); break;}
 				}
 			}
 		} else
@@ -199,6 +209,15 @@ public class ModularWarfare {
 					case 0: {gunTypes.put(baseType.internalName, new ItemGun((GunType) baseType));break;}
 					case 1: {ammoTypes.put(baseType.internalName, new ItemAmmo((AmmoType) baseType));break;}
 					case 2: {attachmentTypes.put(baseType.internalName, new ItemAttachment((AttachmentType) baseType));break;}
+					case 3: {
+						ArmorType armorType = (ArmorType) baseType;
+						for(ArmorInfo armorInfo : armorType.armorTypes)
+						{
+							String armorSlot = armorInfo.armorType.toString();
+							armorTypes.put(baseType.internalName + "_" + armorSlot, new ItemMWArmor(armorType, EntityEquipmentSlot.fromString(armorSlot)));
+						}
+						break;
+					}
 				}
 			}
 		}
