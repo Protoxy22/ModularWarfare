@@ -150,8 +150,8 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
 				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
-					float tiltProgress = getReloadTiltProgress(effectiveReloadAnimationProgress, model);					
+					float reloadProgress = reloadProgress(animations);
+					float tiltProgress = getReloadTiltProgress(reloadProgress, model);					
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
 				}
 				
@@ -201,9 +201,9 @@ public class RenderGun implements CustomItemRenderer {
 						boolean shouldNormalRender = true;
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-							float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
-							float tiltProgress = getReloadTiltProgress(effectiveReloadAnimationProgress, model);	
-							float clipPosition = getReloadClipPosition(effectiveReloadAnimationProgress, model);
+							float reloadProgress = reloadProgress(animations);
+							float tiltProgress = getReloadTiltProgress(reloadProgress, model);	
+							float clipPosition = getReloadClipPosition(reloadProgress, model);
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition);
 						}
 						
@@ -220,8 +220,8 @@ public class RenderGun implements CustomItemRenderer {
 								{
 									// TODO: Investigate mag count in animation
 									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
-									float effectiveReloadAnimationProgress = animations.lastReloadAnimationProgress + (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
-									if(animations.reloading && effectiveReloadAnimationProgress < 0.5f)
+									float reloadProgress = animations.lastReloadAnimationProgress + (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
+									if(animations.reloading && reloadProgress < 0.5f)
 										 magCount -= 1;
 									if(modelAmmo.magCountOffset.containsKey(magCount))
 									{
@@ -353,19 +353,19 @@ public class RenderGun implements CustomItemRenderer {
 	}
 	
 	//Calculates the tilt and untilt at the start and end of the reload animation
-	private float getReloadTiltProgress(float effectiveReloadAnimationProgress, ModelGun model) {
+	private float getReloadTiltProgress(float reloadProgress, ModelGun model) {
 		float tiltProgress = 1f;
-		if (effectiveReloadAnimationProgress < model.tiltGunTime)
-			tiltProgress = effectiveReloadAnimationProgress / model.tiltGunTime;
-		if (effectiveReloadAnimationProgress > model.tiltGunTime + model.unloadClipTime
+		if (reloadProgress < model.tiltGunTime)
+			tiltProgress = reloadProgress / model.tiltGunTime;
+		if (reloadProgress > model.tiltGunTime + model.unloadClipTime
 				+ model.loadClipTime)
-			tiltProgress = 1F - (effectiveReloadAnimationProgress
+			tiltProgress = 1F - (reloadProgress
 					- (model.tiltGunTime + model.unloadClipTime + model.loadClipTime))
 					/ model.untiltGunTime;
 		return tiltProgress;
 	}
 
-	private float getEffectiveReloadAnimProgress(AnimStateMachine animations) {
+	private float reloadProgress(AnimStateMachine animations) {
 		return animations.lastReloadAnimationProgress
 				+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 	}
