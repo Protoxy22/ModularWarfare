@@ -1,3 +1,4 @@
 {
-    "defWeaponModeSwitch":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:defWeaponModeSwitch"]}
+    "defWeaponModeSwitch":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:defWeaponModeSwitch"]},
+    "defemptyclick":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:defemptyclick"]}
 }

@@ -135,6 +135,7 @@ public class ItemGun extends BaseItem {
 		if(!hasNextShot(heldStack))
 		{
 			// play out of ammo click
+			//TODO Make this only trigger once and reset on reload
 			gunType.playSound(entityPlayer, WeaponSoundType.DryFire);
 			if(fireMode == WeaponFireMode.BURST) heldStack.getTagCompound().setInteger("shotsremaining", 0);
 			return;
