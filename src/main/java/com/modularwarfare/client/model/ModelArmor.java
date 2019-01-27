@@ -1,9 +1,13 @@
 package com.modularwarfare.client.model;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -11,6 +15,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.math.MathHelper;
 
 public class ModelArmor extends TurboBipedBase {
 	
@@ -26,38 +32,39 @@ public class ModelArmor extends TurboBipedBase {
 	/** For big scopes, so that the player actually looks through them properly */
 	public float renderOffset = 0F;
 	
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+	public HashMap<UUID, ModelBiped> bipedInstances = new HashMap<UUID, ModelBiped>();
+	
+	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
 	{
 		GL11.glPushMatrix();
 		{
 			GL11.glScalef(modelScale, modelScale, modelScale);
-			isSneak = entity.isSneaking();
-			ItemStack itemstack = ((EntityLivingBase)entity).getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-			rightArmPose = itemstack.isEmpty() ? ArmPose.EMPTY : ArmPose.ITEM;
+						
+			for(ModelRendererTurbo model : leftArmModel)
+				if(model != null)
+					bipedLeftArm.addChild(model);
 			
-			if(!itemstack.isEmpty())
-			{
-				EnumAction enumaction = itemstack.getItemUseAction();
-				if(enumaction == EnumAction.BLOCK)
-				{
-					rightArmPose = ArmPose.BLOCK;
-				}
-				else if(enumaction == EnumAction.BOW)
-				{
-					rightArmPose = ArmPose.BOW_AND_ARROW;
-				}
-			}
-			setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-			if(isSneak)
+			for(ModelRendererTurbo model : rightArmModel)
+				if(model != null)
+					bipedRightArm.addChild(model);
+			
+			for(ModelRendererTurbo model : headModel)
+				if(model != null)
+					bipedHead.addChild(model);
+						
+	        setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
+	        
+	        if(isSneak)
 			{
 				GlStateManager.translate(0.0F, 0.2F, 0.0F);
 			}
-			render(headModel, bipedHead, f5, modelScale);
-			render(bodyModel, bipedBody, f5, modelScale);
-			render(leftArmModel, bipedLeftArm, f5, modelScale);
-			render(rightArmModel, bipedRightArm, f5, modelScale);
-			render(leftLegModel, bipedLeftLeg, f5, modelScale);
-			render(rightLegModel, bipedRightLeg, f5, modelScale);
+	        
+			render(headModel, bipedHead, scale, modelScale);
+			render(bodyModel, bipedBody, scale, modelScale);
+			//render(leftArmModel, bipedLeftArm, scale, modelScale);
+			//render(rightArmModel, bipedRightArm, scale, modelScale);
+			render(leftLegModel, bipedLeftLeg, scale, modelScale);
+			render(rightLegModel, bipedRightLeg, scale, modelScale);
 		}
 		GL11.glPopMatrix();
 	}
@@ -78,9 +85,9 @@ public class ModelArmor extends TurboBipedBase {
 	{
 		for(ModelRendererTurbo mod : models)
 		{
-			mod.rotationPointX = bodyPart.rotationPointX / scale;
-			mod.rotationPointY = bodyPart.rotationPointY / scale;
-			mod.rotationPointZ = bodyPart.rotationPointZ / scale;
+			mod.rotationPointX = bodyPart.rotationPointX;
+			mod.rotationPointY = bodyPart.rotationPointY;
+			mod.rotationPointZ = bodyPart.rotationPointZ;
 		}
 	}
 	
