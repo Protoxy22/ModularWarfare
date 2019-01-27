@@ -116,7 +116,7 @@ public class RenderGun implements CustomItemRenderer {
 				float translateX= 0;
 				float translateY = 0;
 				float translateZ = 0;
-				float crouchZoom = model.crouchZoom;
+				float crouchZoom = animations.reloading ? 0f : model.crouchZoom;
 				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
 				float hipRecover = reloadSwitch;
 								
