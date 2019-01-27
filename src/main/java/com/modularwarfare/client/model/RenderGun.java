@@ -150,7 +150,7 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
 				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					float reloadProgress = reloadProgress(animations);
+					float reloadProgress = getReloadProgress(animations);
 					float tiltProgress = getReloadTiltProgress(reloadProgress, model);					
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
 				}
@@ -201,7 +201,7 @@ public class RenderGun implements CustomItemRenderer {
 						boolean shouldNormalRender = true;
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-							float reloadProgress = reloadProgress(animations);
+							float reloadProgress = getReloadProgress(animations);
 							float tiltProgress = getReloadTiltProgress(reloadProgress, model);	
 							float clipPosition = getReloadClipPosition(reloadProgress, model);
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition);
@@ -365,7 +365,7 @@ public class RenderGun implements CustomItemRenderer {
 		return tiltProgress;
 	}
 
-	private float reloadProgress(AnimStateMachine animations) {
+	private float getReloadProgress(AnimStateMachine animations) {
 		return animations.lastReloadAnimationProgress
 				+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 	}
