@@ -105,6 +105,11 @@ public class ClientTickHandler extends ForgeEvent {
 			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 			
+			float triggerPullSpeed = 0.03f * renderTick;
+			float triggerPullValue = Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
+			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
+			System.out.println(model.triggerDistance);
+			
 			float maxHorizontal = 3.0f;
 			float maxVertical = 1.5f;
 			float swaySpeed = 0.003f * renderTick;

@@ -45,6 +45,9 @@ public class RenderGun implements CustomItemRenderer {
 	public static float swayHorizontal = 0f;
 	public static Float swayVerticalEP;
 	public static Float swayHorizontalEP;
+	
+	public static float triggerPullSwitch;
+	
 	public static int shotState = 0;
 	
 	private int direction = 0;
@@ -412,7 +415,7 @@ public class RenderGun implements CustomItemRenderer {
 				}
 				else if (!anim.reloading && !model.righthandPump) {
 					//System.out.println("1d");
-					RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
+					RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true);
 				}
 				else {
 					//System.out.println("1e");
@@ -444,7 +447,7 @@ public class RenderGun implements CustomItemRenderer {
 				RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
 			} else if (!anim.reloading && !model.lefthandPump) {
 				//System.out.println("2d");
-				RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
+				RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, true);
 			} else {
 				//System.out.println("2e");
 				RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
@@ -482,8 +485,7 @@ public class RenderGun implements CustomItemRenderer {
 						RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
 					}
 					else if (!anim.reloading) {
-						//System.out.println("3c");	
-						RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
+						RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, false);
 					}
 					else {
 						//System.out.println("3d");
@@ -515,7 +517,7 @@ public class RenderGun implements CustomItemRenderer {
 
 					else if (!anim.reloading) {
 						//System.out.println("4c");
-						RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
+						RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);
 					}
 					else {
 						//System.out.println("4d");

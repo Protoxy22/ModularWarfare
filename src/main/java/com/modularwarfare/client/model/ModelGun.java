@@ -196,6 +196,8 @@ public class ModelGun extends TurboBase
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
 	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
 	public Vector3f gunRenderOffset = new Vector3f(0f, 0f, 0f);
+	
+	public float triggerDistance = 0.03f;
 
 	public static void glowOn()
 	{

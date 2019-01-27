@@ -98,8 +98,7 @@ public class cz805 extends ModelGun //Same as Filename
 	    chargeTime = 10;
 	    
 	    leftHandCharge = true;
-	    //chargeModifier = new Vector3f (8.0F, 8.0F, 10.0F);
-
+	    //chargeModifier = new Vector3f (8.0F, 8.0F, 10.0F);	    
 
 		flipAll();
 	}
