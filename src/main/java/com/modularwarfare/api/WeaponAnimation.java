@@ -4,7 +4,7 @@ import com.modularwarfare.client.model.ModelGun;
 
 public class WeaponAnimation {
 	
-	public void onGunAnimation(float reloadRotate, float adsSwitch) 
+	public void onGunAnimation(float reloadRotate) 
 	{
 		
 	}

@@ -152,7 +152,7 @@ public class RenderGun implements CustomItemRenderer {
 				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 					float effectiveReloadAnimationProgress = getEffectiveReloadAnimProgress(animations);
 					float tiltProgress = getReloadAnimRotate(effectiveReloadAnimationProgress, model);					
-					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, adsSwitch);
+					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
 				}
 				
 				//Recoil
