@@ -35,7 +35,7 @@ public class ItemGun extends BaseItem {
 	public GunType type;
 	public boolean isAiming = false;
 	public static float modelScale = 0;
-	
+	public static boolean canDryFire = true;
 	public static boolean fireButtonHeld = false;
 	public static boolean lastFireButtonHeld = false;
 	
@@ -134,9 +134,10 @@ public class ItemGun extends BaseItem {
 		int shotCount = fireMode == WeaponFireMode.BURST ? heldStack.getTagCompound().getInteger("shotsremaining") > 0 ? heldStack.getTagCompound().getInteger("shotsremaining") : gunType.numBurstRounds: 1;
 		if(!hasNextShot(heldStack))
 		{
-			// play out of ammo click
-			//TODO Make this only trigger once and reset on reload
-			gunType.playSound(entityPlayer, WeaponSoundType.DryFire);
+			if(canDryFire) {
+				gunType.playSound(entityPlayer, WeaponSoundType.DryFire);
+				canDryFire = false;
+			}
 			if(fireMode == WeaponFireMode.BURST) heldStack.getTagCompound().setInteger("shotsremaining", 0);
 			return;
 		} 
@@ -169,6 +170,7 @@ public class ItemGun extends BaseItem {
 		}
 		
 		consumeShot(heldStack);
+		canDryFire = true;
 		
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire);
