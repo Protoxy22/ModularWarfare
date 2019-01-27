@@ -1,5 +1,7 @@
 package com.modularwarfare.utility;
 
+import org.lwjgl.util.vector.Vector3f;
+
 public class NumberHelper {
 		
 	public static float clamp(float val, float min, float max) {
@@ -52,6 +54,20 @@ public class NumberHelper {
 		{
 			return value;
 		}
+	}
+	
+	public static Vector3f addVector(Vector3f left, Vector3f right)
+	{
+		Vector3f resultVector = new Vector3f();
+		resultVector = resultVector.add(left, right, resultVector);
+		return resultVector;
+	}
+	
+	public static Vector3f subtractVector(Vector3f left, Vector3f right)
+	{
+		Vector3f resultVector = new Vector3f();
+		resultVector = resultVector.sub(left, right, resultVector);
+		return resultVector;
 	}
 
 }
