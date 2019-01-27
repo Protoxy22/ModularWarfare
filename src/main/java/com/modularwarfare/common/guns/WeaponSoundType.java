@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public enum WeaponSoundType {
 	
 	/** The sound played upon dry firing */
-	@SerializedName("weaponDryFire") DryFire("weaponDryFire", 8, null),
+	@SerializedName("weaponDryFire") DryFire("weaponDryFire", 8, "defemptyclick"),
 	
 	/** The sound played upon shooting */
 	@SerializedName("weaponFire") Fire("weaponFire", 64, null),

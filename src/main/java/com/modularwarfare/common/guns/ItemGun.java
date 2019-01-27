@@ -129,6 +129,7 @@ public class ItemGun extends BaseItem {
 		if(!hasNextShot(heldStack))
 		{
 			// play out of ammo click
+			gunType.playSound(entityPlayer, WeaponSoundType.DryFire);
 			if(fireMode == WeaponFireMode.BURST) heldStack.getTagCompound().setInteger("shotsremaining", 0);
 			return;
 		} 
@@ -184,10 +185,6 @@ public class ItemGun extends BaseItem {
 		if(WeaponSoundType.ModeSwitch != null) 
 		{
 			gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);	
-		}
-		else
-		{
-			//modeswitch_default
 		}
 	}
 	/**
