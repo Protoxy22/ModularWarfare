@@ -17,64 +17,64 @@ public class RenderArms {
 	 */
 	
 	// right hand pump action animation
-	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
 	{
-		GL11.glTranslatef(-(armPosition.x
+		GL11.glTranslatef(-(reloadPos.x
 				- Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) / model.pumpModifier),
-				armPosition.y, armPosition.z);
-		handleRotate(rotationPoint);
+				reloadPos.y, reloadPos.z);
+		handleRotate(reloadRot);
 	}
 	
 	// This moves the right hand if leftHandAmmo & handCharge are true (For left
 	// hand reload with right hand charge)
-	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
 	{
 		GL11.glTranslatef(
-				-(armPosition.x
+				-(reloadPos.x
 						- Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing)
 								/ model.chargeModifier.x),
-				(-(armPosition.y
+				(-(reloadPos.y
 						- Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing)
 								/ model.chargeModifier.y)),
-				(-(armPosition.z
+				(-(reloadPos.z
 						- Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing)
 								/ model.chargeModifier.z)));
-		handleRotate(rotationPoint);
+		handleRotate(reloadRot);
 	}
 	
 	// This moves the right hand if leftHandAmmo & handBolt are true (For left hand
 	// reload with right hand bolt action)
-	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
 	{
 		GL11.glTranslatef(
-				(armPosition.x + Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing)
+				(reloadPos.x + Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing)
 						/ model.chargeModifier.x),
-				((armPosition.y
+				((reloadPos.y
 						+ Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing)
 								/ model.chargeModifier.y)),
-				(-(armPosition.z
+				(-(reloadPos.z
 						- Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing)
 								/ model.chargeModifier.z)));
-		handleRotate(rotationPoint);
+		handleRotate(reloadRot);
 	}
 	
-	public static void renderArmDefault(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmDefault(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
 	{
-		GL11.glTranslatef(armPosition.x, armPosition.y, armPosition.z);
-		handleRotate(rotationPoint);
+		GL11.glTranslatef(reloadPos.x, reloadPos.y, reloadPos.z);
+		handleRotate(reloadRot);
 	}
 	
-	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f rotationPoint, Vector3f armPosition)
+	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos)
 	{
-		GL11.glTranslatef(armPosition.x, armPosition.y, armPosition.z);
-		handleRotate(rotationPoint);
+		GL11.glTranslatef(reloadPos.x, reloadPos.y, reloadPos.z);
+		handleRotate(reloadRot);
 	}
 	
-	private static void handleRotate(Vector3f rotationPoint)
+	private static void handleRotate(Vector3f reloadRot)
 	{
-		GL11.glRotatef(rotationPoint.y, 0F, 1F, 0F);
-		GL11.glRotatef(rotationPoint.z, 0F, 0F, 1F);
-		GL11.glRotatef(rotationPoint.x, 1F, 0F, 0F);
+		GL11.glRotatef(reloadRot.y, 0F, 1F, 0F);
+		GL11.glRotatef(reloadRot.z, 0F, 0F, 1F);
+		GL11.glRotatef(reloadRot.x, 1F, 0F, 0F);
 	}
 
 }
