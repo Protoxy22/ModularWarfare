@@ -43,10 +43,10 @@ public class cslr4 extends ModelGun //Same as Filename
 		rotateGunVertical = 05F;
 		rotateGunHorizontal = 21F;
 		tiltGun = -05F;
-		tiltGunTime = 0.20F;
+		/*tiltGunTime = 0.20F;
 		unloadClipTime = 0.30F;
 		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
+		untiltGunTime = 0.15F;*/
 		translateGun = new Vector3f(3 /16F, -1F /16F, -2F /16F);
 		rotateClipVertical = -90F;
 		rotateClipHorizontal = -1F;

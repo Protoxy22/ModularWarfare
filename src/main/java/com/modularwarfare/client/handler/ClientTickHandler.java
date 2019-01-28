@@ -109,6 +109,10 @@ public class ClientTickHandler extends ForgeEvent {
 			float triggerPullValue = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
 			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
 			
+			float modeSwitchSpeed = 0.03f * renderTick;
+			float modeSwitchValue = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
+			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
+			
 			float maxHorizontal = 3.0f;
 			float maxVertical = 1.5f;
 			float swaySpeed = 0.003f * renderTick;

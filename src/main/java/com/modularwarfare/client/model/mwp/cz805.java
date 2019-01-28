@@ -47,10 +47,10 @@ public class cz805 extends ModelGun //Same as Filename
 		rotateGunVertical = 25F;
 		rotateGunHorizontal = 1F;
 		tiltGun = 25F;
-		tiltGunTime = 0.15F;
+		/*tiltGunTime = 0.15F;
 		unloadClipTime = 0.35F;
 		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
+		untiltGunTime = 0.15F;*/
 		translateGun = new Vector3f(1 /16F, -1F /16F, -1F /16F);
 		rotateClipVertical = -91F;
 		rotateClipHorizontal = 1F;

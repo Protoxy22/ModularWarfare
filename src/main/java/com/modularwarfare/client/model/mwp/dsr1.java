@@ -45,10 +45,10 @@ public class dsr1 extends ModelGun //Same as Filename
 		rotateGunVertical = 45F;
 		rotateGunHorizontal = 1F;
 		tiltGun = 25F;
-		tiltGunTime = 0.20F;
+		/*tiltGunTime = 0.20F;
 		unloadClipTime = 0.30F;
 		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
+		untiltGunTime = 0.15F;*/
 		translateGun = new Vector3f(7 /16F, 1F /16F, -2F /16F);
 		rotateClipVertical = 1F;
 		rotateClipHorizontal = 1F;

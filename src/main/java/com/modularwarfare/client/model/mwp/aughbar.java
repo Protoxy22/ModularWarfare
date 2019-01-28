@@ -49,10 +49,10 @@ public class aughbar extends ModelGun //Same as Filename
 		rotateGunVertical = 35F;
 		rotateGunHorizontal = -15F;
 		tiltGun = 15F;
-		tiltGunTime = 0.15F;
+		/*tiltGunTime = 0.15F;
 		unloadClipTime = 0.35F;
 		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
+		untiltGunTime = 0.15F;*/
 		translateGun = new Vector3f(9 /16F, 2F /16F, 0.5F /16F);
 		rotateClipVertical = -90F;
 		rotateClipHorizontal = -20F;

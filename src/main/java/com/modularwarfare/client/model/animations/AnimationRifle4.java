@@ -10,6 +10,11 @@ import net.minecraft.util.math.MathHelper;
 
 public class AnimationRifle4 extends WeaponAnimation {
 	
+	public AnimationRifle4()
+	{
+		ammoLoadOffset = new Vector3f(0, 0, 0);
+	}
+	
 	@Override
 	public void onGunAnimation(float tiltProgress)
 	{

@@ -2,6 +2,10 @@ package com.modularwarfare.api;
 
 import java.util.HashMap;
 
+import org.apache.logging.log4j.Level;
+
+import com.modularwarfare.ModularWarfare;
+
 public class WeaponAnimations {
 	
 	private static HashMap<String, WeaponAnimation> animationMap = new HashMap<String, WeaponAnimation>();
@@ -21,6 +25,9 @@ public class WeaponAnimations {
 	
 	public static WeaponAnimation getAnimation(String internalName)
 	{
+		WeaponAnimation weaponAnimation = animationMap.get(internalName);
+		if(weaponAnimation == null)
+			ModularWarfare.LOGGER.log(Level.ERROR, String.format("Animation named '%s' does not exist in animation registry.", internalName));
 		return animationMap.get(internalName);
 	}
 

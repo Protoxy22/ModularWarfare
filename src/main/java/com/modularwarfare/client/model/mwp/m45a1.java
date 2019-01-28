@@ -44,10 +44,10 @@ public class m45a1 extends ModelGun //Same as Filename
 
 		gunSlideDistance = 1.6F;
 		//animationType = EnumAnimationType.CUSTOM;
-		tiltGunTime = 0.15F;
+		/*tiltGunTime = 0.15F;
 		unloadClipTime = 0.35F;
 		loadClipTime = 0.35F;
-		untiltGunTime = 0.15F;
+		untiltGunTime = 0.15F;*/
 		rotateGunVertical = 20F;
 		rotateGunHorizontal = 10F;
 		tiltGun = 20F;
