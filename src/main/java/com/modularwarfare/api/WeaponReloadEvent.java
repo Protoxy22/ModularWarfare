@@ -74,13 +74,15 @@ public class WeaponReloadEvent extends WeaponEvent {
 	{
 		private final boolean offhandReload;
 		private final boolean multiMagReload;
+		private final boolean loadOnly;
 		private int reloadTime;
 		
-		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload, int reloadTime) 
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload, boolean loadOnly, int reloadTime) 
 		{
 			super(entityPlayer, stackWeapon, itemWeapon);
 			this.offhandReload = offhandReload;
 			this.multiMagReload = multiMagReload;
+			this.loadOnly = loadOnly;
 			this.reloadTime = reloadTime;
 		}
 		
@@ -92,6 +94,11 @@ public class WeaponReloadEvent extends WeaponEvent {
 		public boolean isMultiMagReload()
 		{
 			return multiMagReload;
+		}
+		
+		public boolean isLoadOnly()
+		{
+			return loadOnly;
 		}
 		
 		public int getReloadTime() 

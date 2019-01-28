@@ -160,6 +160,7 @@ public class PacketGunReload extends PacketBase {
 								
 				/** Weapon Pre-Reload event */
 				boolean multiMagReload = hasAmmoLoaded && ammoStackToLoad.getTagCompound().hasKey("magcount");
+				boolean loadOnly = false;
 				WeaponReloadEvent.Pre preReloadEvent = new WeaponReloadEvent.Pre(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload);
 				MinecraftForge.EVENT_BUS.post(preReloadEvent);
 				if(preReloadEvent.isCanceled())
@@ -168,6 +169,8 @@ public class PacketGunReload extends PacketBase {
 				/** Unload old ammo stack */
 				if(!multiMagReload || multiMagToLoad != null)
 					unloadAmmo(entityPlayer, gunStack);
+				else
+					loadOnly = true;
 				
 				/** Loading of new ammo stack */
 				if(multiMagReload & hasAmmoLoaded & multiMagToLoad == null)
@@ -191,7 +194,7 @@ public class PacketGunReload extends PacketBase {
 				}
 				
 				/** Post Reload */
-				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload, preReloadEvent.getReloadTime());
+				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload, loadOnly, preReloadEvent.getReloadTime());
 				MinecraftForge.EVENT_BUS.post(postReloadEvent);
 				
 				gunType.playSound(entityPlayer, WeaponSoundType.Reload);

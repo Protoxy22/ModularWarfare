@@ -24,7 +24,7 @@ public class ClientWeaponHandler extends ForgeEvent {
 	@SubscribeEvent
 	public void onWeaponReload(WeaponReloadEvent.Post event)
 	{
-		ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerReload(event.getReloadTime(), (ModelGun) event.getWeaponItem().type.model);
+		ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerReload(event.getReloadTime(), (ModelGun) event.getWeaponItem().type.model, event.isLoadOnly());
 	}
 
 }
