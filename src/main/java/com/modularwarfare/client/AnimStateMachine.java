@@ -20,7 +20,7 @@ public class AnimStateMachine {
 	public int reloadAmmoCount = 1;
 	public boolean unloadOnly = false;
 	public boolean loadOnly = false;
-	public boolean renderAmmo = false;
+	public boolean renderAmmo = true;
 	
 	/** Recoil */
 	public float gunRecoil = 0F, lastGunRecoil = 0F;
@@ -201,6 +201,7 @@ public class AnimStateMachine {
 		timeUntilCharge = model.chargeDelay;
 		timeToChargeFor = model.chargeTime;
 		loadOnly = isLoadOnly;
+		renderAmmo = !loadOnly;
 		unloadOnly = isUnload;
 		//reloadAmmoCount = ammoCount;
 		//FlansModClient.lastBulletReload = ammoCount - 1;
