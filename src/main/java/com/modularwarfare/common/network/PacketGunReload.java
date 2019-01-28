@@ -198,19 +198,28 @@ public class PacketGunReload extends PacketBase {
 				}
 				
 				/** Post Reload */
-				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload, loadOnly, preReloadEvent.getReloadTime());
+				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload, loadOnly, false, preReloadEvent.getReloadTime());
 				MinecraftForge.EVENT_BUS.post(postReloadEvent);
 				
 				gunType.playSound(entityPlayer, WeaponSoundType.Reload);
 				ServerTickHandler.playerReloadCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 			} else
 			{
-				unloadAmmo(entityPlayer, gunStack);
+				WeaponReloadEvent.Pre preReloadEvent = new WeaponReloadEvent.Pre(entityPlayer, gunStack, itemGun, false, false);
+				MinecraftForge.EVENT_BUS.post(preReloadEvent);
+				if(preReloadEvent.isCanceled())
+					return;
+				
+				if(unloadAmmo(entityPlayer, gunStack))
+				{
+					WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, false, false, false, true, preReloadEvent.getReloadTime());
+					MinecraftForge.EVENT_BUS.post(postReloadEvent);
+				}
 			}
 		}
 	}
 	
-	public void unloadAmmo(EntityPlayerMP entityPlayer, ItemStack gunStack)
+	public boolean unloadAmmo(EntityPlayerMP entityPlayer, ItemStack gunStack)
 	{
 		NBTTagCompound nbtTagCompound = gunStack.getTagCompound();	
 		if(ItemGun.hasAmmoLoaded(gunStack))
@@ -219,7 +228,9 @@ public class PacketGunReload extends PacketBase {
 			ItemAmmo returningAmmoItem = (ItemAmmo) returningAmmo.getItem();
 			entityPlayer.inventory.addItemStackToInventory(returningAmmo);
 			nbtTagCompound.removeTag("ammo");
+			return true;
 		}
+		return false;
 	}
 
 	@Override

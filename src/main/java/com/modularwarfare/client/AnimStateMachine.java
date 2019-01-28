@@ -18,6 +18,7 @@ public class AnimStateMachine {
 	public float reloadAnimationTime = 0;
 	public float reloadAnimationProgress = 0F, lastReloadAnimationProgress = 0F;
 	public int reloadAmmoCount = 1;
+	public boolean unloadOnly = false;
 	public boolean loadOnly = false;
 	
 	/** Recoil */
@@ -188,7 +189,7 @@ public class AnimStateMachine {
 		}
 	}
 	
-	public void triggerReload(int reloadTime, ModelGun model, boolean isLoadOnly)
+	public void triggerReload(int reloadTime, ModelGun model, boolean isLoadOnly, boolean isUnload)
 	{
 		reloading = true;
 		lastReloadAnimationProgress = reloadAnimationProgress = 0F;
@@ -199,6 +200,7 @@ public class AnimStateMachine {
 		timeUntilCharge = model.chargeDelay;
 		timeToChargeFor = model.chargeTime;
 		loadOnly = isLoadOnly;
+		unloadOnly = isUnload;
 		//reloadAmmoCount = ammoCount;
 		//FlansModClient.lastBulletReload = ammoCount - 1;
 	}
