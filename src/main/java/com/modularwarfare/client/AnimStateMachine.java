@@ -20,6 +20,7 @@ public class AnimStateMachine {
 	public int reloadAmmoCount = 1;
 	public boolean unloadOnly = false;
 	public boolean loadOnly = false;
+	public boolean renderAmmo = false;
 	
 	/** Recoil */
 	public float gunRecoil = 0F, lastGunRecoil = 0F;
