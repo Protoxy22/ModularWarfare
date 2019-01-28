@@ -18,6 +18,8 @@ public class AnimStateMachine {
 	public float reloadAnimationTime = 0;
 	public float reloadAnimationProgress = 0F, lastReloadAnimationProgress = 0F;
 	public int reloadAmmoCount = 1;
+	// TODO: change
+	public boolean willysboolean = false;
 	
 	/** Recoil */
 	public float gunRecoil = 0F, lastGunRecoil = 0F;

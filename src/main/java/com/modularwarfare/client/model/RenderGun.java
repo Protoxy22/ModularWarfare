@@ -279,15 +279,6 @@ public class RenderGun implements CustomItemRenderer {
 					renderMovingArm(mc.player, model, animations); 
 				}
 				
-				GL11.glPopMatrix();
-			}
-			GL11.glPopMatrix();
-			
-			GL11.glPushMatrix();
-			{
-				float f = 1F / 16F;
-				
-				
 				ItemStack pumpAttachment = null;
 				if (pumpAttachment == null)
 				{
@@ -309,6 +300,14 @@ public class RenderGun implements CustomItemRenderer {
 					}
 					GL11.glPopMatrix();
 				}
+				
+				GL11.glPopMatrix();
+			}
+			GL11.glPopMatrix();
+			
+			GL11.glPushMatrix();
+			{
+				float f = 1F / 16F;
 				
 				for(AttachmentEnum attachment : AttachmentEnum.values())
 				{
@@ -423,6 +422,7 @@ public class RenderGun implements CustomItemRenderer {
 		}
 		return movingArmState;
 	}
+	
 	// Resets render modifiers
 	public static void resetRenderMods()
 	{
@@ -435,6 +435,7 @@ public class RenderGun implements CustomItemRenderer {
 		RenderGun.adsSwitch = 0f;
 		RenderGun.crouchSwitch = 0f;
 	}
+	
 	//Renders the static left or right hand that does not move with the ammo depending on leftHandAmmo setting
 	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
