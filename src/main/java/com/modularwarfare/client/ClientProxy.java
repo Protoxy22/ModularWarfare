@@ -27,6 +27,7 @@ import com.modularwarfare.client.model.animations.AnimationPistol;
 import com.modularwarfare.client.model.animations.AnimationRifle;
 import com.modularwarfare.client.model.animations.AnimationRifle2;
 import com.modularwarfare.client.model.animations.AnimationRifle3;
+import com.modularwarfare.client.model.animations.AnimationRifle4;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
@@ -79,6 +80,7 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("rifle", new AnimationRifle());
 		WeaponAnimations.registerAnimation("rifle2", new AnimationRifle2());
 		WeaponAnimations.registerAnimation("rifle3", new AnimationRifle3());
+		WeaponAnimations.registerAnimation("rifle4", new AnimationRifle4());
 		WeaponAnimations.registerAnimation("pistol", new AnimationPistol());
 	}
 	

@@ -10,6 +10,7 @@ public class WeaponAnimations {
 	public static String RIFLE = "rifle";
 	public static String RIFLE2 = "rifle2";
 	public static String RIFLE3 = "rifle3";
+	public static String RIFLE4 = "rifle4";
 	public static String PISTOL = "pistol";
 	
 	public static String registerAnimation(String internalName, WeaponAnimation animation)

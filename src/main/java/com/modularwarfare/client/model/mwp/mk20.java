@@ -11,6 +11,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 //import com.flansmod.client.model.EnumAnimationType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
@@ -41,7 +42,7 @@ public class mk20 extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.07F, 0F);//forward/up/?
 
 		gunSlideDistance = 3F;
-		//animationType = EnumAnimationType.CUSTOM;
+		reloadAnimation = WeaponAnimations.RIFLE4;
 
 		rotateGunVertical = 35F;
 		rotateGunHorizontal = 1F;
@@ -58,22 +59,25 @@ public class mk20 extends ModelGun //Same as Filename
 
 		hasFlash = false;
         
-        leftArmPos = new Vector3f(-0.15F, -0.2F, -0.13F);
-        leftArmRot = new Vector3f(60.0F, 55.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.25F, -0.55F, -0.10F);
-        leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);
-        leftArmChargePos = new Vector3f(0.18F, 0.45F, 0.06F);
-        leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
- 
-        rightArmPos = new Vector3f(-0.37F, -0.20F, 0.0F);
-        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.37F, -0.20F, 0.03F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
+        leftArmPos = new Vector3f(0.02F, -0.23F, -0.44F);
+        //leftArmPos = new Vector3f(0.05F, 0.12F, -0.70F);
+        leftArmRot = new Vector3f(0.0F, -45.0F, -40.0F);
+        //leftArmRot = new Vector3f(0.0F, -65.0F, -70.0F);
+        leftArmReloadPos = new Vector3f(0.1F, 0.12F, -0.70F);
+        leftArmReloadRot = new Vector3f(0.0F, -65.0F, -70.0F);
         
-        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
-        leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);
  
-        leftHandAmmo = true;
+        rightArmPos = new Vector3f(-0.72F, -0.11F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(-0.38F, -0.44F, 0.01F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -70.0F);
+        rightArmChargePos = new Vector3f(-0.20F, 0.42F, -0.31F);
+        rightArmChargeRot = new Vector3f(-30.0F, -0.0F, -60.0F);
+        
+        rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+        leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+ 
+        leftHandAmmo = false;
         
 		//RecoilSlideDistance = 0.15F;
 		//RotateSlideDistance = -0.5F;
