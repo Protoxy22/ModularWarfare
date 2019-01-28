@@ -169,7 +169,7 @@ public class PacketGunReload extends PacketBase {
 				/** Unload old ammo stack */
 				if(!multiMagReload || multiMagToLoad != null)
 					unloadAmmo(entityPlayer, gunStack);
-				else
+				else if(!ItemGun.hasAmmoLoaded(gunStack))
 					loadOnly = true;
 				
 				/** Loading of new ammo stack */
