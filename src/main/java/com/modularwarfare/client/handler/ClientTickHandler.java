@@ -90,7 +90,7 @@ public class ClientTickHandler extends ForgeEvent {
 			}
 			
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
-			float value = Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
+			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
 			float sprintSpeed = 0.15f * renderTick;
@@ -106,7 +106,7 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 			
 			float triggerPullSpeed = 0.03f * renderTick;
-			float triggerPullValue = Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
+			float triggerPullValue = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
 			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
 			
 			float maxHorizontal = 3.0f;

@@ -60,9 +60,7 @@ public class mk20 extends ModelGun //Same as Filename
 		hasFlash = false;
         
         leftArmPos = new Vector3f(0.02F, -0.23F, -0.44F);
-        //leftArmPos = new Vector3f(0.05F, 0.12F, -0.70F);
         leftArmRot = new Vector3f(0.0F, -45.0F, -40.0F);
-        //leftArmRot = new Vector3f(0.0F, -65.0F, -70.0F);
         leftArmReloadPos = new Vector3f(0.1F, 0.12F, -0.70F);
         leftArmReloadRot = new Vector3f(0.0F, -65.0F, -70.0F);
         

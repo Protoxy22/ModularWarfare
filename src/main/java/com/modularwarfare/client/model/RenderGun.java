@@ -359,11 +359,14 @@ public class RenderGun implements CustomItemRenderer {
 		float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((reloadProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
 		if (reloadProgress >= tiltGunTime + unloadClipTime) anim.loadOnly = false;
 		
-		if(anim.loadOnly && anim.reloadAnimationProgress <= 0.5 && anim.reloadAnimationProgress >= tiltGunTime)
-			anim.reloadAnimationProgress += 10.0F / anim.reloadAnimationTime;
-		
-		System.out.println("/" + (reloadProgress >= tiltGunTime + unloadClipTime));
-		
+		if(anim.loadOnly)
+		{
+			float dividedTime = unloadClipTime / 3F;
+			tiltGunTime += dividedTime * 2;
+			loadClipTime += dividedTime;
+			unloadClipTime = 0f;
+		}
+				
 		return clipPosition;
 	}
 	
@@ -455,7 +458,7 @@ public class RenderGun implements CustomItemRenderer {
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		String staticArmState = getStaticArmState(model, anim);
 		
-		if (model.leftHandAmmo) 
+		if (model.leftHandAmmo && model.rightArmPos != null) 
 		{
 			GL11.glPushMatrix();
 			{
@@ -477,7 +480,7 @@ public class RenderGun implements CustomItemRenderer {
 			GL11.glPopMatrix();
 		}
 
-		if (!model.leftHandAmmo) 
+		if (!model.leftHandAmmo && model.leftArmPos != null) 
 		{
 			GL11.glPushMatrix();
 			{
@@ -489,7 +492,7 @@ public class RenderGun implements CustomItemRenderer {
 				if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
 				else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
 				else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-				else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, true);
+				else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);
 				else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
 
 				GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
@@ -514,14 +517,14 @@ public class RenderGun implements CustomItemRenderer {
 			//TODO Why the fuck is this required on this but not the other?
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
 			
-			if (!model.leftHandAmmo) 
+			if (!model.leftHandAmmo && model.rightArmPos != null && model.rightArmReloadPos != null) 
 			{
 				GL11.glPushMatrix();
 				{
 					//System.out.println(movingArmState);
 					if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);}
 					else if (movingArmState == "Bolt") {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);}
-					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, false);}
+					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);}
 					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
 					modelplayer.bipedRightArm.render(0.0625F);
@@ -530,7 +533,7 @@ public class RenderGun implements CustomItemRenderer {
 				GL11.glPopMatrix();
 			}
 			
-			if (model.leftHandAmmo) 
+			if (model.leftHandAmmo && model.leftArmPos != null && model.leftArmReloadPos != null) 
 			{
 				GL11.glPushMatrix();
 				{
