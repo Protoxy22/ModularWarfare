@@ -51,17 +51,15 @@ public class ump45 extends ModelGun //Same as Filename
 		
 		hasFlash = false;
         
-        leftArmPos = new Vector3f(-0.15F, -0.17F, -0.14F);
-        leftArmRot = new Vector3f(60.0F, 55.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.07F, -0.55F, -0.25F);
-        leftArmReloadRot = new Vector3f(40.0F, 25.0F, 0.0F);
-        leftArmChargePos = new Vector3f(0.18F, 0.45F, 0.06F);
-        leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
+        leftArmPos = new Vector3f(0.10F, -0.13F, -0.55F);
+        leftArmRot = new Vector3f(0.0F, -55.0F, -50.0F);
+        leftArmReloadPos = new Vector3f(-0.13F, -0.4F, -0.37F);
+        leftArmReloadRot = new Vector3f(0.0F, -35.0F, -50.0F);
  
-        rightArmPos = new Vector3f(-0.36F, -0.15F, 0.0F);
+        rightArmPos = new Vector3f(-0.35F, -0.12F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.36F, -0.15F, 0.02F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(-0.38F, -0.13F, 0.0F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         
         rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
         leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);

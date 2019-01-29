@@ -10,7 +10,7 @@ public class WeaponAnimation {
 	
 	public Vector3f getAmmoLoadOffset()
 	{
-	    return new Vector3f(0, 0, 0);
+	    return new Vector3f(0, -2, 0);
 	}
 	
 	public float tiltGunTime = 0.15F, unloadClipTime = 0.35F, loadClipTime = 0.35F, untiltGunTime = 0.15F;

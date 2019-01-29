@@ -4,7 +4,7 @@
   "iconName": "mwp.stf12",
   "gunDamage": 5,
   "roundsPerMin": 85,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.12gauge"],
   "modelName": "mwp.stf12",
   "weaponSounds": 
   [
