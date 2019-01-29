@@ -43,9 +43,11 @@ import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.client.EnumHelperClient;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -68,7 +70,7 @@ public class ClientProxy extends CommonProxy {
 	public static RenderAmmo ammoRenderer;
 	public static RenderAttachment attachmentRenderer;
 	public static HashMap<String, SoundEvent> modSounds = new HashMap<String, SoundEvent>();
-	
+		
 	@Override
 	public void load() 
 	{
@@ -76,7 +78,7 @@ public class ClientProxy extends CommonProxy {
 		new ClientRenderHooks();
 		new ClientTickHandler();
 		new ClientWeaponHandler();
-		
+				
 		WeaponAnimations.registerAnimation("rifle", new AnimationRifle());
 		WeaponAnimations.registerAnimation("rifle2", new AnimationRifle2());
 		WeaponAnimations.registerAnimation("rifle3", new AnimationRifle3());

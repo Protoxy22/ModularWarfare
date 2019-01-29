@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderAttachment implements CustomItemRenderer {
+public class RenderAttachment extends CustomItemRenderer {
 
 	private static TextureManager renderEngine;
 	public static float smoothing;
@@ -95,7 +95,7 @@ public class RenderAttachment implements CustomItemRenderer {
 			{
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/attachments/" + AttachmentType.modelSkins[0].getSkin() + ".png"));
+				bindTexture("attachments", AttachmentType.modelSkins[0].getSkin());
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				model.renderAttachment(f);
 			}

@@ -1,10 +1,12 @@
 package com.modularwarfare.client.model;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
@@ -23,6 +25,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.ITextureObject;
+import net.minecraft.client.renderer.texture.SimpleTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,9 +36,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-public class RenderGun implements CustomItemRenderer {
+public class RenderGun extends CustomItemRenderer {
 
-	private static TextureManager renderEngine;
 	public static float smoothing;
 
 	public static String lastModel = "";
@@ -54,7 +57,7 @@ public class RenderGun implements CustomItemRenderer {
 	private int direction = 0;
 	
 	private float lastReloadProgress = 0f;
-	
+		
 	@Override
 	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
 		if (!(item.getItem() instanceof ItemGun))
@@ -182,9 +185,8 @@ public class RenderGun implements CustomItemRenderer {
 			{
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
-
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-						"skins/guns/" + gunType.modelSkins[0].getSkin() + ".png"));
+				
+				bindTexture("guns", gunType.modelSkins[0].getSkin());
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				
@@ -196,6 +198,28 @@ public class RenderGun implements CustomItemRenderer {
 				model.renderDefaultGrip(f);
 				model.renderDefaultGadget(f);
 				model.renderSlide(f);
+				
+				ItemStack pumpAttachment = null;
+				if (pumpAttachment == null)
+				{
+					GL11.glPushMatrix();
+					{
+						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
+						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
+						model.renderPump(f);
+					}
+					GL11.glPopMatrix();
+				}
+				
+				if (model.chargeHandleDistance != 0F)
+				{
+					GL11.glPushMatrix();
+					{
+						GL11.glTranslatef(-(1 - Math.abs(animations.lastCharged + (animations.charged - animations.lastCharged) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
+						model.renderCharge(f);
+					}
+					GL11.glPopMatrix();
+				}
 				
 				GL11.glPushMatrix();
 				{
@@ -245,8 +269,7 @@ public class RenderGun implements CustomItemRenderer {
 											
 											Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
 											GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
-											renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-													"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
+											bindTexture("ammo", ammoType.modelSkins[0].getSkin());
 											
 											if(animations.renderAmmo) modelAmmo.renderAmmo(f);
 										}
@@ -263,8 +286,6 @@ public class RenderGun implements CustomItemRenderer {
 							
 							if(shouldNormalRender)
 							{
-								renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-										"skins/ammo/" + ammoType.modelSkins[0].getSkin() + ".png"));
 								if(animations.renderAmmo) modelAmmo.renderAmmo(f);
 							}
 						} else
@@ -279,28 +300,6 @@ public class RenderGun implements CustomItemRenderer {
 				}
 				else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
 					renderMovingArm(mc.player, model, animations); 
-				}
-				
-				ItemStack pumpAttachment = null;
-				if (pumpAttachment == null)
-				{
-					GL11.glPushMatrix();
-					{
-						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
-						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
-						model.renderPump(f);
-					}
-					GL11.glPopMatrix();
-				}
-				
-				if (model.chargeHandleDistance != 0F)
-				{
-					GL11.glPushMatrix();
-					{
-						GL11.glTranslatef(-(1 - Math.abs(animations.lastCharged + (animations.charged - animations.lastCharged) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
-						model.renderCharge(f);
-					}
-					GL11.glPopMatrix();
 				}
 				
 				GL11.glPopMatrix();
@@ -322,8 +321,7 @@ public class RenderGun implements CustomItemRenderer {
 						{
 							GL11.glPushMatrix();
 							{
-								renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-										"skins/attachments/" + attachmentType.modelSkins[0].getSkin() + ".png"));
+								bindTexture("attachments", attachmentType.modelSkins[0].getSkin());
 								Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
 								Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
@@ -462,49 +460,39 @@ public class RenderGun implements CustomItemRenderer {
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		String staticArmState = getStaticArmState(model, anim);
 		
-		if (model.leftHandAmmo && model.rightArmPos != null) 
+		GL11.glPushMatrix();
 		{
-			GL11.glPushMatrix();
+			if(mc.player.getSkinType() != "slim")
+				mc.renderEngine.bindTexture(mc.player.getLocationSkin());
+			else bindTexture("arms", "armSkin");
+			
+			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
+			Vector3f armScale = rightArm ? model.rightArmScale : model.leftArmScale;
+			Vector3f armRot = rightArm ? model.rightArmRot : model.leftArmRot;
+			Vector3f armPos = rightArm ? model.rightArmPos : model.leftArmPos;
+			Vector3f chargeArmRot = rightArm ? model.rightArmChargeRot : model.leftArmChargeRot;
+			Vector3f chargeArmPos = rightArm ? model.rightArmChargePos : model.leftArmChargePos;
+			Vector3f reloadArmRot = rightArm ? model.rightArmReloadRot : model.leftArmReloadRot;
+			Vector3f reloadArmPos = rightArm ? model.rightArmReloadPos : model.leftArmReloadPos;
+			
+			if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, armRot, armPos);
+			else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, chargeArmRot, chargeArmPos);
+			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos);
+			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, true);
+			else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos);
+			
+			GL11.glScalef(armScale.x, armScale.y, armScale.z);
+			if(rightArm) 
 			{
-				if(mc.player.getSkinType() != "slim")
-					mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-				else
-					mc.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armSkin.png"));
-				
-				if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);
-				else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-				else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);
-				else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true);
-				else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);
-				
-				GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
 				modelplayer.bipedRightArm.render(0.0625F);
 				renderRightSleeve(player, modelplayer);
-			}
-			GL11.glPopMatrix();
-		}
-
-		if (!model.leftHandAmmo && model.leftArmPos != null) 
-		{
-			GL11.glPushMatrix();
+			} else
 			{
-				if(mc.player.getSkinType() != "slim")
-					mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-				else
-					mc.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armSkin.png"));
-				
-				if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);
-				else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-				else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos);
-				else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);
-				else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);
-
-				GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 				modelplayer.bipedLeftArm.render(0.0625F);
 				renderLeftSleeve(player, modelplayer);
 			}
-			GL11.glPopMatrix();
 		}
+		GL11.glPopMatrix();
 	}
 
 	//Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
@@ -512,14 +500,13 @@ public class RenderGun implements CustomItemRenderer {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-		else mc.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armSkin.png"));
+		else bindTexture("arms", "armSkin");
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
 		
 		GL11.glPushMatrix();
 		{
-			//TODO Why the fuck is this required on this but not the other?
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
 			
 			if (!model.leftHandAmmo && model.rightArmPos != null && model.rightArmReloadPos != null) 
@@ -566,8 +553,7 @@ public class RenderGun implements CustomItemRenderer {
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
 			if(armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-						"skins/armor/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin() + ".png"));
+				bindTexture("armor", ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin());
 				GL11.glPushMatrix();
 				{
 					float modelScale = modelArmor.modelScale;
@@ -586,8 +572,7 @@ public class RenderGun implements CustomItemRenderer {
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
 			if(armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
-				renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID,
-						"skins/armor/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin() + ".png"));
+				bindTexture("armor", ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin());
 				GL11.glPushMatrix();
 				{
 					float modelScale = modelArmor.modelScale;

@@ -2,6 +2,7 @@ package com.modularwarfare.common.armor;
 
 import javax.annotation.Nullable;
 
+import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.common.type.BaseType;
@@ -41,7 +42,7 @@ public class ItemMWArmor extends ItemArmor {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String armourType)
 	{
-		return ModularWarfare.MOD_ID + ":skins/armor/" + type.modelSkins[0].getSkin() + ".png";
+		return ModularWarfare.MOD_ID + ":skins/" + (ModConfig.INSTANCE.detailedSkins ? "hd" : "default") + "/armor/" + type.modelSkins[0].getSkin() + ".png";
 	}
 	
 	@Override
