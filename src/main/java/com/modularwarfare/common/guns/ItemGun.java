@@ -80,7 +80,11 @@ public class ItemGun extends BaseItem {
 					if(gunType.acceptedAttachments.get(AttachmentEnum.Sight) != null && gunType.acceptedAttachments.get(AttachmentEnum.Sight).size() >= 1)
 					{
 						ItemAttachment itemAttachment = ModularWarfare.attachmentTypes.get(gunType.acceptedAttachments.get(AttachmentEnum.Sight).get(0));
-						GunType.addAttachment(heldStack, AttachmentEnum.Sight, new ItemStack(itemAttachment));
+						ItemStack attachmentStack = new ItemStack(itemAttachment);
+						NBTTagCompound tag = new NBTTagCompound();
+						tag.setInteger("skinId", 1);
+						attachmentStack.setTagCompound(tag);
+						GunType.addAttachment(heldStack, AttachmentEnum.Sight, attachmentStack);
 					}
 				}
 			}	

@@ -3,5 +3,16 @@
   "internalName": "mwp.ump45doublemag",
   "modelName": "mwp.ammo.ump45doublemag",
   "magazineCount": 2,
-  "ammoCapacity": 25
+  "ammoCapacity": 25,
+  "modelSkins":
+  [
+    {
+      "skinAsset": "mwp.ump45doublemag",
+      "displayName": "UMP45 Double Mag - Default"
+    },
+    {
+      "skinAsset": "mwp.ump45doublemag_pink",
+      "displayName": "UMP45 Double Mag - Pink"
+    }
+  ]
 }
