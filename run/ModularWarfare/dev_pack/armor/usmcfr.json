@@ -1,5 +1,5 @@
 {
-    "internalName": "usmcfr",
+    "internalName": "mwp.usmcfr",
     "modelName": "mwp.armor.usmcfr",
     "displayName": "USMCFR Armor",
     "armorTypes": [
@@ -19,5 +19,20 @@
             "armorType": "feet",
             "displayName": "USMCFR Boots"
         }
+    ],
+    "modelSkins":
+    [
+      {
+        "skinAsset": "mwp.usmcfr",
+        "displayName": "USMCFR - Default"
+      },
+      {
+        "skinAsset": "mwp.usmcfr_forest",
+        "displayName": "USMCFR - Forest"
+      },
+      {
+        "skinAsset": "mwp.usmcfr_hd",
+        "displayName": "USMCFR - HD"
+      }
     ]
 }

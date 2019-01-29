@@ -24,5 +24,16 @@
   "acceptedAttachments": 
   {
     "sight": [""]
-  }
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "mwp.akm",
+      "displayName": "AKM - Default"
+    },
+    {
+      "skinAsset": "mwp.akm_pink",
+      "displayName": "AKM - Pink"
+    }
+  ]
 }

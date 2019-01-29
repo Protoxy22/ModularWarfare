@@ -24,6 +24,7 @@ public class CustomItemRenderer
 	public void bindTexture(String type, String fileName)
 	{
 		String pathFormat = "skins/%s/%s/%s.png";
+		String pathFormatSkins = "skins/%s/%s/%s.png";
 		try
 		{
 			ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID,

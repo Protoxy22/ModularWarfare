@@ -186,7 +186,10 @@ public class RenderGun extends CustomItemRenderer {
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
 				
-				bindTexture("guns", gunType.modelSkins[0].getSkin());
+				/** Weapon Texture */
+				int skinId = item.getTagCompound().getInteger("skinId");
+				String path = skinId > 0 ? "skins/" + gunType.modelSkins[skinId].getSkin() : gunType.modelSkins[0].getSkin();
+				bindTexture("guns", path);
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				
