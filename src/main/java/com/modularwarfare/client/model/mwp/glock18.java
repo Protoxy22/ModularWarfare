@@ -63,8 +63,8 @@ public class glock18 extends ModelGun //Same as Filename
         leftArmRot = new Vector3f(70.0F, 0.0F, -40.0F);
         leftArmReloadPos = new Vector3f(-0.62F, -0.15F, -0.10F);
         leftArmReloadRot = new Vector3f(30.0F, 0.0F, -40.0F);
-        leftArmChargePos = new Vector3f(-0.50F, 0.01F, -0.15F);
-        leftArmChargeRot = new Vector3f(60.0F, 35.0F, 0.0F);
+        leftArmChargePos = new Vector3f(-0.60F, 0.25F, -0.25F);
+        leftArmChargeRot = new Vector3f(70.0F, 0.0F, -40.0F);
  
         rightArmPos = new Vector3f(-0.56F, -0.04F, 0.00F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -85.0F);
@@ -94,10 +94,10 @@ public class glock18 extends ModelGun //Same as Filename
 	    chargeHandleDistance = 0.5F;
 	    chargeDelay = 0;
 	    chargeDelayAfterReload = 65;
-	    chargeTime = 8;
+	    chargeTime = 6;
 	    
 	    leftHandCharge = true;
-	    chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
+	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 
 		flipAll();
 	}

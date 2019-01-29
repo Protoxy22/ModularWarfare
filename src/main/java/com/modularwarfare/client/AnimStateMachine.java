@@ -87,9 +87,9 @@ public class AnimStateMachine {
 				charging = true;
 				lastCharged = charged = -1F;
 			}
-
 		}
 
+		//System.out.println(lastCharged + (charged - lastCharged));
 		// Time until hammer pullback
 		if (timeUntilPullback > 0) {
 			timeUntilPullback--;
@@ -158,8 +158,6 @@ public class AnimStateMachine {
 		lastGunRecoil = gunRecoil;
 		if (gunRecoil > 0)
 			gunRecoil *= 0.5F;
-		
-		System.out.println(charged);
 	}
 	
 	public void triggerShoot(ModelGun model)

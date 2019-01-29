@@ -206,8 +206,15 @@ public class RenderGun extends CustomItemRenderer {
 				{
 					GL11.glPushMatrix();
 					{
+						
 						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
+						if(model.rightHandBolt)
+						{
+							GL11.glTranslatef(0, 2.56F, 0);
+							GL11.glRotatef(-90 * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
+							GL11.glTranslatef(0, -2.56F, 0);
+						}
 						model.renderPump(f);
 					}
 					GL11.glPopMatrix();
