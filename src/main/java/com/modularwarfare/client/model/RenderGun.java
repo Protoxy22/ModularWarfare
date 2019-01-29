@@ -504,7 +504,7 @@ public class RenderGun extends CustomItemRenderer {
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
-		
+		//System.out.println(weaponAnimation.ammoLoadOffset);
 		GL11.glPushMatrix();
 		{
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
