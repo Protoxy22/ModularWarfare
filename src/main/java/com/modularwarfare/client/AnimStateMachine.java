@@ -89,13 +89,13 @@ public class AnimStateMachine {
 		}
 
 		// Timer until pulling back the charge handle/bolt
-		if (timeUntilCharge > 0) {
-			timeUntilCharge--;
-			if (timeUntilCharge == 0) {
+		if (timeUntilCharge >= 0 && !charging) {
+			timeUntilCharge -= timeUntilCharge >= 1 ? 1 : 0;
+			if (timeUntilCharge == 0 && chargeTrigger >= 1f) {
 				// Pump it!
 				charging = true;
 				lastCharged = charged = -1F;
-			} 
+			}
 		}	
 		
 		//System.out.println(chargeTrigger);
