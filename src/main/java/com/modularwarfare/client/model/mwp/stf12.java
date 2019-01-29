@@ -43,7 +43,7 @@ public class stf12 extends ModelGun //Same as Filename
 		translateAll(0F, -13F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/? 
 
-		gunSlideDistance = 0.65F;
+		gunSlideDistance = 0F;
 		lefthandPump = true;
 		//animationType = EnumAnimationType.CUSTOMRIFLE;
 		/*tiltGunTime = 0.10F;
@@ -57,7 +57,6 @@ public class stf12 extends ModelGun //Same as Filename
 		pumpDelay = 6;
 		pumpTime = 9;
 		pumpHandleDistance = 1.5F;
-		chargeHandleDistance = 4.25F;
 		
 		rotateGunVertical = 30F;
 		rotateGunHorizontal = -0F;
