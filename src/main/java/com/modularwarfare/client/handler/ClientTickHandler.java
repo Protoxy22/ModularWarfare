@@ -74,9 +74,11 @@ public class ClientTickHandler extends ForgeEvent {
 	}
 	
 	public void onRenderTickStart(Minecraft minecraft, float renderTick)
-	{
+	{	
 		if (minecraft.player == null || minecraft.world == null)
 			return;
+	
+		AnimStateMachine.renderTick = renderTick;
 		
 		EntityPlayerSP player = minecraft.player;
 		

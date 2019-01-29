@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.utility.NumberHelper;
 
 import net.minecraft.item.ItemStack;
 
@@ -62,6 +63,10 @@ public class AnimStateMachine {
 	
 	public float chargeTrigger = 0f;
 	public boolean chargeTriggerTrigger = false;
+
+	private int chargeDelayAfterReload;
+	
+	public static float renderTick;
 	
 	public void onUpdate()
 	{
@@ -90,6 +95,9 @@ public class AnimStateMachine {
 				// Pump it!
 				charging = true;
 				lastCharged = charged = -1F;
+			} else if(timeUntilCharge <= chargeDelayAfterReload-20)
+			{
+				chargeTrigger = NumberHelper.clamp(chargeTrigger - 0.15f * renderTick, 0, 1);
 			}
 		}
 
@@ -129,6 +137,19 @@ public class AnimStateMachine {
 			charged += 2F / timeToChargeFor;
 			if (charged >= 0.999F)
 				charging = false;
+		}
+		
+		if(charging && charged >= 0.66)
+		{
+			chargeTriggerTrigger = true;
+		}
+		if(chargeTriggerTrigger)
+		{
+			chargeTrigger -= 0.15f * renderTick;
+			if(chargeTrigger <= 0)
+			{
+				chargeTriggerTrigger = false;
+			}
 		}
 
 		if (isFired) {
@@ -209,6 +230,7 @@ public class AnimStateMachine {
 		timeUntilPump = model.pumpDelayAfterReload;
 		timeToPumpFor = model.pumpTime;
 		timeUntilCharge = /*model.chargeDelay*/ model.chargeDelayAfterReload;
+		chargeDelayAfterReload = model.chargeDelayAfterReload;
 		timeToChargeFor = model.chargeTime;
 		loadOnly = isLoadOnly;
 		renderAmmo = !loadOnly;
