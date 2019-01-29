@@ -60,6 +60,9 @@ public class AnimStateMachine {
 	
 	public ItemStack cachedAmmoStack;
 	
+	public float chargeTrigger = 0f;
+	public boolean chargeTriggerTrigger = false;
+	
 	public void onUpdate()
 	{
 		//Assign values

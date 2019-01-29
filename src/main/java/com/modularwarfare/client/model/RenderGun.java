@@ -248,7 +248,6 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPushMatrix();
 				{
 					boolean cachedUnload = (animations.unloadOnly && animations.cachedAmmoStack != null);
-					System.out.println(cachedUnload);
 					if(ItemGun.hasAmmoLoaded(item) || cachedUnload)
 					{
 						ItemStack stackAmmo =  cachedUnload ? animations.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
