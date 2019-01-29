@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 
@@ -55,6 +56,8 @@ public class AnimStateMachine {
 	public boolean isFired = false;
 	
 	public Vector3f casingRandom = new Vector3f(0F, 0F, 0F);
+	
+	public ModelAmmo cachedAmmo = null;
 	
 	public void onUpdate()
 	{
