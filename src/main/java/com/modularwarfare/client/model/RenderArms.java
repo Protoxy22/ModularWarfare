@@ -32,10 +32,11 @@ public class RenderArms {
 	{
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), anim.chargeTrigger);
 		//GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale)), 0F, 0F);
-		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
+		GL11.glTranslatef(defaultPos.x + offsetPosition.x, 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y, 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z);
-		//System.out.println(offsetPosition);
+		System.out.println(defaultPos);
+		//System.out.println(anim.chargeTrigger);
 		
 		//Rotation
 		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), anim.chargeTrigger);
