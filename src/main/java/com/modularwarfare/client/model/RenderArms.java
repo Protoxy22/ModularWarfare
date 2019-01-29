@@ -28,13 +28,20 @@ public class RenderArms {
 	
 	// This moves the right hand if leftHandAmmo & handCharge are true (For left
 	// hand reload with right hand charge)
-	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
+	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos)
 	{
-		GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale)), 0F, 0F);
-		GL11.glTranslatef(0F, reloadPos.y, 0F);
-		GL11.glTranslatef(0F, 0F, reloadPos.z);
-		//System.out.println(anim.lastCharged + (anim.charged - anim.lastCharged));
-		handleRotate(reloadRot);
+		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), anim.chargeTrigger);
+		//GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale)), 0F, 0F);
+		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
+		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y, 0F);
+		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z);
+		//System.out.println(offsetPosition);
+		
+		//Rotation
+		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), anim.chargeTrigger);
+		GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
+		GL11.glRotatef(defaultRot.y + offsetRotation.y, 0F, 1F, 0F);
+		GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
 	}
 	
 	// This moves the right hand if leftHandAmmo & handBolt are true (For left hand

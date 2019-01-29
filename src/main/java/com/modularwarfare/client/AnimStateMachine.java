@@ -95,13 +95,14 @@ public class AnimStateMachine {
 				// Pump it!
 				charging = true;
 				lastCharged = charged = -1F;
-			} else if(timeUntilCharge <= chargeDelayAfterReload-20)
-			{
-				chargeTrigger = NumberHelper.clamp(chargeTrigger - 0.15f * renderTick, 0, 1);
-			}
+			} 
 		}
-
-		//System.out.println(lastCharged + (charged - lastCharged));
+		if(timeUntilCharge <= chargeDelayAfterReload-20 && !chargeTriggerTrigger)
+		{
+			chargeTrigger = NumberHelper.clamp(chargeTrigger + 0.01f * renderTick, 0, 1);
+			//System.out.println(chargeTrigger);
+		}
+		//System.out.println(chargeTrigger);
 		// Time until hammer pullback
 		if (timeUntilPullback > 0) {
 			timeUntilPullback--;
@@ -142,13 +143,17 @@ public class AnimStateMachine {
 		if(charging && charged >= 0.66)
 		{
 			chargeTriggerTrigger = true;
+			System.out.println("CALLED1");
 		}
 		if(chargeTriggerTrigger)
 		{
+			
 			chargeTrigger -= 0.15f * renderTick;
+			System.out.println(chargeTrigger);
 			if(chargeTrigger <= 0)
 			{
 				chargeTriggerTrigger = false;
+				System.out.println("CALLED3");
 			}
 		}
 
