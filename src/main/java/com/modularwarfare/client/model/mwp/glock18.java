@@ -78,8 +78,8 @@ public class glock18 extends ModelGun //Same as Filename
 		//RecoilSlideDistance = 0.1F;
 		//RotateSlideDistance = -2F;
 
-		//scopeIsOnSlide = true;
-		//slideLockOnEmpty = true;
+		scopeIsOnSlide = true;
+		slideLockOnEmpty = true;
 		
 		casingAnimDistance = new Vector3f(0, 1, 12);
 	    casingAnimSpread = new Vector3f(2, 2, 0);
@@ -91,14 +91,13 @@ public class glock18 extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(0.0F, -10.0F, 30.0F);
 		sprintTranslate = new Vector3f(0.7F, 0.60F, 0.1F);
 		
-	    //chargeHandleDistance = 0.5F;
-	    //chargeDelay = 0;
-	    //chargeDelayAfterReload = 43;
-	    //chargeTime = 8;
+	    chargeHandleDistance = 0.5F;
+	    chargeDelay = 0;
+	    chargeDelayAfterReload = 65;
+	    chargeTime = 8;
 	    
-	    //leftHandCharge = true;
-	    //chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
-
+	    leftHandCharge = true;
+	    chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
 
 		flipAll();
 	}

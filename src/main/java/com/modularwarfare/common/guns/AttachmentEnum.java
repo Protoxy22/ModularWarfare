@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public enum AttachmentEnum {
 	
-	@SerializedName("sight") Sight("sight");
+	@SerializedName("sight") Sight("sight"),
+	@SerializedName("slide") Slide("slide");
 	
 	
 	public String typeName;

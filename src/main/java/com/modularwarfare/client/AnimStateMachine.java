@@ -155,6 +155,8 @@ public class AnimStateMachine {
 		lastGunRecoil = gunRecoil;
 		if (gunRecoil > 0)
 			gunRecoil *= 0.5F;
+		
+		System.out.println(charged);
 	}
 	
 	public void triggerShoot(ModelGun model)
@@ -198,7 +200,7 @@ public class AnimStateMachine {
 		
 		timeUntilPump = model.pumpDelayAfterReload;
 		timeToPumpFor = model.pumpTime;
-		timeUntilCharge = model.chargeDelay;
+		timeUntilCharge = /*model.chargeDelay*/ model.chargeDelayAfterReload;
 		timeToChargeFor = model.chargeTime;
 		loadOnly = isLoadOnly;
 		renderAmmo = !loadOnly;

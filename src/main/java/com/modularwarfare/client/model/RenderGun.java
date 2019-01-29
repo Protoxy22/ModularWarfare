@@ -194,13 +194,12 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				
 				model.renderGun(f);
-				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null)
+				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
 					model.renderDefaultScope(f);
 				model.renderDefaultBarrel(f);
 				model.renderDefaultStock(f);
 				model.renderDefaultGrip(f);
 				model.renderDefaultGadget(f);
-				model.renderSlide(f);
 				
 				ItemStack pumpAttachment = null;
 				if (pumpAttachment == null)
@@ -222,6 +221,28 @@ public class RenderGun extends CustomItemRenderer {
 						model.renderCharge(f);
 					}
 					GL11.glPopMatrix();
+				}
+				
+				if(GunType.getAttachment(item, AttachmentEnum.Slide) == null)
+				{
+					GL11.glPushMatrix();
+					{
+						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
+						GL11.glTranslatef(-(1 - Math.abs(animations.lastCharged + (animations.charged - animations.lastCharged) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
+						model.renderSlide(f);
+						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnSlide)
+							model.renderDefaultScope(f);
+					}
+					GL11.glPopMatrix();
+				}
+				
+				boolean empty = !ItemGun.hasNextShot(item);
+				if (model.slideLockOnEmpty)
+				{
+					if (empty)
+						animations.isGunEmpty = true;
+					else if (!empty && !animations.reloading)
+						animations.isGunEmpty = false;
 				}
 				
 				GL11.glPushMatrix();
@@ -485,7 +506,7 @@ public class RenderGun extends CustomItemRenderer {
 			if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, armRot, armPos);
 			else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, chargeArmRot, chargeArmPos);
 			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos);
-			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, true);
+			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, rightArm);
 			else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos);
 			
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
