@@ -54,25 +54,27 @@ public class glock18 extends ModelGun //Same as Filename
 		//rotateClipHorizontal = 1F;
 		//tiltClip = 25F;
 
+		rotateHipPosition = new Vector3f(0.0F, 0.0F, 5.0F);
+		translateHipPosition = new Vector3f(0.15F, 0.1F, -0.0F);
 
 		translateClip = new Vector3f(-6 /16F, -20F /16F, 0F /16F);
         //adsSpeed = -0.0F;
-        leftArmPos = new Vector3f(-0.50F, 0.01F, -0.15F);
-        leftArmRot = new Vector3f(60.0F, 35.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.53F, -0.15F, -0.10F);
-        leftArmReloadRot = new Vector3f(60.0F, 35.0F, 0.0F);
+        leftArmPos = new Vector3f(-0.60F, 0.11F, -0.25F);
+        leftArmRot = new Vector3f(70.0F, 0.0F, -40.0F);
+        leftArmReloadPos = new Vector3f(-0.62F, -0.15F, -0.10F);
+        leftArmReloadRot = new Vector3f(30.0F, 0.0F, -40.0F);
         leftArmChargePos = new Vector3f(-0.50F, 0.01F, -0.15F);
         leftArmChargeRot = new Vector3f(60.0F, 35.0F, 0.0F);
  
-        rightArmPos = new Vector3f(-0.45F, -0.02F, 0.00F);
-        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.48F, -0.01F, 0.035F);
-        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmPos = new Vector3f(-0.56F, -0.04F, 0.00F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -85.0F);
+        rightArmReloadPos = new Vector3f(-0.59F, -0.04F, 0.08F);
+        rightArmReloadRot = new Vector3f(0.0F, 5.0F, -85.0F);
         
         leftHandAmmo = true;
         
-        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
-        leftArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
+        rightArmScale = new Vector3f(0.6F, 0.8F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 0.8F, 0.6F);
 		//RecoilSlideDistance = 0.1F;
 		//RotateSlideDistance = -2F;
 
@@ -86,8 +88,8 @@ public class glock18 extends ModelGun //Same as Filename
 
 		crouchZoom = -0.10F;
 		fancyStance = true;
-		sprintRotate = new Vector3f(0.0F, -5.0F, 50.0F);
-		sprintTranslate = new Vector3f(1.3F, 0.70F, 0.1F);
+		sprintRotate = new Vector3f(0.0F, -10.0F, 30.0F);
+		sprintTranslate = new Vector3f(0.7F, 0.60F, 0.1F);
 		
 	    //chargeHandleDistance = 0.5F;
 	    //chargeDelay = 0;

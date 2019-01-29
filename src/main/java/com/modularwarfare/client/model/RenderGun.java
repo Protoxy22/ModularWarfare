@@ -516,7 +516,7 @@ public class RenderGun implements CustomItemRenderer {
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
-		
+		//System.out.println(weaponAnimation.ammoLoadOffset);
 		GL11.glPushMatrix();
 		{
 			//TODO Why the fuck is this required on this but not the other?
