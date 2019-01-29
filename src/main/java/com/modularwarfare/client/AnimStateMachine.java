@@ -62,7 +62,7 @@ public class AnimStateMachine {
 	public ItemStack cachedAmmoStack;
 	
 	public float chargeTrigger = 0f;
-	public boolean chargeTriggerTrigger = false;
+	public int chargeTriggerTrigger = 0;
 
 	private int chargeDelayAfterReload;
 	
@@ -97,11 +97,33 @@ public class AnimStateMachine {
 				lastCharged = charged = -1F;
 			} 
 		}
-		if(timeUntilCharge <= chargeDelayAfterReload-20 && !chargeTriggerTrigger)
-		{
-			chargeTrigger = NumberHelper.clamp(chargeTrigger + 0.01f * renderTick, 0, 1);
-			//System.out.println(chargeTrigger);
+		
+		if(chargeTriggerTrigger == 0 && timeUntilCharge <= chargeDelayAfterReload-65)
+			chargeTriggerTrigger = 1;
+		
+		if(chargeTriggerTrigger == 1) {
+			chargeTrigger = NumberHelper.clamp(chargeTrigger + 0.15f * renderTick, 0, 1);
+			System.out.println(chargeTrigger);
 		}
+		
+		if(charging && charged >= 0.66)
+		{
+			chargeTriggerTrigger = 2;
+		}
+		if(chargeTriggerTrigger == 2)
+		{
+			
+			chargeTrigger -= 0.15f * renderTick;
+			if(chargeTrigger <= 0)
+			{
+				chargeTriggerTrigger = 3;
+				chargeTrigger = 0;
+			}
+		}
+		if(chargeTriggerTrigger == 3 && timeUntilCharge != 0) {
+			chargeTriggerTrigger = 0;
+		}		
+		
 		//System.out.println(chargeTrigger);
 		// Time until hammer pullback
 		if (timeUntilPullback > 0) {
@@ -138,23 +160,6 @@ public class AnimStateMachine {
 			charged += 2F / timeToChargeFor;
 			if (charged >= 0.999F)
 				charging = false;
-		}
-		
-		if(charging && charged >= 0.66)
-		{
-			chargeTriggerTrigger = true;
-			System.out.println("CALLED1");
-		}
-		if(chargeTriggerTrigger)
-		{
-			
-			chargeTrigger -= 0.15f * renderTick;
-			System.out.println(chargeTrigger);
-			if(chargeTrigger <= 0)
-			{
-				chargeTriggerTrigger = false;
-				System.out.println("CALLED3");
-			}
 		}
 
 		if (isFired) {
