@@ -66,6 +66,12 @@ public class ItemMWArmor extends ItemArmor {
     }
 	
 	@Override
+    public boolean getShareTag()
+    {
+        return true;
+    }
+	
+	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String armourType)
 	{
 		int skinId = stack.getTagCompound().getInteger("skinId");
@@ -100,11 +106,5 @@ public class ItemMWArmor extends ItemArmor {
 		}
 		return null;
 	}
-	
-	@Override
-    public boolean getShareTag()
-    {
-        return true;
-    }
 
 }

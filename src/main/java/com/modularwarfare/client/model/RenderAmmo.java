@@ -96,7 +96,9 @@ public class RenderAmmo extends CustomItemRenderer {
 			{
 				float f = 1F / 16F;
 				float modelScale = model.modelScale;
-				bindTexture("ammo", ammoType.modelSkins[0].getSkin());
+				int skinId = item.getTagCompound().getInteger("skinId");
+				String path = skinId > 0 ? "skins/" + ammoType.modelSkins[skinId].getSkin() : ammoType.modelSkins[0].getSkin();
+				bindTexture("ammo", path);
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				model.renderAmmo(f);
 			}

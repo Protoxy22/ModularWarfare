@@ -272,7 +272,9 @@ public class RenderGun extends CustomItemRenderer {
 											
 											Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
 											GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
-											bindTexture("ammo", ammoType.modelSkins[0].getSkin());
+											int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
+											String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
+											bindTexture("ammo", pathAmmo);
 											
 											if(animations.renderAmmo) modelAmmo.renderAmmo(f);
 										}
@@ -324,7 +326,9 @@ public class RenderGun extends CustomItemRenderer {
 						{
 							GL11.glPushMatrix();
 							{
-								bindTexture("attachments", attachmentType.modelSkins[0].getSkin());
+								int skinId = itemStack.getTagCompound().getInteger("skinId");
+								String path = skinId > 0 ? "skins/" + attachmentType.modelSkins[skinId].getSkin() : attachmentType.modelSkins[0].getSkin();
+								bindTexture("attachments", path);
 								Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
 								Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
@@ -467,7 +471,7 @@ public class RenderGun extends CustomItemRenderer {
 		{
 			if(mc.player.getSkinType() != "slim")
 				mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-			else bindTexture("arms", "armSkin");
+			else bindTexture("arms", "armskin");
 			
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 			Vector3f armScale = rightArm ? model.rightArmScale : model.leftArmScale;
@@ -556,7 +560,9 @@ public class RenderGun extends CustomItemRenderer {
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
 			if(armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
-				bindTexture("armor", ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin());
+				int skinId = armorStack.getTagCompound().getInteger("skinId");
+				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
+				bindTexture("armor", path);
 				GL11.glPushMatrix();
 				{
 					float modelScale = modelArmor.modelScale;
@@ -575,7 +581,9 @@ public class RenderGun extends CustomItemRenderer {
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
 			if(armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
-				bindTexture("armor", ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin());
+				int skinId = armorStack.getTagCompound().getInteger("skinId");
+				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
+				bindTexture("armor", path);
 				GL11.glPushMatrix();
 				{
 					float modelScale = modelArmor.modelScale;

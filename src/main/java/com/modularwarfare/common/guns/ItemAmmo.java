@@ -43,6 +43,7 @@ public class ItemAmmo extends BaseItem {
 			ItemAmmo itemAmmo = (ItemAmmo) heldStack.getItem();
 			NBTTagCompound nbtTagCompound = new NBTTagCompound();
 			nbtTagCompound.setInteger("ammocount", itemAmmo.type.ammoCapacity);
+			nbtTagCompound.setInteger("skinId", 1);
 			if(itemAmmo.type.magazineCount != null)
 			{
 				nbtTagCompound.setInteger("magcount", 1);

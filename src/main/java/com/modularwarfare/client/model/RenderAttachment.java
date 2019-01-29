@@ -41,9 +41,9 @@ public class RenderAttachment extends CustomItemRenderer {
 		}
 	}
 
-	private void renderAttachment(CustomItemRenderType renderType, ItemStack item, AttachmentType AttachmentType, Object... data) {
+	private void renderAttachment(CustomItemRenderType renderType, ItemStack item, AttachmentType attachmentType, Object... data) {
 
-		ModelAttachment model = (ModelAttachment) AttachmentType.model;
+		ModelAttachment model = (ModelAttachment) attachmentType.model;
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
 		if (renderEngine == null)
@@ -90,14 +90,19 @@ public class RenderAttachment extends CustomItemRenderer {
 				break;
 
 			}
-
+			
 			GL11.glPushMatrix();
-			{
-				float f = 1F / 16F;
-				float modelScale = model.modelScale;
-				bindTexture("attachments", AttachmentType.modelSkins[0].getSkin());
-				GL11.glScalef(modelScale, modelScale, modelScale);
-				model.renderAttachment(f);
+			{	
+				if(item != null && item.getTagCompound() != null)
+				{
+					float f = 1F / 16F;
+					float modelScale = model.modelScale;
+					int skinId = item.getTagCompound().getInteger("skinId");
+					String path = skinId > 0 ? "skins/" + attachmentType.modelSkins[skinId].getSkin() : attachmentType.modelSkins[0].getSkin();
+					bindTexture("attachments", path);
+					GL11.glScalef(modelScale, modelScale, modelScale);
+					model.renderAttachment(f);
+				}
 			}
 			GL11.glPopMatrix();
 		}

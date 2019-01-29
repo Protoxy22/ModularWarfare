@@ -1,5 +1,16 @@
 {
     "displayName": "Docter Sight",
     "internalName": "mwp.docter",
-    "modelName": "mwp.attachments.docter"
+    "modelName": "mwp.attachments.docter",
+    "modelSkins":
+    [
+      {
+        "skinAsset": "mwp.docter",
+        "displayName": "Docter - Default"
+      },
+      {
+        "skinAsset": "mwp.docter_pink",
+        "displayName": "Docter - Pink"
+      }
+    ]
 }
