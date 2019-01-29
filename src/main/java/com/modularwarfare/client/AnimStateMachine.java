@@ -4,9 +4,10 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
+
+import net.minecraft.item.ItemStack;
 
 public class AnimStateMachine {
 	
@@ -57,7 +58,7 @@ public class AnimStateMachine {
 	
 	public Vector3f casingRandom = new Vector3f(0F, 0F, 0F);
 	
-	public ModelAmmo cachedAmmo = null;
+	public ItemStack cachedAmmoStack;
 	
 	public void onUpdate()
 	{
@@ -151,6 +152,9 @@ public class AnimStateMachine {
 		if(reloading && reloadAnimationProgress >= 1F)
 		{
 			reloading = false;
+			loadOnly = false;
+			unloadOnly = false;
+			cachedAmmoStack = null;;
 			lastReloadAnimationProgress = reloadAnimationProgress = 0;
 		}
 		
