@@ -124,6 +124,33 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.swayVertical = NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2);
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
+			
+			AnimStateMachine anim = ClientRenderHooks.getAnimations(player);
+			if(anim.chargeTriggerTrigger == 0 && anim.timeUntilCharge <= anim.chargeDelayAfterReload-65)
+				anim.chargeTriggerTrigger = 1;
+			
+			if(anim.chargeTriggerTrigger == 1) {
+				anim.chargeTrigger = NumberHelper.clamp(anim.chargeTrigger + 0.15f * renderTick, 0, 1);
+				System.out.println(anim.chargeTrigger);
+			}
+			
+			if(anim.charging && anim.charged >= 0.66)
+			{
+				anim.chargeTriggerTrigger = 2;
+			}
+			if(anim.chargeTriggerTrigger == 2)
+			{
+				
+				anim.chargeTrigger -= 0.15f * renderTick;
+				if(anim.chargeTrigger <= 0)
+				{
+					anim.chargeTriggerTrigger = 3;
+					anim.chargeTrigger = 0;
+				}
+			}
+			if(anim.chargeTriggerTrigger == 3 && anim.timeUntilCharge != 0) {
+				anim.chargeTriggerTrigger = 0;
+			}	
 		} else
 		{
 			RenderGun.resetRenderMods();

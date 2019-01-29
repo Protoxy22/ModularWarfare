@@ -64,7 +64,7 @@ public class AnimStateMachine {
 	public float chargeTrigger = 0f;
 	public int chargeTriggerTrigger = 0;
 
-	private int chargeDelayAfterReload;
+	public int chargeDelayAfterReload;
 	
 	public static float renderTick;
 	
@@ -96,33 +96,7 @@ public class AnimStateMachine {
 				charging = true;
 				lastCharged = charged = -1F;
 			} 
-		}
-		
-		if(chargeTriggerTrigger == 0 && timeUntilCharge <= chargeDelayAfterReload-65)
-			chargeTriggerTrigger = 1;
-		
-		if(chargeTriggerTrigger == 1) {
-			chargeTrigger = NumberHelper.clamp(chargeTrigger + 0.15f * renderTick, 0, 1);
-			System.out.println(chargeTrigger);
-		}
-		
-		if(charging && charged >= 0.66)
-		{
-			chargeTriggerTrigger = 2;
-		}
-		if(chargeTriggerTrigger == 2)
-		{
-			
-			chargeTrigger -= 0.15f * renderTick;
-			if(chargeTrigger <= 0)
-			{
-				chargeTriggerTrigger = 3;
-				chargeTrigger = 0;
-			}
-		}
-		if(chargeTriggerTrigger == 3 && timeUntilCharge != 0) {
-			chargeTriggerTrigger = 0;
-		}		
+		}	
 		
 		//System.out.println(chargeTrigger);
 		// Time until hammer pullback
