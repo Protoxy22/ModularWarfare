@@ -80,12 +80,12 @@ public class akm extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
 		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 		
-	    chargeHandleDistance = 0.9F;
-	    chargeDelay = 0;
-	    chargeDelayAfterReload = 65;
-	    chargeTime = 7;
+	    //chargeHandleDistance = 0.9F;
+	    //chargeDelay = 0;
+	    //chargeDelayAfterReload = 65;
+	    //chargeTime = 7;
 	    
-	    rightHandCharge = true;
+	    //rightHandCharge = true;
 	    chargeModifier = new Vector3f (16.0F, 8.0F, 16.0F);
 
 //		rotateGunVertical = 20F;

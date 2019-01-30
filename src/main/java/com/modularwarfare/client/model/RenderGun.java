@@ -480,7 +480,7 @@ public class RenderGun extends CustomItemRenderer {
 		}
 		else 
 		{
-			if (anim.chargeTriggerTrigger >= 1 && anim.chargeTriggerTrigger != 3) movingArmState = "Charge";
+			if (anim.chargeTriggerTrigger >= 1 && anim.chargeTriggerTrigger != 3 && model.leftHandCharge && anim.charged != -1.0F) movingArmState = "Charge";
 			else if (!anim.reloading && model.lefthandPump) movingArmState = "Pump";
 			else if (!anim.reloading) movingArmState = "Default";
 			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.loadOnly) movingArmState = "Load";
