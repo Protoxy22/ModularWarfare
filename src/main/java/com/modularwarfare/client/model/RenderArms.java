@@ -76,7 +76,7 @@ public class RenderArms {
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
-		Vector3f ammoLoadOffset = animation.getAmmoLoadOffset();
+		Vector3f ammoLoadOffset = animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f);
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));
