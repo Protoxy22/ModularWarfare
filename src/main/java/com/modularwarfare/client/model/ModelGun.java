@@ -42,8 +42,8 @@ public class ModelGun extends TurboBase
 
 	//Arm rendering variables DEFAULT, RELOADING, CHARGING
 	public boolean leftHandAmmo = true;
-	public Vector3f leftArmScale = new Vector3f(0.8F,0.8F,0.8F);
-	public Vector3f rightArmScale = new Vector3f(0.8F,0.8F,0.8F);	
+	public Vector3f leftArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
+	public Vector3f rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);	
 	public Vector3f leftArmPos;
 	public Vector3f leftArmRot;
 	public Vector3f rightArmPos;
@@ -65,7 +65,6 @@ public class ModelGun extends TurboBase
 	/** If true, move the hands with the bolt action */
 	public boolean rightHandBolt = false;
 	public boolean leftHandBolt = false;
-	public float pumpModifier = 4F;
 	public Vector3f chargeModifier = new Vector3f(1F, 0F, 0F);
 	
 
