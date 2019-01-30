@@ -33,6 +33,8 @@ public class AmmoType extends BaseType {
 	//Dynamic Ammo Stuff
 	/** Will this ammo item be loaded or empty when crafted, default loaded */
 	public boolean emptyOnCraft = false;
+	/** Override ammo deletion, to allow for enabling or disabling of returned empty mags */
+	public boolean allowEmptyMagazines = false;
 	
 	//TODO; Deltric check this
 	//If subAmmo != null, ammo is to use submunition reload system

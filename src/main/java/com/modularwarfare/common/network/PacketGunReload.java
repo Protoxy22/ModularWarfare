@@ -226,7 +226,10 @@ public class PacketGunReload extends PacketBase {
 		{
 			ItemStack returningAmmo = new ItemStack(nbtTagCompound.getCompoundTag("ammo"));
 			ItemAmmo returningAmmoItem = (ItemAmmo) returningAmmo.getItem();
-			entityPlayer.inventory.addItemStackToInventory(returningAmmo);
+			if(returningAmmoItem.type.subAmmo != null || ItemAmmo.hasAmmo(returningAmmo) || returningAmmoItem.type.allowEmptyMagazines)
+			{
+				entityPlayer.inventory.addItemStackToInventory(returningAmmo);
+			}
 			nbtTagCompound.removeTag("ammo");
 			return true;
 		}

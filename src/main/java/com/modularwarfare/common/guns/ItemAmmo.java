@@ -56,6 +56,27 @@ public class ItemAmmo extends BaseItem {
 		}
     }
 	
+	public static boolean hasAmmo(ItemStack ammoStack)
+	{
+		if(ammoStack.getTagCompound() != null)
+		{
+			NBTTagCompound nbtTagCompound = ammoStack.getTagCompound();
+			if(nbtTagCompound.hasKey("magcount"))
+			{
+				ItemAmmo itemAmmo = ((ItemAmmo)ammoStack.getItem());
+				for(int i = 0; i < itemAmmo.type.magazineCount; i++)
+				{
+					if(nbtTagCompound.getInteger("ammocount" + i) > 0)
+						return true;
+				}
+			} else
+			{
+				return nbtTagCompound.getInteger("ammocount") > 0;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Minecraft Overrides
 	 */
