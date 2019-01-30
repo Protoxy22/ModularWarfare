@@ -12,7 +12,7 @@ package com.modularwarfare.client.model.mwp.ammo; //Path where the model is loca
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.model.ModelAmmo;
-import com.modularwarfare.client.model.RenderVariables;
+import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class ump45doublemag extends ModelAmmo //Same as Filename

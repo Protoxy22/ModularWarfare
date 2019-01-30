@@ -1,4 +1,4 @@
-package com.modularwarfare.client.model;
+package com.modularwarfare.client.model.objects;
 
 import org.lwjgl.util.vector.Vector3f;
 

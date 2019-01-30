@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.client.model.objects.RenderVariables;
+import com.modularwarfare.client.model.objects.TurboBase;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 import net.minecraft.client.model.ModelBase;

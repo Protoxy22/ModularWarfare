@@ -1,4 +1,4 @@
-package com.modularwarfare.client.model;
+package com.modularwarfare.client.model.objects;
 
 import org.lwjgl.util.vector.Vector3f;
 
@@ -17,7 +17,7 @@ public class TurboBase extends ModelBase {
 	/** This offsets the render position for item frames */
 	public Vector3f itemFrameOffset = new Vector3f();
 	
-	protected void render(ModelRendererTurbo[] models, float f)
+	public void render(ModelRendererTurbo[] models, float f)
 	{
 		for(ModelRendererTurbo model : models)
 			if(model != null)

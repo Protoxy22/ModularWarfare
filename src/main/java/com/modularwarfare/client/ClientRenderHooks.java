@@ -5,11 +5,11 @@ import java.util.HashMap;
 import org.lwjgl.util.glu.Project;
 
 import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.model.CustomItemRenderType;
-import com.modularwarfare.client.model.CustomItemRenderer;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.client.model.objects.CustomItemRenderType;
+import com.modularwarfare.client.model.objects.CustomItemRenderer;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;

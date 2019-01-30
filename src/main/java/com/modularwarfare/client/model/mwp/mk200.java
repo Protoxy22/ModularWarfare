@@ -12,6 +12,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class mk200 extends ModelGun //Same as Filename
@@ -67,10 +68,9 @@ public class mk200 extends ModelGun //Same as Filename
 		//untiltGunTime = 0.15F;
 
 
-		barrelBreakPoint = new Vector3f(79 /16F, 117F /16F, 1F /16F);
-
-
-		breakAngle = 110F;
+        breakActions.add(new BreakActionData(breakActionModel, new Vector3f(79 /16F, 117F /16F, 1F /16F), 110, false));
+		//barrelBreakPoint = new Vector3f(79 /16F, 117F /16F, 1F /16F);
+		//breakAngle = 110F;
 
 
 		rotateGunVertical = 1F;

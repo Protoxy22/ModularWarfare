@@ -2,8 +2,8 @@ package com.modularwarfare.common.type;
 
 import java.util.Map;
 
-import com.modularwarfare.client.model.TurboBase;
-import com.modularwarfare.client.model.TurboBipedBase;
+import com.modularwarfare.client.model.objects.TurboBase;
+import com.modularwarfare.client.model.objects.TurboBipedBase;
 import com.modularwarfare.common.guns.SkinType;
 
 import net.minecraftforge.fml.common.FMLCommonHandler;

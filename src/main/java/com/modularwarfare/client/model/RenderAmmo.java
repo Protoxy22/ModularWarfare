@@ -4,6 +4,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.model.objects.CustomItemRenderType;
+import com.modularwarfare.client.model.objects.CustomItemRenderer;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;

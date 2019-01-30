@@ -1,5 +1,6 @@
 package com.modularwarfare.client.model;
 
+import com.modularwarfare.client.model.objects.TurboBase;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class ModelAttachment extends TurboBase {

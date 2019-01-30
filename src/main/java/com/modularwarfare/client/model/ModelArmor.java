@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.lwjgl.opengl.GL11;
 
+import com.modularwarfare.client.model.objects.TurboBipedBase;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 import net.minecraft.client.model.ModelBiped;

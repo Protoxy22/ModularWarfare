@@ -1,17 +1,19 @@
 package com.modularwarfare.client.model;
 
-import java.util.HashMap;
 import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
+import com.modularwarfare.client.model.objects.BreakActionData;
+import com.modularwarfare.client.model.objects.CustomItemRenderType;
+import com.modularwarfare.client.model.objects.CustomItemRenderer;
+import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentEnum;
@@ -25,15 +27,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.SimpleTexture;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
 public class RenderGun extends CustomItemRenderer {
@@ -241,8 +239,9 @@ public class RenderGun extends CustomItemRenderer {
 					}
 					GL11.glPopMatrix();
 				}
+				
 				//Render the break action
-				GL11.glPushMatrix();
+				/*GL11.glPushMatrix();
 				{
 					
 					GL11.glTranslatef(model.barrelBreakPoint.x, model.barrelBreakPoint.y, model.barrelBreakPoint.z);
@@ -253,7 +252,23 @@ public class RenderGun extends CustomItemRenderer {
 					if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnBreakAction)
 						model.renderDefaultScope(f);
 				}
-				GL11.glPopMatrix();
+				GL11.glPopMatrix();*/
+				
+				// TODO: Allignment lines
+				for(BreakActionData breakAction : model.breakActions)
+				{
+					GL11.glPushMatrix();
+					{
+						
+						GL11.glTranslatef(breakAction.breakPoint.x, breakAction.breakPoint.y, breakAction.breakPoint.z);
+						GL11.glRotatef(tiltProgress * -breakAction.angle, 0F, 0F, 1F);
+						GL11.glTranslatef(-breakAction.breakPoint.x, -breakAction.breakPoint.y, -breakAction.breakPoint.z);
+						model.render(breakAction.modelGroup, f);
+						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnBreakAction && breakAction.scopePart)
+							model.renderDefaultScope(f);
+					}
+					GL11.glPopMatrix();
+				}
 				
 				boolean empty = !ItemGun.hasNextShot(item);
 				if (model.slideLockOnEmpty)

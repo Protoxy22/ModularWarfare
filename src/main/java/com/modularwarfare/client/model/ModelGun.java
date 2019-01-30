@@ -1,11 +1,15 @@
 package com.modularwarfare.client.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
+import com.modularwarfare.client.model.objects.BreakActionData;
+import com.modularwarfare.client.model.objects.RenderVariables;
+import com.modularwarfare.client.model.objects.TurboBase;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 import com.modularwarfare.common.guns.AttachmentEnum;
 
@@ -196,6 +200,7 @@ public class ModelGun extends TurboBase
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
 	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
 	public Vector3f gunRenderOffset = new Vector3f(0f, 0f, 0f);
+	public ArrayList<BreakActionData> breakActions = new ArrayList<BreakActionData>();
 	
 	public float triggerDistance = 0.02f;
 
