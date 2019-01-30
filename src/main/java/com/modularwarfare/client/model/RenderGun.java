@@ -83,6 +83,8 @@ public class RenderGun extends CustomItemRenderer {
         float max = 1.5f;
         float randomNum = new Random().nextFloat();
         float randomShake = min + (randomNum * (max - min));
+        float reloadProgress = getReloadProgress(animations);
+        float tiltProgress = getReloadTiltProgress(reloadProgress, model);		
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -157,9 +159,7 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glTranslatef(0F, translateY, 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
-				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					float reloadProgress = getReloadProgress(animations);
-					float tiltProgress = getReloadTiltProgress(reloadProgress, model);					
+				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {				
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
 				}
 				
@@ -228,7 +228,7 @@ public class RenderGun extends CustomItemRenderer {
 					}
 					GL11.glPopMatrix();
 				}
-				
+				//Render Slide
 				if(GunType.getAttachment(item, AttachmentEnum.Slide) == null)
 				{
 					GL11.glPushMatrix();
@@ -241,6 +241,19 @@ public class RenderGun extends CustomItemRenderer {
 					}
 					GL11.glPopMatrix();
 				}
+				//Render the break action
+				GL11.glPushMatrix();
+				{
+					
+					GL11.glTranslatef(model.barrelBreakPoint.x, model.barrelBreakPoint.y, model.barrelBreakPoint.z);
+					GL11.glRotatef(tiltProgress * -model.breakAngle, 0F, 0F, 1F);
+					// TODO: Render alignment lines
+					GL11.glTranslatef(-model.barrelBreakPoint.x, -model.barrelBreakPoint.y, -model.barrelBreakPoint.z);
+					model.renderBreakAction(f);
+					if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnBreakAction)
+						model.renderDefaultScope(f);
+				}
+				GL11.glPopMatrix();
 				
 				boolean empty = !ItemGun.hasNextShot(item);
 				if (model.slideLockOnEmpty)
@@ -262,8 +275,6 @@ public class RenderGun extends CustomItemRenderer {
 						boolean shouldNormalRender = true;
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-							float reloadProgress = getReloadProgress(animations);
-							float tiltProgress = getReloadTiltProgress(reloadProgress, model);	
 							float clipPosition = getReloadClipPosition(reloadProgress, model, animations);
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition);
 						}
@@ -281,7 +292,6 @@ public class RenderGun extends CustomItemRenderer {
 								{
 									// TODO: Investigate mag count in animation
 									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
-									float reloadProgress = animations.lastReloadAnimationProgress + (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 									if(animations.reloading && reloadProgress < 0.5f)
 										 magCount -= 1;
 									if(modelAmmo.magCountOffset.containsKey(magCount))
