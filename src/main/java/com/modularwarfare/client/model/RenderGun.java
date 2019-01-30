@@ -211,7 +211,7 @@ public class RenderGun extends CustomItemRenderer {
 						if(model.rightHandBolt)
 						{
 							GL11.glTranslatef(0, 2.56F, 0);
-							GL11.glRotatef(-90 * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
+							GL11.glRotatef(model.boltRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
 							GL11.glTranslatef(0, -2.56F, 0);
 						}
 						model.renderPump(f);

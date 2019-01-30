@@ -47,8 +47,9 @@ public class RenderArms {
 	// reload with right hand bolt action)
 	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
 	{
-		GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) / model.chargeModifier.x), 0F, reloadPos.z);
-		GL11.glTranslatef(0F, (reloadPos.y - Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) / model.chargeModifier.x), 0F);
+		GL11.glTranslatef(reloadPos.x + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
+		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
+		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.z * model.modelScale)));
 
 		handleRotate(reloadRot);
 	}

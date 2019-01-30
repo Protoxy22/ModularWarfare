@@ -66,7 +66,7 @@ public class ModelGun extends TurboBase
 	public boolean rightHandBolt = false;
 	public boolean leftHandBolt = false;
 	public float pumpModifier = 4F;
-	public Vector3f chargeModifier = new Vector3f(8F, 4F, 4F);
+	public Vector3f chargeModifier = new Vector3f(1F, 0F, 0F);
 	
 
 	//Stance variables
@@ -135,6 +135,8 @@ public class ModelGun extends TurboBase
 	public float numBulletsInReloadAnimation = 1;
 	/** For shotgun pump handles, rifle bolts and hammer pullbacks */
 	public int pumpDelay = 0, pumpDelayAfterReload = 0, pumpTime = 1, hammerDelay = 0;
+	/** For bolt action weapons */
+	public float boltRotation = -90F;
 	/** For shotgun pump handle */
 	public float pumpHandleDistance = 4F / 16F;
 	/** For end loaded projectiles */

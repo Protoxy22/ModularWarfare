@@ -1,0 +1,38 @@
+{
+  "displayName": "MK200",
+  "internalName": "mwp.mk200",
+  "gunDamage": 5,
+  "roundsPerMin": 600,
+  "acceptedAmmo": ["mwp.mk200ammo"],
+  "fireModes": ["full", "semi"],
+  "modelName": "mwp.mk200",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.mk200",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.mk200"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "mwp.mk200",
+      "displayName": "MK200 Default"
+    },
+    {
+      "skinAsset": "mwp.akm_pink",
+      "displayName": "AKM - Pink"
+    }
+  ]
+}

@@ -81,7 +81,7 @@ public class cslr4 extends ModelGun //Same as Filename
 		pumpHandleDistance = 0.50F;
 		
 		rightHandBolt = true;
-	    chargeModifier = new Vector3f (16.0F, 8.0F, 4.0F);
+		chargeModifier = new Vector3f (1.0F, -1.0F, 0.0F);
 		
 		crouchZoom = -0.05F;
 		fancyStance = true;

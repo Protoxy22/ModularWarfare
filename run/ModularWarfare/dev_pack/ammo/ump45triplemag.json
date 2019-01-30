@@ -1,0 +1,7 @@
+{
+  "displayName": "UMP45 Triple Test Mag",
+  "internalName": "mwp.ump45triplemag",
+  "modelName": "mwp.ammo.ump45triplemag",
+  "magazineCount": 3,
+  "ammoCapacity": 25
+}
