@@ -387,4 +387,9 @@ public class ModelGun extends TurboBase
     	}
 	}
 	
+	public boolean hasArms()
+	{
+		return leftArmPos != null || rightArmPos != null;
+	}
+	
 }

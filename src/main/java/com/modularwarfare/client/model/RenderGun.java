@@ -176,7 +176,7 @@ public class RenderGun extends CustomItemRenderer {
 
 			}
 			
-			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
+			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
 				 renderStaticArm(mc.player, model, animations); 
 			}
 			
@@ -343,10 +343,10 @@ public class RenderGun extends CustomItemRenderer {
 					}
 				}
 				
-				if(ModularWarfare.DEV_ENV){
+				if(ModularWarfare.DEV_ENV && model.hasArms()){
 					renderMovingArm(mc.player, model, animations); 
 				}
-				else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON) {
+				else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
 					renderMovingArm(mc.player, model, animations); 
 				}
 				
