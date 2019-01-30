@@ -5,6 +5,7 @@
   "weaponType": "mp",
   "fireModes": ["full", "semi"],
   "gunDamage": 5,
+  "reloadTime": 45,
   "roundsPerMin": 1200,
   "acceptedAmmo": ["mwp.glock17ammo"],
   "modelName": "mwp.glock18",

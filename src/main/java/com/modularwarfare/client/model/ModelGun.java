@@ -98,7 +98,7 @@ public class ModelGun extends TurboBase
 	public float gunSlideDistance = 1F / 4F;
 	public float altgunSlideDistance = 1F / 4F;
 	/** Adds backwards recoil translations to the gun model when firing  */
-	public float modelRecoilBackwards = 0.1F;
+	public float modelRecoilBackwards = 0.05F;
 	/** Adds upwards/downwards recoil translations to the gun model when firing  */
 	public float modelRecoilUpwards = -1.0F;
 	/** Adds a left-right model shaking motion when firing, default 0.5 */
