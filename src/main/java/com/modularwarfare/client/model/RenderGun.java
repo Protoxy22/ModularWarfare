@@ -120,8 +120,7 @@ public class RenderGun extends CustomItemRenderer {
 				float translateX= 0;
 				float translateY = 0;
 				float translateZ = 0;
-				float crouchZoom = animations.reloading ? 0f : model.crouchZoom;
-				int isCrouching = entityLivingBase.isSneaking() && adsSwitch >= 0.5F ? 1 : 0;
+				float crouchZoom = animations.reloading ? 0f : animations.charged < 1 ? 0f : model.crouchZoom;
 				float hipRecover = reloadSwitch;
 								
 				//Store the model settings as local variables to reduce calls
