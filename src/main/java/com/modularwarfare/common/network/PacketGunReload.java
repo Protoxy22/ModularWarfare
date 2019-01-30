@@ -194,7 +194,7 @@ public class PacketGunReload extends PacketBase {
 					if(offhandedReload)
 						inventory.offHandInventory.set(0, ammoStackToLoad.getCount() > 1 ? ammoStackToLoad : ItemStack.EMPTY);
 					else
-						inventory.setInventorySlotContents(ammoStackSlotToLoad, ammoStackToLoad.getCount() > 1 ? ammoStackToLoad : ItemStack.EMPTY);					
+						inventory.setInventorySlotContents(ammoStackSlotToLoad, ammoStackToLoad.getCount() >= 1 ? ammoStackToLoad : ItemStack.EMPTY);					
 				}
 				
 				/** Post Reload */
