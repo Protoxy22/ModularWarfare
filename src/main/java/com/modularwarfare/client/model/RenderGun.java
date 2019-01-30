@@ -302,10 +302,10 @@ public class RenderGun extends CustomItemRenderer {
 				
 				GL11.glPushMatrix();
 				{
-					if(ItemGun.hasAmmoLoaded(item))
+					boolean cachedUnload = (animations.unloadOnly && animations.cachedAmmoStack != null);
+					if(ItemGun.hasAmmoLoaded(item) || cachedUnload)
 					{
-						ItemStack stackAmmo = new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
-						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
+						ItemStack stackAmmo =  cachedUnload ? animations.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
 						AmmoType ammoType = itemAmmo.type;
 						boolean shouldNormalRender = true;
 						
@@ -353,6 +353,9 @@ public class RenderGun extends CustomItemRenderer {
 											
 											if(animations.renderAmmo) 
 											{
+												if(!cachedUnload)
+													animations.cachedAmmoStack = stackAmmo;
+												
 												modelAmmo.renderAmmo(f); 
 											}
 										}
@@ -369,6 +372,9 @@ public class RenderGun extends CustomItemRenderer {
 							
 							if(shouldNormalRender && animations.renderAmmo)
 							{
+								if(!cachedUnload)
+									animations.cachedAmmoStack = stackAmmo;
+								
 								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
 								String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 								bindTexture("ammo", pathAmmo);
@@ -378,6 +384,9 @@ public class RenderGun extends CustomItemRenderer {
 						{
 							if(animations.renderAmmo) 
 							{
+								if(!cachedUnload)
+									animations.cachedAmmoStack = stackAmmo;
+								
 								model.renderAmmo(f);
 							}
 						}

@@ -64,6 +64,7 @@ public class AnimStateMachine {
 
 	public int chargeDelayAfterReload;
 	
+	public ItemStack cachedAmmoStack;
 	public static float renderTick;
 	
 	public void onUpdate()
@@ -160,6 +161,7 @@ public class AnimStateMachine {
 			reloading = false;
 			loadOnly = false;
 			unloadOnly = false;
+			cachedAmmoStack = null;
 			lastReloadAnimationProgress = reloadAnimationProgress = 0;
 		}
 		
