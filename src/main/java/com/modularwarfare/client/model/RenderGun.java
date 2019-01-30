@@ -270,6 +270,26 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPopMatrix();
 				}
 				
+				//Render hammer actions
+				GL11.glPushMatrix();
+				{
+					GL11.glTranslatef(model.hammerSpinPoint.x, model.hammerSpinPoint.y, model.hammerSpinPoint.z);
+					GL11.glRotatef(-animations.hammerRotation, 0F, 0F, 1F);
+					GL11.glTranslatef(-model.hammerSpinPoint.x, -model.hammerSpinPoint.y, -model.hammerSpinPoint.z);
+					model.renderHammer(f);
+				}
+				GL11.glPopMatrix();
+				
+				// Render the revolver barrel
+				GL11.glPushMatrix();
+				{
+					GL11.glTranslatef(model.revolverFlipPoint.x, model.revolverFlipPoint.y, model.revolverFlipPoint.z);
+					GL11.glRotatef(tiltProgress * model.revolverFlipAngle, 1F, 0F, 0F);
+					GL11.glTranslatef(-model.revolverFlipPoint.x, -model.revolverFlipPoint.y, -model.revolverFlipPoint.z);
+					model.renderRevolverBarrel(f);
+				}
+				GL11.glPopMatrix();
+				
 				boolean empty = !ItemGun.hasNextShot(item);
 				if (model.slideLockOnEmpty)
 				{
