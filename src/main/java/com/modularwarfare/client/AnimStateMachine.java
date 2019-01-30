@@ -58,9 +58,7 @@ public class AnimStateMachine {
 	public boolean isFired = false;
 	
 	public Vector3f casingRandom = new Vector3f(0F, 0F, 0F);
-	
-	public ItemStack cachedAmmoStack;
-	
+		
 	public float chargeTrigger = 0f;
 	public int chargeTriggerTrigger = 0;
 
@@ -162,7 +160,6 @@ public class AnimStateMachine {
 			reloading = false;
 			loadOnly = false;
 			unloadOnly = false;
-			cachedAmmoStack = null;;
 			lastReloadAnimationProgress = reloadAnimationProgress = 0;
 		}
 		

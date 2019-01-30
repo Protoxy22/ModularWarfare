@@ -51,6 +51,7 @@ public class RenderGun extends CustomItemRenderer {
 	public static float triggerPullSwitch;
 	
 	public static int shotState = 0;
+	public int oldMagCount;
 	
 	private int direction = 0;
 	
@@ -301,10 +302,9 @@ public class RenderGun extends CustomItemRenderer {
 				
 				GL11.glPushMatrix();
 				{
-					boolean cachedUnload = (animations.unloadOnly && animations.cachedAmmoStack != null);
-					if(ItemGun.hasAmmoLoaded(item) || cachedUnload)
+					if(ItemGun.hasAmmoLoaded(item))
 					{
-						ItemStack stackAmmo =  cachedUnload ? animations.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
+						ItemStack stackAmmo = new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
 						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
 						AmmoType ammoType = itemAmmo.type;
 						boolean shouldNormalRender = true;
@@ -325,10 +325,12 @@ public class RenderGun extends CustomItemRenderer {
 								GL11.glTranslatef(ammoOffset.x, ammoOffset.y, ammoOffset.z);
 								if(ammoType.magazineCount != null)
 								{
-									// TODO: Investigate mag count in animation
 									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
-									if(animations.reloading && reloadProgress < 0.5f)
-										 magCount -= 1;
+									if(!animations.reloading)
+										oldMagCount = magCount;
+									else if(animations.reloading && reloadProgress < 0.5f) 
+										 magCount = oldMagCount;
+									
 									if(modelAmmo.magCountOffset.containsKey(magCount))
 									{
 										shouldNormalRender = false;
@@ -351,9 +353,6 @@ public class RenderGun extends CustomItemRenderer {
 											
 											if(animations.renderAmmo) 
 											{
-												if(!cachedUnload)
-													animations.cachedAmmoStack = stackAmmo;
-
 												modelAmmo.renderAmmo(f); 
 											}
 										}
@@ -370,18 +369,15 @@ public class RenderGun extends CustomItemRenderer {
 							
 							if(shouldNormalRender && animations.renderAmmo)
 							{
-								if(!cachedUnload)
-									animations.cachedAmmoStack = stackAmmo;
-
-								modelAmmo.renderAmmo(f); 
+								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
+								String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
+								bindTexture("ammo", pathAmmo);
+								modelAmmo.renderAmmo(f);
 							}
 						} else
 						{
 							if(animations.renderAmmo) 
 							{
-								if(!cachedUnload)
-									animations.cachedAmmoStack = stackAmmo;
-								
 								model.renderAmmo(f);
 							}
 						}
