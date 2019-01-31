@@ -184,17 +184,21 @@ public class PacketGunReload extends PacketBase {
 				{
 					ItemStack loadingItemStack = ammoStackToLoad.copy();
 					loadingItemStack.setCount(1);
-					ammoStackToLoad.setCount(ammoStackToLoad.getCount()-1);
 					
 					if(multiMagReload && multiMagToLoad != null)
 						loadingItemStack.getTagCompound().setInteger("magcount", multiMagToLoad);
 					
 					nbtTagCompound.setTag("ammo", loadingItemStack.writeToNBT(new NBTTagCompound()));
 					
-					if(offhandedReload)
-						inventory.offHandInventory.set(0, ammoStackToLoad.getCount() > 1 ? ammoStackToLoad : ItemStack.EMPTY);
-					else
-						inventory.setInventorySlotContents(ammoStackSlotToLoad, ammoStackToLoad.getCount() >= 1 ? ammoStackToLoad : ItemStack.EMPTY);					
+					ammoStackToLoad.setCount(ammoStackToLoad.getCount()-1);
+					
+					if(!entityPlayer.capabilities.isCreativeMode)
+					{
+						if(offhandedReload)
+							inventory.offHandInventory.set(0, ammoStackToLoad.getCount() > 1 ? ammoStackToLoad : ItemStack.EMPTY);
+						else
+							inventory.setInventorySlotContents(ammoStackSlotToLoad, ammoStackToLoad.getCount() >= 1 ? ammoStackToLoad : ItemStack.EMPTY);
+					}
 				}
 				
 				/** Post Reload */
