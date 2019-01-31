@@ -48,7 +48,7 @@ public class ClientRenderHooks extends ForgeEvent {
 	
 	public static HashMap<EntityLivingBase, AnimStateMachine> gunAnimations = new HashMap<EntityLivingBase, AnimStateMachine>();
 	private Minecraft mc;
-	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[3];
+	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[4];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
 	private float partialTicks;
 	
@@ -252,7 +252,7 @@ public class ClientRenderHooks extends ForgeEvent {
 					//setupViewBobbing(partialTicks);
 				}
 			}
-		}
+		}		
 	}
 	
 	public void SetPartialTick(float dT)

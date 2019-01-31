@@ -25,8 +25,6 @@ public class ItemAmmo extends BaseItem {
 	{
 		super(type);
 		this.type = type;
-		this.setMaxStackSize(type.maxStackSize);
-		this.setMaxDamage(type.ammoCapacity);
 	}
 	
 	@Override

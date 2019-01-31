@@ -16,7 +16,7 @@ public class ArmorType extends BaseType {
 	
 	
 	public void initializeArmor(EntityEquipmentSlot slot)
-	{
+	{	
 		for(ArmorInfo armorInfo : armorTypes)
 		{
 			if(armorInfo.armorType.toString().equalsIgnoreCase(slot.getName()))
@@ -30,6 +30,9 @@ public class ArmorType extends BaseType {
 	@Override
 	public void loadExtraValues()
 	{
+		if(maxStackSize == null)
+			maxStackSize = 1;
+		
 		loadBaseValues();
 	}
 	

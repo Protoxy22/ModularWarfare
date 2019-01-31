@@ -100,6 +100,9 @@ public class GunType extends BaseType {
 	@Override
 	public void loadExtraValues()
 	{
+		if(maxStackSize == null)
+			maxStackSize = 1;
+		
 		loadBaseValues();
 		fireTickDelay = 1200 / roundsPerMin;
 		

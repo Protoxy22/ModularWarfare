@@ -35,6 +35,7 @@ import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
+import com.modularwarfare.common.guns.ItemBullet;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.guns.WeaponSoundType;
 import com.modularwarfare.common.type.BaseType;
@@ -102,6 +103,11 @@ public class ClientProxy extends CommonProxy {
 		for(ItemAttachment itemAttachment : ModularWarfare.attachmentTypes.values())
 		{
 			ModelLoader.setCustomModelResourceLocation(itemAttachment, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemAttachment.type.internalName));
+		}
+		
+		for(ItemBullet itemBullet : ModularWarfare.bulletTypes.values())
+		{
+			ModelLoader.setCustomModelResourceLocation(itemBullet, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemBullet.type.internalName));
 		}
 		
 		for(ItemMWArmor itemArmor : ModularWarfare.armorTypes.values())

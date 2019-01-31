@@ -43,7 +43,6 @@ public class ItemGun extends BaseItem {
 	{
 		super(type);
 		this.type = type;
-		this.setMaxStackSize(1);
 		this.setNoRepair();		
 	}
 	

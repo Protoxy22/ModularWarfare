@@ -16,6 +16,8 @@ public class BaseType {
 	public String modelName;
 	public TurboBase model;
 	public TurboBipedBase bipedModel;
+	/** Max stack size */
+	public Integer maxStackSize;
 	/** Weapon model skins/textures */
 	public SkinType[] modelSkins;
 	public String internalName;

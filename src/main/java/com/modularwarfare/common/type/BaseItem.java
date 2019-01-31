@@ -15,11 +15,14 @@ public class BaseItem extends Item {
 	
 	public BaseItem(BaseType type)
 	{
+		type.loadExtraValues();
+		
 		setUnlocalizedName(type.internalName);
 		setRegistryName(type.internalName);
 		setCreativeTab(ModularWarfare.MOD_TAB);
-		type.loadExtraValues();
+		
 		this.baseType = type;
+		this.setMaxStackSize(type.maxStackSize);
 	}
 	
 	public void setType(BaseType type)

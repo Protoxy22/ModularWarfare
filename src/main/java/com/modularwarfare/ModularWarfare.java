@@ -24,9 +24,11 @@ import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentType;
+import com.modularwarfare.common.guns.BulletType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
+import com.modularwarfare.common.guns.ItemBullet;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.NetworkHandler;
@@ -74,6 +76,7 @@ public class ModularWarfare {
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static HashMap<String, ItemAttachment> attachmentTypes = new HashMap<String, ItemAttachment>();
 	public static HashMap<String, ItemMWArmor> armorTypes = new HashMap<String, ItemMWArmor>();
+	public static HashMap<String, ItemBullet> bulletTypes = new HashMap<String, ItemBullet>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
 	/**
@@ -150,6 +153,11 @@ public class ModularWarfare {
 	    	event.getRegistry().register(itemAmmo);
 	    	tabOrder.add(itemAmmo);
 	    }
+	    for(ItemBullet itemBullet : bulletTypes.values()) 
+	    {
+	    	event.getRegistry().register(itemBullet);
+	    	tabOrder.add(itemBullet);
+	    }
 	    for(ItemMWArmor itemArmor : armorTypes.values())
 	    {
 	    	event.getRegistry().register(itemArmor);
@@ -199,6 +207,7 @@ public class ModularWarfare {
 					case 1: {ammoTypes.get(baseType.internalName).setType((AmmoType) baseType); break;}
 					case 2: {attachmentTypes.get(baseType.internalName).setType((AttachmentType) baseType); break;}
 					case 3: {armorTypes.get(baseType.internalName).setType((ArmorType) baseType); break;}
+					case 4: {bulletTypes.get(baseType.internalName).setType((BulletType) baseType); break;}
 				}
 			}
 		} else
@@ -219,6 +228,7 @@ public class ModularWarfare {
 						}
 						break;
 					}
+					case 4: {bulletTypes.put(baseType.internalName, new ItemBullet((BulletType) baseType));break;}
 				}
 			}
 		}
@@ -285,6 +295,8 @@ public class ModularWarfare {
 								InputStream stream = zipFile.getInputStream(zipEntry);
 								JsonReader jsonReader = new JsonReader(new InputStreamReader(stream));
 								BaseType parsedType = gson.fromJson(jsonReader, type.typeClass);
+								parsedType.id = type.id;
+								parsedType.contentPack = file.getName();
 								baseTypes.add(parsedType);
 							}
 						}

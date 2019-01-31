@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentType;
+import com.modularwarfare.common.guns.BulletType;
 import com.modularwarfare.common.guns.GunType;
 
 public class ContentTypes {
@@ -18,6 +19,7 @@ public class ContentTypes {
 		registerType("ammo", AmmoType.class);
 		registerType("attachments", AttachmentType.class);
 		registerType("armor", ArmorType.class);
+		registerType("bullets", BulletType.class);
 	}
 	
 	private static void registerType(String name, Class<? extends BaseType> typeClass)

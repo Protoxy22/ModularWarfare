@@ -9,6 +9,9 @@ public class AttachmentType extends BaseType {
 	@Override
 	public void loadExtraValues()
 	{
+		if(maxStackSize == null)
+			maxStackSize = 1;
+		
 		loadBaseValues();
 	}
 	
