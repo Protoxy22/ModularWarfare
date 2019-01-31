@@ -1,0 +1,23 @@
+{
+    "internalName": "mwp.ghillie",
+    "modelName": "mwp.armor.ghillie",
+    "displayName": "Ghillie Suit",
+    "armorTypes": [
+        {
+            "armorType": "head",
+            "displayName": "Ghillie Helmet"
+        },
+        {
+            "armorType": "chest",
+            "displayName": "Ghillie Body"
+        },
+        {
+            "armorType": "legs",
+            "displayName": "Ghillie Pants"
+        },
+        {
+            "armorType": "feet",
+            "displayName": "Ghillie Boots"
+        }
+    ]
+}

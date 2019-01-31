@@ -62,22 +62,21 @@ public class aughbar extends ModelGun //Same as Filename
 
 		hasFlash = false;
 
-		leftArmPos = new Vector3f(-0.27F, -0.20F, -0.20F);
-		leftArmRot = new Vector3f(70.0F, 45.0F, 0.0F);
-		leftArmReloadPos = new Vector3f(-0.95F, -0.20F, 0.02F);
-		leftArmReloadRot = new Vector3f(80.0F, 60.0F, 0.0F);
-		leftArmChargePos = new Vector3f(0.20F, 0.50F, 0.15F);
-		leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
-
-		rightArmPos = new Vector3f(-0.53F, -0.28F, 0.33F);
-		rightArmRot = new Vector3f(-30.0F, 0.0F, -90.0F);
-		rightArmReloadPos = new Vector3f(-0.59F, -0.3F, 0.36F);
-		rightArmReloadRot = new Vector3f(-30.0F, 0.0F, -90.0F);
-
-		rightArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
-		leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
-
-		leftHandAmmo = true;
+        leftArmPos = new Vector3f(-0.10F, -0.1F, -0.50F);
+        leftArmRot = new Vector3f(0.0F, -45.0F, -60.0F);
+        leftArmReloadPos = new Vector3f(-0.77F, -0.47F, -0.53F);
+        leftArmReloadRot = new Vector3f(0.0F, -45.0F, -40.0F);
+        
+ 
+        rightArmPos = new Vector3f(-0.62F, -0.19F, 0.20F);
+        rightArmRot = new Vector3f(10.0F, 20.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(-0.65F, -0.2F, 0.205F);
+        rightArmReloadRot = new Vector3f(10.0F, 20.0F, -90.0F);
+        
+        rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+        leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+ 
+        leftHandAmmo = true;
 
 		//RecoilSlideDistance = 0.05F;
 		//RotateSlideDistance = -0.05F;
@@ -91,7 +90,7 @@ public class aughbar extends ModelGun //Same as Filename
 		chargeDelay = 0;
 		chargeDelayAfterReload = 85;
 		chargeTime = 10;
-		leftHandCharge = true;
+		leftHandCharge = false;
 		chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
 
 

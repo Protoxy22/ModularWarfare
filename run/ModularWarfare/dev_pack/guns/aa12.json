@@ -4,7 +4,7 @@
   "iconName": "mwp.aa12",
   "gunDamage": 5,
   "roundsPerMin": 360,
-  "acceptedAmmo": ["10rndstanag", "30rndstanag", "50rnddrum"],
+  "acceptedAmmo": ["mwp.aa12ammo"],
   "modelName": "mwp.aa12",
   "weaponSounds": 
   [

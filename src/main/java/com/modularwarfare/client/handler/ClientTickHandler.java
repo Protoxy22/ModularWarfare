@@ -131,7 +131,6 @@ public class ClientTickHandler extends ForgeEvent {
 			
 			if(anim.chargeTriggerTrigger == 1) {
 				anim.chargeTrigger = NumberHelper.clamp(anim.chargeTrigger + 0.15f * renderTick, 0, 1);
-				System.out.println(anim.chargeTrigger);
 			}
 			
 			if(anim.charging && anim.charged >= 0.66)
