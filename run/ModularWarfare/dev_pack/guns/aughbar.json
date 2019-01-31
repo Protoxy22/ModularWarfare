@@ -5,6 +5,7 @@
   "gunDamage": 5,
   "roundsPerMin": 700,
   "acceptedAmmo": ["mwp.aughbarammo"],
+  "fireModes": ["full", "semi"],
   "modelName": "mwp.aughbar",
   "weaponSounds": 
   [

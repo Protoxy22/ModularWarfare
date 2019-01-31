@@ -57,30 +57,25 @@ public class aa12 extends ModelGun //Same as Filename
 		
 		hasFlash = false;
         
-        leftArmPos = new Vector3f(0.05F, -0.28F, 0.09F);
-        leftArmRot = new Vector3f(60.0F, 45.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.14F, -0.55F, 0.2F);
-        leftArmReloadRot = new Vector3f(60.0F, 55.0F, -0.0F);
-        leftArmChargePos = new Vector3f(0.15F, 0.43F, 0.14F);
-        leftArmChargeRot = new Vector3f(60.0F, 45.0F, 0.0F);
+        leftArmPos = new Vector3f(0.10F, -0.13F, -0.55F);
+        leftArmRot = new Vector3f(0.0F, -55.0F, -50.0F);
+        leftArmReloadPos = new Vector3f(-0.13F, -0.4F, -0.37F);
+        leftArmReloadRot = new Vector3f(0.0F, -35.0F, -50.0F);
+ 
+        rightArmPos = new Vector3f(-0.35F, -0.12F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(-0.38F, -0.13F, 0.0F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        
+        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);
+ 
+        leftHandAmmo = true;
         
 	    chargeHandleDistance = 1.6F;
 	    chargeDelay = 0;
 	    chargeDelayAfterReload = 85;
 	    chargeTime = 8;
-	    
-	    leftHandCharge = true;
-	    chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
- 
-        rightArmPos = new Vector3f(0.30F, -0.55F, 0.0F);
-        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.35F, -0.565F, 0.05F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
-        
-        rightArmScale = new Vector3f(0.8F, 0.8F, 0.8F);
-        leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
- 
-        leftHandAmmo = true;
         
 		//RecoilSlideDistance = 0.1F;
 		//RotateSlideDistance = -0.5F;

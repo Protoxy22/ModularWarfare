@@ -79,7 +79,7 @@ public class BaseType {
 	
 	public String getAssetDir()
 	{
-		System.out.println("called");
+		//System.out.println("called");
 		return "";
 	}
 

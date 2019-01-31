@@ -9,7 +9,10 @@
 
 package com.modularwarfare.client.model.mwp.ammo; //Path where the model is located
 
+import org.lwjgl.util.vector.Vector3f;
+
 import com.modularwarfare.client.model.ModelAmmo;
+import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class ump45triplemag extends ModelAmmo //Same as Filename
@@ -24,6 +27,10 @@ public class ump45triplemag extends ModelAmmo //Same as Filename
 		initammoModel_1();
 		modelScale = 0.12F;
 		translateAll(0F, 0F, 0F);
+		magCountOffset.put(1, new RenderVariables(new Vector3f(0f, 0f, 0f)));
+		magCountOffset.put(2, new RenderVariables(new Vector3f(0.05f, 0.4f, 0.75f)));
+		magCountOffset.put(3, new RenderVariables(new Vector3f(-0.05f, -0.4f, -0.75f)));
+		
 
 
 		flipAll();
