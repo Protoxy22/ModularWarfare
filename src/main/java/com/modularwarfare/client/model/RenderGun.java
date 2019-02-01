@@ -209,9 +209,9 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						if(model.rightHandBolt)
 						{
-							GL11.glTranslatef(0, 2.56F, 0);
+							GL11.glTranslatef(model.boltRotationPoint.x, model.boltRotationPoint.y, model.boltRotationPoint.z);
 							GL11.glRotatef(model.boltRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
-							GL11.glTranslatef(0, -2.56F, 0);
+							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
 						}
 						model.renderPump(f);
 					}

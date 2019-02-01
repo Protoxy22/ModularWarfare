@@ -36,6 +36,8 @@ public class cslr4 extends ModelGun //Same as Filename
 		translateAll(0F, -10.0F, -.35F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
+		boltRotationPoint = new Vector3f(0, 2.56F, 0);
+		
 		gunSlideDistance = 0F;
 		//animationType = EnumAnimationType.CUSTOM;
 		translateAimPosition = new Vector3f(0.05F, 0F, 0F);

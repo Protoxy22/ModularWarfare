@@ -34,7 +34,6 @@ public class ModelGun extends TurboBase
 	public ModelRendererTurbo[] revolverBarrelModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] revolver2BarrelModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] breakActionModel = new ModelRendererTurbo[0];
-	public ModelRendererTurbo[] altbreakActionModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] slideModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] altslideModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] pumpModel = new ModelRendererTurbo[0];
@@ -140,6 +139,8 @@ public class ModelGun extends TurboBase
 	public int pumpDelay = 0, pumpDelayAfterReload = 0, pumpTime = 1, hammerDelay = 0;
 	/** For bolt action weapons */
 	public float boltRotation = -90F;
+	/** The rotation point for the bolt twist */
+	public Vector3f boltRotationPoint = new Vector3f();
 	/** For shotgun pump handle */
 	public float pumpHandleDistance = 4F / 16F;
 	/** For end loaded projectiles */
@@ -150,9 +151,6 @@ public class ModelGun extends TurboBase
 	public boolean gripIsOnPump = false;
 	/** If true, then the gadget attachment will move with the shotgun pump */
 	public boolean gadgetIsOnPump = false;
-	/** The rotation point for the barrel break */
-	public Vector3f barrelBreakPoint = new Vector3f();
-	public Vector3f altbarrelBreakPoint = new Vector3f();
 	/** The amount the revolver barrel flips out by */
 	public float revolverFlipAngle = 15F;
 	/** The amount the revolver2 barrel flips out by */
@@ -161,9 +159,6 @@ public class ModelGun extends TurboBase
 	public Vector3f revolverFlipPoint = new Vector3f();
 	/** The rotation point for the revolver2 flip */
 	public Vector3f revolver2FlipPoint = new Vector3f();
-	/** The angle the gun is broken by for break actions */
-	public float breakAngle = 45F;
-	public float altbreakAngle = 45F;
 	/** If true, then the gun will perform a spinning reload animation */
 	public boolean spinningCocking = false;
 	/** The point, in model co-ordinates, about which the gun is spun */
@@ -324,11 +319,6 @@ public class ModelGun extends TurboBase
 	{
 		render(breakActionModel, f);
 	}
-	
-	public void renderaltBreakAction(float f)
-	{
-		render(altbreakActionModel, f);
-	}
 
 	public void renderHammer(float f)
 	{
@@ -360,7 +350,6 @@ public class ModelGun extends TurboBase
 		flip(revolverBarrelModel);
 		flip(revolver2BarrelModel);
 		flip(breakActionModel);
-		flip(altbreakActionModel);
 		flip(hammerModel);
 		flip(althammerModel);
 	}
@@ -385,7 +374,6 @@ public class ModelGun extends TurboBase
     		translate(revolverBarrelModel, x, y, z);
     		translate(revolver2BarrelModel, x, y, z);
     		translate(breakActionModel, x, y, z);
-    		translate(altbreakActionModel, x, y, z);
     		translate(hammerModel, x, y, z);
     		translate(althammerModel, x, y, z);
     	}
