@@ -449,11 +449,19 @@ public class RenderGun extends CustomItemRenderer {
 		float tiltGunTime = wepAnim.tiltGunTime, unloadClipTime = wepAnim.unloadClipTime, loadClipTime = wepAnim.loadClipTime, untiltGunTime = wepAnim.untiltGunTime;
 		if(anim.loadOnly)
 		{
-			//System.out.println("called3");
 			float dividedTime = unloadClipTime / 3F;
 			tiltGunTime += dividedTime * 2;
 			loadClipTime += dividedTime;
 			unloadClipTime = 0f;
+		}
+		if(anim.unloadOnly)
+		{
+			System.out.println("called3");
+			float dividedTime = loadClipTime / 3F;
+			//tiltGunTime += dividedTime;
+			untiltGunTime += dividedTime *2;
+			unloadClipTime += dividedTime;
+			loadClipTime = 0f;
 		}
 		//Unload half of animation (Starts moving after Progress passes tiltGunTime, moves until Progress reaches tiltGunTime + unloadClipTime)
 		if (reloadProgress > tiltGunTime && reloadProgress < tiltGunTime + unloadClipTime)

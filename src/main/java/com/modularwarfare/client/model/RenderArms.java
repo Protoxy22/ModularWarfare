@@ -95,7 +95,6 @@ public class RenderArms {
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));
-		System.out.println(animation.ammoLoadOffset);
 		//Rotation
 		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), tiltProgress);
 		GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
