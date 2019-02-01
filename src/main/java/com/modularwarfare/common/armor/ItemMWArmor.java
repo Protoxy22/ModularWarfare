@@ -35,7 +35,8 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 		setUnlocalizedName(internalName);
 		setRegistryName(internalName);
 		setCreativeTab(ModularWarfare.MOD_TAB);
-		setMaxDamage(type.durability);
+		if(type.durability != null)
+			setMaxDamage(type.durability);
 		this.baseType = type;
 		this.type = type;
 	}
