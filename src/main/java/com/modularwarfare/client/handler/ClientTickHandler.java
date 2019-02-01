@@ -91,8 +91,11 @@ public class ClientTickHandler extends ForgeEvent {
 				RenderGun.lastModel = model.getClass().getName(); 
 			}
 			
+			AnimStateMachine anim = ClientRenderHooks.getAnimations(player);
+			
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
-			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
+			System.out.println(anim.chargeTriggerTrigger);
+			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && !anim.reloading && !anim.charging && !(anim.timeUntilCharge > 0) && anim.chargeTriggerTrigger == 3 ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
 			float sprintSpeed = 0.15f * renderTick;
@@ -125,7 +128,6 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
 			
-			AnimStateMachine anim = ClientRenderHooks.getAnimations(player);
 			if(anim.chargeTriggerTrigger == 0 && anim.timeUntilCharge <= anim.chargeDelayAfterReload-65)
 				anim.chargeTriggerTrigger = 1;
 			
@@ -145,6 +147,7 @@ public class ClientTickHandler extends ForgeEvent {
 				{
 					anim.chargeTriggerTrigger = 3;
 					anim.chargeTrigger = 0;
+					anim.timeUntilCharge = 0;
 				}
 			}
 			if(anim.chargeTriggerTrigger == 3 && anim.timeUntilCharge != 0) {

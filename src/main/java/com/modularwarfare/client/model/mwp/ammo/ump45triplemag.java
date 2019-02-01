@@ -29,9 +29,7 @@ public class ump45triplemag extends ModelAmmo //Same as Filename
 		translateAll(0F, 0F, 0F);
 		magCountOffset.put(1, new RenderVariables(new Vector3f(0f, 0f, 0f)));
 		magCountOffset.put(2, new RenderVariables(new Vector3f(0.05f, 0.4f, 0.75f)));
-		magCountOffset.put(3, new RenderVariables(new Vector3f(-0.05f, -0.4f, -0.75f)));
-		
-
+		magCountOffset.put(3, new RenderVariables(new Vector3f(0.05f, 0.4f, -0.75f)));
 
 		flipAll();
 	}
