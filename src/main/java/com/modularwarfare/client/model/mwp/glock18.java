@@ -63,7 +63,7 @@ public class glock18 extends ModelGun //Same as Filename
         leftArmRot = new Vector3f(70.0F, 0.0F, -40.0F);
         leftArmReloadPos = new Vector3f(-0.62F, -0.15F, -0.10F);
         leftArmReloadRot = new Vector3f(30.0F, 0.0F, -40.0F);
-        leftArmChargePos = new Vector3f(-0.60F, 0.25F, -0.25F);
+        leftArmChargePos = new Vector3f(-0.63F, 0.23F, -0.29F);
         leftArmChargeRot = new Vector3f(70.0F, 0.0F, -40.0F);
  
         rightArmPos = new Vector3f(-0.56F, -0.04F, 0.00F);
