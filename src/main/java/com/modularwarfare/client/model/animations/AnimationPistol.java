@@ -10,6 +10,15 @@ import net.minecraft.util.math.MathHelper;
 
 public class AnimationPistol extends WeaponAnimation {
 	
+	public AnimationPistol()
+	{
+		ammoLoadOffset = new Vector3f(0, -0.35F, 0);
+		tiltGunTime = 0.15F;
+		unloadClipTime = 0.35F;
+		loadClipTime = 0.35F;
+		untiltGunTime = 0.15F;
+	}
+	
 	@Override
 	public void onGunAnimation(float tiltProgress)
 	{

@@ -456,7 +456,6 @@ public class RenderGun extends CustomItemRenderer {
 		}
 		if(anim.unloadOnly)
 		{
-			System.out.println("called3");
 			float dividedTime = loadClipTime / 3F;
 			//tiltGunTime += dividedTime;
 			untiltGunTime += dividedTime *2;
