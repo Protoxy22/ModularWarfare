@@ -155,6 +155,11 @@ public class ItemGun extends BaseItem {
 		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
 		
+		ItemBullet bulletItem = ItemAmmo.getUsedBullet(heldStack);
+		BulletType bulletType = null;
+		if(bulletItem != null)
+			bulletType = bulletItem.type;
+		
 		for(Entity e : postFireEvent.getAffectedEntities())
 		{
 			if(e instanceof EntityLivingBase)
@@ -162,7 +167,16 @@ public class ItemGun extends BaseItem {
 				EntityLivingBase targetLiving = (EntityLivingBase) e;
 				if(targetLiving != entityPlayer)
 				{
-					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), postFireEvent.getDamage());
+					float damage = postFireEvent.getDamage();
+					if(bulletType != null)
+					{
+						BulletProperty bulletProperty = bulletType.bulletProperties.get(targetLiving.getName());
+						if(bulletProperty != null)
+						{
+							damage *= bulletProperty.bulletDamage;
+						}
+					}
+					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
 					targetLiving.hurtResistantTime = 0;
 				}
 			}

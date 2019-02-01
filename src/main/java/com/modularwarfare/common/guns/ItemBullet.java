@@ -32,7 +32,13 @@ public class ItemBullet extends BaseItem {
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
-		tooltip.add(generateLoreLine("Damage", type.bulletDamage + "x"));
+		tooltip.add(generateLoreHeader("Modifiers"));
+		System.out.println();
+		for(String key : type.bulletProperties.keySet())
+		{
+			BulletProperty bulletProperty = type.bulletProperties.get(key);
+			tooltip.add(generateLoreListEntry(key, bulletProperty.bulletDamage + "x"));
+		}
     }
 	
 }

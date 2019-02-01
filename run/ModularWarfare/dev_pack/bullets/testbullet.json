@@ -1,4 +1,9 @@
 {
     "internalName": "mwp.testbullet",
-    "displayName": "Test Bullet"
+    "displayName": "Zombie Rounds",
+    "bulletProperties": {
+        "Zombie": {
+            "bulletDamage": 1.5
+        }
+    }
 }
