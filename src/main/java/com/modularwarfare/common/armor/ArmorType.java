@@ -11,6 +11,9 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class ArmorType extends BaseType {
 	
+	public Integer durability;
+	public double defense = 0;
+	
 	public ArmorInfo[] armorTypes;
 	public HashMap<String, ArmorInfo> armorInfoMap = new HashMap<String, ArmorInfo>();
 	

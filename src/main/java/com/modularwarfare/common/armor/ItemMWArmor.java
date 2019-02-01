@@ -5,10 +5,6 @@ import javax.annotation.Nullable;
 import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelArmor;
-import com.modularwarfare.common.guns.AttachmentEnum;
-import com.modularwarfare.common.guns.GunType;
-import com.modularwarfare.common.guns.ItemAttachment;
-import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseType;
 
 import net.minecraft.client.model.ModelBiped;
@@ -19,11 +15,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemMWArmor extends ItemArmor {
+public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 
 	public ArmorType type;
 	public BaseType baseType;
@@ -37,6 +35,7 @@ public class ItemMWArmor extends ItemArmor {
 		setUnlocalizedName(internalName);
 		setRegistryName(internalName);
 		setCreativeTab(ModularWarfare.MOD_TAB);
+		setMaxDamage(type.durability);
 		this.baseType = type;
 		this.type = type;
 	}
@@ -109,6 +108,24 @@ public class ItemMWArmor extends ItemArmor {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
+		return new ArmorProperties(1, type.defense, Integer.MAX_VALUE);
+	}
+
+	@Override
+	public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
+		return (int)(type.defense * 20);
+	}
+
+	@Override
+	public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
+		if(type.durability != null)
+		{
+			stack.damageItem(damage, entity);
+		}
 	}
 
 }
