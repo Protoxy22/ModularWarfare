@@ -537,7 +537,7 @@ public class RenderGun extends CustomItemRenderer {
 			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.loadOnly) movingArmState = "Load";
 			else if(reloadProgress >= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.unloadOnly) movingArmState = "Unload";
 			else movingArmState = "Reload";
-			System.out.println("Moving Left Arm" + " - " + movingArmState);
+			//System.out.println("Moving Left Arm" + " - " + movingArmState);
 		}
 		return movingArmState;
 	}
