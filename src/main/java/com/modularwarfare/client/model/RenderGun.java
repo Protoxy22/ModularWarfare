@@ -473,7 +473,7 @@ public class RenderGun extends CustomItemRenderer {
 			clipPosition = 1F - (reloadProgress - (tiltGunTime + unloadClipTime)) / loadClipTime;
 		//WIP LOAD ONLY
 		float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((reloadProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
-		if (reloadProgress >= tiltGunTime + unloadClipTime) anim.renderAmmo = true;
+		if (reloadProgress >= tiltGunTime + unloadClipTime && anim.loadOnly) anim.renderAmmo = true;
 
 				
 		return clipPosition;

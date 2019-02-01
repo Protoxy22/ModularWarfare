@@ -2,5 +2,5 @@
   "displayName": "MK200 Box",
   "internalName": "mwp.mk200ammo",
   "ammoCapacity": 200,
-  "subAmmo": ["mwp.testbullet"]
+  "subAmmo": ["mwp.holopointrounds", "mwp.spotterbullet"]
 }

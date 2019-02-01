@@ -150,6 +150,11 @@ public class AnimStateMachine {
 		else if (gunSlide > 0 && !isGunEmpty)
 			gunSlide *= 0.5F;
 		
+		if(unloadOnly && reloadAnimationProgress >= 0.5f) {
+			System.out.println("called");
+			renderAmmo = false;
+		}
+		
 		//Reload
 		lastReloadAnimationProgress = reloadAnimationProgress;
 		if(reloading)
@@ -158,6 +163,7 @@ public class AnimStateMachine {
 			isGunEmpty = false;
 		if(reloading && reloadAnimationProgress >= 1F)
 		{
+			//renderAmmo = true;
 			reloading = false;
 			loadOnly = false;
 			unloadOnly = false;

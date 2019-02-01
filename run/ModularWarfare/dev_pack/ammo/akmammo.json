@@ -4,5 +4,5 @@
   "iconName": "mwp.akmammo",
   "skinAsset": "default",
   "ammoCapacity": 30,
-  "subAmmo": ["mwp.testbullet"]
+  "subAmmo": ["mwp.holopointrounds", "mwp.spotterbullet"]
 }

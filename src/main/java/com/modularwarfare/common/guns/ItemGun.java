@@ -22,6 +22,8 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -170,10 +172,18 @@ public class ItemGun extends BaseItem {
 					float damage = postFireEvent.getDamage();
 					if(bulletType != null)
 					{
-						BulletProperty bulletProperty = bulletType.bulletProperties.get(targetLiving.getName());
+						BulletProperty bulletProperty = bulletType.bulletProperties.get(targetLiving.getName()) != null ? bulletType.bulletProperties.get(targetLiving.getName()) : bulletType.bulletProperties.get("All");
 						if(bulletProperty != null)
 						{
 							damage *= bulletProperty.bulletDamage;
+							
+							if(bulletProperty.potionEffects != null)
+							{
+								for(PotionEntry potionEntry : bulletProperty.potionEffects)
+								{
+									targetLiving.addPotionEffect(new PotionEffect(potionEntry.potionEffect.getPotion(), potionEntry.duration, potionEntry.level));
+								}
+							}
 						}
 					}
 					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
