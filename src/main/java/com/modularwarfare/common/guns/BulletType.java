@@ -1,18 +1,19 @@
 package com.modularwarfare.common.guns;
 
-import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.model.ModelAmmo;
+import java.util.HashMap;
+
 import com.modularwarfare.common.type.BaseType;
 
 public class BulletType extends BaseType {
+	
+	// Bullet Type 
+	public HashMap<String, BulletProperty> bulletProperties = new HashMap<String, BulletProperty>();
 	
 	// AmmoType Overrides
 	/** Base value for Upwards cursor/view recoil */
 	public float recoilPitch = 0.0F;
 	/** Base value for Left/Right cursor/view recoil */
 	public float recoilYaw = 0.0F;
-	/** Damage inflicted per bullet. Multiplied by the gun damage value. */
-	public float bulletDamage = 1;
 	/** The amount that bullets spread out when fired from this gun */
 	public float bulletSpread;
 	

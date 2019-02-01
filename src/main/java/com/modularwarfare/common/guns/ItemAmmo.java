@@ -76,6 +76,21 @@ public class ItemAmmo extends BaseItem {
 		return false;
 	}
 	
+	public static ItemBullet getUsedBullet(ItemStack gunStack)
+	{
+		if(ItemGun.hasAmmoLoaded(gunStack))
+		{
+			ItemStack ammoStack = new ItemStack(gunStack.getTagCompound().getCompoundTag("ammo"));
+			if(ammoStack.hasTagCompound() && ammoStack.getTagCompound().hasKey("bullet"))
+			{
+				ItemStack usedBullet = new ItemStack(ammoStack.getTagCompound().getCompoundTag("bullet"));
+				ItemBullet usedBulletItem = (ItemBullet) usedBullet.getItem();
+				return usedBulletItem;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Minecraft Overrides
 	 */

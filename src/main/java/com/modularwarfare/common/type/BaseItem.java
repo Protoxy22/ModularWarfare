@@ -39,6 +39,22 @@ public class BaseItem extends Item {
     	return String.format(baseDisplayLine, prefix, value);
 	}
 	
+	public String generateLoreHeader(String prefix)
+	{
+		String baseDisplayLine = "%b%l%s";
+    	baseDisplayLine = baseDisplayLine.replaceAll("%l", TextFormatting.BOLD.toString());
+    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+    	return String.format(baseDisplayLine, prefix);
+	}
+	
+	public String generateLoreListEntry(String prefix, String value)
+	{
+		String baseDisplayLine = " - %s %g%s";
+    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
+    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
+    	return String.format(baseDisplayLine, value, prefix);
+	}
+	
 	public String generateLoreLineAlt(String prefix, String current, String max)
 	{
 		String baseDisplayLine = "%b%s: %g%s%dg/%g%s";
