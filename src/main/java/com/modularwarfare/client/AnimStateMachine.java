@@ -4,8 +4,10 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.common.network.PacketGunReloadSound;
 import com.modularwarfare.utility.NumberHelper;
 
 import net.minecraft.item.ItemStack;
@@ -66,6 +68,8 @@ public class AnimStateMachine {
 	
 	public ItemStack cachedAmmoStack;
 	public static float renderTick;
+	
+	boolean playedLoadSound = false;
 	
 	public void onUpdate()
 	{
@@ -129,10 +133,13 @@ public class AnimStateMachine {
 			if (pumped >= 0.999F)
 				pumping = false;
 		}
+		
 		if (charging) {
-			charged += 2F / timeToChargeFor;
-			if (charged >= 0.999F)
+			charged += 2F / (timeToChargeFor * 0.51);
+			charged = NumberHelper.clamp(charged, -1F, 1F);
+			if (charged >= 0.999F) {
 				charging = false;
+			}
 		}
 
 		if (isFired) {
@@ -151,8 +158,13 @@ public class AnimStateMachine {
 			gunSlide *= 0.5F;
 		
 		if(unloadOnly && reloadAnimationProgress >= 0.5f) {
-			System.out.println("called");
 			renderAmmo = false;
+		}
+		
+		if(reloadAnimationProgress >= 0.5f && !playedLoadSound && !unloadOnly && !loadOnly)
+		{
+			ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound());
+			playedLoadSound = true;
 		}
 		
 		//Reload
@@ -224,6 +236,7 @@ public class AnimStateMachine {
 		loadOnly = isLoadOnly;
 		renderAmmo = !loadOnly;
 		unloadOnly = isUnload;
+		playedLoadSound = false;
 		//reloadAmmoCount = ammoCount;
 		//FlansModClient.lastBulletReload = ammoCount - 1;
 	}

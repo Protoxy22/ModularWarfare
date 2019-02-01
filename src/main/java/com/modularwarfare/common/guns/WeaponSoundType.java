@@ -17,7 +17,10 @@ public enum WeaponSoundType {
 	@SerializedName("weaponFireLast") FireLast("weaponFireLast", 16, null),
 	
 	/** The sound to play upon reloading */
-	@SerializedName("weaponReload") Reload("weaponReload", 16, null),
+	@SerializedName("weaponLoad") Load("weaponReload", 16, null),
+	
+	/** The sound to play upon reloading */
+	@SerializedName("weaponUnload") Unload("weaponReload", 16, null),
 	
 	/** The sound to play upon reloading when empty */ 
 	@SerializedName("weaponReloadEmpty") ReloadEmpty("weaponReloadEmpty", 16, null),

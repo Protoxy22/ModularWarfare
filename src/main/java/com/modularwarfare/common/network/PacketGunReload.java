@@ -358,7 +358,11 @@ public class PacketGunReload extends PacketBase {
 			WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload, loadOnly, false, preReloadEvent.getReloadTime());
 			MinecraftForge.EVENT_BUS.post(postReloadEvent);
 			
-			gunType.playSound(entityPlayer, WeaponSoundType.Reload);
+			if(postReloadEvent.isLoadOnly())
+				gunType.playSound(entityPlayer, WeaponSoundType.Load);				
+			else if(!postReloadEvent.isLoadOnly() && !postReloadEvent.isUnload())
+				gunType.playSound(entityPlayer, WeaponSoundType.Unload);
+
 			ServerTickHandler.playerReloadCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 		} else
 		{
@@ -371,6 +375,9 @@ public class PacketGunReload extends PacketBase {
 			{
 				WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, false, false, false, true, preReloadEvent.getReloadTime());
 				MinecraftForge.EVENT_BUS.post(postReloadEvent);
+				
+				if(postReloadEvent.isUnload())
+					gunType.playSound(entityPlayer, WeaponSoundType.Unload);
 			}
 		}
 	}

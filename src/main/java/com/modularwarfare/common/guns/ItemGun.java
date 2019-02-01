@@ -325,6 +325,12 @@ public class ItemGun extends BaseItem {
 			}
     	}
     	
+    	if(ItemAmmo.getUsedBullet(stack) != null)
+    	{
+    		ItemBullet itemBullet = ItemAmmo.getUsedBullet(stack);
+        	tooltip.add(generateLoreLine("Bullet", itemBullet.type.displayName));
+    	}
+    	
     	String baseDisplayLine = "%bFire Mode: %g%s";
     	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
     	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
