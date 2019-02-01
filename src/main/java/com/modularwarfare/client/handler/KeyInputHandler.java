@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
+import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.network.PacketGunReload;
 import com.modularwarfare.common.network.PacketGunSwitchMode;
@@ -12,6 +13,7 @@ import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -79,14 +81,16 @@ public class KeyInputHandler extends ForgeEvent {
 				break;
 				
 			case GunReload:
-				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+				ItemStack reloadStack = entityPlayer.getHeldItemMainhand();
+				if(reloadStack != null && (reloadStack.getItem() instanceof ItemGun || reloadStack.getItem() instanceof ItemAmmo))
 				{
 					ModularWarfare.NETWORK.sendToServer(new PacketGunReload());
 				}
 				break;
 				
 			case GunUnload:
-				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+				ItemStack unloadStack = entityPlayer.getHeldItemMainhand();
+				if(unloadStack != null && (unloadStack.getItem() instanceof ItemGun || unloadStack.getItem() instanceof ItemAmmo))
 				{
 					ModularWarfare.NETWORK.sendToServer(new PacketGunReload(true));
 				}

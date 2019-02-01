@@ -53,7 +53,7 @@ public class ItemMWArmor extends ItemArmor {
 		{
 			EntityPlayer entityPlayer = (EntityPlayer) holdingEntity;
 
-			if(unused!= null && unused.getItem() instanceof ItemMWArmor)
+			if(unused != null && unused.getItem() instanceof ItemMWArmor)
 			{				
 				if(unused.getTagCompound() == null)
 				{

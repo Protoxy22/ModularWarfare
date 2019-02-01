@@ -330,7 +330,7 @@ public class RenderGun extends CustomItemRenderer {
 										oldMagCount = magCount;
 									else if(animations.reloading && reloadProgress < 0.5f) 
 										 magCount = oldMagCount;
-									
+																		
 									if(modelAmmo.magCountOffset.containsKey(magCount))
 									{
 										shouldNormalRender = false;
@@ -653,6 +653,7 @@ public class RenderGun extends CustomItemRenderer {
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
 			if(armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+				modelArmor.showChest(true);
 				int skinId = armorStack.getTagCompound().getInteger("skinId");
 				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
 				bindTexture("armor", path);
@@ -674,6 +675,7 @@ public class RenderGun extends CustomItemRenderer {
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
 			if(armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+				modelArmor.showChest(true);
 				int skinId = armorStack.getTagCompound().getInteger("skinId");
 				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
 				bindTexture("armor", path);

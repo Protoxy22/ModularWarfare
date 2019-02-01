@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -75,7 +76,7 @@ public class ModularWarfare {
 	public static HashMap<String, ItemGun> gunTypes = new HashMap<String, ItemGun>();
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static HashMap<String, ItemAttachment> attachmentTypes = new HashMap<String, ItemAttachment>();
-	public static HashMap<String, ItemMWArmor> armorTypes = new HashMap<String, ItemMWArmor>();
+	public static LinkedHashMap<String, ItemMWArmor> armorTypes = new LinkedHashMap<String, ItemMWArmor>();
 	public static HashMap<String, ItemBullet> bulletTypes = new HashMap<String, ItemBullet>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 

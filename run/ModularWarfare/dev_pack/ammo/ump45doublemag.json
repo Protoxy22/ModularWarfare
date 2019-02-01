@@ -4,6 +4,7 @@
   "modelName": "mwp.ammo.ump45doublemag",
   "magazineCount": 2,
   "ammoCapacity": 25,
+  "subAmmo": ["mwp.testbullet"],
   "modelSkins":
   [
     {

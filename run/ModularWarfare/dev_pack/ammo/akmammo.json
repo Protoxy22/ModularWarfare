@@ -3,5 +3,6 @@
   "internalName": "mwp.akmammo",
   "iconName": "mwp.akmammo",
   "skinAsset": "default",
-  "ammoCapacity": 30
+  "ammoCapacity": 30,
+  "subAmmo": ["mwp.testbullet"]
 }

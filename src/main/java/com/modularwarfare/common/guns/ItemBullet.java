@@ -1,7 +1,17 @@
 package com.modularwarfare.common.guns;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
+
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBullet extends BaseItem {
 
@@ -18,5 +28,11 @@ public class ItemBullet extends BaseItem {
 	{
 		this.type = (BulletType) type;
 	}
+	
+	@SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    {
+		tooltip.add(generateLoreLine("Damage", type.bulletDamage + "x"));
+    }
 	
 }
