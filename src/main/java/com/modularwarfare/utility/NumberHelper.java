@@ -77,5 +77,14 @@ public class NumberHelper {
 		vector.z *= amount;
 		return vector;
 	}
+	
+	public static Vector3f divideVector(Vector3f vector, float amount)
+	{
+		Vector3f newVector = new Vector3f(vector.x, vector.y, vector.z);
+		newVector.x /= amount;
+		newVector.y /= amount;
+		newVector.z /= amount;
+		return newVector;
+	}
 
 }

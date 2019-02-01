@@ -87,6 +87,22 @@ public class RenderArms {
 		GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
 	}
 	
+	public static void renderArmUnload(ModelGun model, AnimStateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos)
+	{
+		//Translation
+		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
+		Vector3f ammoLoadOffset = animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f);
+		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
+		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
+		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));
+		System.out.println(animation.ammoLoadOffset);
+		//Rotation
+		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), tiltProgress);
+		GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
+		GL11.glRotatef(defaultRot.y + offsetRotation.y, 0F, 1F, 0F);
+		GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
+	}
+	
 	private static void handleRotate(Vector3f reloadRot)
 	{
 		GL11.glRotatef(reloadRot.x, 1F, 0F, 0F);

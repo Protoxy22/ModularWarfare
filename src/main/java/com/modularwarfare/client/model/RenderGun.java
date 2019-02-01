@@ -22,6 +22,7 @@ import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.utility.NumberHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -209,9 +210,10 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						if(model.rightHandBolt)
 						{
-							GL11.glTranslatef(model.boltRotationPoint.x, model.boltRotationPoint.y, model.boltRotationPoint.z);
+							Vector3f rotHelper = NumberHelper.subtractVector(NumberHelper.divideVector(model.translateAll, 4F), model.boltRotationPoint);
+							GL11.glTranslatef(0F, -rotHelper.y, 0F);
 							GL11.glRotatef(model.boltRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
-							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
+							GL11.glTranslatef(0F, rotHelper.y, 0F);
 						}
 						model.renderPump(f);
 					}
@@ -533,9 +535,9 @@ public class RenderGun extends CustomItemRenderer {
 			else if (!anim.reloading && model.lefthandPump) movingArmState = "Pump";
 			else if (!anim.reloading) movingArmState = "Default";
 			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.loadOnly) movingArmState = "Load";
-			//else if() movingArmState = "Unload";
+			else if(reloadProgress >= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.unloadOnly) movingArmState = "Unload";
 			else movingArmState = "Reload";
-			//System.out.println("Moving Left Arm" + " - " + movingArmState);
+			System.out.println("Moving Left Arm" + " - " + movingArmState);
 		}
 		return movingArmState;
 	}
@@ -634,6 +636,7 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);}
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
+					else if (movingArmState == "Unload") {RenderArms.renderArmUnload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);

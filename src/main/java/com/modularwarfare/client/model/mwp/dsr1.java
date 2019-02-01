@@ -35,7 +35,8 @@ public class dsr1 extends ModelGun //Same as Filename
 
 		modelScale = 0.09F;
 		translateAll(0F, -13F, 0F);//forward/down/right
-		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
+		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/?
+		rightHandBolt = true;
 
 		gunSlideDistance = 0F;
 		reloadAnimation = WeaponAnimations.RIFLE3;
@@ -56,16 +57,22 @@ public class dsr1 extends ModelGun //Same as Filename
 
 		hasFlash = false;
         
+		boltRotationPoint = new Vector3f(0, -0.25F, 0);
+		boltRotation = -90F;
+		chargeModifier = new Vector3f (1.0F, -1.0F, 0.0F);
+		
         leftArmPos = new Vector3f(0.0F, -0.05F, -0.30F);
         leftArmRot = new Vector3f(0.0F, -25.0F, -60.0F);
         leftArmReloadPos = new Vector3f(-0.77F, -0.47F, -0.53F);
         leftArmReloadRot = new Vector3f(0.0F, -45.0F, -40.0F);
-        
- 
+
+
         rightArmPos = new Vector3f(-0.62F, -0.19F, 0.20F);
         rightArmRot = new Vector3f(10.0F, 20.0F, -90.0F);
         rightArmReloadPos = new Vector3f(-0.65F, -0.2F, 0.205F);
         rightArmReloadRot = new Vector3f(10.0F, 20.0F, -90.0F);
+        rightArmChargePos = new Vector3f(-0.49F, -0.14F, 0.15F);
+        rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
         
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);

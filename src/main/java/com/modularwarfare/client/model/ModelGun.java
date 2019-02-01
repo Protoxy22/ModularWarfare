@@ -138,9 +138,11 @@ public class ModelGun extends TurboBase
 	/** For shotgun pump handles, rifle bolts and hammer pullbacks */
 	public int pumpDelay = 0, pumpDelayAfterReload = 0, pumpTime = 1, hammerDelay = 0;
 	/** For bolt action weapons */
-	public float boltRotation = -90F;
+	public float boltRotation = 0F;
 	/** The rotation point for the bolt twist */
 	public Vector3f boltRotationPoint = new Vector3f();
+	/** The translateall value used for offseting rotation points */
+	public Vector3f translateAll = new Vector3f();
 	/** For shotgun pump handle */
 	public float pumpHandleDistance = 4F / 16F;
 	/** For end loaded projectiles */
@@ -357,6 +359,7 @@ public class ModelGun extends TurboBase
 	@Override
 	public void translateAll(float x, float y, float z)
 	{
+		translateAll = new Vector3f(x, y, z);
     	{
     		translate(gunModel, x, y, z);
     		translate(defaultBarrelModel, x, y, z);

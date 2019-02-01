@@ -36,7 +36,8 @@ public class cslr4 extends ModelGun //Same as Filename
 		translateAll(0F, -10.0F, -.35F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
-		boltRotationPoint = new Vector3f(0, 2.56F, 0);
+		boltRotationPoint = new Vector3f(0, 0.06F, 0);
+		boltRotation = -90F;
 		
 		gunSlideDistance = 0F;
 		//animationType = EnumAnimationType.CUSTOM;
@@ -80,7 +81,7 @@ public class cslr4 extends ModelGun //Same as Filename
 		pumpDelay = 10;
 		pumpTime = 20;
 		gripIsOnPump = false;
-		pumpHandleDistance = 0.50F;
+		pumpHandleDistance = 0.75F;
 		
 		rightHandBolt = true;
 		chargeModifier = new Vector3f (1.0F, -1.0F, 0.0F);
