@@ -38,9 +38,10 @@ public class akm extends ModelGun //Same as Filename
 //		gripAttachPoint = new Vector3f(55 /16F, 16F /16F, 0F /16F);
 	    reloadAnimation = WeaponAnimations.RIFLE2;
 		modelScale = 0.18F;
-		translateAll(0F, -12.0F, 0.0F);//forward/down/right
-		rotateAimPosition = new Vector3f(0F, 0F, 0F);
-		translateAimPosition = new Vector3f(0.15F, 0F, 0F);
+		//translateAll(0F, -12.0F, 0.0F);//forward/down/right
+		translateAll = new Vector3f(0F, -12.0F, 0.0F);
+		//rotateAimPosition = new Vector3f(0F, 0F, 0F);
+		//translateAimPosition = new Vector3f(0.15F, 0F, 0F);
 		//rotateHipPosition = new Vector3f(-20.0F, 30.0F, -0.0F);
 		//translateHipPosition = new Vector3f(0.5F, -0.10F, -0.65F);
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
@@ -49,7 +50,21 @@ public class akm extends ModelGun //Same as Filename
 		
 		hasFlash = false;
         
-        leftArmPos = new Vector3f(0.10F, -0.18F, -0.45F);
+        leftArmPos = new Vector3f(0.35F, -0.52F, -0.0F);
+        leftArmRot = new Vector3f(55.0F, 20.0F, -55.0F);
+        leftArmReloadPos = new Vector3f(-0.00F, -0.0F, -0.0F);
+        leftArmReloadRot = new Vector3f(0.0F, -0.0F, -0.0F);
+        
+ 
+        rightArmPos = new Vector3f(-0.0F, -0.00F, 0.0F);
+        rightArmRot = new Vector3f(180.0F, 0.0F, -0.0F);
+        rightArmReloadPos = new Vector3f(-0.0F, -0.00F, 0.0F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -0.0F);
+        rightArmChargePos = new Vector3f(-0.00F, 0.0F, -0.0F);
+        rightArmChargeRot = new Vector3f(-00.0F, -0.0F, -0.0F);
+        
+        
+        /**leftArmPos = new Vector3f(0.10F, -0.18F, -0.45F);
         leftArmRot = new Vector3f(0.0F, -45.0F, -40.0F);
         leftArmReloadPos = new Vector3f(-0.07F, -0.37F, -0.42F);
         leftArmReloadRot = new Vector3f(0.0F, -45.0F, -40.0F);
@@ -60,7 +75,7 @@ public class akm extends ModelGun //Same as Filename
         rightArmReloadPos = new Vector3f(-0.67F, -0.07F, 0.03F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmChargePos = new Vector3f(-0.20F, 0.42F, -0.31F);
-        rightArmChargeRot = new Vector3f(-30.0F, -0.0F, -60.0F);
+        rightArmChargeRot = new Vector3f(-30.0F, -0.0F, -60.0F);*/
         
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);

@@ -32,7 +32,6 @@ public class ModelGun extends TurboBase
 	public ModelRendererTurbo[] ammoModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] fullammoModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] revolverBarrelModel = new ModelRendererTurbo[0];
-	public ModelRendererTurbo[] revolver2BarrelModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] breakActionModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] slideModel = new ModelRendererTurbo[0];
     public ModelRendererTurbo[] altslideModel = new ModelRendererTurbo[0];
@@ -41,7 +40,8 @@ public class ModelGun extends TurboBase
     public ModelRendererTurbo[] altpumpModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] leverActionModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] hammerModel = new ModelRendererTurbo[0];
-	public ModelRendererTurbo[] althammerModel = new ModelRendererTurbo[0];
+	public ModelRendererTurbo[] triggerModel = new ModelRendererTurbo[0];
+	public ModelRendererTurbo[] switchModel = new ModelRendererTurbo[0];
 
 	//Arm rendering variables DEFAULT, RELOADING, CHARGING
 	public boolean leftHandAmmo = true;
@@ -70,6 +70,8 @@ public class ModelGun extends TurboBase
 	public boolean leftHandBolt = false;
 	public Vector3f chargeModifier = new Vector3f(1F, 0F, 0F);
 	
+	//Rotation helper tool
+	public Vector3f rotationHelper = new Vector3f(0F, 0F, 0F);
 
 	//Stance variables
 	/**If true, gun will translate when equipped with a sight attachment */
@@ -125,7 +127,13 @@ public class ModelGun extends TurboBase
     // Charge handle distance/delay/time
     public float chargeHandleDistance = 0F;
     public int chargeDelay = 0, chargeDelayAfterReload = 0, chargeTime = 1;
-
+    //Fire mode switch variables
+    public boolean switchIsOnSlide = false;
+    public Vector3f switchRotationPoint = new Vector3f(0, 0, 0);
+    public float switchSemiRot;
+    public float switchBurstRot;
+    public float switchAutoRot;
+    
     //Reload animation variables
 	//public EnumAnimationType animationType = EnumAnimationType.NONE;
 	//public EnumMeleeAnimation meleeAnimation = EnumMeleeAnimation.DEFAULT;
@@ -141,6 +149,10 @@ public class ModelGun extends TurboBase
 	public float boltRotation = 0F;
 	/** The rotation point for the bolt twist */
 	public Vector3f boltRotationPoint = new Vector3f();
+	/** The rotation point for the trigger */
+	/** For animated triggers */
+	public float triggerRotation = 0F;
+	public Vector3f triggerRotationPoint = new Vector3f();
 	/** The translateall value used for offseting rotation points */
 	public Vector3f translateAll = new Vector3f();
 	/** For shotgun pump handle */
@@ -154,22 +166,16 @@ public class ModelGun extends TurboBase
 	/** If true, then the gadget attachment will move with the shotgun pump */
 	public boolean gadgetIsOnPump = false;
 	/** The amount the revolver barrel flips out by */
-	public float revolverFlipAngle = 15F;
-	/** The amount the revolver2 barrel flips out by */
-	public float revolver2FlipAngle = 15F;
+	public float revolverFlipAngle = 0F;
 	/** The rotation point for the revolver flip */
 	public Vector3f revolverFlipPoint = new Vector3f();
-	/** The rotation point for the revolver2 flip */
-	public Vector3f revolver2FlipPoint = new Vector3f();
 	/** If true, then the gun will perform a spinning reload animation */
 	public boolean spinningCocking = false;
 	/** The point, in model co-ordinates, about which the gun is spun */
 	public Vector3f spinPoint = new Vector3f();
 	/** The point where the hammer will pivot and spin from */
 	public Vector3f hammerSpinPoint = new Vector3f();
-	public Vector3f althammerSpinPoint = new Vector3f();
 	public float hammerAngle = 75F;
-	public float althammerAngle = 75F;
 	/** Single action cocking check */
 	public boolean isSingleAction = false;
 	/** If true, lock the slide when the last bullet is fired */
@@ -312,11 +318,6 @@ public class ModelGun extends TurboBase
 		render(revolverBarrelModel, f);
 	}
 
-	public void renderRevolver2Barrel(float f)
-	{
-		render(revolver2BarrelModel, f);
-	}
-
 	public void renderBreakAction(float f)
 	{
 		render(breakActionModel, f);
@@ -326,13 +327,17 @@ public class ModelGun extends TurboBase
 	{
 		render(hammerModel, f);
 	}
-
-	public void renderaltHammer(float f)
+	
+	public void renderTrigger(float f)
 	{
-		render(althammerModel, f);
+		render(triggerModel, f);
+	}
+	public void renderSwitch(float f)
+	{
+		render(switchModel, f);
 	}
 
-	/** Flips the model. Generally only for backwards compatibility */
+	/** Flips models because toolbox exports upside down */
 	@Override
 	public void flipAll()
 	{
@@ -350,13 +355,13 @@ public class ModelGun extends TurboBase
 		flip(altpumpModel);
 		flip(chargeModel);
 		flip(revolverBarrelModel);
-		flip(revolver2BarrelModel);
 		flip(breakActionModel);
 		flip(hammerModel);
-		flip(althammerModel);
+		flip(triggerModel);
+		flip(switchModel);
 	}
 
-	@Override
+	/**@Override
 	public void translateAll(float x, float y, float z)
 	{
 		translateAll = new Vector3f(x, y, z);
@@ -375,12 +380,12 @@ public class ModelGun extends TurboBase
     		translate(altpumpModel, x, y, z);
     		translate(chargeModel, x, y, z);
     		translate(revolverBarrelModel, x, y, z);
-    		translate(revolver2BarrelModel, x, y, z);
     		translate(breakActionModel, x, y, z);
     		translate(hammerModel, x, y, z);
-    		translate(althammerModel, x, y, z);
+    		translate(triggerModel, x, y, z);
+    		translate(switchModel, x, y, z);
     	}
-	}
+	}*/
 	
 	public boolean hasArms()
 	{

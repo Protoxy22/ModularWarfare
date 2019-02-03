@@ -23,6 +23,7 @@ import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.client.model.rotatetool;
 import com.modularwarfare.client.model.animations.AnimationPistol;
 import com.modularwarfare.client.model.animations.AnimationRifle;
 import com.modularwarfare.client.model.animations.AnimationRifle2;
@@ -44,11 +45,9 @@ import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.settings.GameSettings.Options;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.client.EnumHelperClient;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -85,6 +84,7 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("rifle3", new AnimationRifle3());
 		WeaponAnimations.registerAnimation("rifle4", new AnimationRifle4());
 		WeaponAnimations.registerAnimation("pistol", new AnimationPistol());
+		RenderGun.rotateToolModel = new rotatetool();
 	}
 	
 	@SubscribeEvent

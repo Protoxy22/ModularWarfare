@@ -22,6 +22,7 @@ import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.guns.WeaponFireMode;
 import com.modularwarfare.utility.NumberHelper;
 
 import net.minecraft.client.Minecraft;
@@ -33,6 +34,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
 public class RenderGun extends CustomItemRenderer {
@@ -50,8 +52,11 @@ public class RenderGun extends CustomItemRenderer {
 	public static Float swayHorizontalEP;
 	
 	public static float triggerPullSwitch;
+
 	
 	public static int shotState = 0;
+
+	public static ModelRotateTool rotateToolModel;
 	public int oldMagCount;
 	
 	private int direction = 0;
@@ -85,6 +90,7 @@ public class RenderGun extends CustomItemRenderer {
         float randomShake = min + (randomNum * (max - min));
         float reloadProgress = getReloadProgress(animations);
         float tiltProgress = getReloadTiltProgress(reloadProgress, model);		
+        float f = 1F / 16F;
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -97,7 +103,8 @@ public class RenderGun extends CustomItemRenderer {
 			switch (renderType) {
 
 			case ENTITY: {
-				GL11.glTranslatef(-0.45F + model.itemFrameOffset.x, -0.05F + model.itemFrameOffset.y, model.itemFrameOffset.z);
+				GL11.glTranslatef(-0.5F + model.itemFrameOffset.x, model.itemFrameOffset.y, model.itemFrameOffset.z);
+				GL11.glRotatef(0, 0F, 0F, 1F); //ANGLE UP-DOWN
 				break;
 			}
 
@@ -159,6 +166,7 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glTranslatef(0F, translateY, 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
+				
 				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {				
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
 				}
@@ -182,7 +190,6 @@ public class RenderGun extends CustomItemRenderer {
 			
 			GL11.glPushMatrix();
 			{
-				float f = 1F / 16F;
 				float modelScale = model.modelScale;
 				
 				/** Weapon Texture */
@@ -191,8 +198,9 @@ public class RenderGun extends CustomItemRenderer {
 				bindTexture("guns", path);
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
-				
+				GL11.glTranslatef(model.translateAll.x * f, -model.translateAll.y * f, -model.translateAll.z * f);
 				model.renderGun(f);
+				
 				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
 					model.renderDefaultScope(f);
 				model.renderDefaultBarrel(f);
@@ -210,10 +218,9 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						if(model.rightHandBolt)
 						{
-							Vector3f rotHelper = NumberHelper.subtractVector(NumberHelper.divideVector(model.translateAll, 4F), model.boltRotationPoint);
-							GL11.glTranslatef(0F, -rotHelper.y, 0F);
+							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
 							GL11.glRotatef(model.boltRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
-							GL11.glTranslatef(0F, rotHelper.y, 0F);
+							GL11.glTranslatef(model.boltRotationPoint.x, model.boltRotationPoint.y, model.boltRotationPoint.z);
 						}
 						model.renderPump(f);
 					}
@@ -239,30 +246,28 @@ public class RenderGun extends CustomItemRenderer {
 						model.renderSlide(f);
 						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnSlide)
 							model.renderDefaultScope(f);
+						if(model.switchIsOnSlide) 
+						{
+							GL11.glPushMatrix();
+							{
+								WeaponFireMode fireMode = gunType.getFireMode(item);
+								float switchAngle = fireMode == WeaponFireMode.SEMI ? model.switchSemiRot : fireMode == WeaponFireMode.FULL ? model.switchAutoRot : fireMode == WeaponFireMode.BURST ? model.switchBurstRot : 0F;
+								GL11.glTranslatef(model.switchRotationPoint.x, model.switchRotationPoint.y, model.switchRotationPoint.z);
+								GL11.glRotatef(switchAngle, 0, 0, 1);
+								GL11.glTranslatef(-model.switchRotationPoint.x, -model.switchRotationPoint.y, -model.switchRotationPoint.z);
+								model.renderSwitch(f);
+							}
+							GL11.glPopMatrix();
+						}
 					}
 					GL11.glPopMatrix();
 				}
 				
-				//Render the break action
-				/*GL11.glPushMatrix();
-				{
-					
-					GL11.glTranslatef(model.barrelBreakPoint.x, model.barrelBreakPoint.y, model.barrelBreakPoint.z);
-					GL11.glRotatef(tiltProgress * -model.breakAngle, 0F, 0F, 1F);
-					// TODO: Render alignment lines
-					GL11.glTranslatef(-model.barrelBreakPoint.x, -model.barrelBreakPoint.y, -model.barrelBreakPoint.z);
-					model.renderBreakAction(f);
-					if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnBreakAction)
-						model.renderDefaultScope(f);
-				}
-				GL11.glPopMatrix();*/
-				
-				// TODO: Allignment lines
 				for(BreakActionData breakAction : model.breakActions)
 				{
+					
 					GL11.glPushMatrix();
 					{
-						
 						GL11.glTranslatef(breakAction.breakPoint.x, breakAction.breakPoint.y, breakAction.breakPoint.z);
 						GL11.glRotatef(tiltProgress * -breakAction.angle, 0F, 0F, 1F);
 						GL11.glTranslatef(-breakAction.breakPoint.x, -breakAction.breakPoint.y, -breakAction.breakPoint.z);
@@ -277,11 +282,36 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPushMatrix();
 				{
 					GL11.glTranslatef(model.hammerSpinPoint.x, model.hammerSpinPoint.y, model.hammerSpinPoint.z);
-					GL11.glRotatef(-animations.hammerRotation, 0F, 0F, 1F);
+					GL11.glRotatef(50F, 0F, 0F, 1F);
+					//GL11.glRotatef(-animations.hammerRotation * 2, 0F, 0F, 1F);
 					GL11.glTranslatef(-model.hammerSpinPoint.x, -model.hammerSpinPoint.y, -model.hammerSpinPoint.z);
 					model.renderHammer(f);
 				}
 				GL11.glPopMatrix();
+				
+				//Render trigger
+				GL11.glPushMatrix();
+				{
+					GL11.glTranslatef(-model.triggerRotationPoint.x, -model.triggerRotationPoint.y, -model.triggerRotationPoint.z);
+					GL11.glRotatef(-260 * triggerPullSwitch, 0, 0, 1);
+					GL11.glTranslatef(model.triggerRotationPoint.x, model.triggerRotationPoint.y, model.triggerRotationPoint.z);
+					model.renderTrigger(f);
+				}
+				GL11.glPopMatrix();
+				//TODO
+				//Render fire mode switch
+				if(!model.switchIsOnSlide) {
+				GL11.glPushMatrix();
+				{
+					WeaponFireMode fireMode = gunType.getFireMode(item);
+					float switchAngle = fireMode == WeaponFireMode.SEMI ? model.switchSemiRot : fireMode == WeaponFireMode.FULL ? model.switchAutoRot : fireMode == WeaponFireMode.BURST ? model.switchBurstRot : 0F;
+					GL11.glTranslatef(model.switchRotationPoint.x, model.switchRotationPoint.y, model.switchRotationPoint.z);
+					GL11.glRotatef(switchAngle, 0, 0, 1);
+					GL11.glTranslatef(-model.switchRotationPoint.x, -model.switchRotationPoint.y, -model.switchRotationPoint.z);
+					model.renderSwitch(f);
+				}
+				GL11.glPopMatrix();
+				}
 				
 				// Render the revolver barrel
 				GL11.glPushMatrix();
@@ -375,8 +405,7 @@ public class RenderGun extends CustomItemRenderer {
 							if(shouldNormalRender && animations.renderAmmo)
 							{
 								if(!cachedUnload)
-									animations.cachedAmmoStack = stackAmmo;
-								
+									animations.cachedAmmoStack = stackAmmo;							
 								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
 								String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 								bindTexture("ammo", pathAmmo);
@@ -388,27 +417,48 @@ public class RenderGun extends CustomItemRenderer {
 							{
 								if(!cachedUnload)
 									animations.cachedAmmoStack = stackAmmo;
-								
+								//These translates/rotate was just a test but seems to work well for moving ammo with revolver cylinder
+								GL11.glTranslatef(model.revolverFlipPoint.x, model.revolverFlipPoint.y, model.revolverFlipPoint.z);
+								GL11.glRotatef(tiltProgress * model.revolverFlipAngle, 1F, 0F, 0F);
+								GL11.glTranslatef(-model.revolverFlipPoint.x, -model.revolverFlipPoint.y, -model.revolverFlipPoint.z);
 								model.renderAmmo(f);
 							}
 						}
 					}
 				}
 				
-				if(ModularWarfare.DEV_ENV && model.hasArms()){
-					renderMovingArm(mc.player, model, animations); 
+				if(ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
+					
+					GL11.glPushMatrix();
+					{
+						GL11.glTranslatef(-model.translateAll.x * f, model.translateAll.y * f, model.translateAll.z * f);
+						renderMovingArm(mc.player, model, animations); 
+					}
+					GL11.glPopMatrix();
 				}
 				else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
 					renderMovingArm(mc.player, model, animations); 
 				}
 				
 				GL11.glPopMatrix();
+				
+				//Rotation point dev tool
+				if(ModularWarfare.DEV_ENV && renderType == CustomItemRenderType.ENTITY) {
+				GL11.glPushMatrix();
+				{
+					ModelRotateTool tool = rotateToolModel;
+					GL11.glTranslatef(model.rotationHelper.x, model.rotationHelper.y, model.rotationHelper.z);
+					renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "rotatetool.png"));
+					tool.renderRotateTool(f);
+				}
+				
+				GL11.glPopMatrix();
+				}
 			}
 			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
 			{
-				float f = 1F / 16F;
 				
 				for(AttachmentEnum attachment : AttachmentEnum.values())
 				{
@@ -438,6 +488,7 @@ public class RenderGun extends CustomItemRenderer {
 			GL11.glPopMatrix();
 		}
 		GL11.glPopMatrix();
+		
 	}
 	
 	//Calculates the ammo position during the unloadClip and loadClip stages of the reload

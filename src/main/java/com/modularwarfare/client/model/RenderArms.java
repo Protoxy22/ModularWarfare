@@ -56,7 +56,10 @@ public class RenderArms {
 	public static void renderArmDefault(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean firingHand)
 	{
 		GL11.glTranslatef(reloadPos.x - (firingHand ? RenderGun.triggerPullSwitch : 0f), reloadPos.y, reloadPos.z);
-		handleRotate(reloadRot);
+		//if(left)
+		//handleLeftRotate(reloadRot);
+		//else
+		//handleRightRotate(reloadRot);
 	}
 	
 	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos)
@@ -104,9 +107,11 @@ public class RenderArms {
 	
 	private static void handleRotate(Vector3f reloadRot)
 	{
-		GL11.glRotatef(reloadRot.x, 1F, 0F, 0F);
-		GL11.glRotatef(reloadRot.y, 0F, 1F, 0F);
-		GL11.glRotatef(reloadRot.z, 0F, 0F, 1F);
+			GL11.glTranslatef(0.225F, 0.75F, 0);
+			GL11.glRotatef(reloadRot.x, 1F, 0F, 0F);
+			GL11.glRotatef(reloadRot.y, 0F, 1F, 0F);
+			GL11.glRotatef(reloadRot.z, 0F, 0F, 1F);
+			GL11.glTranslatef(-0.225F, -0.75F, 0);
 
 	}
 

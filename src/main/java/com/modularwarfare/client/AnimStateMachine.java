@@ -52,7 +52,6 @@ public class AnimStateMachine {
 	/** Hammer model mechanics */
 	/** If in single action, the model will play a modified animation and delay hammer reset */
 	public float hammerRotation = 0F;
-	public float althammerRotation = 0F;
 	public int timeUntilPullback = 0;
 	public float gunPullback = -1F, lastGunPullback = -1F;
 	public boolean isFired = false;
@@ -109,7 +108,6 @@ public class AnimStateMachine {
 		} else {
 			// Automatically reset hammer
 			hammerRotation *= 0.6F;
-			althammerRotation *= 0.6F;
 		}
 
 		// Time until bullet casing ejection
@@ -189,7 +187,6 @@ public class AnimStateMachine {
 		timeUntilPullback = model.hammerDelay;
 		timeUntilCasing = model.casingDelay;
 		hammerRotation = model.hammerAngle;
-		althammerRotation = model.althammerAngle;
 		muzzleFlashTime = 2;
 
 		int Low = -1;

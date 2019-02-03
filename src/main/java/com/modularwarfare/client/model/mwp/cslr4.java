@@ -81,7 +81,7 @@ public class cslr4 extends ModelGun //Same as Filename
 		pumpDelay = 10;
 		pumpTime = 20;
 		gripIsOnPump = false;
-		pumpHandleDistance = 0.75F;
+		pumpHandleDistance = -0.75F;
 		
 		rightHandBolt = true;
 		chargeModifier = new Vector3f (1.0F, -1.0F, 0.0F);
