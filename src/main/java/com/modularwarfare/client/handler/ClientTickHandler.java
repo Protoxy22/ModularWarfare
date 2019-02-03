@@ -94,8 +94,8 @@ public class ClientTickHandler extends ForgeEvent {
 			AnimStateMachine anim = ClientRenderHooks.getAnimations(player);
 			
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
-			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? !anim.charging && !(anim.timeUntilCharge > 0) && anim.chargeTriggerTrigger == 3 : true);
-			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) &&  aimChargeMisc? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
+			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? !anim.charging && !(anim.timeUntilCharge > 0) && (anim.chargeTriggerTrigger == 3 || anim.chargeTriggerTrigger == 0) : true);
+			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && aimChargeMisc ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
 			float sprintSpeed = 0.15f * renderTick;

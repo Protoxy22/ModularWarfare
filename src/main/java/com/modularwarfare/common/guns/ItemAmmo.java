@@ -95,29 +95,25 @@ public class ItemAmmo extends BaseItem {
 	 * Minecraft Overrides
 	 */
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
+    public void addInformation(ItemStack ammoStack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
     {
     	if(type.magazineCount == null)
     	{
         	int currentAmmoCount = 0;
     		
-    		if(stack.getTagCompound() != null)
+    		if(ammoStack.getTagCompound() != null)
         	{
-        		NBTTagCompound tag = stack.getTagCompound();
+        		NBTTagCompound tag = ammoStack.getTagCompound();
         		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
         	} else
         	{
         		currentAmmoCount = type.ammoCapacity;
         	}
         		
-//        	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
-//        	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
-//        	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
-//        	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
         	tooltip.add(generateLoreLineAlt("Ammo", Integer.toString(currentAmmoCount), Integer.toString(type.ammoCapacity)));
     	} else
     	{    		
-    		if(stack.getTagCompound() != null)
+    		if(ammoStack.getTagCompound() != null)
         	{
     			String baseDisplayLine = "%bMag Ammo %s: %g%s%dg/%g%s";
             	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
@@ -126,10 +122,20 @@ public class ItemAmmo extends BaseItem {
             	
             	for(int i = 1; i < type.magazineCount+1; i++)
     			{
-            		NBTTagCompound tag = stack.getTagCompound();
+            		NBTTagCompound tag = ammoStack.getTagCompound();
                 	tooltip.add(String.format(baseDisplayLine, i, tag.getInteger("ammocount" + i), type.ammoCapacity));
     			}
         	} 
+    	}
+    	
+    	if(ammoStack.getTagCompound() != null)
+    	{
+    		if(ammoStack.getTagCompound().hasKey("bullet"))
+			{
+				ItemStack usedBullet = new ItemStack(ammoStack.getTagCompound().getCompoundTag("bullet"));
+				ItemBullet usedBulletItem = (ItemBullet) usedBullet.getItem();
+	        	tooltip.add(generateLoreLine("Bullet", usedBulletItem.type.displayName));
+			}
     	}
     }
     
