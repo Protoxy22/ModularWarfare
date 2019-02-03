@@ -135,8 +135,6 @@ public class ModelGun extends TurboBase
     public float switchAutoRot;
     
     //Reload animation variables
-	//public EnumAnimationType animationType = EnumAnimationType.NONE;
-	//public EnumMeleeAnimation meleeAnimation = EnumMeleeAnimation.DEFAULT;
 	/** If true, then the scope attachment will move with the top slide */
 	public boolean scopeIsOnSlide = false;
 	/** If true, then the scope attachment will move with the break action. Can be combined with the above */
@@ -153,7 +151,7 @@ public class ModelGun extends TurboBase
 	/** For animated triggers */
 	public float triggerRotation = 0F;
 	public Vector3f triggerRotationPoint = new Vector3f();
-	/** The translateall value used for offseting rotation points */
+	/** The translateall value used for moving the entire model */
 	public Vector3f translateAll = new Vector3f();
 	/** For shotgun pump handle */
 	public float pumpHandleDistance = 4F / 16F;
@@ -166,15 +164,11 @@ public class ModelGun extends TurboBase
 	/** If true, then the gadget attachment will move with the shotgun pump */
 	public boolean gadgetIsOnPump = false;
 	/** The amount the revolver barrel flips out by */
-	public float revolverFlipAngle = 0F;
-	/** The rotation point for the revolver flip */
-	public Vector3f revolverFlipPoint = new Vector3f();
-	/** If true, then the gun will perform a spinning reload animation */
-	public boolean spinningCocking = false;
-	/** The point, in model co-ordinates, about which the gun is spun */
-	public Vector3f spinPoint = new Vector3f();
-	/** The point where the hammer will pivot and spin from */
-	public Vector3f hammerSpinPoint = new Vector3f();
+	public float cylinderRotation = 0F;
+	/** The rotation point for the revolver cylinder */
+	public Vector3f cylinderRotationPoint = new Vector3f();
+	/** The rotation point for the hammer */
+	public Vector3f hammerRotationPoint = new Vector3f();
 	public float hammerAngle = 75F;
 	/** Single action cocking check */
 	public boolean isSingleAction = false;
@@ -193,7 +187,7 @@ public class ModelGun extends TurboBase
 	public float tiltClip = 0F;
 	public Vector3f translateClip = new Vector3f(0F, 0F, 0F);
 
-	//lighting stuff
+	//lighting stuff for glow
 	private static float lightmapLastX;
     private static float lightmapLastY;
 	private static boolean optifineBreak = false;

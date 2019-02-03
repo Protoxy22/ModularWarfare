@@ -1,7 +1,6 @@
 {
   "displayName": "Glock 18",
   "internalName": "mwp.glock18",
-  "iconName": "mwp.glock18",
   "weaponType": "mp",
   "fireModes": ["full", "semi"],
   "gunDamage": 5,
@@ -16,8 +15,16 @@
       "soundName": "shoot.mwp.pistol3"
     },
     {
-      "soundEvent": "weaponReload",
-      "soundName": "reload.mwp.b.45"
+      "soundEvent": "weaponLoad",
+      "soundName": "load.mwp.pistol1"
+    },
+    {
+      "soundEvent": "weaponUnload",
+      "soundName": "unload.mwp.pistol1"
+    },
+    {
+      "soundEvent": "weaponCharge",
+      "soundName": "charge.mwp.pistol1"
     }
   ]
 }

@@ -23,13 +23,13 @@ public class ragingjudge extends ModelGun //Same as Filename
 	{
 		gunModel = new ModelRendererTurbo[394];
 		ammoModel = new ModelRendererTurbo[85];
-		leverActionModel = new ModelRendererTurbo[8];
+		triggerModel = new ModelRendererTurbo[8];
 		revolverBarrelModel = new ModelRendererTurbo[82];
 		hammerModel = new ModelRendererTurbo[15];
 
 		initgunModel_1();
 		initammoModel_1();
-		initleverActionModel_1();
+		inittriggerModel_1();
 		initrevolverBarrelModel_1();
 		inithammerModel_1();
 
@@ -37,10 +37,13 @@ public class ragingjudge extends ModelGun //Same as Filename
 		translateAll = new Vector3f(17F, -20F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.10F, 0F);//forward/up/? 
 		
-		hammerSpinPoint = new Vector3f(0.5F, 2.1F, 0F);
-		rotationHelper = new Vector3f(0.5F, 2.1F, 0F);
-		revolverFlipAngle = 15F;
-
+		hammerRotationPoint = new Vector3f(0.5F, 2.1F, 0F);
+		rotationHelper = new Vector3f(1.75F, 1.2F, 0F);
+		triggerRotationPoint = new Vector3f(1.75F, 1.2F, 0F);
+		triggerRotation = -30F;
+		cylinderRotation = 15F;
+		
+		
 		gunSlideDistance = 0F;
 		///animationType = EnumAnimationType.CUSTOM;
 
@@ -2000,40 +2003,40 @@ public class ragingjudge extends ModelGun //Same as Filename
 		ammoModel[84].setRotationPoint(28F, -39.5F, -1.75F);
 	}
 
-	private void initleverActionModel_1()
+	private void inittriggerModel_1()
 	{
-		leverActionModel[0] = new ModelRendererTurbo(this, 153, 105, textureX, textureY); // Import Box0
-		leverActionModel[1] = new ModelRendererTurbo(this, 49, 121, textureX, textureY); // Import Box0
-		leverActionModel[2] = new ModelRendererTurbo(this, 409, 129, textureX, textureY); // Import Box0
-		leverActionModel[3] = new ModelRendererTurbo(this, 497, 49, textureX, textureY); // Import Box0
-		leverActionModel[4] = new ModelRendererTurbo(this, 81, 97, textureX, textureY); // Import Box0
-		leverActionModel[5] = new ModelRendererTurbo(this, 497, 113, textureX, textureY); // Import Box0
-		leverActionModel[6] = new ModelRendererTurbo(this, 441, 97, textureX, textureY); // Import Box0
-		leverActionModel[7] = new ModelRendererTurbo(this, 225, 105, textureX, textureY); // Import Box0
+		triggerModel[0] = new ModelRendererTurbo(this, 153, 105, textureX, textureY); // Import Box0
+		triggerModel[1] = new ModelRendererTurbo(this, 49, 121, textureX, textureY); // Import Box0
+		triggerModel[2] = new ModelRendererTurbo(this, 409, 129, textureX, textureY); // Import Box0
+		triggerModel[3] = new ModelRendererTurbo(this, 497, 49, textureX, textureY); // Import Box0
+		triggerModel[4] = new ModelRendererTurbo(this, 81, 97, textureX, textureY); // Import Box0
+		triggerModel[5] = new ModelRendererTurbo(this, 497, 113, textureX, textureY); // Import Box0
+		triggerModel[6] = new ModelRendererTurbo(this, 441, 97, textureX, textureY); // Import Box0
+		triggerModel[7] = new ModelRendererTurbo(this, 225, 105, textureX, textureY); // Import Box0
 
-		leverActionModel[0].addShapeBox(0F, 0F, 0F, 2, 2, 6, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1.25F, 0F, 0F, 1.25F, 0F, 0F, 0F, 0F); // Import Box0
-		leverActionModel[0].setRotationPoint(21F, -19.25F, -3F);
+		triggerModel[0].addShapeBox(0F, 0F, 0F, 2, 2, 6, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 1.25F, 0F, 0F, 1.25F, 0F, 0F, 0F, 0F); // Import Box0
+		triggerModel[0].setRotationPoint(21F, -19.25F, -3F);
 
-		leverActionModel[1].addShapeBox(0F, 0F, 0F, 2, 3, 6, 0F,0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, 1.25F, 0F, 0.5F, 2F, 0F, 0.5F, 2F, 0F, 0F, 1.25F, 0F); // Import Box0
-		leverActionModel[1].setRotationPoint(23F, -20.25F, -3F);
+		triggerModel[1].addShapeBox(0F, 0F, 0F, 2, 3, 6, 0F,0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, 1.25F, 0F, 0.5F, 2F, 0F, 0.5F, 2F, 0F, 0F, 1.25F, 0F); // Import Box0
+		triggerModel[1].setRotationPoint(23F, -20.25F, -3F);
 
-		leverActionModel[2].addShapeBox(0F, 0F, 0F, 2, 3, 6, 0F,0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, -0.5F, 2F, 0F, 0.75F, 0.25F, 0F, 0.75F, 0.25F, 0F, -0.5F, 2F, 0F); // Import Box0
-		leverActionModel[2].setRotationPoint(25F, -20.25F, -3F);
+		triggerModel[2].addShapeBox(0F, 0F, 0F, 2, 3, 6, 0F,0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, 0F, -0.25F, 0F, -0.5F, 2F, 0F, 0.75F, 0.25F, 0F, 0.75F, 0.25F, 0F, -0.5F, 2F, 0F); // Import Box0
+		triggerModel[2].setRotationPoint(25F, -20.25F, -3F);
 
-		leverActionModel[3].addShapeBox(0F, 0F, 0F, 1, 1, 6, 0F,0F, -0.25F, 0F, 0.5F, -0.25F, 0F, 0.5F, -0.25F, 0F, 0F, -0.25F, 0F, -0.75F, 2.25F, 0F, 0.5F, 0.25F, 0F, 0.5F, 0.25F, 0F, -0.75F, 2.25F, 0F); // Import Box0
-		leverActionModel[3].setRotationPoint(27F, -20.25F, -3F);
+		triggerModel[3].addShapeBox(0F, 0F, 0F, 1, 1, 6, 0F,0F, -0.25F, 0F, 0.5F, -0.25F, 0F, 0.5F, -0.25F, 0F, 0F, -0.25F, 0F, -0.75F, 2.25F, 0F, 0.5F, 0.25F, 0F, 0.5F, 0.25F, 0F, -0.75F, 2.25F, 0F); // Import Box0
+		triggerModel[3].setRotationPoint(27F, -20.25F, -3F);
 
-		leverActionModel[4].addShapeBox(0F, 0F, 0F, 2, 2, 5, 0F,0F, 0F, 0.5F, 0F, 1.55F, 0.5F, 0F, 1.55F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import Box0
-		leverActionModel[4].setRotationPoint(25.5F, -15.25F, -2.5F);
+		triggerModel[4].addShapeBox(0F, 0F, 0F, 2, 2, 5, 0F,0F, 0F, 0.5F, 0F, 1.55F, 0.5F, 0F, 1.55F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F); // Import Box0
+		triggerModel[4].setRotationPoint(25.5F, -15.25F, -2.5F);
 
-		leverActionModel[5].addShapeBox(0F, 0F, 0F, 2, 3, 5, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.5F, 0F, 0F, 2F, 0F, 0F, 2F, 0F, 0F, -1.5F, 0F, 0F); // Import Box0
-		leverActionModel[5].setRotationPoint(25.5F, -13.25F, -2.5F);
+		triggerModel[5].addShapeBox(0F, 0F, 0F, 2, 3, 5, 0F,0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -1.5F, 0F, 0F, 2F, 0F, 0F, 2F, 0F, 0F, -1.5F, 0F, 0F); // Import Box0
+		triggerModel[5].setRotationPoint(25.5F, -13.25F, -2.5F);
 
-		leverActionModel[6].addShapeBox(0F, 0F, 0F, 2, 1, 5, 0F,0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 1.75F, 0F, 0F, 1.75F, 0F, 0F, -1F, 0F, 0F); // Import Box0
-		leverActionModel[6].setRotationPoint(27F, -10.25F, -2.5F);
+		triggerModel[6].addShapeBox(0F, 0F, 0F, 2, 1, 5, 0F,0F, 0F, 0F, 0.5F, 0F, 0F, 0.5F, 0F, 0F, 0F, 0F, 0F, -1F, 0F, 0F, 1.75F, 0F, 0F, 1.75F, 0F, 0F, -1F, 0F, 0F); // Import Box0
+		triggerModel[6].setRotationPoint(27F, -10.25F, -2.5F);
 
-		leverActionModel[7].addShapeBox(0F, 0F, 0F, 2, 1, 5, 0F,0F, 0F, 0F, 0.75F, 0F, 0F, 0.75F, 0F, 0F, 0F, 0F, 0F, -1.75F, -0.25F, 0F, 2.25F, 0F, 0F, 2.25F, 0F, 0F, -1.75F, -0.25F, 0F); // Import Box0
-		leverActionModel[7].setRotationPoint(28F, -9.25F, -2.5F);
+		triggerModel[7].addShapeBox(0F, 0F, 0F, 2, 1, 5, 0F,0F, 0F, 0F, 0.75F, 0F, 0F, 0.75F, 0F, 0F, 0F, 0F, 0F, -1.75F, -0.25F, 0F, 2.25F, 0F, 0F, 2.25F, 0F, 0F, -1.75F, -0.25F, 0F); // Import Box0
+		triggerModel[7].setRotationPoint(28F, -9.25F, -2.5F);
 	}
 
 	private void initrevolverBarrelModel_1()

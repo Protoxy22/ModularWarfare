@@ -281,10 +281,10 @@ public class RenderGun extends CustomItemRenderer {
 				//Render hammer actions
 				GL11.glPushMatrix();
 				{
-					GL11.glTranslatef(model.hammerSpinPoint.x, model.hammerSpinPoint.y, model.hammerSpinPoint.z);
+					GL11.glTranslatef(model.hammerRotationPoint.x, model.hammerRotationPoint.y, model.hammerRotationPoint.z);
 					GL11.glRotatef(50F, 0F, 0F, 1F);
-					//GL11.glRotatef(-animations.hammerRotation * 2, 0F, 0F, 1F);
-					GL11.glTranslatef(-model.hammerSpinPoint.x, -model.hammerSpinPoint.y, -model.hammerSpinPoint.z);
+					GL11.glRotatef(-animations.hammerRotation * 2, 0F, 0F, 1F);
+					GL11.glTranslatef(-model.hammerRotationPoint.x, -model.hammerRotationPoint.y, -model.hammerRotationPoint.z);
 					model.renderHammer(f);
 				}
 				GL11.glPopMatrix();
@@ -292,9 +292,9 @@ public class RenderGun extends CustomItemRenderer {
 				//Render trigger
 				GL11.glPushMatrix();
 				{
-					GL11.glTranslatef(-model.triggerRotationPoint.x, -model.triggerRotationPoint.y, -model.triggerRotationPoint.z);
-					GL11.glRotatef(-260 * triggerPullSwitch, 0, 0, 1);
 					GL11.glTranslatef(model.triggerRotationPoint.x, model.triggerRotationPoint.y, model.triggerRotationPoint.z);
+					GL11.glRotatef(model.triggerRotation * (triggerPullSwitch * 50), 0, 0, 1);
+					GL11.glTranslatef(-model.triggerRotationPoint.x, -model.triggerRotationPoint.y, -model.triggerRotationPoint.z);
 					model.renderTrigger(f);
 				}
 				GL11.glPopMatrix();
@@ -316,9 +316,9 @@ public class RenderGun extends CustomItemRenderer {
 				// Render the revolver barrel
 				GL11.glPushMatrix();
 				{
-					GL11.glTranslatef(model.revolverFlipPoint.x, model.revolverFlipPoint.y, model.revolverFlipPoint.z);
-					GL11.glRotatef(tiltProgress * model.revolverFlipAngle, 1F, 0F, 0F);
-					GL11.glTranslatef(-model.revolverFlipPoint.x, -model.revolverFlipPoint.y, -model.revolverFlipPoint.z);
+					GL11.glTranslatef(model.cylinderRotationPoint.x, model.cylinderRotationPoint.y, model.cylinderRotationPoint.z);
+					GL11.glRotatef(tiltProgress * model.cylinderRotation, 1F, 0F, 0F);
+					GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
 					model.renderRevolverBarrel(f);
 				}
 				GL11.glPopMatrix();
@@ -418,9 +418,9 @@ public class RenderGun extends CustomItemRenderer {
 								if(!cachedUnload)
 									animations.cachedAmmoStack = stackAmmo;
 								//These translates/rotate was just a test but seems to work well for moving ammo with revolver cylinder
-								GL11.glTranslatef(model.revolverFlipPoint.x, model.revolverFlipPoint.y, model.revolverFlipPoint.z);
-								GL11.glRotatef(tiltProgress * model.revolverFlipAngle, 1F, 0F, 0F);
-								GL11.glTranslatef(-model.revolverFlipPoint.x, -model.revolverFlipPoint.y, -model.revolverFlipPoint.z);
+								GL11.glTranslatef(model.cylinderRotationPoint.x, model.cylinderRotationPoint.y, model.cylinderRotationPoint.z);
+								GL11.glRotatef(tiltProgress * model.cylinderRotation, 1F, 0F, 0F);
+								GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
 								model.renderAmmo(f);
 							}
 						}
