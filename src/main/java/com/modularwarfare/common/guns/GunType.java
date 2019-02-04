@@ -151,7 +151,7 @@ public class GunType extends BaseType {
 		model = ModularWarfare.PROXY.loadModel(modelName != null ? modelName : internalName, internalName, ModelGun.class);
 	}
 	
-	public void playSound(EntityPlayer entityPlayer, WeaponSoundType weaponSoundType)
+	public void playSound(EntityPlayer entityPlayer, WeaponSoundType weaponSoundType, ItemStack gunStack)
 	{
 		if(weaponSoundType != null)
 		{
@@ -185,9 +185,10 @@ public class GunType extends BaseType {
 							}		
 							//Send sound packet for guns using advanced audio settings
 							float customPitch = ((random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch);
-							
+							float test = ItemGun.getMagazineBullets(gunStack) <= 5 ? 0.30f - (0.05f * ItemGun.getMagazineBullets(gunStack)) : 0f;
+							System.out.println(test);
+							customPitch += test;
 							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, volume, customPitch), (EntityPlayerMP) hearingPlayer);
-							System.out.println((random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch);
 						}
 					} else 
 					{

@@ -124,7 +124,7 @@ public class ItemGun extends BaseItem {
 		
 	}
 	
-	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
+	public void onGunFire(EntityPlayer entityPlayer, World world, ItemStack gunStack, ItemGun itemGun, WeaponFireMode fireMode)
 	{
 		GunType gunType = itemGun.type;
 		
@@ -132,19 +132,19 @@ public class ItemGun extends BaseItem {
 		if(isOnShootCooldown(entityPlayer) || isReloading(entityPlayer) || (!type.allowSprintFiring && entityPlayer.isSprinting()) || !itemGun.type.hasFireMode(fireMode)) 
 			return;
 		
-		int shotCount = fireMode == WeaponFireMode.BURST ? heldStack.getTagCompound().getInteger("shotsremaining") > 0 ? heldStack.getTagCompound().getInteger("shotsremaining") : gunType.numBurstRounds: 1;
-		if(!hasNextShot(heldStack))
+		int shotCount = fireMode == WeaponFireMode.BURST ? gunStack.getTagCompound().getInteger("shotsremaining") > 0 ? gunStack.getTagCompound().getInteger("shotsremaining") : gunType.numBurstRounds: 1;
+		if(!hasNextShot(gunStack))
 		{
 			if(canDryFire) {
-				gunType.playSound(entityPlayer, WeaponSoundType.DryFire);
+				gunType.playSound(entityPlayer, WeaponSoundType.DryFire, gunStack);
 				canDryFire = false;
 			}
-			if(fireMode == WeaponFireMode.BURST) heldStack.getTagCompound().setInteger("shotsremaining", 0);
+			if(fireMode == WeaponFireMode.BURST) gunStack.getTagCompound().setInteger("shotsremaining", 0);
 			return;
 		} 
 					
 		// Weapon pre fire event
-		WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, heldStack, itemGun, type.weaponMaxRange);
+		WeaponFireEvent.Pre preFireEvent = new WeaponFireEvent.Pre(entityPlayer, gunStack, itemGun, type.weaponMaxRange);
 		MinecraftForge.EVENT_BUS.post(preFireEvent);
 		if(preFireEvent.isCanceled())
 			return;
@@ -154,10 +154,10 @@ public class ItemGun extends BaseItem {
 		List<Entity> entities = line.getEntities(world, Entity.class, false);
 		
 		// Weapon post fire event
-		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
+		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, entities);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
 		
-		ItemBullet bulletItem = getUsedBullet(heldStack, gunType);
+		ItemBullet bulletItem = getUsedBullet(gunStack, gunType);
 		BulletType bulletType = null;			
 		if(bulletItem != null)
 			bulletType = bulletItem.type;
@@ -192,31 +192,31 @@ public class ItemGun extends BaseItem {
 			}
 		}
 		
-		consumeShot(heldStack);
+		consumeShot(gunStack);
 		canDryFire = true;
 		
 		// Sound
-		gunType.playSound(entityPlayer, WeaponSoundType.Fire);
+		gunType.playSound(entityPlayer, WeaponSoundType.Fire, gunStack);
 		
 		// Burst Stuff
 		if(fireMode == WeaponFireMode.BURST)
 		{
 			shotCount = shotCount - 1;
-			heldStack.getTagCompound().setInteger("shotsremaining", shotCount);
+			gunStack.getTagCompound().setInteger("shotsremaining", shotCount);
 		}
 		
 		// Fire Delay
 		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 	}
 	
-	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, WeaponFireMode fireMode)
+	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack gunStack, ItemGun itemGun, WeaponFireMode fireMode)
 	{	
-		GunType.setFireMode(heldStack, fireMode);
+		GunType.setFireMode(gunStack, fireMode);
 		
 		GunType gunType = itemGun.type;
 		if(WeaponSoundType.ModeSwitch != null) 
 		{
-			gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch);	
+			gunType.playSound(entityPlayer, WeaponSoundType.ModeSwitch, gunStack);	
 		}
 	}
 	/**
@@ -242,6 +242,22 @@ public class ItemGun extends BaseItem {
 	public static boolean hasAmmoLoaded(ItemStack gunStack)
 	{
 		return !(gunStack.getItem() instanceof ItemAir) ? gunStack.hasTagCompound() ? gunStack.getTagCompound().hasKey("ammo") ? gunStack.getTagCompound().getTag("ammo") != null : false : false : false;
+	}
+	
+	public static int getMagazineBullets(ItemStack gunStack)
+	{
+		if(hasAmmoLoaded(gunStack))
+		{
+			ItemStack ammoStack = new ItemStack(gunStack.getTagCompound().getCompoundTag("ammo"));
+			ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
+			if(ammoStack.getTagCompound() != null)
+			{
+				String key = itemAmmo.type.magazineCount != null ? "ammocount" + ammoStack.getTagCompound().getInteger("magcount") : "ammocount";
+				int ammoCount = ammoStack.getTagCompound().getInteger(key);
+				return ammoCount;
+			}
+		}
+		return 0;
 	}
 	
 	public static boolean hasNextShot(ItemStack gunStack)

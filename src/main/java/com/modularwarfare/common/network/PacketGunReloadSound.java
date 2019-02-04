@@ -48,7 +48,7 @@ public class PacketGunReloadSound extends PacketBase {
 				if(!ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID()))
 					return;
 				
-				gunType.playSound(entityPlayer, WeaponSoundType.Load);
+				gunType.playSound(entityPlayer, WeaponSoundType.Load, gunStack);
 			}
 		}
 	}

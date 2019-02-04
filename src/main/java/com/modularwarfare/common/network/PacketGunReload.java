@@ -324,7 +324,7 @@ public class PacketGunReload extends PacketBase {
 					MinecraftForge.EVENT_BUS.post(postReloadEvent);
 					
 					if(postReloadEvent.isUnload())
-						gunType.playSound(entityPlayer, WeaponSoundType.Unload);
+						gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
 				}
 			}
 		}
@@ -493,9 +493,9 @@ public class PacketGunReload extends PacketBase {
 			MinecraftForge.EVENT_BUS.post(postReloadEvent);
 			
 			if(postReloadEvent.isLoadOnly())
-				gunType.playSound(entityPlayer, WeaponSoundType.Load);				
+				gunType.playSound(entityPlayer, WeaponSoundType.Load, gunStack);				
 			else if(!postReloadEvent.isLoadOnly() && !postReloadEvent.isUnload())
-				gunType.playSound(entityPlayer, WeaponSoundType.Unload);
+				gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
 
 			ServerTickHandler.playerReloadCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 		} else
@@ -511,7 +511,7 @@ public class PacketGunReload extends PacketBase {
 				MinecraftForge.EVENT_BUS.post(postReloadEvent);
 				
 				if(postReloadEvent.isUnload())
-					gunType.playSound(entityPlayer, WeaponSoundType.Unload);
+					gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
 			}
 		}
 	}
