@@ -48,9 +48,9 @@ public class win3030 extends ModelGun //Same as Filename
 		rotationHelper = new Vector3f(1.55F,0.5F,0F);
 		pumpDelayAfterReload = 65;
 		pumpDelay = 10;
-		pumpTime = 15;
+		pumpTime = 20;
 		gripIsOnPump = false;
-		pumpHandleDistance = 0.75F;
+		pumpHandleDistance = 0.55F;
 		
 		tiltGun = 0F;
 		rotateGunVertical = 0F;

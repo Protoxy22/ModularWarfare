@@ -64,20 +64,20 @@ public class glock18 extends ModelGun //Same as Filename
 		translateHipPosition = new Vector3f(0.15F, 0.1F, -0.0F);
 
 		translateClip = new Vector3f(-6 /16F, -20F /16F, 0F /16F);
-        //adsSpeed = -0.0F;
-        //leftArmPos = new Vector3f(-0.60F, 0.11F, -0.25F);
-       // leftArmRot = new Vector3f(70.0F, 0.0F, -40.0F);
-       // leftArmReloadPos = new Vector3f(-0.62F, -0.15F, -0.10F);
-       // leftArmReloadRot = new Vector3f(30.0F, 0.0F, -40.0F);
-       // leftArmChargePos = new Vector3f(-0.63F, 0.23F, -0.29F);
-       // leftArmChargeRot = new Vector3f(70.0F, 0.0F, -40.0F);
+        adsSpeed = -0.0F;
+        leftArmPos = new Vector3f(-0.60F, 0.11F, -0.25F);
+        leftArmRot = new Vector3f(70.0F, 0.0F, -40.0F);
+        leftArmReloadPos = new Vector3f(-0.62F, -0.15F, -0.10F);
+        leftArmReloadRot = new Vector3f(30.0F, 0.0F, -40.0F);
+        leftArmChargePos = new Vector3f(-0.63F, 0.23F, -0.29F);
+        leftArmChargeRot = new Vector3f(70.0F, 0.0F, -40.0F);
  
-       // rightArmPos = new Vector3f(-0.56F, -0.04F, 0.00F);
-       // rightArmRot = new Vector3f(0.0F, 0.0F, -85.0F);
-       // rightArmReloadPos = new Vector3f(-0.59F, -0.04F, 0.08F);
-       // rightArmReloadRot = new Vector3f(0.0F, 5.0F, -85.0F);
+        rightArmPos = new Vector3f(-0.56F, -0.04F, 0.00F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -85.0F);
+        rightArmReloadPos = new Vector3f(-0.59F, -0.04F, 0.08F);
+        rightArmReloadRot = new Vector3f(0.0F, 5.0F, -85.0F);
         
-        //leftHandAmmo = true;
+        leftHandAmmo = true;
         
         rightArmScale = new Vector3f(0.6F, 0.8F, 0.6F);
         leftArmScale = new Vector3f(0.6F, 0.8F, 0.6F);
