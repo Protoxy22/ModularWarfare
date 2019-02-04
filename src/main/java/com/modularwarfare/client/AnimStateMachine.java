@@ -162,7 +162,7 @@ public class AnimStateMachine {
 			renderAmmo = false;
 		}
 		
-		if(reloadAnimationProgress >= 0.5f && !playedLoadSound && !unloadOnly && !loadOnly)
+		if(reloadAnimationProgress >= 0.75f && !playedLoadSound && !unloadOnly && !loadOnly)
 		{
 			ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound());
 			playedLoadSound = true;

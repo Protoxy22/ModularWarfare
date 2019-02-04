@@ -184,7 +184,10 @@ public class GunType extends BaseType {
 								volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundVolumeMultiplier);
 							}		
 							//Send sound packet for guns using advanced audio settings
-							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, volume, (random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
+							float customPitch = ((random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch);
+							
+							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, volume, customPitch), (EntityPlayerMP) hearingPlayer);
+							System.out.println((random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch);
 						}
 					} else 
 					{
