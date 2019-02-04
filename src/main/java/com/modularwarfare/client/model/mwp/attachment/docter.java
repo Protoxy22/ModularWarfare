@@ -2,7 +2,7 @@
 // Copyright (C) 2016 Minecraft-SMP.de
 // This file is for Flan's Flying Mod Version 4.0.x+
 
-package com.modularwarfare.client.model.mwp.attachments; //Path where the model is located
+package com.modularwarfare.client.model.mwp.attachment; //Path where the model is located
 
 import com.modularwarfare.client.model.ModelAttachment;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
