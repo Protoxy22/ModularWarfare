@@ -76,9 +76,10 @@ public class WeaponReloadEvent extends WeaponEvent {
 		private final boolean multiMagReload;
 		private final boolean loadOnly;
 		private final boolean unloadOnly;
+		private final int reloadAmount;
 		private int reloadTime;
 		
-		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload, boolean loadOnly, boolean unloadOnly, int reloadTime) 
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload, boolean loadOnly, boolean unloadOnly, int reloadTime, int reloadAmount) 
 		{
 			super(entityPlayer, stackWeapon, itemWeapon);
 			this.offhandReload = offhandReload;
@@ -86,6 +87,17 @@ public class WeaponReloadEvent extends WeaponEvent {
 			this.loadOnly = loadOnly;
 			this.unloadOnly = unloadOnly;
 			this.reloadTime = reloadTime;
+			this.reloadAmount = reloadAmount;
+		}
+		
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean multiMagReload, boolean loadOnly, boolean unloadOnly, int reloadTime) 
+		{
+			this(entityPlayer, stackWeapon, itemWeapon, offhandReload, multiMagReload, loadOnly, unloadOnly, reloadTime, 1);
+		}
+		
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, boolean offhandReload, boolean loadOnly, boolean unloadOnly, int reloadTime, int reloadAmount) 
+		{
+			this(entityPlayer, stackWeapon, itemWeapon, offhandReload, false, loadOnly, unloadOnly, reloadTime, reloadAmount);
 		}
 		
 		public boolean isOffhandReload()
@@ -112,6 +124,12 @@ public class WeaponReloadEvent extends WeaponEvent {
 		{
 			return reloadTime;
 		}
+		
+		public int getReloadCount()
+		{
+			return reloadAmount;
+		}
+		
 	}
 
 }

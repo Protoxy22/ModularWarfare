@@ -40,12 +40,6 @@ public class GunType extends BaseType {
 	public float bulletSpeed = 5.0F;
 	/** The amount that bullets spread out when fired from this gun */
 	public float bulletSpread;
-	/** # of items to load - used for guns with internal storage / singular ammo items such as shotguns */
-	public int numPrimaryAmmoItems = 1;
-	/** The time (in ticks) it takes to reload this gun */
-	public int reloadTime = 60;
-	/** The time (in ticks) it takes to offhand reload this gun */
-	public Integer offhandReloadTime;
 	/** The fire rate of the gun in RPM, 1200 = MAX */
 	public int roundsPerMin = 1;
 	/** For when RPM is converted to ticks - Do not use */
@@ -54,8 +48,6 @@ public class GunType extends BaseType {
 	public int numBurstRounds = 3;
 	/** For one shot items like a panzerfaust */
 	public boolean consumeGunUponUse = false;
-	/** Ammo types which can be used in the gun */
-	public String[] acceptedAmmo;
 	
 	//Recoil Variables
 	/** Base value for Upwards cursor/view recoil */
@@ -73,7 +65,13 @@ public class GunType extends BaseType {
 	/** Attachment Types */
 	public HashMap<AttachmentEnum, ArrayList<String>> acceptedAttachments = new HashMap<AttachmentEnum, ArrayList<String>>();
 	
-	//Ammo Override variables
+	// Reload Variables
+	/** The time (in ticks) it takes to reload this gun */
+	public int reloadTime = 60;
+	/** The time (in ticks) it takes to offhand reload this gun */
+	public Integer offhandReloadTime;
+	
+	// Shared Ammo/Bullet Variables
 	/** If true, numBullets determined by loaded ammo type */
 	public boolean ammoNumBullets = false;
 	/** If true, bulletSpeed determined by loaded ammo type */
@@ -86,10 +84,18 @@ public class GunType extends BaseType {
 	public boolean ammoRecoilPitch = false;
 	/** If true, recoil yaw is determined by loaded ammo type */
 	public boolean ammoRecoilYaw = false;
-	//Dynamic ammo models
+	
+	// Ammo Variables
+	/** Ammo types which can be used in the gun */
+	public String[] acceptedAmmo;
 	/** If true && != null, ammo model will be set by ammo type used. Used built-in ammo model by default */
 	public boolean dynamicAmmo = false;
 	
+	// Bullet Variables
+	public Integer internalAmmoStorage;
+	public String[] acceptedBullets;
+	
+	// Misc Settings
 	public boolean allowSprintFiring = false;
 	public boolean allowDefaultSounds = true;
 	

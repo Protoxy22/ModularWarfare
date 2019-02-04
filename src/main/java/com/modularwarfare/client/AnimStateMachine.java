@@ -128,8 +128,11 @@ public class AnimStateMachine {
 
 		if (pumping) {
 			pumped += 2F / timeToPumpFor;
-			if (pumped >= 0.999F)
+			if (pumped >= 0.999F) {
+				pumped = 1f;
+				lastPumped = 1f;
 				pumping = false;
+			}
 		}
 		
 		if (charging) {
@@ -180,7 +183,7 @@ public class AnimStateMachine {
 			cachedAmmoStack = null;
 			lastReloadAnimationProgress = reloadAnimationProgress = 0;
 		}
-		
+				
 		//Recoil model
 		lastGunRecoil = gunRecoil;
 		if (gunRecoil > 0)

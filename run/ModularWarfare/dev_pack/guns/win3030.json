@@ -3,8 +3,9 @@
   "internalName": "mwp.win3030",
   "iconName": "mwp.win3030",
   "gunDamage": 5,
-  "roundsPerMin": 20,
-  "acceptedAmmo": ["mwp.cslr4ammo"],
+  "roundsPerMin": 30,
+  "internalAmmoStorage": 7,
+  "acceptedBullets": ["mwp.spotterbullet"],
   "weaponSounds": 
   [
     {

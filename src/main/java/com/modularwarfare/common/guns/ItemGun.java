@@ -157,8 +157,8 @@ public class ItemGun extends BaseItem {
 		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, heldStack, itemGun, entities);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
 		
-		ItemBullet bulletItem = ItemAmmo.getUsedBullet(heldStack);
-		BulletType bulletType = null;
+		ItemBullet bulletItem = getUsedBullet(heldStack, gunType);
+		BulletType bulletType = null;			
 		if(bulletItem != null)
 			bulletType = bulletItem.type;
 		
@@ -256,6 +256,9 @@ public class ItemGun extends BaseItem {
 				int ammoCount = ammoStack.getTagCompound().getInteger(key) - 1;
 				return ammoCount >= 0;
 			}
+		} else if(gunStack.getTagCompound() != null && gunStack.getTagCompound().hasKey("ammocount"))
+		{
+			return gunStack.getTagCompound().getInteger("ammocount") > 0;
 		}
 		return false;
 	}
@@ -273,7 +276,27 @@ public class ItemGun extends BaseItem {
 				nbtTagCompound.setInteger(key, nbtTagCompound.getInteger(key) - 1);
 				gunStack.getTagCompound().setTag("ammo", ammoStack.writeToNBT(new NBTTagCompound()));
 			}
+		 }else if(gunStack.getTagCompound() != null && gunStack.getTagCompound().hasKey("ammocount"))
+		{
+			int ammoCount = gunStack.getTagCompound().getInteger("ammocount");
+			gunStack.getTagCompound().setInteger("ammocount", ammoCount-1);
 		}
+	}
+	
+	public static ItemBullet getUsedBullet(ItemStack gunStack, GunType gunType)
+	{
+		if(gunType.acceptedAmmo != null)
+			return ItemAmmo.getUsedBullet(gunStack);
+		else if(gunType.acceptedBullets != null)
+		{
+			if(gunStack.hasTagCompound() && gunStack.getTagCompound().hasKey("bullet"))
+			{
+				ItemStack usedBullet = new ItemStack(gunStack.getTagCompound().getCompoundTag("bullet"));
+				ItemBullet usedBulletItem = (ItemBullet) usedBullet.getItem();
+				return usedBulletItem;
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -286,6 +309,7 @@ public class ItemGun extends BaseItem {
     	
     	if(gunType == null)
     		return;
+    	
     	
     	if(hasAmmoLoaded(stack))
     	{
@@ -301,18 +325,19 @@ public class ItemGun extends BaseItem {
 		    		currentAmmoCount = tag.hasKey("ammocount") ? tag.getInteger("ammocount") : 0;
 		    	}
 		    	
-		    	String baseDisplayLine = "%bAmmo: %g%s%dg/%g%s";
-		    	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
-		    	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
-		    	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
-		    	tooltip.add(String.format(baseDisplayLine, currentAmmoCount, itemAmmo.type.ammoCapacity));
+	        	tooltip.add(generateLoreLineAlt("Ammo", Integer.toString(currentAmmoCount), Integer.toString(itemAmmo.type.ammoCapacity)));
 			} else
 			{
 				if(stack.getTagCompound() != null)
 	        	{
-	    			String baseDisplayLine = "%bMag Ammo %s: %g%s%dg/%g%s";
+					if(gunType.acceptedBullets != null)
+					{
+						int ammoCount = stack.getTagCompound().hasKey("ammocount") ? stack.getTagCompound().getInteger("ammocount") : 0;
+			        	tooltip.add(generateLoreLineAlt("Ammo", Integer.toString(ammoCount), Integer.toString(gunType.internalAmmoStorage)));
+					}
+					
+	    			String baseDisplayLine = "%Ammo %s: %g%s%dg/%g%s";
 	            	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
-	            	//baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
 	            	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
 	            	
 	            	for(int i = 1; i < itemAmmo.type.magazineCount+1; i++)
@@ -322,6 +347,15 @@ public class ItemGun extends BaseItem {
 	                	tooltip.add(String.format(displayLine, i, tag.getInteger("ammocount" + i), itemAmmo.type.ammoCapacity));
 	    			}
 	        	} 
+			}
+    	}
+    	
+    	if(stack.getTagCompound() != null)
+    	{
+			if(gunType.acceptedBullets != null)
+			{
+				int ammoCount = stack.getTagCompound().hasKey("ammocount") ? stack.getTagCompound().getInteger("ammocount") : 0;
+	        	tooltip.add(generateLoreLineAlt("Ammo", Integer.toString(ammoCount), Integer.toString(gunType.internalAmmoStorage)));
 			}
     	}
     	
