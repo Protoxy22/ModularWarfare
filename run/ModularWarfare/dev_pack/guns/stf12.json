@@ -6,7 +6,7 @@
   "roundsPerMin": 85,
   "reloadTime": 70,
   "internalAmmoStorage": 7,
-  "acceptedBullets": ["mwp.spotterbullet"],
+  "acceptedBullets": ["mwp.12gauge"],
   "modelName": "mwp.stf12",
   "weaponSounds": 
   [

@@ -70,16 +70,16 @@ public class stf12 extends ModelGun //Same as Filename
 		//RecoilSlideDistance = 0.3F;
 		//RotateSlideDistance = -7F;
         
-        leftArmPos = new Vector3f(0.10F, -0.23F, -0.45F);
-        leftArmRot = new Vector3f(0.0F, -45.0F, -40.0F);
-        leftArmReloadPos = new Vector3f(0.1F, 0.12F, -0.70F);
-        leftArmReloadRot = new Vector3f(0.0F, -65.0F, -70.0F);
+        leftArmPos = new Vector3f(0.350F, -0.50F, -0.0F);
+        leftArmRot = new Vector3f(25.0F, 0.0F, -45.0F);
+        leftArmReloadPos = new Vector3f(0.150F, -0.60F, -0.0F);
+        leftArmReloadRot = new Vector3f(25.0F, 0.0F, -45.0F);
         
-        rightArmPos = new Vector3f(-0.72F, -0.10F, 0.0F);
+        rightArmPos = new Vector3f(0.29F, -0.60F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.38F, -0.44F, 0.01F);
-        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -70.0F);
-        
+        rightArmReloadPos = new Vector3f(0.29F, -0.60F, 0.0F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+  
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
  

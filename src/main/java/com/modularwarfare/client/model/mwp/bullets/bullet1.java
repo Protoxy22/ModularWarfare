@@ -7,7 +7,7 @@
 // Created on: 21.12.2018 - 12:41:02
 // Last changed on: 21.12.2018 - 12:41:02
 
-package com.modularwarfare.client.model.mwp.bullet; //Path where the model is located
+package com.modularwarfare.client.model.mwp.bullets; //Path where the model is located
 
 import com.modularwarfare.client.model.ModelBullet;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
