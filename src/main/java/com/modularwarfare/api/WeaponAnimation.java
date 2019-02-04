@@ -15,7 +15,7 @@ public class WeaponAnimation {
 		
 	}
 	
-	public void onAmmoAnimation(ModelGun gunModel, float clipPosition)
+	public void onAmmoAnimation(ModelGun gunModel, float clipPosition, int reloadAmmoCount)
 	{
 		
 	}

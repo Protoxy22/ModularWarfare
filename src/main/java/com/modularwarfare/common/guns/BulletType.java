@@ -2,7 +2,9 @@ package com.modularwarfare.common.guns;
 
 import java.util.HashMap;
 
+import com.modularwarfare.client.model.ModelBullet;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.ModularWarfare;
 
 public class BulletType extends BaseType {
 	
@@ -29,7 +31,7 @@ public class BulletType extends BaseType {
 	@Override
 	public void reloadModel()
 	{
-		//model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelAmmo.class);
+		model = ModularWarfare.PROXY.loadModel(modelName, internalName, ModelBullet.class);
 	}
 	
 	@Override

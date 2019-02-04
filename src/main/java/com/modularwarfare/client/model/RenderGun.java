@@ -21,9 +21,9 @@ import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
+import com.modularwarfare.common.guns.ItemBullet;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.guns.WeaponFireMode;
-import com.modularwarfare.utility.NumberHelper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -354,7 +354,7 @@ public class RenderGun extends CustomItemRenderer {
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 							float clipPosition = getReloadClipPosition(reloadProgress, model, animations);
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, animations.reloadAmmoCount);
 						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)
@@ -434,6 +434,20 @@ public class RenderGun extends CustomItemRenderer {
 								GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
 								model.renderAmmo(f);
 							}
+						}
+					} else if(ItemGun.getUsedBullet(item, gunType) != null)
+					{
+						ItemBullet itemBullet = ItemGun.getUsedBullet(item, gunType);
+						
+						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+							float clipPosition = getReloadClipPosition(reloadProgress, model, animations);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, animations.reloadAmmoCount);
+						}
+						
+						if(itemBullet.type.model != null)
+						{
+							// TODO: Render bullet
+							
 						}
 					}
 				}
