@@ -218,9 +218,9 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						if(model.rightHandBolt)
 						{
-							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
-							GL11.glRotatef(model.boltRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
 							GL11.glTranslatef(model.boltRotationPoint.x, model.boltRotationPoint.y, model.boltRotationPoint.z);
+							GL11.glRotatef(model.boltRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 1, 0, 0);
+							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
 						}
 						model.renderPump(f);
 					}
@@ -286,6 +286,17 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glRotatef(-animations.hammerRotation * 2, 0F, 0F, 1F);
 					GL11.glTranslatef(-model.hammerRotationPoint.x, -model.hammerRotationPoint.y, -model.hammerRotationPoint.z);
 					model.renderHammer(f);
+				}
+				GL11.glPopMatrix();
+				
+				//Render lever action
+				GL11.glPushMatrix();
+				{
+					GL11.glTranslatef(model.leverRotationPoint.x, model.leverRotationPoint.y, model.leverRotationPoint.z);
+					GL11.glRotatef(model.leverRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 0, 0, 1);
+					GL11.glTranslatef(-model.leverRotationPoint.x, -model.leverRotationPoint.y, -model.leverRotationPoint.z);
+					System.out.println(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing));
+					model.renderLeverAction(f);
 				}
 				GL11.glPopMatrix();
 				

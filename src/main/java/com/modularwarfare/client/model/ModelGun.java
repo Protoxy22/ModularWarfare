@@ -147,10 +147,14 @@ public class ModelGun extends TurboBase
 	public float boltRotation = 0F;
 	/** The rotation point for the bolt twist */
 	public Vector3f boltRotationPoint = new Vector3f();
-	/** The rotation point for the trigger */
 	/** For animated triggers */
 	public float triggerRotation = 0F;
+	/** The rotation point for the trigger */
 	public Vector3f triggerRotationPoint = new Vector3f();
+	/** For animated triggers */
+	public float leverRotation = 0F;
+	/** The rotation point for the trigger */
+	public Vector3f leverRotationPoint = new Vector3f();
 	/** The translateall value used for moving the entire model */
 	public Vector3f translateAll = new Vector3f();
 	/** For shotgun pump handle */
@@ -322,6 +326,11 @@ public class ModelGun extends TurboBase
 		render(hammerModel, f);
 	}
 	
+	public void renderLeverAction(float f)
+	{
+		render(leverActionModel, f);
+	}
+	
 	public void renderTrigger(float f)
 	{
 		render(triggerModel, f);
@@ -351,6 +360,7 @@ public class ModelGun extends TurboBase
 		flip(revolverBarrelModel);
 		flip(breakActionModel);
 		flip(hammerModel);
+		flip(leverActionModel);
 		flip(triggerModel);
 		flip(switchModel);
 	}
@@ -376,6 +386,7 @@ public class ModelGun extends TurboBase
     		translate(revolverBarrelModel, x, y, z);
     		translate(breakActionModel, x, y, z);
     		translate(hammerModel, x, y, z);
+    		translate(leverActionModel, x, y, z);
     		translate(triggerModel, x, y, z);
     		translate(switchModel, x, y, z);
     	}

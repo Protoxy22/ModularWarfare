@@ -1,0 +1,19 @@
+{
+  "displayName": "Delta's 3030Win",
+  "internalName": "mwp.win3030",
+  "iconName": "mwp.win3030",
+  "gunDamage": 5,
+  "roundsPerMin": 20,
+  "acceptedAmmo": ["mwp.cslr4ammo"],
+  "weaponSounds": 
+  [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "shoot.mwp.sniper1"
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "reload.mwp.g.60"
+    }
+  ]
+}
