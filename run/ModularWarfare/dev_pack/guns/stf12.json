@@ -4,7 +4,7 @@
   "iconName": "mwp.stf12",
   "gunDamage": 5,
   "roundsPerMin": 85,
-  "reloadTime": 70,
+  "reloadTime": 200,
   "internalAmmoStorage": 7,
   "acceptedBullets": ["mwp.12gauge"],
   "modelName": "mwp.stf12",

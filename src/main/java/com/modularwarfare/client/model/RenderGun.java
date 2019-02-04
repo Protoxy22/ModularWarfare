@@ -444,10 +444,15 @@ public class RenderGun extends CustomItemRenderer {
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, animations.reloadAmmoCount);
 						}
 						
-						if(itemBullet.type.model != null)
+						if(itemBullet.type.model != null && animations.reloading)
 						{
 							// TODO: Render bullet
-							
+							GL11.glPushMatrix();
+							{
+								ModelBullet bulletModel = (ModelBullet) itemBullet.type.model;
+								bulletModel.renderBullet(f);
+							}
+							GL11.glPopMatrix();
 						}
 					}
 				}

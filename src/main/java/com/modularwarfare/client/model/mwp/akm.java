@@ -36,7 +36,7 @@ public class akm extends ModelGun //Same as Filename
 		initslideModel_1();
 
 //		gripAttachPoint = new Vector3f(55 /16F, 16F /16F, 0F /16F);
-	    reloadAnimation = WeaponAnimations.RIFLE2;
+	    reloadAnimation = WeaponAnimations.RIFLE;
 		modelScale = 0.18F;
 		//translateAll(0F, -12.0F, 0.0F);//forward/down/right
 		translateAll = new Vector3f(0F, -12.0F, 0.0F);
@@ -50,25 +50,25 @@ public class akm extends ModelGun //Same as Filename
 		
 		hasFlash = false;
         
-        leftArmPos = new Vector3f(0.350F, -0.50F, -0.0F);
-        leftArmRot = new Vector3f(45.0F, 0.0F, -45.0F);
-        leftArmReloadPos = new Vector3f(-0.00F, -0.0F, -0.0F);
-        leftArmReloadRot = new Vector3f(0.0F, -0.0F, -0.0F);
+        //leftArmPos = new Vector3f(0.350F, -0.50F, -0.0F);
+        //leftArmRot = new Vector3f(45.0F, 0.0F, -45.0F);
+       //leftArmReloadPos = new Vector3f(-0.00F, -0.0F, -0.0F);
+        //leftArmReloadRot = new Vector3f(0.0F, -0.0F, -0.0F);
         
  
-        rightArmPos = new Vector3f(0.29F, -0.60F, 0.0F);
-        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.0F, -0.00F, 0.0F);
-        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -0.0F);
-        rightArmChargePos = new Vector3f(-0.00F, 0.0F, -0.0F);
-        rightArmChargeRot = new Vector3f(-00.0F, -0.0F, -0.0F);
+        //rightArmPos = new Vector3f(0.29F, -0.60F, 0.0F);
+       // rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        //rightArmReloadPos = new Vector3f(-0.0F, -0.00F, 0.0F);
+        //rightArmReloadRot = new Vector3f(0.0F, 0.0F, -0.0F);
+        //rightArmChargePos = new Vector3f(-0.00F, 0.0F, -0.0F);
+        //rightArmChargeRot = new Vector3f(-00.0F, -0.0F, -0.0F);
         
        
         
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
  
-        leftHandAmmo = true;
+       // leftHandAmmo = true;
         
 		//RecoilSlideDistance = 0.15F;
 		//RotateSlideDistance = -2F;
