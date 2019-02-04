@@ -635,9 +635,9 @@ public class RenderGun extends CustomItemRenderer {
 			Vector3f reloadArmRot = rightArm ? model.rightArmReloadRot : model.leftArmReloadRot;
 			Vector3f reloadArmPos = rightArm ? model.rightArmReloadPos : model.leftArmReloadPos;
 			
-			if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, armRot, armPos);
+			if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, armRot, armPos, !rightArm);
 			else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, chargeArmRot, chargeArmPos, armRot, armPos);
-			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos);
+			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos, !rightArm);
 			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, rightArm);
 			else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos);
 			
@@ -662,6 +662,7 @@ public class RenderGun extends CustomItemRenderer {
 		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 		else bindTexture("arms", "armSkin");
 		float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
+		boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
 		//System.out.println(weaponAnimation.ammoLoadOffset);
@@ -674,8 +675,8 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPushMatrix();
 				{
 					//System.out.println(movingArmState);
-					if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos);}
-					else if (movingArmState == "Bolt") {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos);}
+					if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos, !rightArm);}
+					else if (movingArmState == "Bolt") {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos, !rightArm);}
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos);}
@@ -691,7 +692,7 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPushMatrix();
 				{
 					if (movingArmState == "Charge") {RenderArms.renderArmCharge(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos, model.leftArmRot, model.leftArmPos);}
-					else if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos);}
+					else if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.leftArmRot, model.leftArmPos, !rightArm);}
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
 					else if (movingArmState == "Unload") {RenderArms.renderArmUnload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos);}
