@@ -19,10 +19,13 @@ public class RenderArms {
 	 */
 	
 	// right hand pump action animation
-	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
+	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
 		GL11.glTranslatef(-(reloadPos.x - Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.pumpHandleDistance * model.modelScale)), reloadPos.y, reloadPos.z);
-		handleRotate(reloadRot);
+		if(leftHand)
+			handleRotateLeft(reloadRot);
+		else
+			handleRotateRight(reloadRot);
 	}
 	
 	// This moves the right hand if leftHandAmmo & handCharge are true (For left
@@ -44,13 +47,15 @@ public class RenderArms {
 	
 	// This moves the right hand if leftHandAmmo & handBolt are true (For left hand
 	// reload with right hand bolt action)
-	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos)
+	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
 		GL11.glTranslatef(reloadPos.x + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
 		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
 		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.z * model.modelScale)));
-
-		handleRotate(reloadRot);
+		if(leftHand)
+			handleRotateLeft(reloadRot);
+		else
+			handleRotateRight(reloadRot);
 	}
 	
 	public static void renderArmDefault(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean firingHand)
@@ -105,7 +110,17 @@ public class RenderArms {
 		GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
 	}
 	
-	private static void handleRotate(Vector3f reloadRot)
+	private static void handleRotateLeft(Vector3f reloadRot)
+	{
+			GL11.glTranslatef(0.225F, 0.75F, 0);
+			GL11.glRotatef(reloadRot.x, 1F, 0F, 0F);
+			GL11.glRotatef(reloadRot.y, 0F, 1F, 0F);
+			GL11.glRotatef(reloadRot.z, 0F, 0F, 1F);
+			GL11.glTranslatef(-0.225F, -0.75F, 0);
+
+	}
+	
+	private static void handleRotateRight(Vector3f reloadRot)
 	{
 			GL11.glTranslatef(0.225F, 0.75F, 0);
 			GL11.glRotatef(reloadRot.x, 1F, 0F, 0F);
