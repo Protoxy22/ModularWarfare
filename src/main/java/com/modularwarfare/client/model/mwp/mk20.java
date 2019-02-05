@@ -37,7 +37,7 @@ public class mk20 extends ModelGun //Same as Filename
 //		gripAttachPoint = new Vector3f(165 /16F, 54F /16F, 0F /16F);
 //		scopeAttachPoint = new Vector3f(10 /16F, 87F /16F, 0F /16F);
 
-		translateAll(-0.5F, -19.5F, -0.5F);//forward/down/right
+		translateAll = new Vector3f(-0.5F, -19.5F, -0.5F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.07F, 0F);//forward/up/?
 
 		gunSlideDistance = 3F;

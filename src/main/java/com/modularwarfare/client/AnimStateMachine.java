@@ -97,7 +97,7 @@ public class AnimStateMachine {
 			if (timeUntilCharge == 0 && chargeTrigger >= 1f) {
 				// Pump it!
 				charging = true;
-				System.out.println("called");
+				//System.out.println("called");
 				ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Charge));
 				lastCharged = charged = -1F;
 			}

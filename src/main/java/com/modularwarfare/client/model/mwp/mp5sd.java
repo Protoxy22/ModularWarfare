@@ -34,7 +34,7 @@ public class mp5sd extends ModelGun //Same as Filename
 
 //		gripAttachPoint = new Vector3f(70 /16F, 30F /16F, 0F /16F);
 
-		translateAll(0F, -10.6F, -0.1F);//forward/down/right
+		translateAll = new Vector3f(0F, -10.6F, -0.1F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.10F, 0F);//forward/up/? 
 
 
@@ -52,10 +52,10 @@ public class mp5sd extends ModelGun //Same as Filename
 
 		hasFlash = false;
         
-        leftArmPos = new Vector3f(0.0F, -0.10F, -0.49F);
-        leftArmRot = new Vector3f(0.0F, -45.0F, -50.0F);
-        leftArmReloadPos = new Vector3f(-0.15F, -0.4F, -0.37F);
-        leftArmReloadRot = new Vector3f(0.0F, -35.0F, -50.0F);
+        leftArmPos = new Vector3f(0.350F, -0.54F, 0.02F);
+        leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(0.150F, -0.72F, 0.02F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
  
         rightArmPos = new Vector3f(-0.38F, -0.13F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);

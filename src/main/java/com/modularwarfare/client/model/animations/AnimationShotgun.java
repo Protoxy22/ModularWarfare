@@ -42,11 +42,20 @@ public class AnimationShotgun extends WeaponAnimation {
 		float multiAmmoPosition = ammoPosition * reloadAmmoCount;
 		int bulletNum = MathHelper.floor(multiAmmoPosition);
 		float bulletProgress = multiAmmoPosition - bulletNum;
+
 		
-		GL11.glRotatef(bulletProgress * 1f, 0F, 1F, 0F);
-		GL11.glRotatef(bulletProgress * 20F, 0F, 0F, 1F);
-		GL11.glRotatef(bulletProgress * 1F, 1F, 0F, 0F);
-		GL11.glTranslatef(bulletProgress * (-2F /16F) / gunModel.modelScale, bulletProgress * (-8F /16F) / gunModel.modelScale, bulletProgress * (-1F /16F) / gunModel.modelScale);	
+		//Translate X - Forwards/Backwards
+		GL11.glTranslatef(bulletProgress * (-2F /16F) / gunModel.modelScale, 0F, 0F);
+		//Translate Y - Up/Down
+		GL11.glTranslatef(0F, bulletProgress * (-8F /16F) / gunModel.modelScale, 0F);
+		//Translate Z - Left/Right
+		GL11.glTranslatef(0F, 0F, bulletProgress * (-1F /16F) / gunModel.modelScale);
+		//Rotate X axis - Rolls Left/Right
+		GL11.glRotatef(1F * bulletProgress, 1F, 0F, 0F);
+		//Rotate Y axis - Angle Left/Right
+		GL11.glRotatef(1F * bulletProgress, 0F, 1F, 0F);
+		//Rotate Z axis - Angle Up/Down
+		GL11.glRotatef(20F * bulletProgress, 0F, 0F, 1F);
 	}
 
 }

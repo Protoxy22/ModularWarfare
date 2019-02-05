@@ -36,7 +36,7 @@ public class dsr1 extends ModelGun //Same as Filename
 		inittriggerModel_1();
 
 		modelScale = 0.09F;
-		translateAll(0F, -13F, 0F);//forward/down/right
+		translateAll = new Vector3f(0F, -13F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/?
 		rightHandBolt = true;
 

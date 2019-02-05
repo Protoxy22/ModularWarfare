@@ -52,18 +52,13 @@ public class RenderGun extends CustomItemRenderer {
 	public static float swayHorizontal = 0f;
 	public static Float swayVerticalEP;
 	public static Float swayHorizontalEP;
-	
 	public static float triggerPullSwitch;
-
-	
 	public static int shotState = 0;
-
 	public static ModelRotateTool rotateToolModel;
 	public int oldMagCount;
-	
 	private int direction = 0;
-	
 	private float lastReloadProgress = 0f;
+	
 		
 	@Override
 	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
@@ -150,6 +145,7 @@ public class RenderGun extends CustomItemRenderer {
 				translateY = (0.834F + customHipTranslate.y) - (-0.064F + customAimTranslate.y + customHipTranslate.y) * adsSwitch;//0.898
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
 			
+				//Custom view bobbing applies to gun models
 				float bobModifier = !entityLivingBase.isSprinting() ? adsSwitch == 0F ? !animations.reloading ? 0.7F : 0.2F: 0F : !animations.reloading ? adsSwitch == 0 ? 0.75F : 0.15F : 0.4F;
 				EntityPlayer entityplayer = (EntityPlayer)Minecraft.getMinecraft().getRenderViewEntity();
 				float f1 = (entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified) * bobModifier;
@@ -170,6 +166,7 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
 				
+				//Calls reload animation from the specified animation file
 				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {				
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
 				}
@@ -187,6 +184,7 @@ public class RenderGun extends CustomItemRenderer {
 
 			}
 			
+			//Render call for the static arm
 			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
 				 renderStaticArm(mc.player, model, animations); 
 			}
@@ -203,6 +201,8 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				GL11.glTranslatef(model.translateAll.x * f, -model.translateAll.y * f, -model.translateAll.z * f);
 				
+				//Item frame rendering properties
+				//TODO Issue with item frame lighting and entities
 				if(renderType == CustomItemRenderType.ENTITY)
 				{
 					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
@@ -221,6 +221,7 @@ public class RenderGun extends CustomItemRenderer {
 				
 				model.renderGun(f);
 				
+				//Render any attachments
 				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
 					model.renderDefaultScope(f);
 				model.renderDefaultBarrel(f);
@@ -228,6 +229,8 @@ public class RenderGun extends CustomItemRenderer {
 				model.renderDefaultGrip(f);
 				model.renderDefaultGadget(f);
 				
+				
+				//Render pump action
 				ItemStack pumpAttachment = null;
 				if (pumpAttachment == null)
 				{
@@ -236,6 +239,7 @@ public class RenderGun extends CustomItemRenderer {
 						
 						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
+						//Doubles as bolt action animation if set
 						if(model.rightHandBolt)
 						{
 							GL11.glTranslatef(model.boltRotationPoint.x, model.boltRotationPoint.y, model.boltRotationPoint.z);
@@ -247,6 +251,7 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPopMatrix();
 				}
 				
+				//Render charge handle
 				if (model.chargeHandleDistance != 0F)
 				{
 					GL11.glPushMatrix();
@@ -256,6 +261,7 @@ public class RenderGun extends CustomItemRenderer {
 					}
 					GL11.glPopMatrix();
 				}
+				
 				//Render Slide
 				if(GunType.getAttachment(item, AttachmentEnum.Slide) == null)
 				{
@@ -266,6 +272,7 @@ public class RenderGun extends CustomItemRenderer {
 						model.renderSlide(f);
 						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnSlide)
 							model.renderDefaultScope(f);
+						//Render the scope on the slide, if its set on slide
 						if(model.switchIsOnSlide) 
 						{
 							GL11.glPushMatrix();
@@ -283,6 +290,7 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPopMatrix();
 				}
 				
+				//Render break action, uses an array system to allow multiple different break action types on a gun
 				for(BreakActionData breakAction : model.breakActions)
 				{
 					
@@ -315,7 +323,6 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glTranslatef(model.leverRotationPoint.x, model.leverRotationPoint.y, model.leverRotationPoint.z);
 					GL11.glRotatef(model.leverRotation * (1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing)), 0, 0, 1);
 					GL11.glTranslatef(-model.leverRotationPoint.x, -model.leverRotationPoint.y, -model.leverRotationPoint.z);
-					//System.out.println(1 - Math.abs(animations.lastPumped + (animations.pumped - animations.lastPumped) * smoothing));
 					model.renderLeverAction(f);
 				}
 				GL11.glPopMatrix();
@@ -329,7 +336,7 @@ public class RenderGun extends CustomItemRenderer {
 					model.renderTrigger(f);
 				}
 				GL11.glPopMatrix();
-				//TODO
+				
 				//Render fire mode switch
 				if(!model.switchIsOnSlide) {
 				GL11.glPushMatrix();
@@ -354,6 +361,7 @@ public class RenderGun extends CustomItemRenderer {
 				}
 				GL11.glPopMatrix();
 				
+				//Slide lock - Keeps slide in the back position when empty if true
 				boolean empty = !ItemGun.hasNextShot(item);
 				if (model.slideLockOnEmpty)
 				{
@@ -368,7 +376,8 @@ public class RenderGun extends CustomItemRenderer {
 					boolean cachedUnload = (animations.unloadOnly && animations.cachedAmmoStack != null);
 					if(ItemGun.hasAmmoLoaded(item) || cachedUnload)
 					{
-						ItemStack stackAmmo =  cachedUnload ? animations.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
+						ItemStack stackAmmo =  cachedUnload ? animations.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
+						ItemAmmo itemAmmo = (ItemAmmo) stackAmmo.getItem();
 						AmmoType ammoType = itemAmmo.type;
 						boolean shouldNormalRender = true;
 						
@@ -455,7 +464,8 @@ public class RenderGun extends CustomItemRenderer {
 								model.renderAmmo(f);
 							}
 						}
-					} else if(ItemGun.getUsedBullet(item, gunType) != null)
+					} 
+					else if(ItemGun.getUsedBullet(item, gunType) != null)
 					{
 						ItemBullet itemBullet = ItemGun.getUsedBullet(item, gunType);
 						
@@ -477,6 +487,7 @@ public class RenderGun extends CustomItemRenderer {
 					}
 				}
 				
+				//Render moving arm
 				if(ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
 					
 					GL11.glPushMatrix();
@@ -505,6 +516,7 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPopMatrix();
 				}
 				
+				//Test gun xray stuff
 				if(renderType == CustomItemRenderType.ENTITY)
 				{
 					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
@@ -610,13 +622,14 @@ public class RenderGun extends CustomItemRenderer {
 				+ (animations.reloadAnimationProgress - animations.lastReloadAnimationProgress) * smoothing;
 	}
 	
+	//Determine the state of the static arm
 	private String getStaticArmState(ModelGun model, AnimStateMachine anim)
 	{
 		String staticArmState;
 		if(model.leftHandAmmo) 
 		{
 			if(!anim.reloading && model.righthandPump) staticArmState = "Pump";
-			else if(anim.charged < 0.9 && model.rightHandCharge && anim.charged != -1.0F) staticArmState = "Charge";
+			else if(anim.charged < 0.66 && model.rightHandCharge && anim.charged != -1.0F) staticArmState = "Charge";
 			else if(anim.pumped < 0.9 && model.rightHandBolt) staticArmState = "Bolt";
 			else if(!anim.reloading && !model.righthandPump) staticArmState = "Default";
 			else staticArmState = "Reload";
@@ -633,6 +646,8 @@ public class RenderGun extends CustomItemRenderer {
 		}
 		return staticArmState;
 	}
+	
+	//Determine the state of the moving arm
 	private String getMovingArmState(ModelGun model, AnimStateMachine anim)
 	{
 		WeaponAnimation wepAnim = WeaponAnimations.getAnimation(model.reloadAnimation);
@@ -701,6 +716,7 @@ public class RenderGun extends CustomItemRenderer {
 			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, rightArm, !model.leftHandAmmo);
 			else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos, !model.leftHandAmmo);
 			
+			//Render the armor model on the arm
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
 			if(rightArm) 
 			{
@@ -725,7 +741,6 @@ public class RenderGun extends CustomItemRenderer {
 		boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
-		//System.out.println(weaponAnimation.ammoLoadOffset);
 		GL11.glPushMatrix();
 		{
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
@@ -734,7 +749,6 @@ public class RenderGun extends CustomItemRenderer {
 			{
 				GL11.glPushMatrix();
 				{
-					//System.out.println(movingArmState);
 					if (movingArmState == "Pump") {RenderArms.renderArmPump(model, anim, smoothing, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Bolt") {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos, model.leftHandAmmo);}
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true, model.leftHandAmmo);}

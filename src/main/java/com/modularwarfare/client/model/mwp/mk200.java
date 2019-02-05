@@ -97,7 +97,7 @@ public class mk200 extends ModelGun //Same as Filename
 		translateClip = new Vector3f(1 /16F, -50F /16F, -100F /16F);
 
 
-		translateAll(70F, 7.5F, -0.25F);
+		translateAll = new Vector3f(70F, 7.5F, -0.25F);
 
 
 		flipAll();

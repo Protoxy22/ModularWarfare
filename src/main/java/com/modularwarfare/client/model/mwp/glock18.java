@@ -103,7 +103,7 @@ public class glock18 extends ModelGun //Same as Filename
 	    chargeHandleDistance = 0.5F;
 	    chargeDelay = 0;
 	    chargeDelayAfterReload = 65;
-	    chargeTime = 6;
+	    chargeTime = 40;
 	    
 	    leftHandCharge = true;
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);

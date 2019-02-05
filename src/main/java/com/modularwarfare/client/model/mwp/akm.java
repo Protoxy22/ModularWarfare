@@ -60,8 +60,8 @@ public class akm extends ModelGun //Same as Filename
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmChargePos = new Vector3f(-0.00F, 0.0F, -0.0F);
-        rightArmChargeRot = new Vector3f(-00.0F, -0.0F, -0.0F);
+        rightArmChargePos = new Vector3f(0.47F, -0.39F, 0.14F);
+        rightArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
         
        
         
@@ -83,13 +83,13 @@ public class akm extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
 		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 		
-	    //chargeHandleDistance = 0.9F;
-	    //chargeDelay = 0;
-	    //chargeDelayAfterReload = 65;
-	    //chargeTime = 7;
+	    chargeHandleDistance = 0.9F;
+	    chargeDelay = 0;
+	    chargeDelayAfterReload = 65;
+	    chargeTime = 20;
 	    
-	    //rightHandCharge = true;
-	    chargeModifier = new Vector3f (16.0F, 8.0F, 16.0F);
+	    rightHandCharge = true;
+	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 
 //		rotateGunVertical = 20F;
 //		rotateGunHorizontal = 1F;

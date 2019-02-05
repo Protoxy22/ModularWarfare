@@ -39,7 +39,7 @@ public class aughbar extends ModelGun //Same as Filename
 //		scopeAttachPoint = new Vector3f(8F /16F, 44.5F /16F, 0F /16F);
 //		gripAttachPoint = new Vector3f(58F /16F, 25F /16F, 0F /16F);
 
-		translateAll(-.5F, -7F, -0.1F);//forward/down/right
+		translateAll = new Vector3f(-.5F, -7F, -0.1F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.1F, -0.0F);//forward/up/?
 
 		gunSlideDistance = 1F;

@@ -39,7 +39,7 @@ public class cz805 extends ModelGun //Same as Filename
 //		gripAttachPoint = new Vector3f(195 /16F, 48F /16F, 0F /16F);
 		attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(0F /16F, 5F /16F, 0F /16F));
 
-		translateAll(2F, -9F, -0.225F);//forward/down/right
+		translateAll = new Vector3f(2F, -9F, -0.225F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.06F, 0F);//forward/up/?
 
 		gunSlideDistance = 5F;

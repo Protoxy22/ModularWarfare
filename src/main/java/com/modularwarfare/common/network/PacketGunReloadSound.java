@@ -58,7 +58,7 @@ public class PacketGunReloadSound extends PacketBase {
 				if(soundType == null)
 					return;
 				
-				System.out.println(soundType.eventName);
+				//System.out.println(soundType.eventName);
 				gunType.playSound(entityPlayer, soundType, gunStack);
 			}
 		}
