@@ -6,6 +6,8 @@ import com.modularwarfare.common.type.BaseType;
 
 public class AttachmentType extends BaseType {
 	
+	public AttachmentEnum attachmentType;
+	
 	@Override
 	public void loadExtraValues()
 	{

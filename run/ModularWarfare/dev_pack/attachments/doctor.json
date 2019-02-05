@@ -2,6 +2,7 @@
     "displayName": "Docter Sight",
     "internalName": "mwp.docter",
     "modelName": "mwp.attachments.docter",
+    "attachmentType": "sight",
     "modelSkins":
     [
       {
