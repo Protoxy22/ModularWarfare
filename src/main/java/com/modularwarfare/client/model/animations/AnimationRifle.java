@@ -10,6 +10,15 @@ import net.minecraft.util.math.MathHelper;
 
 public class AnimationRifle extends WeaponAnimation {
 	
+	public AnimationRifle()
+	{
+		ammoLoadOffset = new Vector3f(0, -0.5F, 0);
+		tiltGunTime = 0.15F;
+		unloadAmmoTime = 0.35F;
+		loadAmmoTime = 0.35F;
+		untiltGunTime = 0.15F;
+	}
+	
 	@Override
 	public void onGunAnimation(float tiltProgress)
 	{
@@ -28,12 +37,12 @@ public class AnimationRifle extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float clipPosition, int reloadAmmoCount)
+	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount)
 	{
-		float ammoPosition = clipPosition * reloadAmmoCount;
-		int bulletNum = MathHelper.floor(ammoPosition);
-		float bulletProgress = ammoPosition - bulletNum;
-		
+		float multiAmmoPosition = ammoPosition * reloadAmmoCount;
+		int bulletNum = MathHelper.floor(multiAmmoPosition);
+		float bulletProgress = multiAmmoPosition - bulletNum;
+
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(bulletProgress * -0.75F, 0F, 0F);
 		//Translate Y - Up/Down

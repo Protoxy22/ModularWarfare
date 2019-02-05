@@ -38,7 +38,9 @@ public class ragingjudge extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.10F, 0F);//forward/up/? 
 		
 		hammerRotationPoint = new Vector3f(0.5F, 2.1F, 0F);
+		
 		rotationHelper = new Vector3f(1.75F, 1.2F, 0F);
+		
 		triggerRotationPoint = new Vector3f(1.75F, 1.2F, 0F);
 		triggerRotation = -30F;
 		cylinderRotation = 15F;

@@ -29,11 +29,11 @@ public class AnimationRifle3 extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float clipPosition, int reloadAmmoCount)
+	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount)
 	{
-		float ammoPosition = clipPosition * 1/*getNumBulletsInReload(animations, gripAttachment, type, item)*/;
+		float multiAmmoPosition = ammoPosition * 1/*getNumBulletsInReload(animations, gripAttachment, type, item)*/;
 		int bulletNum = MathHelper.floor(ammoPosition);
-		float bulletProgress = ammoPosition - bulletNum;
+		float bulletProgress = multiAmmoPosition - bulletNum;
 		
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(bulletProgress * -2.75F, 0F, 0F);
@@ -42,11 +42,11 @@ public class AnimationRifle3 extends WeaponAnimation {
 		//Translate Z - Left/Right
 		GL11.glTranslatef(0F, 0F, bulletProgress * 0F);
 		//Rotate X axis - Rolls Left/Right
-		GL11.glRotatef(0F * clipPosition, 1F, 0F, 0F);
+		GL11.glRotatef(0F * ammoPosition, 1F, 0F, 0F);
 		//Rotate Y axis - Angle Left/Right
-		GL11.glRotatef(0F * clipPosition, 0F, 1F, 0F);
+		GL11.glRotatef(0F * ammoPosition, 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
-		GL11.glRotatef(-50F * clipPosition, 0F, 0F, 1F);
+		GL11.glRotatef(-50F * ammoPosition, 0F, 0F, 1F);
 
 	}
 

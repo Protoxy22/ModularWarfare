@@ -101,6 +101,8 @@ public class GunType extends BaseType {
 	
 	//Sound Variables
 	private SoundEntry[] weaponSounds;
+	//Increases pitch incrementally over last 5 rounds, 0.05F recommended
+	public float emptyPitch = 0.0F;
 	public HashMap<WeaponSoundType, ArrayList<SoundEntry>> weaponSoundMap;
 	
 	@Override
@@ -184,10 +186,11 @@ public class GunType extends BaseType {
 								volume = (float) (((distance + maxSoundRange/6) / 16) * soundEntry.soundVolumeMultiplier);
 							}		
 							//Send sound packet for guns using advanced audio settings
+							//Increases pitch slighty towards end of mag if enabled
+							
 							float customPitch = ((random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch);
-							float test = ItemGun.getMagazineBullets(gunStack) <= 5 ? 0.30f - (0.05f * ItemGun.getMagazineBullets(gunStack)) : 0f;
-							System.out.println(test);
-							customPitch += test;
+							float modifyPitch = ItemGun.getMagazineBullets(gunStack) <= 5 && emptyPitch != 0F ? 0.30f - (emptyPitch * ItemGun.getMagazineBullets(gunStack)) : 0f;
+							customPitch += modifyPitch;
 							ModularWarfare.NETWORK.sendTo(new PacketPlaySound(originPos, soundName, volume, customPitch), (EntityPlayerMP) hearingPlayer);
 						}
 					} else 

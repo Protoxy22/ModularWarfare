@@ -50,25 +50,25 @@ public class akm extends ModelGun //Same as Filename
 		
 		hasFlash = false;
         
-        //leftArmPos = new Vector3f(0.350F, -0.50F, -0.0F);
-        //leftArmRot = new Vector3f(45.0F, 0.0F, -45.0F);
-       //leftArmReloadPos = new Vector3f(-0.00F, -0.0F, -0.0F);
-        //leftArmReloadRot = new Vector3f(0.0F, -0.0F, -0.0F);
+        leftArmPos = new Vector3f(0.350F, -0.52F, 0.02F);
+        leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(0.150F, -0.72F, 0.02F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
         
  
-        //rightArmPos = new Vector3f(0.29F, -0.60F, 0.0F);
-       // rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        //rightArmReloadPos = new Vector3f(-0.0F, -0.00F, 0.0F);
-        //rightArmReloadRot = new Vector3f(0.0F, 0.0F, -0.0F);
-        //rightArmChargePos = new Vector3f(-0.00F, 0.0F, -0.0F);
-        //rightArmChargeRot = new Vector3f(-00.0F, -0.0F, -0.0F);
+        rightArmPos = new Vector3f(0.29F, -0.60F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmChargePos = new Vector3f(-0.00F, 0.0F, -0.0F);
+        rightArmChargeRot = new Vector3f(-00.0F, -0.0F, -0.0F);
         
        
         
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
  
-       // leftHandAmmo = true;
+        leftHandAmmo = true;
         
 		//RecoilSlideDistance = 0.15F;
 		//RotateSlideDistance = -2F;

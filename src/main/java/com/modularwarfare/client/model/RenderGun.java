@@ -353,8 +353,8 @@ public class RenderGun extends CustomItemRenderer {
 						boolean shouldNormalRender = true;
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-							float clipPosition = getReloadClipPosition(reloadProgress, model, animations);
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, animations.reloadAmmoCount);
+							float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount);
 						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)
@@ -440,8 +440,8 @@ public class RenderGun extends CustomItemRenderer {
 						ItemBullet itemBullet = ItemGun.getUsedBullet(item, gunType);
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-							float clipPosition = getReloadClipPosition(reloadProgress, model, animations);
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, clipPosition, animations.reloadAmmoCount);
+							float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount);
 						}
 						
 						if(itemBullet.type.model != null && animations.reloading)
@@ -521,43 +521,42 @@ public class RenderGun extends CustomItemRenderer {
 		
 	}
 	
-	//Calculates the ammo position during the unloadClip and loadClip stages of the reload
-	private float getReloadClipPosition(float reloadProgress, ModelGun model, AnimStateMachine anim) 
+	//Calculates the ammo position during the unloadAmmo and loadAmmo stages of the reload
+	private float getReloadAmmoPosition(float reloadProgress, ModelGun model, AnimStateMachine anim) 
 	{
-		float clipPosition = 0F;
+		float ammoPosition = 0F;
 		//These values must always add up to 1.0 and control which of the 4 states the reload animation is in by comparing their value to reloadProgress
 		WeaponAnimation wepAnim = WeaponAnimations.getAnimation(model.reloadAnimation);
-		float tiltGunTime = wepAnim.tiltGunTime, unloadClipTime = wepAnim.unloadClipTime, loadClipTime = wepAnim.loadClipTime, untiltGunTime = wepAnim.untiltGunTime;
+		float tiltGunTime = wepAnim.tiltGunTime, unloadAmmoTime = wepAnim.unloadAmmoTime, loadAmmoTime = wepAnim.loadAmmoTime, untiltGunTime = wepAnim.untiltGunTime;
 		if(anim.loadOnly)
 		{
-			float dividedTime = unloadClipTime / 3F;
+			float dividedTime = unloadAmmoTime / 3F;
 			tiltGunTime += dividedTime * 2;
-			loadClipTime += dividedTime;
-			unloadClipTime = 0f;
+			loadAmmoTime += dividedTime;
+			unloadAmmoTime = 0f;
 		}
 		if(anim.unloadOnly)
 		{
-			float dividedTime = loadClipTime / 3F;
+			float dividedTime = loadAmmoTime / 3F;
 			//tiltGunTime += dividedTime;
 			untiltGunTime += dividedTime *2;
-			unloadClipTime += dividedTime;
-			loadClipTime = 0f;
+			unloadAmmoTime += dividedTime;
+			loadAmmoTime = 0f;
 		}
-		//Unload half of animation (Starts moving after Progress passes tiltGunTime, moves until Progress reaches tiltGunTime + unloadClipTime)
-		if (reloadProgress > tiltGunTime && reloadProgress < tiltGunTime + unloadClipTime)
+		//Unload half of animation (Starts moving after Progress passes tiltGunTime, moves until Progress reaches tiltGunTime + unloadAmmoTime)
+		if (reloadProgress > tiltGunTime && reloadProgress < tiltGunTime + unloadAmmoTime)
 			//Moves the ammo down 0 to 2.4
-			clipPosition = (reloadProgress - tiltGunTime) / unloadClipTime;
+			ammoPosition = (reloadProgress - tiltGunTime) / unloadAmmoTime;
 
-		//Load half of animation (Starts moving after Progress passes tiltGunTime + unloadClipTime, moves until Progress reaches 1.0 - untiltGunTime (Back to original position))
-		if (reloadProgress >= tiltGunTime + unloadClipTime && reloadProgress < 1 - untiltGunTime)
+		//Load half of animation (Starts moving after Progress passes tiltGunTime + unloadAmmoTime, moves until Progress reaches 1.0 - untiltGunTime (Back to original position))
+		if (reloadProgress >= tiltGunTime + unloadAmmoTime && reloadProgress < 1 - untiltGunTime)
 			//Moves the ammo up -2.4 to 0
-			clipPosition = 1F - (reloadProgress - (tiltGunTime + unloadClipTime)) / loadClipTime;
+			ammoPosition = 1F - (reloadProgress - (tiltGunTime + unloadAmmoTime)) / loadAmmoTime;
 		//WIP LOAD ONLY
-		float loadOnlyClipPosition = Math.max(0F, Math.min(1F, 1F - ((reloadProgress - tiltGunTime) / (unloadClipTime + loadClipTime))));
-		if (reloadProgress >= tiltGunTime + unloadClipTime && anim.loadOnly) anim.renderAmmo = true;
-
-				
-		return clipPosition;
+		float loadOnlyAmmoPosition = Math.max(0F, Math.min(1F, 1F - ((reloadProgress - tiltGunTime) / (unloadAmmoTime + loadAmmoTime))));
+		if (reloadProgress >= tiltGunTime + unloadAmmoTime && anim.loadOnly) anim.renderAmmo = true;
+	
+		return ammoPosition;
 	}
 	
 	//Calculates the tilt and untilt at the start and end of the reload animation
@@ -566,10 +565,10 @@ public class RenderGun extends CustomItemRenderer {
 		float tiltProgress = 1f;
 		if (reloadProgress < wepAnim.tiltGunTime)
 			tiltProgress = reloadProgress / wepAnim.tiltGunTime;
-		if (reloadProgress > wepAnim.tiltGunTime + wepAnim.unloadClipTime
-				+ wepAnim.loadClipTime)
+		if (reloadProgress > wepAnim.tiltGunTime + wepAnim.unloadAmmoTime
+				+ wepAnim.loadAmmoTime)
 			tiltProgress = 1F - (reloadProgress
-					- (wepAnim.tiltGunTime + wepAnim.unloadClipTime + wepAnim.loadClipTime))
+					- (wepAnim.tiltGunTime + wepAnim.unloadAmmoTime + wepAnim.loadAmmoTime))
 					/ wepAnim.untiltGunTime;
 		return tiltProgress;
 	}
@@ -612,7 +611,7 @@ public class RenderGun extends CustomItemRenderer {
 			if(anim.charged < 0.9 && model.rightHandCharge && anim.charged != -1.0F) movingArmState = "Pump";
 			else if(anim.pumped < 0.9 && model.rightHandBolt) movingArmState = "Bolt";
 			else if(!anim.reloading) movingArmState = "Default";
-			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.loadOnly) movingArmState = "Load";
+			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadAmmoTime && anim.loadOnly) movingArmState = "Load";
 			//else if() movingArmState = "Unload";
 			else movingArmState = "Reload";
 			//System.out.println("Moving Right Arm" + " - " + movingArmState);
@@ -622,8 +621,8 @@ public class RenderGun extends CustomItemRenderer {
 			if (anim.chargeTriggerTrigger >= 1 && anim.chargeTriggerTrigger != 3 && model.leftHandCharge && anim.charged != -1.0F) movingArmState = "Charge";
 			else if (!anim.reloading && model.lefthandPump) movingArmState = "Pump";
 			else if (!anim.reloading) movingArmState = "Default";
-			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.loadOnly) movingArmState = "Load";
-			else if(reloadProgress >= wepAnim.tiltGunTime + wepAnim.unloadClipTime && anim.unloadOnly) movingArmState = "Unload";
+			else if(reloadProgress <= wepAnim.tiltGunTime + wepAnim.unloadAmmoTime && anim.loadOnly) movingArmState = "Load";
+			else if(reloadProgress >= wepAnim.tiltGunTime + wepAnim.unloadAmmoTime && anim.unloadOnly) movingArmState = "Unload";
 			else movingArmState = "Reload";
 			//System.out.println("Moving Left Arm" + " - " + movingArmState);
 		}
@@ -633,10 +632,10 @@ public class RenderGun extends CustomItemRenderer {
 	// Resets render modifiers
 	public static void resetRenderMods()
 	{
-		RenderGun.swayHorizontal = 0f;
-		RenderGun.swayVertical = 0f;
-		RenderGun.swayHorizontalEP = 0f;
-		RenderGun.swayVerticalEP = 0f;
+		//RenderGun.swayHorizontal = 0f;
+		//RenderGun.swayVertical = 0f;
+		//RenderGun.swayHorizontalEP = 0f;
+		//RenderGun.swayVerticalEP = 0f;
 		RenderGun.reloadSwitch = 0f;
 		RenderGun.sprintSwitch = 0f;
 		RenderGun.adsSwitch = 0f;
