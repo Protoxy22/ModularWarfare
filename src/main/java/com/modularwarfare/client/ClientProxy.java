@@ -228,7 +228,7 @@ public class ClientProxy extends CommonProxy {
 				
 				File typeModel = new File(itemModelsDir, type.internalName + ".json");
 				
-				if(ModularWarfare.DEV_ENV ? true : !typeModel.exists())
+				if(ModularWarfare.DEV_ENV ? /*true*/ !typeModel.exists() : !typeModel.exists())
 				{
 					if(type instanceof ArmorType)
 					{

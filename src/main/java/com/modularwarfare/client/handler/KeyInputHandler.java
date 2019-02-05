@@ -7,6 +7,7 @@ import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.network.PacketGunAddAttachment;
 import com.modularwarfare.common.network.PacketGunReload;
 import com.modularwarfare.common.network.PacketGunSwitchMode;
 import com.modularwarfare.utility.event.ForgeEvent;
@@ -29,6 +30,7 @@ public class KeyInputHandler extends ForgeEvent {
 		keyBinds.add(new KeyEntry(KeyType.ClientReload));
 		keyBinds.add(new KeyEntry(KeyType.FireMode));
 		keyBinds.add(new KeyEntry(KeyType.GunUnload));
+		keyBinds.add(new KeyEntry(KeyType.AddAttachment));
 		
 		if(ModularWarfare.DEV_ENV)
 		{
@@ -102,7 +104,14 @@ public class KeyInputHandler extends ForgeEvent {
 					ModularWarfare.loadContentPacks(true);
 					ModularWarfare.PROXY.reloadModels(true);
 				}
-				break;	
+				break;
+				
+			case AddAttachment:
+				if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
+				{
+					ModularWarfare.NETWORK.sendToServer(new PacketGunAddAttachment());
+				}
+				break;
 				
 			default:
 				ModularWarfare.LOGGER.warn("Default case called on handleKeyInput for " + keyType.toString());

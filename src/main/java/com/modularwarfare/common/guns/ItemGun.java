@@ -78,15 +78,6 @@ public class ItemGun extends BaseItem {
 					nbtTagCompound.setString("firemode", gunType.fireModes[0].name().toLowerCase());
 					nbtTagCompound.setInteger("skinId", 0);
 					heldStack.setTagCompound(nbtTagCompound);
-					if(gunType.acceptedAttachments.get(AttachmentEnum.Sight) != null && gunType.acceptedAttachments.get(AttachmentEnum.Sight).size() >= 1)
-					{
-						ItemAttachment itemAttachment = ModularWarfare.attachmentTypes.get(gunType.acceptedAttachments.get(AttachmentEnum.Sight).get(0));
-						ItemStack attachmentStack = new ItemStack(itemAttachment);
-						NBTTagCompound tag = new NBTTagCompound();
-						tag.setInteger("skinId", 1);
-						attachmentStack.setTagCompound(tag);
-						GunType.addAttachment(heldStack, AttachmentEnum.Sight, attachmentStack);
-					}
 				}
 			}	
 		}
