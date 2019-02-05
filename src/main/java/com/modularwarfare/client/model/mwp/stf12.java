@@ -11,6 +11,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -45,7 +46,7 @@ public class stf12 extends ModelGun //Same as Filename
 
 		gunSlideDistance = 0F;
 		lefthandPump = true;
-		//animationType = EnumAnimationType.CUSTOMRIFLE;
+		reloadAnimation = WeaponAnimations.SHOTGUN;
 		/*tiltGunTime = 0.10F;
 		unloadClipTime = 0.00F;
 		loadClipTime = 0.80F;
