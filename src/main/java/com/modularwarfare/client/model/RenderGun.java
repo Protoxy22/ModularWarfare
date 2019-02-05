@@ -206,9 +206,16 @@ public class RenderGun extends CustomItemRenderer {
 				if(renderType == CustomItemRenderType.ENTITY)
 				{
 					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
+					{
+						/** Gun Xray
+						GlStateManager.disableRescaleNormal();
+			            RenderHelper.disableStandardItemLighting();
+			            GlStateManager.disableLighting();
+			            GlStateManager.disableDepth();*/
+						GlStateManager.enableRescaleNormal();
 						RenderHelper.enableStandardItemLighting();
-					else {
-						RenderHelper.disableStandardItemLighting();
+						GlStateManager.enableLighting();
+						GlStateManager.enableDepth();
 					}
 				}
 				
@@ -496,6 +503,18 @@ public class RenderGun extends CustomItemRenderer {
 				}
 				
 				GL11.glPopMatrix();
+				}
+				
+				if(renderType == CustomItemRenderType.ENTITY)
+				{
+					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
+					{
+						/** Gun Xray
+			            GlStateManager.enableLighting();
+			            GlStateManager.enableDepth();
+			            RenderHelper.enableStandardItemLighting();
+			            GlStateManager.enableRescaleNormal();*/
+					}
 				}
 			}
 			GL11.glPopMatrix();
