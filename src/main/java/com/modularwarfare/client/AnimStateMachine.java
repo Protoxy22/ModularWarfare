@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.common.guns.WeaponSoundType;
 import com.modularwarfare.common.network.PacketGunReloadSound;
 import com.modularwarfare.utility.NumberHelper;
 
@@ -96,6 +97,8 @@ public class AnimStateMachine {
 			if (timeUntilCharge == 0 && chargeTrigger >= 1f) {
 				// Pump it!
 				charging = true;
+				System.out.println("called");
+				ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Charge));
 				lastCharged = charged = -1F;
 			}
 		}	
@@ -164,7 +167,7 @@ public class AnimStateMachine {
 		
 		if(reloadAnimationProgress >= 0.75f && !playedLoadSound && !unloadOnly && !loadOnly)
 		{
-			ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound());
+			ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Load));
 			playedLoadSound = true;
 		}
 		

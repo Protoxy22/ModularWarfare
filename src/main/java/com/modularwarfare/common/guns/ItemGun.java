@@ -352,7 +352,7 @@ public class ItemGun extends BaseItem {
 			        	tooltip.add(generateLoreLineAlt("Ammo", Integer.toString(ammoCount), Integer.toString(gunType.internalAmmoStorage)));
 					}
 					
-	    			String baseDisplayLine = "%Ammo %s: %g%s%dg/%g%s";
+	    			String baseDisplayLine = "Ammo %s: %g%s%dg/%g%s";
 	            	baseDisplayLine = baseDisplayLine.replaceAll("%b", TextFormatting.BLUE.toString());
 	            	baseDisplayLine = baseDisplayLine.replaceAll("%dg", TextFormatting.DARK_GRAY.toString());
 	            	

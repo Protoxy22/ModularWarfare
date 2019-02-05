@@ -19,19 +19,26 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 
 public class PacketGunReloadSound extends PacketBase {
 		
+	public WeaponSoundType soundType;
+	
 	public PacketGunReloadSound() {}
+	
+	public PacketGunReloadSound(WeaponSoundType soundType) {
+		this.soundType = soundType;
+	}
 		
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf data) {
-		
+		ByteBufUtils.writeUTF8String(data, soundType.eventName);
 	}
 
 	@Override
 	public void decodeInto(ChannelHandlerContext ctx, ByteBuf data) {
-		
+		soundType = WeaponSoundType.fromString(ByteBufUtils.readUTF8String(data));
 	}
 
 	@Override
@@ -44,11 +51,15 @@ public class PacketGunReloadSound extends PacketBase {
 				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
 				GunType gunType = itemGun.type;
 				InventoryPlayer inventory = entityPlayer.inventory;
-				
-				if(!ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID()))
+								
+//				if(!ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID()))
+//					return;
+								
+				if(soundType == null)
 					return;
 				
-				gunType.playSound(entityPlayer, WeaponSoundType.Load, gunStack);
+				System.out.println(soundType.eventName);
+				gunType.playSound(entityPlayer, soundType, gunStack);
 			}
 		}
 	}

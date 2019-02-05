@@ -42,4 +42,22 @@ public enum WeaponSoundType {
 		this.defaultSound = defaultSound;
 	}
 	
+	public static WeaponSoundType fromString(String input)
+	{
+		for(WeaponSoundType soundType : values())
+		{
+			if(soundType.toString().equalsIgnoreCase(input))
+			{
+				return soundType;
+			}
+		}
+		return null;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return eventName;
+	}
+	
 }
