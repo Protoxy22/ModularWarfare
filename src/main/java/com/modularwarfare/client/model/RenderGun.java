@@ -26,9 +26,11 @@ import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.guns.WeaponFireMode;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -103,6 +105,7 @@ public class RenderGun extends CustomItemRenderer {
 			switch (renderType) {
 
 			case ENTITY: {
+				
 				GL11.glTranslatef(-0.5F + model.itemFrameOffset.x, model.itemFrameOffset.y, model.itemFrameOffset.z);
 				GL11.glRotatef(0, 0F, 0F, 1F); //ANGLE UP-DOWN
 				break;
@@ -199,6 +202,16 @@ public class RenderGun extends CustomItemRenderer {
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				GL11.glTranslatef(model.translateAll.x * f, -model.translateAll.y * f, -model.translateAll.z * f);
+				
+				if(renderType == CustomItemRenderType.ENTITY)
+				{
+					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
+						RenderHelper.enableStandardItemLighting();
+					else {
+						RenderHelper.disableStandardItemLighting();
+					}
+				}
+				
 				model.renderGun(f);
 				
 				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
