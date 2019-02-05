@@ -228,7 +228,7 @@ public class ClientProxy extends CommonProxy {
 				
 				File typeModel = new File(itemModelsDir, type.internalName + ".json");
 				
-				if(!typeModel.exists())
+				if(ModularWarfare.DEV_ENV ? true : !typeModel.exists())
 				{
 					if(type instanceof ArmorType)
 					{
@@ -239,7 +239,7 @@ public class ClientProxy extends CommonProxy {
 							typeModel = new File(itemModelsDir, newInternalName + ".json");
 
 							try {
-								FileWriter fileWriter = new FileWriter(typeModel);
+								FileWriter fileWriter = new FileWriter(typeModel, false);
 								gson.toJson(createJson(type, newInternalName), fileWriter);
 								fileWriter.flush();
 								fileWriter.close();
@@ -250,7 +250,7 @@ public class ClientProxy extends CommonProxy {
 					} else
 					{
 						try {
-							FileWriter fileWriter = new FileWriter(typeModel);
+							FileWriter fileWriter = new FileWriter(typeModel, false);
 							gson.toJson(createJson(type), fileWriter);
 							fileWriter.flush();
 							fileWriter.close();
