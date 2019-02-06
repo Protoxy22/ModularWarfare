@@ -22,5 +22,11 @@ public class SkinType {
 		skinType.displayName = baseType.displayName + " - Default";
 		return skinType;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return skinAsset;
+	}
 
 }
