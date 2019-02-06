@@ -4,10 +4,8 @@ import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
-import com.modularwarfare.common.guns.WeaponFireMode;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.item.ItemStack;
@@ -36,8 +34,9 @@ public class DevGui extends Gui
 		String modelScale =  "Scale - " + Float.toString(gunType.model.modelScale);
 		String iconName = "Icon - " + gunType.iconName;
 		String skinNames = Arrays.toString(gunType.modelSkins);
-		//TODO How to do this?
-		//String animType = "Anim - " + gunType.model.reloadAnimation;
+		//WeaponAnimation weaponAnimation = animationMap.get(internalName);
+		String reloadAnim = ((ModelGun)gunType.model).reloadAnimation;
+		String animType = "Anim - " + reloadAnim;
 		
 		//Gun stats
 		String gunDamage = "Damage - " + Float.toString(gunType.gunDamage);
@@ -56,6 +55,7 @@ public class DevGui extends Gui
 		drawCenteredString(mc.fontRenderer, modelScale, (width / 2) + 180, (height / 2) - 94, Integer.parseInt("FFAA00", 16));
 		drawCenteredString(mc.fontRenderer, iconName, (width / 2) + 180, (height / 2) - 86, Integer.parseInt("FFAA00", 16));
 		drawCenteredString(mc.fontRenderer, skinNames, (width / 2) + 180, (height / 2) - 78, Integer.parseInt("FFAA00", 16));
+		drawCenteredString(mc.fontRenderer, animType, (width / 2) + 180, (height / 2) - 70, Integer.parseInt("FFAA00", 16));
 		
 		
 		drawCenteredString(mc.fontRenderer, gunDamage, (width / 2) + 180, (height / 2) - 36, Integer.parseInt("FFAA00", 16));
