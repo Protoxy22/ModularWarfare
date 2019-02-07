@@ -31,73 +31,47 @@ public class mk200 extends ModelGun //Same as Filename
 		initammoModel_1();
 		initbreakActionModel_1();
 
+		
+		translateAll = new Vector3f(105F, 7.0F, 0F);
 		thirdPersonOffset = new Vector3f(4 /16F, -1F /16F, 0F /16F);
 
         modelScale = 0.045F;
 		//gunSlideDistance = 5.25F;
 
-        leftArmPos = new Vector3f(0.10F, -0.18F, -0.45F);
-        leftArmRot = new Vector3f(0.0F, -45.0F, -40.0F);
-        leftArmReloadPos = new Vector3f(-0.07F, -0.37F, -0.42F);
-        leftArmReloadRot = new Vector3f(0.0F, -45.0F, -40.0F);
+        leftArmPos = new Vector3f(0.280F, -0.72F, 0.02F);
+        leftArmRot = new Vector3f(85.0F, 30.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(0.150F, -0.72F, 0.02F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
         
- 
-        rightArmPos = new Vector3f(-0.67F, -0.07F, 0.0F);
+        rightArmPos = new Vector3f(0.29F, -0.70F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.67F, -0.07F, 0.03F);
+        rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmChargePos = new Vector3f(-0.20F, 0.42F, -0.31F);
-        rightArmChargeRot = new Vector3f(-30.0F, -0.0F, -60.0F);
         
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
  
         leftHandAmmo = true;
 		//animationType = EnumAnimationType.CUSTOM;
-
-
 		//tiltGunTime = 0.2F;
-
-
 		//unloadClipTime = 0.3F;
-
-
 		//loadClipTime = 0.35F;
-
-
 		//untiltGunTime = 0.15F;
-
-
-        breakActions.add(new BreakActionData(breakActionModel, new Vector3f(79 /16F, 117F /16F, 1F /16F), 110, false));
+        rotationHelper = new Vector3f(0.10F,7.75F,0F);
+        breakActions.add(new BreakActionData(breakActionModel, new Vector3f(0.10F, 7.75F, 0F), 110, false));
 		//barrelBreakPoint = new Vector3f(79 /16F, 117F /16F, 1F /16F);
 		//breakAngle = 110F;
 
 
 		rotateGunVertical = 1F;
-
-
 		rotateGunHorizontal = 1F;
-
-
 		tiltGun = 1F;
-
-
 		translateGun = new Vector3f(1 /16F, 0F /16F, 0F /16F);
-
-
 		rotateClipVertical = -10F;
-
-
 		rotateClipHorizontal = 1F;
-
-
 		tiltClip = -100F;
-
-
 		translateClip = new Vector3f(1 /16F, -50F /16F, -100F /16F);
-
-
-		translateAll = new Vector3f(70F, 7.5F, -0.25F);
+		
 
 
 		flipAll();

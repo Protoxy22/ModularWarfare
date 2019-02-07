@@ -20,6 +20,7 @@ import com.modularwarfare.client.export.ItemModelExport;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
+import com.modularwarfare.client.handler.RenderGuiHandler;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
@@ -79,6 +80,7 @@ public class ClientProxy extends CommonProxy {
 		new ClientRenderHooks();
 		new ClientTickHandler();
 		new ClientWeaponHandler();
+		new RenderGuiHandler();
 				
 		WeaponAnimations.registerAnimation("rifle", new AnimationRifle());
 		WeaponAnimations.registerAnimation("rifle2", new AnimationRifle2());
