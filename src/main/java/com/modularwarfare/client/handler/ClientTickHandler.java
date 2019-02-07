@@ -5,8 +5,9 @@ import java.util.Random;
 import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.AnimStateMachine;
 import com.modularwarfare.client.ClientRenderHooks;
+import com.modularwarfare.client.StateMachine;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
@@ -78,7 +79,7 @@ public class ClientTickHandler extends ForgeEvent {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
 	
-		AnimStateMachine.renderTick = renderTick;
+		//StateMachine.renderTick = renderTick;
 		
 		EntityPlayerSP player = minecraft.player;
 		
@@ -91,10 +92,10 @@ public class ClientTickHandler extends ForgeEvent {
 				RenderGun.lastModel = model.getClass().getName(); 
 			}
 			
-			AnimStateMachine anim = ClientRenderHooks.getAnimations(player);
-			
+			StateMachine anim = ClientRenderHooks.getAnimations(player);
+						
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
-			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? !anim.charging && !(anim.timeUntilCharge > 0) && (anim.chargeTriggerTrigger == 3 || anim.chargeTriggerTrigger == 0) : true);
+			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? !anim.isAnimState(StateType.Charge) : true);
 			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && aimChargeMisc ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
@@ -128,31 +129,31 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
 			
-			if(anim.chargeTriggerTrigger == 0 && anim.timeUntilCharge <= anim.chargeDelayAfterReload-65)
-				anim.chargeTriggerTrigger = 1;
-			
-			if(anim.chargeTriggerTrigger == 1) {
-				anim.chargeTrigger = NumberHelper.clamp(anim.chargeTrigger + 0.15f * renderTick, 0, 1);
-			}
-			
-			if(anim.charging && anim.charged >= 0.66)
-			{
-				anim.chargeTriggerTrigger = 2;
-			}
-			if(anim.chargeTriggerTrigger == 2)
-			{
-				
-				anim.chargeTrigger -= 0.15f * renderTick;
-				if(anim.chargeTrigger <= 0)
-				{
-					anim.chargeTriggerTrigger = 3;
-					anim.chargeTrigger = 0;
-					anim.timeUntilCharge = 0;
-				}
-			}
-			if(anim.chargeTriggerTrigger == 3 && anim.timeUntilCharge != 0) {
-				anim.chargeTriggerTrigger = 0;
-			}	
+//			if(anim.chargeTriggerTrigger == 0 && anim.timeUntilCharge <= anim.chargeDelayAfterReload-65)
+//				anim.chargeTriggerTrigger = 1;
+//			
+//			if(anim.chargeTriggerTrigger == 1) {
+//				anim.chargeTrigger = NumberHelper.clamp(anim.chargeTrigger + 0.15f * renderTick, 0, 1);
+//			}
+//			
+//			if(anim.charging && anim.charged >= 0.66)
+//			{
+//				anim.chargeTriggerTrigger = 2;
+//			}
+//			if(anim.chargeTriggerTrigger == 2)
+//			{
+//				
+//				anim.chargeTrigger -= 0.15f * renderTick;
+//				if(anim.chargeTrigger <= 0)
+//				{
+//					anim.chargeTriggerTrigger = 3;
+//					anim.chargeTrigger = 0;
+//					anim.timeUntilCharge = 0;
+//				}
+//			}
+//			if(anim.chargeTriggerTrigger == 3 && anim.timeUntilCharge != 0) {
+//				anim.chargeTriggerTrigger = 0;
+//			}	
 		} else
 		{
 			RenderGun.resetRenderMods();
@@ -210,7 +211,7 @@ public class ClientTickHandler extends ForgeEvent {
 		antiRecoilYaw *= 0.8F;
 		
 		// Gun Animation State Machine
-		for(AnimStateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
+		for(StateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
 		{
 			gunAnimation.onUpdate();
 		}		

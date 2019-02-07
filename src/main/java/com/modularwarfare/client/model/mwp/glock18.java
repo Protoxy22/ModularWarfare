@@ -12,6 +12,9 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
+import com.modularwarfare.client.anim.AnimStateBuilder;
+import com.modularwarfare.client.anim.AnimationType;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -88,7 +91,7 @@ public class glock18 extends ModelGun //Same as Filename
 		//RotateSlideDistance = -2F;
 
 		scopeIsOnSlide = true;
-		slideLockOnEmpty = true;
+		slideLockOnEmpty = false;
 		
 		casingAnimDistance = new Vector3f(0, 1, 12);
 	    casingAnimSpread = new Vector3f(2, 2, 0);
@@ -100,14 +103,20 @@ public class glock18 extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(0.0F, -10.0F, 30.0F);
 		sprintTranslate = new Vector3f(0.7F, 0.60F, 0.1F);
 		
-	    chargeHandleDistance = 0.5F;
+	    /*chargeHandleDistance = 0.5F;
 	    chargeDelay = 0;
 	    chargeDelayAfterReload = 65;
 	    chargeTime = 40;
 	    
 	    leftHandCharge = true;
-	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
+	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);*/
 
+	    animationStates = new AnimStateBuilder()
+	    		.addState(StateType.Tilt, 0.20f, AnimationType.All)
+	    		.addState(StateType.Unload, 0.25f, AnimationType.Unload)
+	    		.addState(StateType.Load, 0.35f, AnimationType.Load)
+	    		.addState(StateType.Untilt, 0.20f, AnimationType.All);
+	    		//.addState(StateType.Charge, 0.15f, AnimationType.Load);
 
 		flipAll();
 	}

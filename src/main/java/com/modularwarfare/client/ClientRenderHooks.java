@@ -46,7 +46,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ClientRenderHooks extends ForgeEvent {
 	
-	public static HashMap<EntityLivingBase, AnimStateMachine> gunAnimations = new HashMap<EntityLivingBase, AnimStateMachine>();
+	public static HashMap<EntityLivingBase, StateMachine> gunAnimations = new HashMap<EntityLivingBase, StateMachine>();
 	private Minecraft mc;
 	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[4];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
@@ -408,15 +408,15 @@ public class ClientRenderHooks extends ForgeEvent {
 		return x + dT * f3;
 	}
 	
-	public static AnimStateMachine getAnimations(EntityPlayer entityPlayer)
+	public static StateMachine getAnimations(EntityPlayer entityPlayer)
 	{
-		AnimStateMachine animation = null;
+		StateMachine animation = null;
 		if(gunAnimations.containsKey(entityPlayer))
 		{
 			animation = gunAnimations.get(entityPlayer);
 		} else
 		{
-			animation = new AnimStateMachine();
+			animation = new StateMachine();
 			gunAnimations.put(entityPlayer, animation);
 		}
 		return animation;

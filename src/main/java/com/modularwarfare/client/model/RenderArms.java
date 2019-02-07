@@ -4,7 +4,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
-import com.modularwarfare.client.AnimStateMachine;
+import com.modularwarfare.client.StateMachine;
+import com.modularwarfare.client.anim.AnimState;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.utility.NumberHelper;
 
 public class RenderArms {
@@ -19,9 +21,12 @@ public class RenderArms {
 	 */
 	
 	// right hand pump action animation
-	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
+	public static void renderArmPump(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
-		GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.pumpHandleDistance * model.modelScale)), reloadPos.y, reloadPos.z);
+		AnimState pumpState = anim.getState(StateType.Charge);
+		float pumpCurrent = pumpState == null ? 1f : pumpState.currentValue;
+		float pumpLast = pumpState == null ? 1f : pumpState.lastValue;
+		GL11.glTranslatef((reloadPos.x + Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.pumpHandleDistance * model.modelScale)), reloadPos.y, reloadPos.z);
 		if(leftHand)
 			handleRotateLeft(reloadRot);
 		else
@@ -30,16 +35,19 @@ public class RenderArms {
 	
 	// This moves the right hand if leftHandAmmo & handCharge are true (For left
 	// hand reload with right hand charge)
-	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
+	public static void renderArmCharge(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
-		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), anim.chargeTrigger);
+		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), 1f);
+		AnimState pumpState = anim.getState(StateType.Charge);
+		float pumpCurrent = pumpState == null ? 1f : pumpState.currentValue;
+		float pumpLast = pumpState == null ? 1f : pumpState.lastValue;
 		//GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale)), 0F, 0F);
-		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
+		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y, 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z);
 		
 		//Rotation
-		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), anim.chargeTrigger);
+		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), 1f);
 		if(leftHand) {
 			GL11.glTranslatef(0.225F, 0.75F, 0);
 			GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
@@ -58,18 +66,21 @@ public class RenderArms {
 	
 	// This moves the right hand if leftHandAmmo & handBolt are true (For left hand
 	// reload with right hand bolt action)
-	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
+	public static void renderArmBolt(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
-		GL11.glTranslatef(reloadPos.x + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
-		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
-		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(anim.lastPumped + (anim.pumped - anim.lastPumped) * smoothing) * (model.chargeModifier.z * model.modelScale)));
+		AnimState pumpState = anim.getState(StateType.Charge);
+		float pumpCurrent = pumpState == null ? 1f : pumpState.currentValue;
+		float pumpLast = pumpState == null ? 1f : pumpState.lastValue;
+		GL11.glTranslatef(reloadPos.x + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
+		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
+		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.z * model.modelScale)));
 		if(leftHand)
 			handleRotateLeft(reloadRot);
 		else
 			handleRotateRight(reloadRot);
 	}
 	
-	public static void renderArmDefault(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean firingHand, boolean leftHand)
+	public static void renderArmDefault(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean firingHand, boolean leftHand)
 	{
 		GL11.glTranslatef(reloadPos.x - (firingHand ? RenderGun.triggerPullSwitch : 0f), reloadPos.y, reloadPos.z);
 		if(leftHand)
@@ -78,7 +89,7 @@ public class RenderArms {
 			handleRotateRight(reloadRot);
 	}
 	
-	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
+	public static void renderArmReload(ModelGun model, StateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
@@ -102,7 +113,7 @@ public class RenderArms {
 		}
 	}
 	
-	public static void renderArmLoad(ModelGun model, AnimStateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
+	public static void renderArmLoad(ModelGun model, StateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
@@ -128,7 +139,7 @@ public class RenderArms {
 		}
 	}
 	
-	public static void renderArmUnload(ModelGun model, AnimStateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
+	public static void renderArmUnload(ModelGun model, StateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
