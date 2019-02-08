@@ -1,11 +1,9 @@
 package com.modularwarfare.client.anim;
 
-public enum StateType {
+public enum ReloadType {
 	
-	Tilt,
 	Unload,
 	Load,
-	Untilt,
-	Charge;
+	Full
 
 }

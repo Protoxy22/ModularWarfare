@@ -5,8 +5,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.client.StateMachine;
-import com.modularwarfare.client.anim.AnimState;
-import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.utility.NumberHelper;
 
 public class RenderArms {
@@ -23,9 +21,9 @@ public class RenderArms {
 	// right hand pump action animation
 	public static void renderArmPump(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
-		AnimState pumpState = anim.getState(StateType.Charge);
-		float pumpCurrent = pumpState == null ? 1f : pumpState.currentValue;
-		float pumpLast = pumpState == null ? 1f : pumpState.lastValue;
+		// TODO: Pumping current and last
+		float pumpCurrent = 1f;
+		float pumpLast = 1f;
 		GL11.glTranslatef((reloadPos.x + Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.pumpHandleDistance * model.modelScale)), reloadPos.y, reloadPos.z);
 		if(leftHand)
 			handleRotateLeft(reloadRot);
@@ -38,9 +36,9 @@ public class RenderArms {
 	public static void renderArmCharge(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), 1f);
-		AnimState pumpState = anim.getState(StateType.Charge);
-		float pumpCurrent = pumpState == null ? 1f : pumpState.currentValue;
-		float pumpLast = pumpState == null ? 1f : pumpState.lastValue;
+		// TODO: Pumping current and last
+		float pumpCurrent = 1f;
+		float pumpLast = 1f;
 		//GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale)), 0F, 0F);
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y, 0F);
@@ -68,9 +66,9 @@ public class RenderArms {
 	// reload with right hand bolt action)
 	public static void renderArmBolt(ModelGun model, StateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
-		AnimState pumpState = anim.getState(StateType.Charge);
-		float pumpCurrent = pumpState == null ? 1f : pumpState.currentValue;
-		float pumpLast = pumpState == null ? 1f : pumpState.lastValue;
+		// TODO: Pumping current and last
+		float pumpCurrent = 1f;
+		float pumpLast = 1f;
 		GL11.glTranslatef(reloadPos.x + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
 		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
 		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.z * model.modelScale)));

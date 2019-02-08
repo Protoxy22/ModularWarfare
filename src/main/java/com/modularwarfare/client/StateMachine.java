@@ -2,10 +2,6 @@ package com.modularwarfare.client;
 
 import java.util.Random;
 
-import com.modularwarfare.client.anim.AnimState;
-import com.modularwarfare.client.anim.AnimStateMachine;
-import com.modularwarfare.client.anim.AnimationType;
-import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.item.ItemStack;
@@ -13,9 +9,7 @@ import net.minecraft.item.ItemStack;
 public class StateMachine {
 	
 	public static StateMachine defaultStateMachine = new StateMachine();
-	
-	private AnimStateMachine animStateMachine;
-	
+		
 	public boolean isGunEmpty;
 	
 	/** Reload */
@@ -26,7 +20,7 @@ public class StateMachine {
 	public boolean unloadOnly = false;
 	public boolean loadOnly = false;
 	public boolean renderAmmo = true;
-//	
+
 	/** Recoil */
 	public float gunRecoil = 0F, lastGunRecoil = 0F;
 //	
@@ -73,16 +67,18 @@ public class StateMachine {
 	public void onUpdate()
 	{
 		
-		lastReloadAnimationProgress = reloadAnimationProgress;
-		if(reloading)
-			reloadAnimationProgress += 1F / reloadAnimationTime;
-		if(reloading && reloadAnimationProgress >= 0.9F)
-			isGunEmpty = false;
-
-		if(reloading && animStateMachine != null && animStateMachine.tick(reloadAnimationProgress, reloadAnimationTime))
-		{
-			reloading = false;
-		}
+		
+		
+		
+//		lastReloadAnimationProgress = reloadAnimationProgress;
+//		if(reloading)
+//			reloadAnimationProgress += 1F / reloadAnimationTime;
+//		if(reloading && reloadAnimationProgress >= 0.9F)
+//			isGunEmpty = false;
+//		if(reloadAnimationProgress >= 1f)
+//			reloadAnimationProgress -= Math.random()/2;
+		
+		
 		
 		//System.out.println(reloading);
 		
@@ -241,9 +237,7 @@ public class StateMachine {
 	public void triggerReload(int reloadTime, ModelGun model, boolean isLoadOnly, boolean isUnload, int reloadCount)
 	{
 		reloading = true;
-		
-		animStateMachine = model.animationStates.build(isLoadOnly ? AnimationType.Load : isUnload ? AnimationType.Unload : AnimationType.All);
-		
+				
 		lastReloadAnimationProgress = reloadAnimationProgress = 0F;
 		reloadAnimationTime = isLoadOnly || isUnload ? reloadTime*0.65f : reloadTime;
 		
@@ -263,29 +257,6 @@ public class StateMachine {
 	public void triggerEmpty()
 	{
 		isGunEmpty = true;
-	}
-	
-	public boolean isAnimState(StateType stateType)
-	{
-		if(animStateMachine == null || animStateMachine.currentState == null)
-			return false;
-		
-		if(animStateMachine.currentState.stateType != stateType)
-			return false;
-		return true;
-	}
-	
-	public AnimState getState(StateType stateType)
-	{
-		if(animStateMachine == null)
-			return null;
-		
-		for(AnimState anim : animStateMachine.states)
-		{
-			if(anim.stateType == stateType)
-				return anim;
-		}
-		return null;
 	}
 
 }

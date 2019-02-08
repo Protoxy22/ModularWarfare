@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.lwjgl.util.glu.Project;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
@@ -47,6 +48,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 public class ClientRenderHooks extends ForgeEvent {
 	
 	public static HashMap<EntityLivingBase, StateMachine> gunAnimations = new HashMap<EntityLivingBase, StateMachine>();
+	public static HashMap<EntityLivingBase, AnimStateMachine> weaponAnimations = new HashMap<EntityLivingBase, AnimStateMachine>();
 	private Minecraft mc;
 	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[4];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
@@ -418,6 +420,20 @@ public class ClientRenderHooks extends ForgeEvent {
 		{
 			animation = new StateMachine();
 			gunAnimations.put(entityPlayer, animation);
+		}
+		return animation;
+	}
+	
+	public static AnimStateMachine getAnimMachine(EntityPlayer entityPlayer)
+	{
+		AnimStateMachine animation = null;
+		if(weaponAnimations.containsKey(entityPlayer))
+		{
+			animation = weaponAnimations.get(entityPlayer);
+		} else
+		{
+			animation = new AnimStateMachine();
+			weaponAnimations.put(entityPlayer, animation);
 		}
 		return animation;
 	}

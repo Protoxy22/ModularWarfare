@@ -12,9 +12,6 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
-import com.modularwarfare.client.anim.AnimStateBuilder;
-import com.modularwarfare.client.anim.AnimationType;
-import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -110,13 +107,6 @@ public class glock18 extends ModelGun //Same as Filename
 	    
 	    leftHandCharge = true;
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);*/
-
-	    animationStates = new AnimStateBuilder()
-	    		.addState(StateType.Tilt, 0.20f, AnimationType.All)
-	    		.addState(StateType.Unload, 0.25f, AnimationType.Unload)
-	    		.addState(StateType.Load, 0.35f, AnimationType.Load)
-	    		.addState(StateType.Untilt, 0.20f, AnimationType.All);
-	    		//.addState(StateType.Charge, 0.15f, AnimationType.Load);
 
 		flipAll();
 	}

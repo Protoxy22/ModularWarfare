@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
-import com.modularwarfare.client.anim.AnimStateBuilder;
 import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.model.objects.TurboBase;
@@ -203,9 +202,7 @@ public class ModelGun extends TurboBase
 	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
 	public Vector3f gunRenderOffset = new Vector3f(0f, 0f, 0f);
 	public ArrayList<BreakActionData> breakActions = new ArrayList<BreakActionData>();
-	
-	public AnimStateBuilder animationStates;
-	
+		
 	public float triggerDistance = 0.02f;
 
 	public static void glowOn()

@@ -7,7 +7,7 @@ import org.lwjgl.input.Mouse;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.StateMachine;
-import com.modularwarfare.client.anim.StateType;
+import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
@@ -93,9 +93,10 @@ public class ClientTickHandler extends ForgeEvent {
 			}
 			
 			StateMachine anim = ClientRenderHooks.getAnimations(player);
+			AnimStateMachine animnew = ClientRenderHooks.getAnimMachine(player);
 						
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
-			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? !anim.isAnimState(StateType.Charge) : true);
+			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? /* TODO: Check if is charging !anim.isAnimState(StateType.Charge)*/ true : true);
 			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && aimChargeMisc ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
 			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
@@ -209,12 +210,16 @@ public class ClientTickHandler extends ForgeEvent {
 		player.rotationYaw += antiRecoilYaw * 0.2F;
 		antiRecoilPitch *= 0.8F;
 		antiRecoilYaw *= 0.8F;
-		
 		// Gun Animation State Machine
-		for(StateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
+//		for(StateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
+//		{
+//			gunAnimation.onUpdate();
+//		}
+		
+		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
 		{
-			gunAnimation.onUpdate();
-		}		
+			stateMachine.onUpdate();
+		}
 	}
 
 }
