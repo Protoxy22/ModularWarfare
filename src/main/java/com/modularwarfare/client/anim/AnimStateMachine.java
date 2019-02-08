@@ -103,4 +103,9 @@ public class AnimStateMachine {
 		return Optional.ofNullable(stateEntry);
 	}
 	
+	public boolean isState(StateType stateType)
+	{
+		return currentState != null ? currentState.stateType == stateType : false;
+	}
+	
 }
