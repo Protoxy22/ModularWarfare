@@ -400,7 +400,17 @@ public class RenderGun extends CustomItemRenderer {
 						AmmoType ammoType = itemAmmo.type;
 						boolean shouldNormalRender = true;
 						
-						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+						if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
+						{
+							if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
+							{
+								//Unload/Load ammo
+								Optional<StateEntry> unload = anim.getCurrentState();
+								float ammoProgress = unload.isPresent() ? (unload.get().stateType == StateType.Unload || unload.get().stateType == StateType.Load) ? unload.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+								WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, animations.reloadAmmoCount, anim);
+								//WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(test, anim);
+							}
+							//This is old
 							float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount, anim);
 						}
@@ -488,7 +498,17 @@ public class RenderGun extends CustomItemRenderer {
 					{
 						ItemBullet itemBullet = ItemGun.getUsedBullet(item, gunType);
 						
-						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+						if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
+						{
+							if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
+							{
+								//Unload/Load ammo
+								Optional<StateEntry> unload = anim.getCurrentState();
+								float ammoProgress = unload.isPresent() ? (unload.get().stateType == StateType.Unload || unload.get().stateType == StateType.Load) ? unload.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+								WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, animations.reloadAmmoCount, anim);
+								//WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(test, anim);
+							}
+							//This is old
 							float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount, anim);
 						}

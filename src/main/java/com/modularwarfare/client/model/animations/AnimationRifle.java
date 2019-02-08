@@ -27,7 +27,7 @@ public class AnimationRifle extends WeaponAnimation {
 	@Override
 	public void onGunAnimation(float tiltProgress, AnimStateMachine animation)
 	{
-		System.out.println(tiltProgress);
+		//System.out.println(tiltProgress);
 		
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
@@ -44,9 +44,10 @@ public class AnimationRifle extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount, AnimStateMachine animation)
+	public void onAmmoAnimation(ModelGun gunModel, float ammoProgress, int reloadAmmoCount, AnimStateMachine animation)
 	{
-		float multiAmmoPosition = ammoPosition * reloadAmmoCount;
+		System.out.println("called");
+		float multiAmmoPosition = ammoProgress * reloadAmmoCount;
 		int bulletNum = MathHelper.floor(multiAmmoPosition);
 		float bulletProgress = multiAmmoPosition - bulletNum;
 

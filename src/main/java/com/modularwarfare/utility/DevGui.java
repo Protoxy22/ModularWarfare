@@ -67,6 +67,7 @@ public class DevGui extends Gui
         		mc.fontRenderer.drawString(iconName, (width), (height) + 128, Integer.parseInt("FFFFFF", 16), false);
         		mc.fontRenderer.drawString(skinNames, (width), (height) + 136, Integer.parseInt("FFFFFF", 16), false);
         		mc.fontRenderer.drawString(dynamicAmmo, (width), (height) + 144, Integer.parseInt("FFFFFF", 16), false);
+        		mc.fontRenderer.drawString(reloadAnim, (width), (height) + 152, Integer.parseInt("FFFFFF", 16), false);
             }
             GL11.glPopMatrix();
 
