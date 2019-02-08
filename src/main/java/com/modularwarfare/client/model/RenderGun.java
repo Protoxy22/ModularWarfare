@@ -1,5 +1,6 @@
 package com.modularwarfare.client.model;
 
+import java.util.Optional;
 import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
@@ -11,6 +12,8 @@ import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.StateMachine;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.StateEntry;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.model.objects.CustomItemRenderType;
 import com.modularwarfare.client.model.objects.CustomItemRenderer;
@@ -169,8 +172,10 @@ public class RenderGun extends CustomItemRenderer {
 				
 				
 				//Calls reload animation from the specified animation file
-				if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {				
-					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress);
+				if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+					Optional<StateEntry> chargeEntry = anim.getCurrentState();
+					float test = chargeEntry.isPresent() ? (chargeEntry.get().stateType == StateType.Tilt || chargeEntry.get().stateType == StateType.Untilt) ? chargeEntry.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(test, anim);
 				}
 				
 				//Recoil
@@ -274,11 +279,12 @@ public class RenderGun extends CustomItemRenderer {
 				{
 					GL11.glPushMatrix();
 					{
-						// TODO: Pumping current and last
-						float pumpCurrent = 1f;
-						float pumpLast = 1f;
+						Optional<StateEntry> chargeEntry = anim.getCurrentState();
+						float currentCharge = chargeEntry.isPresent() ? (chargeEntry.get().stateType == StateType.Charge || chargeEntry.get().stateType == StateType.Uncharge) ? chargeEntry.get().currentValue : 1f : 1f;
+						float lastCharge = chargeEntry.isPresent() ? (chargeEntry.get().stateType == StateType.Charge || chargeEntry.get().stateType == StateType.Uncharge) ? chargeEntry.get().lastValue : 1f : 1f;
+
 						GL11.glTranslatef(-(animations.lastGunSlide + (animations.gunSlide - animations.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
-						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
+						GL11.glTranslatef(-(1 - Math.abs(lastCharge + (currentCharge - lastCharge) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
 						model.renderSlide(f);
 						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnSlide)
 							model.renderDefaultScope(f);
@@ -396,7 +402,7 @@ public class RenderGun extends CustomItemRenderer {
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 							float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount, anim);
 						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)
@@ -484,7 +490,7 @@ public class RenderGun extends CustomItemRenderer {
 						
 						if (animations.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 							float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount, anim);
 						}
 						
 						if(itemBullet.type.model != null && animations.reloading)

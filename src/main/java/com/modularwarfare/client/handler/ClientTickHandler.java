@@ -78,9 +78,7 @@ public class ClientTickHandler extends ForgeEvent {
 	{	
 		if (minecraft.player == null || minecraft.world == null)
 			return;
-	
-		//StateMachine.renderTick = renderTick;
-		
+			
 		EntityPlayerSP player = minecraft.player;
 		
 		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)

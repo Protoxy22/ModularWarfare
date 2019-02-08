@@ -1,9 +1,14 @@
 package com.modularwarfare.client.model.animations;
 
+import java.util.Optional;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
+import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.StateEntry;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.util.math.MathHelper;
@@ -20,8 +25,10 @@ public class AnimationRifle extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onGunAnimation(float tiltProgress)
+	public void onGunAnimation(float tiltProgress, AnimStateMachine animation)
 	{
+		System.out.println(tiltProgress);
+		
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
 		//Translate Y - Up/Down
@@ -37,7 +44,7 @@ public class AnimationRifle extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount)
+	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount, AnimStateMachine animation)
 	{
 		float multiAmmoPosition = ammoPosition * reloadAmmoCount;
 		int bulletNum = MathHelper.floor(multiAmmoPosition);

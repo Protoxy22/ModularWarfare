@@ -46,7 +46,7 @@ public class glock18 extends ModelGun //Same as Filename
 		switchSemiRot = 65F;
 	    
 		modelScale = 0.12F;
-		//gunSlideDistance = 0.5F;
+		gunSlideDistance = 0.5F;
 	    reloadAnimation = WeaponAnimations.PISTOL;
 		//tiltGunTime = 0.15F;
 		//unloadClipTime = 0.35F;
@@ -100,13 +100,13 @@ public class glock18 extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(0.0F, -10.0F, 30.0F);
 		sprintTranslate = new Vector3f(0.7F, 0.60F, 0.1F);
 		
-	    /*chargeHandleDistance = 0.5F;
-	    chargeDelay = 0;
-	    chargeDelayAfterReload = 65;
-	    chargeTime = 40;
+	    chargeHandleDistance = 0.5F;
+	    //chargeDelay = 0;
+	    //chargeDelayAfterReload = 65;
+	    //chargeTime = 40;
 	    
-	    leftHandCharge = true;
-	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);*/
+	    //leftHandCharge = true;
+	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 
 		flipAll();
 	}

@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
+import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.util.math.MathHelper;
@@ -20,7 +21,7 @@ public class AnimationShotgun extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onGunAnimation(float tiltProgress)
+	public void onGunAnimation(float tiltProgress, AnimStateMachine animation)
 	{
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
@@ -37,7 +38,7 @@ public class AnimationShotgun extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount)
+	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount, AnimStateMachine animation)
 	{
 		float multiAmmoPosition = ammoPosition * reloadAmmoCount;
 		int bulletNum = MathHelper.floor(multiAmmoPosition);

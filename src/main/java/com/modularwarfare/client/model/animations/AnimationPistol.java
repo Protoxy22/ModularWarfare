@@ -1,9 +1,15 @@
 package com.modularwarfare.client.model.animations;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
+import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.StateEntry;
+import com.modularwarfare.client.anim.StateEntry.MathType;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.util.math.MathHelper;
@@ -20,7 +26,7 @@ public class AnimationPistol extends WeaponAnimation {
 	}
 	
 	@Override
-	public void onGunAnimation(float tiltProgress)
+	public void onGunAnimation(float tiltProgress, AnimStateMachine animation)
 	{
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.2F * tiltProgress, 0F, 0F);
@@ -34,11 +40,10 @@ public class AnimationPistol extends WeaponAnimation {
 		GL11.glRotatef(-10F * tiltProgress, 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
 		GL11.glRotatef(25F * tiltProgress, 0F, 0F, 1F);
-
 	}
 	
 	@Override
-	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount)
+	public void onAmmoAnimation(ModelGun gunModel, float ammoPosition, int reloadAmmoCount, AnimStateMachine animation)
 	{
 		float multiAmmoPosition = ammoPosition * 1/*getNumBulletsInReload(animations, gripAttachment, type, item)*/;
 		int bulletNum = MathHelper.floor(ammoPosition);
@@ -57,6 +62,19 @@ public class AnimationPistol extends WeaponAnimation {
 		//Rotate Z axis - Angle Up/Down
 		GL11.glRotatef(-20F * ammoPosition, 0F, 0F, 1F);
 
+	}
+	
+	@Override
+	public ArrayList<StateEntry> getAnimStates()
+	{
+		ArrayList<StateEntry> states = new ArrayList<StateEntry>();
+		states.add(new StateEntry(StateType.Tilt, 0.20f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Unload, 0.20f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Load, 0.20f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Untilt, 0.20f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Charge, 0.18f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Uncharge, 0.02f, 0f, MathType.Add));
+		return states;
 	}
 
 }

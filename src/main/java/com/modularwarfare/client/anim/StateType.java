@@ -6,6 +6,7 @@ public enum StateType {
 	Unload,
 	Load,
 	Untilt,
-	Charge;
+	Charge,
+	Uncharge;
 
 }

@@ -107,7 +107,6 @@ public class akm extends ModelGun //Same as Filename
 //		AnimationCustom customAnimation = new AnimationCustom();
 //		customAnimation.setGunRotation(new Vector3f(20f, 0f, 1f));
 //	    WeaponAnimations.registerAnimation("akm_reload", customAnimation);	    	    
-	    
 		flipAll();
 	}
 

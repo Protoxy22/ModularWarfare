@@ -5,6 +5,7 @@ import java.util.Random;
 import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.api.WeaponReloadEvent;
 import com.modularwarfare.client.ClientRenderHooks;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.utility.event.ForgeEvent;
 
@@ -16,7 +17,7 @@ public class ClientWeaponHandler extends ForgeEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onWeaponFire(WeaponFireEvent.Post event)
 	{
-		ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerShoot((ModelGun) event.getWeaponItem().type.model);
+		//ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerShoot((ModelGun) event.getWeaponItem().type.model);
 		ClientTickHandler.playerRecoilPitch += 2 * new Random().nextFloat();
 		ClientTickHandler.playerRecoilYaw += 2 * new Random().nextFloat();
 	}
@@ -24,8 +25,7 @@ public class ClientWeaponHandler extends ForgeEvent {
 	@SubscribeEvent
 	public void onWeaponReload(WeaponReloadEvent.Post event)
 	{
-		ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerReload(event.getReloadTime(), (ModelGun) event.getWeaponItem().type.model, event.isLoadOnly(), event.isUnload(), event.getReloadCount());
-		//System.out.println(event.getReloadCount());
+		ClientRenderHooks.getAnimMachine(event.getWeaponUser()).triggerReload(event.getReloadTime(), event.getReloadCount(), (ModelGun) event.getWeaponItem().type.model, event.isLoadOnly() ? ReloadType.Load : event.isUnload() ? ReloadType.Unload : ReloadType.Full);
 	}
 
 }
