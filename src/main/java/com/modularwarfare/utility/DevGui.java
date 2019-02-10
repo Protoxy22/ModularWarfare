@@ -3,7 +3,9 @@ package com.modularwarfare.utility;
 import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
@@ -23,12 +25,10 @@ public class DevGui extends Gui
 	//private final int boxWidth = 100, boxHeight = 200;
 
 	
-	public DevGui(Minecraft mc, ItemStack itemStack, ItemGun itemGun)
+	public DevGui(Minecraft mc, ItemStack itemStack, ItemGun itemGun, RenderGun renderGun, AnimStateMachine anim)
 	{
     	GunType gunType = ((ItemGun) itemStack.getItem()).type;
-
-    	if(gunType == null)
-    		return;
+    	ModelGun gunModel = (ModelGun) gunType.model;
     	
         ScaledResolution scaled = new ScaledResolution(mc);
         //TODO Add GUI scale command
@@ -106,9 +106,28 @@ public class DevGui extends Gui
         		mc.fontRenderer.drawString(modelRecoil, (width), (height) + 64, Integer.parseInt("FFFFFF", 16), false);
         		mc.fontRenderer.drawString(ammoTypes, (width), (height) + 72, Integer.parseInt("FFFFFF", 16), false);
     		}
-    		GL11.glPopMatrix();
+    		GL11.glPopMatrix();	
+        }
+    	
+    	if(mc.player.inventory.armorItemInSlot(0) != null && mc.player.inventory.armorItemInSlot(0).getItem() == Items.GOLDEN_BOOTS)
+    	{
     		
+    		//Hand debug
+    		String movingArmState = "Moving Arm State - " + RenderGun.getMovingArmState(gunModel, anim);
+    		String staticArmState = "Static Arm State - " + RenderGun.getStaticArmState(gunModel, anim);
+    		GL11.glPushMatrix();
+    		{
+        		GL11.glScalef(textScale, textScale, textScale);
+        		//GUN STATS
+        		mc.fontRenderer.drawString("Hand Debug;", (width), (height), Integer.parseInt("FF0000", 16), false);
+        		mc.fontRenderer.drawString(movingArmState, (width), (height) + 8, Integer.parseInt("FFFFFF", 16), false);
+        		mc.fontRenderer.drawString(staticArmState, (width), (height) + 16, Integer.parseInt("FFFFFF", 16), false);
+
+
+    		}
+    		GL11.glPopMatrix();
     	}
+	
     	
 	
 	}

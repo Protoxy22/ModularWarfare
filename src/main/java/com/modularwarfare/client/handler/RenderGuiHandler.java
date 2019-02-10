@@ -1,6 +1,10 @@
 package com.modularwarfare.client.handler;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.client.ClientProxy;
+import com.modularwarfare.client.ClientRenderHooks;
+import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.network.PacketGunSwitchMode;
 import com.modularwarfare.utility.DevGui;
@@ -25,7 +29,7 @@ public class RenderGuiHandler extends ForgeEvent {
 			EntityPlayerSP entityPlayer = Minecraft.getMinecraft().player;
 			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
 			{
-				new DevGui(Minecraft.getMinecraft(), entityPlayer.getHeldItemMainhand(), ((ItemGun)entityPlayer.getHeldItemMainhand().getItem()));
+				new DevGui(Minecraft.getMinecraft(), entityPlayer.getHeldItemMainhand(), ((ItemGun)entityPlayer.getHeldItemMainhand().getItem()), ClientProxy.gunRenderer, ClientRenderHooks.getAnimMachine(entityPlayer));
 			}
 		}
 	}
