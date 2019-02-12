@@ -412,7 +412,7 @@ public class RenderGun extends CustomItemRenderer {
 							//Unload/Load ammo
 							Optional<StateEntry> unload = anim.getCurrentState();
 							float ammoProgress = unload.isPresent() ? (unload.get().stateType == StateType.Unload || unload.get().stateType == StateType.Load) ? unload.get().currentValue : 1f : 1f;
-							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, animations.reloadAmmoCount, anim);
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, anim.reloadAmmoCount, anim);
 						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)

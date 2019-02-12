@@ -8,6 +8,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.StateMachine;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
@@ -68,7 +69,7 @@ public class ClientTickHandler extends ForgeEvent {
 			}
 			case END:
 			{
-				
+				StateEntry.smoothing = event.renderTickTime;
 				break;
 			}
 		}
@@ -152,7 +153,8 @@ public class ClientTickHandler extends ForgeEvent {
 //			}
 //			if(anim.chargeTriggerTrigger == 3 && anim.timeUntilCharge != 0) {
 //				anim.chargeTriggerTrigger = 0;
-//			}	
+//			}
+			
 		} else
 		{
 			RenderGun.resetRenderMods();
@@ -208,16 +210,22 @@ public class ClientTickHandler extends ForgeEvent {
 		player.rotationYaw += antiRecoilYaw * 0.2F;
 		antiRecoilPitch *= 0.8F;
 		antiRecoilYaw *= 0.8F;
+		
+		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
+		{
+			stateMachine.onUpdate();
+		}
+		
 		// Gun Animation State Machine
 //		for(StateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
 //		{
 //			gunAnimation.onUpdate();
 //		}
 		
-		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
-		{
-			stateMachine.onUpdate();
-		}
+//		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
+//		{
+//			stateMachine.onUpdate();
+//		}
 	}
 
 }
