@@ -406,19 +406,13 @@ public class RenderGun extends CustomItemRenderer {
 						AmmoType ammoType = itemAmmo.type;
 						boolean shouldNormalRender = true;
 						
+						System.out.println(anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null);
 						if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
 						{
-							if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
-							{
-								//Unload/Load ammo
-								Optional<StateEntry> unload = anim.getCurrentState();
-								float ammoProgress = unload.isPresent() ? (unload.get().stateType == StateType.Unload || unload.get().stateType == StateType.Load) ? unload.get().currentValue :  0f : 0f;	
-								WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, anim.reloadAmmoCount, anim);
-								//WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(test, anim);
-							}
-							//This is old
-							//float ammoPosition = getReloadAmmoPosition(reloadProgress, model, animations);
-							//WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoPosition, animations.reloadAmmoCount, anim);
+							//Unload/Load ammo
+							Optional<StateEntry> unload = anim.getCurrentState();
+							float ammoProgress = unload.isPresent() ? (unload.get().stateType == StateType.Unload || unload.get().stateType == StateType.Load) ? unload.get().currentValue : 1f : 1f;
+							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, anim.reloadAmmoCount, anim);
 						}
 						
 						if(gunType.dynamicAmmo && ammoType.model != null)

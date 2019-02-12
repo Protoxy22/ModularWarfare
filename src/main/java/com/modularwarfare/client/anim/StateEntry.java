@@ -14,6 +14,8 @@ public class StateEntry {
 	private float minValue;
 	private float incrementValue;
 	
+	public static float smoothing = 1f;
+	
 	public StateEntry(StateType stateType, float stateTime, float startingValue, MathType mathType)
 	{
 		this.stateTime = stateTime;
@@ -28,9 +30,9 @@ public class StateEntry {
 	{
 		lastValue = currentValue;
 		if(mathType == MathType.Add)
-			currentValue += incrementValue * RenderGun.smoothing / (reloadTime*stateTime);
+			currentValue += incrementValue * smoothing / (reloadTime*stateTime);
 		else if(mathType == MathType.Sub)
-			currentValue -= incrementValue * RenderGun.smoothing / (reloadTime*stateTime);
+			currentValue -= incrementValue * smoothing / (reloadTime*stateTime);
 		currentValue = NumberHelper.clamp(currentValue, minValue, 1f);
 		if((mathType == MathType.Add && currentValue == 1.0) || (mathType == MathType.Sub && currentValue == 0))
 			return true;
