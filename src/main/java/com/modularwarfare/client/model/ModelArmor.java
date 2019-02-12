@@ -57,6 +57,7 @@ public class ModelArmor extends TurboBipedBase {
 	        
 	        if(isSneak)
 			{
+	        	//TODO Divide by model scale
 				GlStateManager.translate(0.0F, 0.2F, 0.0F);
 			}
 	        

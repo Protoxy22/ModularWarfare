@@ -17,7 +17,7 @@ public class ClientWeaponHandler extends ForgeEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onWeaponFire(WeaponFireEvent.Post event)
 	{
-		//ClientRenderHooks.getAnimations(event.getWeaponUser()).triggerShoot((ModelGun) event.getWeaponItem().type.model);
+		ClientRenderHooks.getAnimMachine(event.getWeaponUser()).triggerShoot((ModelGun) event.getWeaponItem().type.model);
 		ClientTickHandler.playerRecoilPitch += 2 * new Random().nextFloat();
 		ClientTickHandler.playerRecoilYaw += 2 * new Random().nextFloat();
 	}
