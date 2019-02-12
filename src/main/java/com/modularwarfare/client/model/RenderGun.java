@@ -173,11 +173,15 @@ public class RenderGun extends CustomItemRenderer {
 				
 				
 				//Calls reload animation from the specified animation file
-				if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 					Optional<StateEntry> currentState = anim.getCurrentState();
 					float test = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(test, anim);
+					//System.out.println(test);
+					//System.out.println("Anim is null");
 				}
+				else
+					//System.out.println("2" + currentState.isPresent());
 				
 				//Recoil
 				GL11.glTranslatef(-(anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);

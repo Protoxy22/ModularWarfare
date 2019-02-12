@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.common.guns.GunType;
@@ -115,6 +116,10 @@ public class DevGui extends Gui
     		//Hand debug
     		String movingArmState = "Moving Arm State - " + RenderGun.getMovingArmState(gunModel, anim);
     		String staticArmState = "Static Arm State - " + RenderGun.getStaticArmState(gunModel, anim);
+    		String animTilt = "Tilt State - " + Boolean.toString(anim.isState(StateType.Tilt));
+    		String animUnload = "Unload State - " + Boolean.toString(anim.isState(StateType.Unload));
+    		String animLoad = "Load State - " + Boolean.toString(anim.isState(StateType.Load));
+    		String animUntilt = "Untilt State - " + Boolean.toString(anim.isState(StateType.Untilt));
     		GL11.glPushMatrix();
     		{
         		GL11.glScalef(textScale, textScale, textScale);
@@ -122,6 +127,10 @@ public class DevGui extends Gui
         		mc.fontRenderer.drawString("Hand Debug;", (width), (height), Integer.parseInt("FF0000", 16), false);
         		mc.fontRenderer.drawString(movingArmState, (width), (height) + 8, Integer.parseInt("FFFFFF", 16), false);
         		mc.fontRenderer.drawString(staticArmState, (width), (height) + 16, Integer.parseInt("FFFFFF", 16), false);
+        		mc.fontRenderer.drawString(animTilt, (width), (height) + 24, Integer.parseInt("FFFFFF", 16), false);
+        		mc.fontRenderer.drawString(animUnload, (width), (height) + 32, Integer.parseInt("FFFFFF", 16), false);
+        		mc.fontRenderer.drawString(animLoad, (width), (height) + 40, Integer.parseInt("FFFFFF", 16), false);
+        		mc.fontRenderer.drawString(animUntilt, (width), (height) + 48, Integer.parseInt("FFFFFF", 16), false);
 
 
     		}
