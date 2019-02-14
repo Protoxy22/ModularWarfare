@@ -129,6 +129,11 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
 			
+			for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
+			{
+				stateMachine.onRenderTickUpdate();
+			}
+			
 //			if(anim.chargeTriggerTrigger == 0 && anim.timeUntilCharge <= anim.chargeDelayAfterReload-65)
 //				anim.chargeTriggerTrigger = 1;
 //			
@@ -213,7 +218,7 @@ public class ClientTickHandler extends ForgeEvent {
 		
 		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
 		{
-			stateMachine.onUpdate();
+			stateMachine.onTickUpdate();
 		}
 		
 		// Gun Animation State Machine

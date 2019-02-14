@@ -13,12 +13,14 @@ public class StateEntry {
 	private MathType mathType;
 	private float minValue;
 	private float incrementValue;
+	public float cutOffTime;
 	
 	public static float smoothing = 1f;
 	
-	public StateEntry(StateType stateType, float stateTime, float startingValue, MathType mathType)
+	public StateEntry(StateType stateType, float stateTime, float cutOffTime, float startingValue, MathType mathType)
 	{
 		this.stateTime = stateTime;
+		this.cutOffTime = cutOffTime;
 		this.currentValue = lastValue = startingValue;
 		this.mathType = mathType;
 		this.stateType = stateType;
@@ -26,7 +28,7 @@ public class StateEntry {
 		this.incrementValue = 1f;
 	}
 	
-	public boolean onTick(float reloadTime)
+	public void onTick(float reloadTime)
 	{
 		lastValue = currentValue;
 		if(mathType == MathType.Add)
@@ -34,9 +36,6 @@ public class StateEntry {
 		else if(mathType == MathType.Sub)
 			currentValue -= incrementValue * smoothing / (reloadTime*stateTime);
 		currentValue = NumberHelper.clamp(currentValue, minValue, 1f);
-		if((mathType == MathType.Add && currentValue == 1.0) || (mathType == MathType.Sub && currentValue == 0))
-			return true;
-		return false;
 	}
 	
 	public static enum MathType

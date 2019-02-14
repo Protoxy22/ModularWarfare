@@ -38,25 +38,23 @@ public class AnimStateMachine {
 	public int reloadAmmoCount = 1;
 	public boolean isFired = false;
 	
-	public void onUpdate()
+	public void onTickUpdate()
 	{	
 		if(reloading)
-		{		
-			if(currentState == null)
-				currentState = stateEntries.get(0);
-			
-			if(currentState.stateType == StateType.Tilt)
-				tiltHold = true;
-			if(currentState.stateType == StateType.Untilt)
-				tiltHold = false;
-			
-			if(currentState.onTick(reloadTime))
+		{	
+			if(stateEntries != null)
 			{
-				boolean tickAgain = false;
-				if(currentState.stateTime == 0.0f)
-					tickAgain = true;
+				if(currentState == null)
+					currentState = stateEntries.get(0);
+								
+				if(currentState.stateType == StateType.Tilt)
+					tiltHold = true;
+				if(currentState.stateType == StateType.Untilt)
+					tiltHold = false;
 				
-				if(!tickAgain)
+				System.out.println(reloadProgress);
+				//System.out.println(currentState.stateType.name() + "> " + currentState.cutOffTime);
+				if(reloadProgress >= currentState.cutOffTime)
 				{
 					if(stateIndex+1 < stateEntries.size())
 					{
@@ -64,34 +62,24 @@ public class AnimStateMachine {
 						currentState = stateEntries.get(stateIndex);
 					} else
 					{
-						reloading = false;
 						stateEntries = null;
 						currentState = null;
 						stateIndex = 0;
 						tiltHold = false;
 					}
-				} else
-				{
-					while(tickAgain)
-					{	
-						if(stateIndex+1 < stateEntries.size())
-						{
-							stateIndex++;
-							currentState = stateEntries.get(stateIndex);
-							
-							if(currentState.stateTime != 0) {
-								tickAgain = false;
-							}
-						} else
-						{
-							reloading = false;
-							stateEntries = null;
-							currentState = null;
-							stateIndex = 0;
-							tiltHold = false;
-						}
-					}
 				}
+			}
+			
+			reloadProgress += 1F / reloadTime;
+			if(reloadProgress >= 0.9F)
+				isGunEmpty = false;
+			if(reloadProgress >= 1F) {
+				reloading = false;
+				reloadProgress = 0f;
+				stateEntries = null;
+				currentState = null;
+				stateIndex = 0;
+				tiltHold = false;
 			}
 		}
 		//temp
@@ -131,13 +119,21 @@ public class AnimStateMachine {
 		}
 	}
 	
+	public void onRenderTickUpdate()
+	{
+		if(reloading && currentState != null)
+		{
+			currentState.onTick(reloadTime);
+		}
+	}
+	
 	public ArrayList<StateEntry> getDefaultEntries()
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();
-		states.add(new StateEntry(StateType.Tilt, 0.15f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Unload, 0.35f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Load, 0.35f, 1f, MathType.Sub));
-		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Tilt, 0.15f, 0.15f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Unload, 0.35f, 0.50f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Load, 0.35f, 0.85f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, 1f, MathType.Sub));
 		return states;
 	}
 	

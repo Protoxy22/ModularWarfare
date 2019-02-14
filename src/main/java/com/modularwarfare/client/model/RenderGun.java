@@ -406,7 +406,6 @@ public class RenderGun extends CustomItemRenderer {
 						AmmoType ammoType = itemAmmo.type;
 						boolean shouldNormalRender = true;
 						
-						System.out.println(anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null);
 						if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
 						{
 							//Unload/Load ammo
