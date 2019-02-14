@@ -125,7 +125,7 @@ public class ClientTickHandler extends ForgeEvent {
 			
 			float maxHorizontal = 3.0f;
 			float maxVertical = 1.5f;
-			float swaySpeed = 0.003f;
+			float swaySpeed = 0.003f * 60f / (float) Minecraft.getDebugFPS();
 			if(RenderGun.swayHorizontalEP == null) RenderGun.swayHorizontalEP = NumberHelper.generateInRange(maxHorizontal);
 			if(RenderGun.swayVerticalEP == null) RenderGun.swayVerticalEP = NumberHelper.generateInRange(maxVertical);
 			RenderGun.swayHorizontal = NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed);
