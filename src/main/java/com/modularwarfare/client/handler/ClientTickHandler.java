@@ -31,9 +31,6 @@ public class ClientTickHandler extends ForgeEvent {
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
 	
-	public static float lowestRenderTick = 100000000000000f;
-	public static float highestRenderTick = 0f;
-	
 	private int tickCount = 0;
 	private int maxTickCount = 20;
 	
@@ -104,7 +101,7 @@ public class ClientTickHandler extends ForgeEvent {
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? /* TODO: Check if is charging !anim.isAnimState(StateType.Charge)*/ true : true);
 			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && aimChargeMisc ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
-			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));
+			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
 			
 			float sprintSpeed = 0.15f * renderTick;
 			float sprintValue = player.isSprinting() ? RenderGun.sprintSwitch + sprintSpeed : RenderGun.sprintSwitch - sprintSpeed;
@@ -128,7 +125,7 @@ public class ClientTickHandler extends ForgeEvent {
 			
 			float maxHorizontal = 3.0f;
 			float maxVertical = 1.5f;
-			float swaySpeed = 0.003f * renderTick;
+			float swaySpeed = 0.003f;
 			if(RenderGun.swayHorizontalEP == null) RenderGun.swayHorizontalEP = NumberHelper.generateInRange(maxHorizontal);
 			if(RenderGun.swayVerticalEP == null) RenderGun.swayVerticalEP = NumberHelper.generateInRange(maxVertical);
 			RenderGun.swayHorizontal = NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed);
@@ -140,33 +137,6 @@ public class ClientTickHandler extends ForgeEvent {
 			{
 				stateMachine.onRenderTickUpdate();
 			}
-			
-//			if(anim.chargeTriggerTrigger == 0 && anim.timeUntilCharge <= anim.chargeDelayAfterReload-65)
-//				anim.chargeTriggerTrigger = 1;
-//			
-//			if(anim.chargeTriggerTrigger == 1) {
-//				anim.chargeTrigger = NumberHelper.clamp(anim.chargeTrigger + 0.15f * renderTick, 0, 1);
-//			}
-//			
-//			if(anim.charging && anim.charged >= 0.66)
-//			{
-//				anim.chargeTriggerTrigger = 2;
-//			}
-//			if(anim.chargeTriggerTrigger == 2)
-//			{
-//				
-//				anim.chargeTrigger -= 0.15f * renderTick;
-//				if(anim.chargeTrigger <= 0)
-//				{
-//					anim.chargeTriggerTrigger = 3;
-//					anim.chargeTrigger = 0;
-//					anim.timeUntilCharge = 0;
-//				}
-//			}
-//			if(anim.chargeTriggerTrigger == 3 && anim.timeUntilCharge != 0) {
-//				anim.chargeTriggerTrigger = 0;
-//			}
-			
 		} else
 		{
 			RenderGun.resetRenderMods();
