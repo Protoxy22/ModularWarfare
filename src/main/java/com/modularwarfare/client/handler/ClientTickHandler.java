@@ -31,6 +31,9 @@ public class ClientTickHandler extends ForgeEvent {
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
 	
+	public static float lowestRenderTick = 100000000000000f;
+	public static float highestRenderTick = 0f;
+	
 	private int tickCount = 0;
 	private int maxTickCount = 20;
 	
@@ -64,12 +67,16 @@ public class ClientTickHandler extends ForgeEvent {
 		{
 			case START:
 			{
-				onRenderTickStart(Minecraft.getMinecraft(), event.renderTickTime);
+				float renderTick = NumberHelper.clamp(event.renderTickTime, 0.019998193f, 0.99999803f);
+				renderTick *= 60d / (double) Minecraft.getDebugFPS();
+				onRenderTickStart(Minecraft.getMinecraft(), renderTick);
 				break;
 			}
 			case END:
 			{
-				StateEntry.smoothing = event.renderTickTime;
+				float renderTick = NumberHelper.clamp(event.renderTickTime, 0.019998193f, 0.99999803f);
+				renderTick *= 60d / (double) Minecraft.getDebugFPS();
+				StateEntry.smoothing = renderTick;
 				break;
 			}
 		}
@@ -97,7 +104,7 @@ public class ClientTickHandler extends ForgeEvent {
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? /* TODO: Check if is charging !anim.isAnimState(StateType.Charge)*/ true : true);
 			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && aimChargeMisc ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
-			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
+			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));
 			
 			float sprintSpeed = 0.15f * renderTick;
 			float sprintValue = player.isSprinting() ? RenderGun.sprintSwitch + sprintSpeed : RenderGun.sprintSwitch - sprintSpeed;
