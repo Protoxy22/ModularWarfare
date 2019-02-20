@@ -58,15 +58,15 @@ public class cslr4 extends ModelGun //Same as Filename
 
 		hasFlash = false;
         
-		leftArmPos = new Vector3f(0.15F, -0.14F, -0.50F);
-        leftArmRot = new Vector3f(0.0F, -45.0F, -50.0F);
-        leftArmReloadPos = new Vector3f(-0.25F, -0.50F, -0.25F);
-        leftArmReloadRot = new Vector3f(40.0F, 15.0F, -20.0F);
+        leftArmPos = new Vector3f(0.450F, -0.58F, 0.05F);
+        leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(0.0F, -0.70F, 0.02F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
  
-        rightArmPos = new Vector3f(-0.47F, -0.31F, 0F);
-        rightArmRot = new Vector3f(0.0F, 0.0F, -80.0F);
-        rightArmReloadPos = new Vector3f(-0.43F, -0.31F, 0.19F);
-        rightArmReloadRot = new Vector3f(-20.0F, 0.0F, -80.0F);
+        rightArmPos = new Vector3f(0.39F, -0.70F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmChargePos = new Vector3f(-0.49F, -0.14F, 0.15F);
         rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
         

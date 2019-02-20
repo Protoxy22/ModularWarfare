@@ -62,21 +62,19 @@ public class cz805 extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
 		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 		
-        leftArmPos = new Vector3f(0.05F, -0.38F, -0.14F);
-        leftArmRot = new Vector3f(40.0F, 45.0F, 0.0F);
-        leftArmReloadPos = new Vector3f(-0.15F, -0.7F, -0.14F);
-        leftArmReloadRot = new Vector3f(40.0F, 45.0F, 0.0F);
-        leftArmChargePos = new Vector3f(0.18F, 0.45F, 0.06F);
-        leftArmChargeRot = new Vector3f(50.0F, 55.0F, -0.0F);
- 
-        rightArmPos = new Vector3f(-0.37F, -0.20F, 0.0F);
-        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.37F, -0.20F, 0.03F);
-        rightArmReloadRot = new Vector3f(-0.0F, 0.0F, -90.0F);
+        leftArmPos = new Vector3f(0.350F, -0.6F, 0.02F);
+        leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(0.10F, -0.82F, 0.02F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
         
-        rightArmScale = new Vector3f(0.6F, 0.6F, 0.6F);
-        leftArmScale = new Vector3f(0.6F, 1.0F, 0.6F);
- 
+        rightArmPos = new Vector3f(0.29F, -0.7F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(0.29F, -0.7F, 0.0F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        
+        rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+        leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+        
         leftHandAmmo = true;
         
 		
@@ -92,12 +90,12 @@ public class cz805 extends ModelGun //Same as Filename
 		//stanceRotate = new Vector3f(40.0F, 0.0F, -20.0F);
 		//stanceTranslate = new Vector3f(0.4F, 0.0F, 0.0F);
 		
-	    chargeHandleDistance = 5.6F;
-	    chargeDelay = 0;
-	    chargeDelayAfterReload = 50;
-	    chargeTime = 10;
+	    //chargeHandleDistance = 5.6F;
+	    //chargeDelay = 0;
+	    //chargeDelayAfterReload = 50;
+	    //chargeTime = 10;
 	    
-	    leftHandCharge = true;
+	    //leftHandCharge = true;
 	    //chargeModifier = new Vector3f (8.0F, 8.0F, 10.0F);	    
 
 		flipAll();

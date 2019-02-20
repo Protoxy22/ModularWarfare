@@ -42,7 +42,19 @@ public class victor extends ModelGun //Same as Filename
 		switchIsOnSlide = true;
 		gunSlideDistance = 0.5F;
 		reloadAnimation = WeaponAnimations.PISTOL;
+		
+        leftArmPos = new Vector3f(0.05F, -0.52F, 0.14F);
+        leftArmRot = new Vector3f(75.0F, 15.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(-0.15F, -0.50F, 0.12F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -45.0F);
+        
+        rightArmPos = new Vector3f(0.38F, -0.52F, 0.01F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -85.0F);
+        rightArmReloadPos = new Vector3f(0.34F, -0.50F, 0.01F);
+        rightArmReloadRot = new Vector3f(05.0F, 05.0F, -85.0F);
 
+        rightArmScale = new Vector3f(0.6F, 0.8F, 0.6F);
+        leftArmScale = new Vector3f(0.6F, 0.8F, 0.6F);
 
 		flipAll();
 	}

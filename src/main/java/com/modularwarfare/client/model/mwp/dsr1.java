@@ -63,18 +63,18 @@ public class dsr1 extends ModelGun //Same as Filename
 		boltRotation = -90F;
 		chargeModifier = new Vector3f (1.0F, -1.0F, 0.0F);
 		
-        leftArmPos = new Vector3f(0.0F, -0.05F, -0.30F);
-        leftArmRot = new Vector3f(0.0F, -25.0F, -60.0F);
-        leftArmReloadPos = new Vector3f(-0.77F, -0.47F, -0.53F);
-        leftArmReloadRot = new Vector3f(0.0F, -45.0F, -40.0F);
-
-
-        rightArmPos = new Vector3f(-0.62F, -0.19F, 0.20F);
-        rightArmRot = new Vector3f(10.0F, 20.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(-0.65F, -0.2F, 0.205F);
-        rightArmReloadRot = new Vector3f(10.0F, 20.0F, -90.0F);
-        rightArmChargePos = new Vector3f(-0.49F, -0.14F, 0.15F);
-        rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
+        leftArmPos = new Vector3f(0.370F, -0.57F, 0.02F);
+        leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
+		leftArmReloadPos = new Vector3f(0.150F, -0.72F, 0.02F);
+        leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
+        
+        rightArmPos = new Vector3f(0.30F, -0.65F, 0.0F);
+        rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
+        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        
+        rightArmChargePos = new Vector3f(0.47F, -0.39F, 0.14F);
+        rightArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
         
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
