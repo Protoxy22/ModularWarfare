@@ -13,7 +13,7 @@ public class AnimationShotgun extends WeaponAnimation {
 	
 	public AnimationShotgun()
 	{
-		ammoLoadOffset = new Vector3f(0, -0.5F, 0);
+		//ammoLoadOffset = new Vector3f(0, -0.5F, 0);
 		tiltGunTime = 0.15F;
 		unloadAmmoTime = 0F;
 		loadAmmoTime = 0.70F;
