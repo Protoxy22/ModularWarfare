@@ -199,6 +199,7 @@ public class ModelGun extends TurboBase
 	public String reloadAnimation = WeaponAnimations.RIFLE;
 	
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
+	public HashMap<String, RenderVariables> bulletMap = new HashMap<String, RenderVariables>();
 	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
 	public Vector3f gunRenderOffset = new Vector3f(0f, 0f, 0f);
 	public ArrayList<BreakActionData> breakActions = new ArrayList<BreakActionData>();

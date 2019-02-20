@@ -10,7 +10,6 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.ClientRenderHooks;
-import com.modularwarfare.client.StateMachine;
 import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
@@ -510,6 +509,18 @@ public class RenderGun extends CustomItemRenderer {
 							GL11.glPushMatrix();
 							{
 								ModelBullet bulletModel = (ModelBullet) itemBullet.type.model;
+								if(model.bulletMap.containsKey(itemBullet.baseType.internalName))
+								{
+									RenderVariables renderVar = model.bulletMap.get(itemBullet.type.internalName);
+									Vector3f offset = renderVar.offset;
+									GL11.glTranslatef(offset.x, offset.y, offset.z);
+									if(renderVar.scale != null)
+									{
+										Vector3f scale = renderVar.scale;
+										GL11.glScalef(scale.x, scale.y, scale.z);
+									}
+								}
+								bindTexture("bullets", itemBullet.type.modelSkins[0].getSkin());
 								bulletModel.renderBullet(f);
 							}
 							GL11.glPopMatrix();
@@ -523,7 +534,7 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPushMatrix();
 					{
 						GL11.glTranslatef(-model.translateAll.x * f, model.translateAll.y * f, model.translateAll.z * f);
-						//renderMovingArm(mc.player, model, anim); 
+						renderMovingArm(mc.player, model, anim); 
 					}
 					GL11.glPopMatrix();
 				}

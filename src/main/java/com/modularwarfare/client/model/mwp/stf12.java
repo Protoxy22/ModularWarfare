@@ -13,6 +13,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class stf12 extends ModelGun //Same as Filename
@@ -99,6 +100,7 @@ public class stf12 extends ModelGun //Same as Filename
 	    casingRotateVector = new Vector3f(0.1F, 10F, 0.1F);
 	    //caseScale = 0.8F;
 
+	    bulletMap.put("mwp.12gauge", new RenderVariables(new Vector3f(2f, 0f, 0f), 1f));
 
 		flipAll();
 	}

@@ -34,7 +34,6 @@ public class StateEntry {
 		this.minValue = 0;
 		this.incrementValue = 1f;
 		this.operationCount = operationCount;
-		System.out.println(operationCount);
 	}
 	
 	public void onTick(float reloadTime)
@@ -50,7 +49,6 @@ public class StateEntry {
 		{
 			currentValue = startingValue;
 			operationCount--;
-			System.out.println("called");
 		}
 	}
 	
