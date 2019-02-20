@@ -125,14 +125,14 @@ public class ClientTickHandler extends ForgeEvent {
 			
 			float maxHorizontal = 3.0f;
 			float maxVertical = 1.5f;
-			float swaySpeed = 0.003f * 60f / (float) Minecraft.getDebugFPS();
-			if(RenderGun.swayHorizontalEP == null) RenderGun.swayHorizontalEP = NumberHelper.generateInRange(maxHorizontal);
-			if(RenderGun.swayVerticalEP == null) RenderGun.swayVerticalEP = NumberHelper.generateInRange(maxVertical);
-			RenderGun.swayHorizontal = NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed);
-			RenderGun.swayVertical = NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2);
+			float swaySpeed = 0.003f * renderTick;
+			if(RenderGun.swayHorizontalEP == null || Float.isNaN(RenderGun.swayHorizontalEP)) RenderGun.swayHorizontalEP = NumberHelper.generateInRange(maxHorizontal);
+			if(RenderGun.swayVerticalEP == null || Float.isNaN(RenderGun.swayVerticalEP)) RenderGun.swayVerticalEP = NumberHelper.generateInRange(maxVertical);
+			RenderGun.swayHorizontal = !Float.isNaN(RenderGun.swayHorizontal) ? NumberHelper.addTowards(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal, swaySpeed) : 0;
+			RenderGun.swayVertical = !Float.isNaN(RenderGun.swayVertical) ? NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2) : 0;
 			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
-			
+						
 			for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
 			{
 				stateMachine.onRenderTickUpdate();

@@ -52,8 +52,6 @@ public class AnimStateMachine {
 				if(currentState.stateType == StateType.Untilt)
 					tiltHold = false;
 				
-				System.out.println(reloadProgress);
-				//System.out.println(currentState.stateType.name() + "> " + currentState.cutOffTime);
 				if(reloadProgress >= currentState.cutOffTime)
 				{
 					if(stateIndex+1 < stateEntries.size())
@@ -82,15 +80,7 @@ public class AnimStateMachine {
 				tiltHold = false;
 			}
 		}
-		//temp
-		boolean isGunEmpty = false;
 		
-		
-		if (isFired) {
-		gunPullback += 2F / 4;
-		if (gunPullback >= 0.999F)
-		isFired = false;
-		}
 		// Slide model
 		lastGunSlide = gunSlide;
 		if (isGunEmpty)
@@ -98,14 +88,21 @@ public class AnimStateMachine {
 		if (!isGunEmpty && gunSlide > 0.9) // Add one extra frame to slide
 			gunSlide -= 0.1F;
 		else if (gunSlide > 0 && !isGunEmpty)
-			gunSlide *= 0.5F;
+			gunSlide *= 0.5F;		
 		
+		
+		// Recoil
 		lastGunRecoil = gunRecoil;
 		if (gunRecoil > 0)
 			gunRecoil *= 0.5F;
-		//System.out.println("called");
 		
 		// Time until hammer pullback
+		if (isFired) {
+			gunPullback += 2F / 4;
+		if (gunPullback >= 0.999F)
+			isFired = false;
+		}
+		
 		if (timeUntilPullback > 0) {
 			timeUntilPullback--;
 			if (timeUntilPullback == 0) {
@@ -114,7 +111,6 @@ public class AnimStateMachine {
 				lastGunPullback = gunPullback = -1F;
 			}
 		} else {
-			// Automatically reset hammer
 			hammerRotation *= 0.6F;
 		}
 	}
@@ -143,11 +139,11 @@ public class AnimStateMachine {
 		
 		lastGunRecoil = gunRecoil = 1F;
 		//System.out.println("called2");
-		//lastGunSlide = gunSlide = 1F;
-		//hammerRotation = model.hammerAngle;
+		lastGunSlide = gunSlide = 1F;
+		hammerRotation = model.hammerAngle;
+		timeUntilPullback = model.hammerDelay;
 		/*timeUntilPump = model.pumpDelay;
 		timeToPumpFor = model.pumpTime;
-		timeUntilPullback = model.hammerDelay;
 		timeUntilCasing = model.casingDelay;
 		muzzleFlashTime = 2;
 

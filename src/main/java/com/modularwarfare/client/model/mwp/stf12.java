@@ -41,7 +41,7 @@ public class stf12 extends ModelGun //Same as Filename
 		
 		rotateAimPosition = new Vector3f(0F, 0F, 0.65F);
 		translateAimPosition = new Vector3f(0.05F, 0.015F, 0F);
-		translateAll = new Vector3f(0F, -13F, 0F);//forward/down/right
+		translateAll = new Vector3f(50F, -13F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0F;
