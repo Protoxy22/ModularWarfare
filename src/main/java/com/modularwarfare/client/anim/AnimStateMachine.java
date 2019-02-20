@@ -123,12 +123,12 @@ public class AnimStateMachine {
 		}
 	}
 	
-	public ArrayList<StateEntry> getDefaultEntries()
+	public ArrayList<StateEntry> getDefaultEntries(int reloadCount)
 	{
-		ArrayList<StateEntry> states = new ArrayList<StateEntry>();
+		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
 		states.add(new StateEntry(StateType.Tilt, 0.15f, 0.15f, 0f, MathType.Add));
 		states.add(new StateEntry(StateType.Unload, 0.35f, 0.50f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Load, 0.35f, 0.85f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Load, 0.35f, 0.85f, 1f, MathType.Sub, reloadCount));
 		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, 1f, MathType.Sub));
 		return states;
 	}
@@ -168,7 +168,7 @@ public class AnimStateMachine {
 	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType)
 	{
 		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getAnimStates();
-		stateEntries = animEntries != null ? animEntries : getDefaultEntries();
+		stateEntries = animEntries != null ? animEntries : getDefaultEntries(reloadCount);
 				
 		this.reloadTime = reloadType != ReloadType.Full ? reloadTime*0.65f : reloadTime;
 		this.reloadType = reloadType;

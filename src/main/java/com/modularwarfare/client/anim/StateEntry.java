@@ -13,29 +13,45 @@ public class StateEntry {
 	private MathType mathType;
 	private float minValue;
 	private float incrementValue;
+	private float startingValue;
+	private float operationCount;
 	public float cutOffTime;
 	
 	public static float smoothing = 1f;
 	
 	public StateEntry(StateType stateType, float stateTime, float cutOffTime, float startingValue, MathType mathType)
 	{
+		this(stateType, stateTime, cutOffTime, startingValue, mathType, 1);
+	}
+	
+	public StateEntry(StateType stateType, float stateTime, float cutOffTime, float startingValue, MathType mathType, int operationCount)
+	{
 		this.stateTime = stateTime;
 		this.cutOffTime = cutOffTime;
-		this.currentValue = lastValue = startingValue;
+		this.startingValue = currentValue = lastValue = startingValue;
 		this.mathType = mathType;
 		this.stateType = stateType;
 		this.minValue = 0;
 		this.incrementValue = 1f;
+		this.operationCount = operationCount;
+		System.out.println(operationCount);
 	}
 	
 	public void onTick(float reloadTime)
 	{
 		lastValue = currentValue;
 		if(mathType == MathType.Add)
-			currentValue += incrementValue * smoothing / (reloadTime*stateTime);
+			currentValue += (incrementValue * smoothing / (reloadTime*stateTime)) * operationCount;
 		else if(mathType == MathType.Sub)
-			currentValue -= incrementValue * smoothing / (reloadTime*stateTime);
+			currentValue -= (incrementValue * smoothing / (reloadTime*stateTime)) * operationCount;
 		currentValue = NumberHelper.clamp(currentValue, minValue, 1f);
+				
+		if(currentValue != startingValue && (currentValue == 1f || currentValue == 0f) && operationCount > 1)
+		{
+			currentValue = startingValue;
+			operationCount--;
+			System.out.println("called");
+		}
 	}
 	
 	public static enum MathType

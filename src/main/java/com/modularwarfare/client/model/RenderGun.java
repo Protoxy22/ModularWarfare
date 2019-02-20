@@ -510,7 +510,6 @@ public class RenderGun extends CustomItemRenderer {
 							GL11.glPushMatrix();
 							{
 								ModelBullet bulletModel = (ModelBullet) itemBullet.type.model;
-								System.out.println("called");
 								bulletModel.renderBullet(f);
 							}
 							GL11.glPopMatrix();
