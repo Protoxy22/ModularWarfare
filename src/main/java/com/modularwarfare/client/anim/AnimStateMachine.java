@@ -46,7 +46,7 @@ public class AnimStateMachine {
 			{
 				if(currentState == null)
 					currentState = stateEntries.get(0);
-								
+												
 				if(currentState.stateType == StateType.Tilt)
 					tiltHold = true;
 				if(currentState.stateType == StateType.Untilt)

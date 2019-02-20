@@ -43,13 +43,13 @@ public class StateEntry {
 			currentValue += (incrementValue * smoothing / (reloadTime*stateTime)) * operationCount;
 		else if(mathType == MathType.Sub)
 			currentValue -= (incrementValue * smoothing / (reloadTime*stateTime)) * operationCount;
-		currentValue = NumberHelper.clamp(currentValue, minValue, 1f);
-				
+		currentValue = NumberHelper.clamp(currentValue, minValue, 0.999f);
+		
 		if(currentValue != startingValue && (currentValue == 1f || currentValue == 0f) && operationCount > 1)
 		{
 			currentValue = startingValue;
 			operationCount--;
-		}
+		}		
 	}
 	
 	public static enum MathType
