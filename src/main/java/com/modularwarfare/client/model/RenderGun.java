@@ -446,7 +446,7 @@ public class RenderGun extends CustomItemRenderer {
 											String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 											bindTexture("ammo", pathAmmo);
 											
-											if(anim.renderAmmo) 
+											if(anim.shouldRenderAmmo()) 
 											{
 												if(!cachedUnload)
 													anim.cachedAmmoStack = stackAmmo;
@@ -465,7 +465,7 @@ public class RenderGun extends CustomItemRenderer {
 								}
 							}
 							
-							if(shouldNormalRender && anim.renderAmmo)
+							if(shouldNormalRender && anim.shouldRenderAmmo())
 							{
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;							
@@ -476,7 +476,7 @@ public class RenderGun extends CustomItemRenderer {
 							}
 						} else
 						{
-							if(anim.renderAmmo) 
+							if(anim.shouldRenderAmmo()) 
 							{
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
-import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.anim.StateEntry.MathType;
 import com.modularwarfare.client.model.ModelGun;
@@ -34,7 +33,6 @@ public class AnimStateMachine {
 	public boolean isGunEmpty = false;
 	public boolean unloadOnly = false;
 	public ItemStack cachedAmmoStack;
-	public boolean renderAmmo = true;
 	public int reloadAmmoCount = 1;
 	public boolean isFired = false;
 	
@@ -46,9 +44,7 @@ public class AnimStateMachine {
 			{
 				if(currentState == null)
 					currentState = stateEntries.get(0);
-				
-				System.out.println(currentState.stateType);
-												
+																
 				if(currentState.stateType == StateType.Tilt)
 					tiltHold = true;
 				if(currentState.stateType == StateType.Untilt)
@@ -59,6 +55,7 @@ public class AnimStateMachine {
 					if(stateIndex+1 < stateEntries.size())
 					{
 						stateIndex++;
+						currentState.finished = true;
 						currentState = stateEntries.get(stateIndex);
 					} else
 					{
@@ -221,4 +218,27 @@ public class AnimStateMachine {
 		return animEntries;
 	}
 	
+	public boolean shouldRenderAmmo()
+	{
+		if(reloading)
+		{
+			switch(reloadType)
+			{
+			case Load:
+			{
+				Optional<StateEntry> state = getState(StateType.Load);
+				return state.isPresent() ? state.get().currentValue < 1f : false;
+			}
+			case Unload:
+			{
+				Optional<StateEntry> state = getState(StateType.Load);
+				return state.isPresent() ? state.get().currentValue > 1f : false;
+			}
+			
+			default:
+				break;
+			}
+		}
+		return true;
+	}
 }

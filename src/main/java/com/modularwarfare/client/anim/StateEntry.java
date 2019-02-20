@@ -16,6 +16,7 @@ public class StateEntry {
 	private float startingValue;
 	private float operationCount;
 	public float cutOffTime;
+	public boolean finished = false;
 	
 	public static float smoothing = 1f;
 	
