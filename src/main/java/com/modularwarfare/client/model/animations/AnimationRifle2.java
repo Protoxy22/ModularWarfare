@@ -13,7 +13,7 @@ public class AnimationRifle2 extends WeaponAnimation {
 	
 	public AnimationRifle2()
 	{
-		ammoLoadOffset = new Vector3f(0, -0.5F, 0);
+		//ammoLoadOffset = new Vector3f(0, -0.5F, 0);
 		tiltGunTime = 0.15F;
 		unloadAmmoTime = 0.35F;
 		loadAmmoTime = 0.35F;
