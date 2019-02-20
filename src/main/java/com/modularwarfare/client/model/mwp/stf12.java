@@ -42,7 +42,7 @@ public class stf12 extends ModelGun //Same as Filename
 		
 		rotateAimPosition = new Vector3f(0F, 0F, 0.65F);
 		translateAimPosition = new Vector3f(0.05F, 0.015F, 0F);
-		translateAll = new Vector3f(50F, -13F, 0F);//forward/down/right
+		translateAll = new Vector3f(0F, -13F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0F;
@@ -72,7 +72,7 @@ public class stf12 extends ModelGun //Same as Filename
 		//RecoilSlideDistance = 0.3F;
 		//RotateSlideDistance = -7F;
         
-        leftArmPos = new Vector3f(0.350F, -0.50F, -0.0F);
+        leftArmPos = new Vector3f(0.30F, -0.550F, -0.01F);
         leftArmRot = new Vector3f(25.0F, 0.0F, -45.0F);
         leftArmReloadPos = new Vector3f(0.150F, -0.60F, -0.0F);
         leftArmReloadRot = new Vector3f(25.0F, 0.0F, -45.0F);
@@ -100,7 +100,7 @@ public class stf12 extends ModelGun //Same as Filename
 	    casingRotateVector = new Vector3f(0.1F, 10F, 0.1F);
 	    //caseScale = 0.8F;
 
-	    bulletMap.put("mwp.12gauge", new RenderVariables(new Vector3f(2f, 0f, 0f), 1f));
+	    bulletMap.put("mwp.12gauge", new RenderVariables(new Vector3f(2f, 1.5f, 0f), new Vector3f(1.0f, 0.75f, 0.75f)));
 
 		flipAll();
 	}
