@@ -51,8 +51,6 @@ public class AnimationRifle extends WeaponAnimation {
 		int bulletNum = MathHelper.floor(multiAmmoPosition);
 		float bulletProgress = multiAmmoPosition - bulletNum;
 		
-		System.out.println(bulletNum);
-		
 		//System.out.println(bulletProgress);
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(ammoProgress * -0.75F, 0F, 0F);
