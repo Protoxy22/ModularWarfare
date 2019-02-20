@@ -11,6 +11,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.animations.AnimationCustom;
@@ -90,6 +91,8 @@ public class akm extends ModelGun //Same as Filename
 	    
 	    rightHandCharge = true;
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
+	    
+	    reloadAnimation = WeaponAnimations.RIFLE;
 
 //		rotateGunVertical = 20F;
 //		rotateGunHorizontal = 1F;

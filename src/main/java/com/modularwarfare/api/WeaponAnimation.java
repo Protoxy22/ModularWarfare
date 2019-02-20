@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.anim.StateEntry.MathType;
@@ -26,9 +27,16 @@ public class WeaponAnimation {
 		
 	}
 	
-	public ArrayList<StateEntry> getAnimStates()
+	public ArrayList<StateEntry> getAnimStates(ReloadType reloadType, int reloadCount)
 	{
-		return null;
+		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
+		states.add(new StateEntry(StateType.Tilt, 0.15f, 0.15f, 0f, MathType.Add));
+		if(reloadType == ReloadType.Unload || reloadType == ReloadType.Full)
+			states.add(new StateEntry(StateType.Unload, 0.35f, 0.50f, 0f, MathType.Add));
+		if(reloadType == ReloadType.Load || reloadType == ReloadType.Full)
+			states.add(new StateEntry(StateType.Load, 0.35f, 0.85f, 1f, MathType.Sub, reloadCount));
+		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, 1f, MathType.Sub));
+		return states;
 	}
 	
 }

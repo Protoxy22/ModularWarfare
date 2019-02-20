@@ -3,10 +3,10 @@ package com.modularwarfare.client.model.animations;
 import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateEntry.MathType;
 import com.modularwarfare.client.anim.StateType;
@@ -66,7 +66,7 @@ public class AnimationPistol extends WeaponAnimation {
 	}
 	
 	@Override
-	public ArrayList<StateEntry> getAnimStates()
+	public ArrayList<StateEntry> getAnimStates(ReloadType reloadType, int reloadCount)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();
 		states.add(new StateEntry(StateType.Tilt, 0.20f, 0.20f, 0f, MathType.Add));

@@ -46,6 +46,8 @@ public class AnimStateMachine {
 			{
 				if(currentState == null)
 					currentState = stateEntries.get(0);
+				
+				System.out.println(currentState.stateType);
 												
 				if(currentState.stateType == StateType.Tilt)
 					tiltHold = true;
@@ -167,9 +169,9 @@ public class AnimStateMachine {
 	
 	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType)
 	{
-		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getAnimStates();
-		stateEntries = animEntries != null ? animEntries : getDefaultEntries(reloadCount);
-				
+		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getAnimStates(reloadType, reloadCount);
+		stateEntries = adjustTiming(animEntries != null ? animEntries : getDefaultEntries(reloadCount));
+		
 		this.reloadTime = reloadType != ReloadType.Full ? reloadTime*0.65f : reloadTime;
 		this.reloadType = reloadType;
 		this.reloading = true;
@@ -201,6 +203,22 @@ public class AnimStateMachine {
 	public boolean isState(StateType stateType)
 	{
 		return currentState != null ? currentState.stateType == stateType : false;
+	}
+	
+	public ArrayList<StateEntry> adjustTiming(ArrayList<StateEntry> animEntries)
+	{
+		float currentTiming = 0f;
+		float dividedAmount = 0f;
+		for(StateEntry entry : animEntries)
+			currentTiming += entry.stateTime;
+		if(currentTiming < 1f)
+			dividedAmount = (1f-currentTiming) / animEntries.size();
+		if(dividedAmount > 0f)
+		{
+			for(StateEntry entry : animEntries)
+				entry.stateTime += dividedAmount;
+		}
+		return animEntries;
 	}
 	
 }

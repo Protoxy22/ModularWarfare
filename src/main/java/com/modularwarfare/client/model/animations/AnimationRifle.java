@@ -1,5 +1,6 @@
 package com.modularwarfare.client.model.animations;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.lwjgl.opengl.GL11;
@@ -7,8 +8,10 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
+import com.modularwarfare.client.anim.StateEntry.MathType;
 import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.util.math.MathHelper;
@@ -64,6 +67,19 @@ public class AnimationRifle extends WeaponAnimation {
 		GL11.glRotatef(0F * ammoProgress, 0F, 1F, 0F);
 		//Rotate Z axis - Angle Up/Down
 		GL11.glRotatef(-90F * ammoProgress, 0F, 0F, 1F);
+	}
+	
+	@Override
+	public ArrayList<StateEntry> getAnimStates(ReloadType reloadType, int reloadCount)
+	{
+		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
+		states.add(new StateEntry(StateType.Tilt, 0.15f, 0.15f, 0f, MathType.Add));
+		if(reloadType == ReloadType.Unload || reloadType == ReloadType.Full)
+			states.add(new StateEntry(StateType.Unload, 0.35f, 0.50f, 0f, MathType.Add));
+		if(reloadType == ReloadType.Load || reloadType == ReloadType.Full)
+			states.add(new StateEntry(StateType.Load, 0.35f, 0.85f, 1f, MathType.Sub, reloadCount));
+		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, 1f, MathType.Sub));
+		return states;
 	}
 
 }

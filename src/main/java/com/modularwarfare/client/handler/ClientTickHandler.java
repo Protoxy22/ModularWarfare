@@ -95,8 +95,7 @@ public class ClientTickHandler extends ForgeEvent {
 				RenderGun.lastModel = model.getClass().getName(); 
 			}
 			
-			StateMachine anim = ClientRenderHooks.getAnimations(player);
-			AnimStateMachine animnew = ClientRenderHooks.getAnimMachine(player);
+			AnimStateMachine anim = ClientRenderHooks.getAnimMachine(player);
 						
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			boolean aimChargeMisc = !anim.reloading && (model.leftHandCharge || model.rightHandCharge ? /* TODO: Check if is charging !anim.isAnimState(StateType.Charge)*/ true : true);
@@ -112,7 +111,7 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));;
 			
 			float reloadSpeed = 0.15f * renderTick;
-			float reloadValue = ClientRenderHooks.getAnimations(player).reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
+			float reloadValue = anim.reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
 			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
 			
 			float triggerPullSpeed = 0.03f * renderTick;

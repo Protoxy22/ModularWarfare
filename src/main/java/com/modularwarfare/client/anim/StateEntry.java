@@ -44,7 +44,6 @@ public class StateEntry {
 		else if(mathType == MathType.Sub)
 			currentValue -= (incrementValue * smoothing / (reloadTime*stateTime)) * operationCount;
 		currentValue = NumberHelper.clamp(currentValue, minValue, 0.999f);
-		
 		if(currentValue != startingValue && (currentValue == 1f || currentValue == 0f) && operationCount > 1)
 		{
 			currentValue = startingValue;
