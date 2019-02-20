@@ -86,5 +86,10 @@ public class NumberHelper {
 		newVector.z /= amount;
 		return newVector;
 	}
-
+	
+	public static boolean isInRange(float maxValue, float currentValue)
+	{
+		return currentValue <= maxValue && currentValue >= -maxValue;
+	}
+	
 }
