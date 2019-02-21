@@ -246,4 +246,9 @@ public class AnimStateMachine {
 		return reloadType != null && reloadType == ReloadType.Unload;
 	}
 	
+	public boolean isLoadOnly()
+	{
+		return reloadType != null && reloadType == ReloadType.Load;
+	}
+	
 }
