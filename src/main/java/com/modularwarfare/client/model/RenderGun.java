@@ -394,7 +394,7 @@ public class RenderGun extends CustomItemRenderer {
 				
 				GL11.glPushMatrix();
 				{
-					boolean cachedUnload = (anim.unloadOnly && anim.cachedAmmoStack != null);
+					boolean cachedUnload = (anim.isUnloadOnly() && anim.cachedAmmoStack != null);
 					if(ItemGun.hasAmmoLoaded(item) || cachedUnload)
 					{
 						ItemStack stackAmmo =  cachedUnload ? anim.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
@@ -660,7 +660,7 @@ public class RenderGun extends CustomItemRenderer {
 			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) return "Charge";
 			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) return "Pump";
 			else if (!anim.reloading) return "Default";
-			else if(anim.getReloadType().isPresent() && anim.getReloadType().get() == ReloadType.Load) return "LoadOnly";
+			else if(anim.isUnloadOnly()) return "LoadOnly";
 			else if(anim.isState(StateType.Load)) return "Load";
 			else if(anim.isState(StateType.Unload)) return "Unload";
 			else return "Reload";
