@@ -64,7 +64,7 @@ public class ClientTickHandler extends ForgeEvent {
 		{
 			case START:
 			{
-				float renderTick = NumberHelper.clamp(event.renderTickTime, 0.019998193f, 0.99999803f);
+				float renderTick = event.renderTickTime;
 				renderTick *= 60d / (double) Minecraft.getDebugFPS();
 				StateEntry.smoothing = renderTick;
 				onRenderTickStart(Minecraft.getMinecraft(), renderTick);
