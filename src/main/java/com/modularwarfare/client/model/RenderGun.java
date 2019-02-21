@@ -91,9 +91,10 @@ public class RenderGun extends CustomItemRenderer {
         float randomNum = new Random().nextFloat();
         float randomShake = min + (randomNum * (max - min));
         //float reloadProgress = getReloadProgress(animations);
-        //float tiltProgress = getReloadTiltProgress(reloadProgress, model);
-        float tiltProgress =1;
-        float f = 1F / 16F;
+		Optional<StateEntry> currentState = anim.getCurrentState();
+		float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+        System.out.println(tiltProgress);
+		float f = 1F / 16F;
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -174,9 +175,9 @@ public class RenderGun extends CustomItemRenderer {
 				
 				//Calls reload animation from the specified animation file
 				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					Optional<StateEntry> currentState = anim.getCurrentState();
-					float test = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
-					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(test, anim);
+					//Optional<StateEntry> currentState = anim.getCurrentState();
+					//float test = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, anim);
 				}
 				
 				//Recoil
@@ -200,7 +201,7 @@ public class RenderGun extends CustomItemRenderer {
 			GL11.glPushMatrix();
 			{
 				float modelScale = model.modelScale;
-				Optional<StateEntry> currentState = anim.getCurrentState();
+				//Optional<StateEntry> currentState = anim.getCurrentState();
 				
 				/** Weapon Texture */
 				int skinId = item.getTagCompound().getInteger("skinId");
@@ -610,6 +611,7 @@ public class RenderGun extends CustomItemRenderer {
 	public static String getStaticArmState(ModelGun model, AnimStateMachine anim)
 	{
 		// TODO: Pumping current and last
+
 		float pumpCurrent = 1f;
 		float pumpLast = 1f;
 		
@@ -655,7 +657,6 @@ public class RenderGun extends CustomItemRenderer {
 			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) return "Charge";
 			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) return "Pump";
 			else if (!anim.reloading) return "Default";
-			else if(anim.isUnloadOnly()) return "LoadOnly";
 			else if(anim.isState(StateType.Load)) return "Load";
 			else if(anim.isState(StateType.Unload)) return "Unload";
 			else return "Reload";
@@ -679,8 +680,8 @@ public class RenderGun extends CustomItemRenderer {
 	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
-		//float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);
-		float tiltProgress = 1;
+		Optional<StateEntry> currentState = anim.getCurrentState();
+        float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		String staticArmState = getStaticArmState(model, anim);
 		GL11.glPushMatrix();
 		{
@@ -701,7 +702,7 @@ public class RenderGun extends CustomItemRenderer {
 			else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, chargeArmRot, chargeArmPos, armRot, armPos, !model.leftHandAmmo);
 			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos, !model.leftHandAmmo);
 			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, rightArm, !model.leftHandAmmo);
-			else if (staticArmState == "Reload") RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos, !model.leftHandAmmo);
+			else if (staticArmState == "Reload") RenderArms.renderStaticArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos, !model.leftHandAmmo);
 			
 			//Render the armor model on the arm
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
@@ -724,11 +725,11 @@ public class RenderGun extends CustomItemRenderer {
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
 		else bindTexture("arms", "armSkin");
-		//float tiltProgress = getReloadTiltProgress(getReloadProgress(anim), model);	
-		float tiltProgress = 1;
 		boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
+		Optional<StateEntry> currentState = anim.getCurrentState();
+        float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		GL11.glPushMatrix();
 		{
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
@@ -741,7 +742,7 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Bolt") {RenderArms.renderArmBolt(model, anim, smoothing, model.rightArmChargeRot, model.rightArmChargePos, model.leftHandAmmo);}
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true, model.leftHandAmmo);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
-					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
+					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
 					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
 					modelplayer.bipedRightArm.render(0.0625F);
 					renderRightSleeve(player, modelplayer);
@@ -758,7 +759,7 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.leftArmRot, model.leftArmPos, false, model.leftHandAmmo);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Unload") {RenderArms.renderArmUnload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
-					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
+					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 					modelplayer.bipedLeftArm.render(0.0625F);

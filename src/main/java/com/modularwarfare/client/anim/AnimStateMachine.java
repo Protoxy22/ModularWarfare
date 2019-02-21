@@ -164,6 +164,7 @@ public class AnimStateMachine {
 		stateEntries = adjustTiming(animEntries != null ? animEntries : getDefaultEntries(reloadCount));
 		
 		this.reloadTime = reloadType != ReloadType.Full ? reloadTime*0.65f : reloadTime;
+		//this.reloadTime = 200;
 		this.reloadType = reloadType;
 		this.reloading = true;
 	}

@@ -1,11 +1,14 @@
 package com.modularwarfare.client.model;
 
+import java.util.Optional;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
-import com.modularwarfare.client.StateMachine;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.StateEntry;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.utility.NumberHelper;
 
 public class RenderArms {
@@ -88,7 +91,36 @@ public class RenderArms {
 			handleRotateRight(reloadRot);
 	}
 	
-	public static void renderArmReload(ModelGun model, AnimStateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
+	public static void renderArmReload(ModelGun model, AnimStateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
+	{
+		//Translation
+		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
+		Optional<StateEntry> currentState = anim.getCurrentState();
+		Vector3f ammoLoadOffset = anim.isLoadOnly() && currentState .isPresent() && currentState.get().stateType != StateType.Load ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
+		//System.out.println(tiltProgress);
+		//System.out.println(anim.isLoadOnly());
+		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
+		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
+		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));
+		//Rotation
+		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadRot, defaultRot), tiltProgress);
+		if(leftHand) {
+			GL11.glTranslatef(0.225F, 0.75F, 0);
+			GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
+			GL11.glRotatef(defaultRot.y + offsetRotation.y, 0F, 1F, 0F);
+			GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
+			GL11.glTranslatef(-0.225F, -0.75F, 0);
+		}
+		else {
+			GL11.glTranslatef(-0.225F, 0.75F, 0);
+			GL11.glRotatef(defaultRot.x + offsetRotation.x, 1F, 0F, 0F);
+			GL11.glRotatef(defaultRot.y + offsetRotation.y, 0F, 1F, 0F);
+			GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
+			GL11.glTranslatef(0.225F, -0.75F, 0);
+		}
+	}
+	
+	public static void renderStaticArmReload(ModelGun model, AnimStateMachine anim, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
@@ -110,13 +142,17 @@ public class RenderArms {
 			GL11.glRotatef(defaultRot.z + offsetRotation.z, 0F, 0F, 1F);
 			GL11.glTranslatef(0.225F, -0.75F, 0);
 		}
+		
 	}
 	
 	public static void renderArmLoad(ModelGun model, AnimStateMachine anim, WeaponAnimation animation, float smoothing, float tiltProgress, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
-		Vector3f ammoLoadOffset = animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f);
+		Optional<StateEntry> currentState = anim.getCurrentState();
+		Vector3f ammoLoadOffset = anim.isLoadOnly() && currentState .isPresent() && currentState.get().stateType != StateType.Load ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
+		//System.out.println(ammoLoadOffset);
+		//System.out.println(anim.isLoadOnly());
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));
@@ -142,7 +178,7 @@ public class RenderArms {
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
-		Vector3f ammoLoadOffset = animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f);
+		Vector3f ammoLoadOffset = anim.isUnloadOnly() ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));
