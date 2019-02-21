@@ -31,7 +31,6 @@ public class AnimStateMachine {
 	//THESE ARE ALL AUTOGENED TO TEMP FIX ERRORS
 
 	public boolean isGunEmpty = false;
-	public boolean unloadOnly = false;
 	public ItemStack cachedAmmoStack;
 	public int reloadAmmoCount = 1;
 	public boolean isFired = false;
@@ -240,6 +239,11 @@ public class AnimStateMachine {
 	public Optional<ReloadType> getReloadType()
 	{
 		return Optional.ofNullable(reloadType);
+	}
+	
+	public boolean isUnloadOnly()
+	{
+		return reloadType != null && reloadType == ReloadType.Unload;
 	}
 	
 }
