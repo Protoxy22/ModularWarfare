@@ -11,6 +11,7 @@ import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.objects.BreakActionData;
@@ -644,28 +645,27 @@ public class RenderGun extends CustomItemRenderer {
 		//float reloadProgress = getReloadProgress(anim);
 		
 		//Calls reload animation from the specified animation file
-		String movingArmState;
 		if(!model.leftHandAmmo) 
 		{
-			if(/*anim.isAnimState(StateType.Charge) && */pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) movingArmState = "Pump";
-			else if(/*anim.isAnimState(StateType.Charge) && */ pumpCurrent < 0.9 && model.rightHandBolt) movingArmState = "Bolt";
-			else if(!anim.reloading) movingArmState = "Default";
-			else if(anim.isState(StateType.Load)) movingArmState = "Load";
+			if(/*anim.isAnimState(StateType.Charge) && */pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Pump";
+			else if(/*anim.isAnimState(StateType.Charge) && */ pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
+			else if(!anim.reloading) return "Default";
+			else if(anim.isState(StateType.Load)) return "Load";
 			//else if() movingArmState = "Unload";
-			else movingArmState = "Reload";
+			else return "Reload";
 			//System.out.println("Moving Right Arm" + " - " + movingArmState);
 		}
 		else 
 		{
-			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) movingArmState = "Charge";
-			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) movingArmState = "Pump";
-			else if (!anim.reloading) movingArmState = "Default";
-			else if(anim.isState(StateType.Load)) movingArmState = "Load";
-			else if(anim.isState(StateType.Unload)) movingArmState = "Unload";
-			else movingArmState = "Reload";
+			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) return "Charge";
+			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) return "Pump";
+			else if (!anim.reloading) return "Default";
+			else if(anim.getReloadType().isPresent() && anim.getReloadType().get() == ReloadType.Load) return "LoadOnly";
+			else if(anim.isState(StateType.Load)) return "Load";
+			else if(anim.isState(StateType.Unload)) return "Unload";
+			else return "Reload";
 			//System.out.println("Moving Left Arm" + " - " + movingArmState);
 		}
-		return movingArmState;
 	}
 	
 	// Resets render modifiers
