@@ -135,7 +135,6 @@ public class ClientTickHandler extends ForgeEvent {
 			for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
 			{
 				stateMachine.onRenderTickUpdate();
-				System.out.println();
 			}
 		} else
 		{
