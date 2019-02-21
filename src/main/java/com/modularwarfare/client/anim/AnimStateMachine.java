@@ -57,12 +57,6 @@ public class AnimStateMachine {
 						stateIndex++;
 						currentState.finished = true;
 						currentState = stateEntries.get(stateIndex);
-					} else
-					{
-						stateEntries = null;
-						currentState = null;
-						stateIndex = 0;
-						tiltHold = false;
 					}
 				}
 			}
@@ -77,6 +71,7 @@ public class AnimStateMachine {
 				currentState = null;
 				stateIndex = 0;
 				tiltHold = false;
+				reloadType = null;
 			}
 		}
 		
@@ -241,4 +236,10 @@ public class AnimStateMachine {
 		}
 		return true;
 	}
+	
+	public Optional<ReloadType> getReloadType()
+	{
+		return Optional.ofNullable(reloadType);
+	}
+	
 }
