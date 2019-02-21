@@ -225,8 +225,8 @@ public class AnimStateMachine {
 			}
 			case Unload:
 			{
-				Optional<StateEntry> state = getState(StateType.Load);
-				return state.isPresent() ? state.get().currentValue > 1f : false;
+				Optional<StateEntry> state = getState(StateType.Unload);
+				return state.isPresent() ? state.get().currentValue < 0.99 : false;
 			}
 			
 			default:

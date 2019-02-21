@@ -447,12 +447,14 @@ public class RenderGun extends CustomItemRenderer {
 											String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 											bindTexture("ammo", pathAmmo);
 											
+											System.out.println("1: " + anim.shouldRenderAmmo());
 											if(anim.shouldRenderAmmo()) 
 											{
 												if(!cachedUnload)
 													anim.cachedAmmoStack = stackAmmo;
 												
-												modelAmmo.renderAmmo(f); 
+												modelAmmo.renderAmmo(f);
+												System.out.println("called 1");
 											}
 										}
 										GL11.glPopMatrix();
@@ -466,8 +468,10 @@ public class RenderGun extends CustomItemRenderer {
 								}
 							}
 							
+							System.out.println("2: " + anim.shouldRenderAmmo());
 							if(shouldNormalRender && anim.shouldRenderAmmo())
 							{
+								System.out.println("called 2");
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;							
 								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
@@ -477,8 +481,10 @@ public class RenderGun extends CustomItemRenderer {
 							}
 						} else
 						{
+							System.out.println("3: " + anim.shouldRenderAmmo());
 							if(anim.shouldRenderAmmo()) 
 							{
+								System.out.println("called 3");
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;
 								//These translates/rotate was just a test but seems to work well for moving ammo with revolver cylinder
@@ -655,7 +661,7 @@ public class RenderGun extends CustomItemRenderer {
 			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) return "Charge";
 			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) return "Pump";
 			else if (!anim.reloading) return "Default";
-			else if(anim.isUnloadOnly()) return "LoadOnly";
+			//else if(anim.isUnloadOnly()) return "LoadOnly";
 			else if(anim.isState(StateType.Load)) return "Load";
 			else if(anim.isState(StateType.Unload)) return "Unload";
 			else return "Reload";
