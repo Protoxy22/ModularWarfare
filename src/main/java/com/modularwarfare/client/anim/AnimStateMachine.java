@@ -56,6 +56,7 @@ public class AnimStateMachine {
 						stateIndex++;
 						currentState.finished = true;
 						currentState = stateEntries.get(stateIndex);
+						onRenderTickUpdate();
 					}
 				}
 			}
@@ -119,10 +120,10 @@ public class AnimStateMachine {
 	public ArrayList<StateEntry> getDefaultEntries(int reloadCount)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
-		states.add(new StateEntry(StateType.Tilt, 0.15f, 0.15f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Unload, 0.35f, 0.50f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Load, 0.35f, 0.85f, 1f, MathType.Sub, reloadCount));
-		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Tilt, 0.15f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Unload, 0.35f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Load, 0.35f, 1f, MathType.Sub, reloadCount));
+		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, MathType.Sub));
 		return states;
 	}
 	
@@ -201,14 +202,21 @@ public class AnimStateMachine {
 	{
 		float currentTiming = 0f;
 		float dividedAmount = 0f;
+		float cutOffTime = 0f;
 		for(StateEntry entry : animEntries)
 			currentTiming += entry.stateTime;
 		if(currentTiming < 1f)
 			dividedAmount = (1f-currentTiming) / animEntries.size();
 		if(dividedAmount > 0f)
 		{
-			for(StateEntry entry : animEntries)
+			for(StateEntry entry : animEntries) {
 				entry.stateTime += dividedAmount;
+			}
+		}
+		for(StateEntry entry : animEntries)
+		{
+			cutOffTime += entry.stateTime;
+			entry.cutOffTime += cutOffTime;
 		}
 		return animEntries;
 	}

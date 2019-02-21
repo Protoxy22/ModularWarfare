@@ -20,15 +20,14 @@ public class StateEntry {
 	
 	public static float smoothing = 1f;
 	
-	public StateEntry(StateType stateType, float stateTime, float cutOffTime, float startingValue, MathType mathType)
+	public StateEntry(StateType stateType, float stateTime, float startingValue, MathType mathType)
 	{
-		this(stateType, stateTime, cutOffTime, startingValue, mathType, 1);
+		this(stateType, stateTime, startingValue, mathType, 1);
 	}
 	
-	public StateEntry(StateType stateType, float stateTime, float cutOffTime, float startingValue, MathType mathType, int operationCount)
+	public StateEntry(StateType stateType, float stateTime, float startingValue, MathType mathType, int operationCount)
 	{
 		this.stateTime = stateTime;
-		this.cutOffTime = cutOffTime;
 		this.startingValue = currentValue = lastValue = startingValue;
 		this.mathType = mathType;
 		this.stateType = stateType;

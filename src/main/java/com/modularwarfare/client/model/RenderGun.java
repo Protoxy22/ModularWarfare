@@ -93,7 +93,7 @@ public class RenderGun extends CustomItemRenderer {
         //float reloadProgress = getReloadProgress(animations);
 		Optional<StateEntry> currentState = anim.getCurrentState();
 		float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
-        System.out.println(tiltProgress);
+		//System.out.println(tiltProgress);
 		float f = 1F / 16F;
 		
 		if (renderEngine == null)
@@ -448,14 +448,12 @@ public class RenderGun extends CustomItemRenderer {
 											String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 											bindTexture("ammo", pathAmmo);
 											
-											System.out.println("1: " + anim.shouldRenderAmmo());
 											if(anim.shouldRenderAmmo()) 
 											{
 												if(!cachedUnload)
 													anim.cachedAmmoStack = stackAmmo;
 												
 												modelAmmo.renderAmmo(f);
-												System.out.println("called 1");
 											}
 										}
 										GL11.glPopMatrix();
@@ -469,10 +467,8 @@ public class RenderGun extends CustomItemRenderer {
 								}
 							}
 							
-							System.out.println("2: " + anim.shouldRenderAmmo());
 							if(shouldNormalRender && anim.shouldRenderAmmo())
 							{
-								System.out.println("called 2");
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;							
 								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
@@ -482,10 +478,8 @@ public class RenderGun extends CustomItemRenderer {
 							}
 						} else
 						{
-							System.out.println("3: " + anim.shouldRenderAmmo());
 							if(anim.shouldRenderAmmo()) 
 							{
-								System.out.println("called 3");
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;
 								//These translates/rotate was just a test but seems to work well for moving ammo with revolver cylinder

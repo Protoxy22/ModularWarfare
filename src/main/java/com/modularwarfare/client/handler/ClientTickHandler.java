@@ -66,6 +66,7 @@ public class ClientTickHandler extends ForgeEvent {
 			{
 				float renderTick = NumberHelper.clamp(event.renderTickTime, 0.019998193f, 0.99999803f);
 				renderTick *= 60d / (double) Minecraft.getDebugFPS();
+				StateEntry.smoothing = renderTick;
 				onRenderTickStart(Minecraft.getMinecraft(), renderTick);
 				break;
 			}
@@ -73,7 +74,6 @@ public class ClientTickHandler extends ForgeEvent {
 			{
 				float renderTick = NumberHelper.clamp(event.renderTickTime, 0.019998193f, 0.99999803f);
 				renderTick *= 60d / (double) Minecraft.getDebugFPS();
-				StateEntry.smoothing = renderTick;
 				break;
 			}
 		}
@@ -135,6 +135,7 @@ public class ClientTickHandler extends ForgeEvent {
 			for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
 			{
 				stateMachine.onRenderTickUpdate();
+				System.out.println();
 			}
 		} else
 		{
