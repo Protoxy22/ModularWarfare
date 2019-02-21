@@ -609,30 +609,26 @@ public class RenderGun extends CustomItemRenderer {
 	//Determine the state of the static arm
 	public static String getStaticArmState(ModelGun model, AnimStateMachine anim)
 	{
-		String staticArmState;
 		// TODO: Pumping current and last
 		float pumpCurrent = 1f;
 		float pumpLast = 1f;
 		
 		if(model.leftHandAmmo) 
 		{
-			if(!anim.reloading && model.righthandPump) staticArmState = "Pump";
-			else if(pumpCurrent < 0.66 && model.rightHandCharge && pumpCurrent != -1.0F) staticArmState = "Charge";
-			else if(pumpCurrent < 0.9 && model.rightHandBolt) staticArmState = "Bolt";
-			else if(!anim.reloading && !model.righthandPump) staticArmState = "Default";
-			else staticArmState = "Reload";
-			//System.out.println("Static Right Arm" + " - " + staticArmState);
+			if(!anim.reloading && model.righthandPump) return "Pump";
+			else if(pumpCurrent < 0.66 && model.rightHandCharge && pumpCurrent != -1.0F) return "Charge";
+			else if(pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
+			else if(!anim.reloading && !model.righthandPump) return "Default";
+			else return "Reload";
 		}
 		else 
 		{
-			if (!anim.reloading && model.lefthandPump) staticArmState = "Pump";
-			else if (pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) staticArmState = "Charge";
-			else if (pumpCurrent < 0.9 && model.rightHandBolt) staticArmState = "Bolt";
-			else if (!anim.reloading && !model.lefthandPump) staticArmState = "Default";
-			else staticArmState = "Reload";
-			//System.out.println("Static Left Arm" + " - " + staticArmState);
+			if (!anim.reloading && model.lefthandPump) return "Pump";
+			else if (pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Charge";
+			else if (pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
+			else if (!anim.reloading && !model.lefthandPump) return "Default";
+			else return "Reload";
 		}
-		return staticArmState;
 	}
 	
 	//Determine the state of the moving arm
@@ -653,7 +649,6 @@ public class RenderGun extends CustomItemRenderer {
 			else if(anim.isState(StateType.Load)) return "Load";
 			//else if() movingArmState = "Unload";
 			else return "Reload";
-			//System.out.println("Moving Right Arm" + " - " + movingArmState);
 		}
 		else 
 		{
@@ -664,7 +659,6 @@ public class RenderGun extends CustomItemRenderer {
 			else if(anim.isState(StateType.Load)) return "Load";
 			else if(anim.isState(StateType.Unload)) return "Unload";
 			else return "Reload";
-			//System.out.println("Moving Left Arm" + " - " + movingArmState);
 		}
 	}
 	
