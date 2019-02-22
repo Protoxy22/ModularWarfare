@@ -85,16 +85,19 @@ public class RenderGun extends CustomItemRenderer {
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine anim, GunType gunType, Object... data) {
 		Minecraft mc = Minecraft.getMinecraft(); 
 		ModelGun model = (ModelGun) gunType.model;
+		
+		/** Random Shake */
 		float min = -1.5f;
         float max = 1.5f;
         float randomNum = new Random().nextFloat();
         float randomShake = min + (randomNum * (max - min));
         
+        /** Current States */
 		Optional<StateEntry> currentReloadState = anim.getReloadState();
 		Optional<StateEntry> currentShootState = anim.getShootState();
 		
 		float tiltProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Tilt || currentReloadState.get().stateType == StateType.Untilt) ? currentReloadState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
-		float f = 1F / 16F;
+		float worldScale = 1F / 16F;
 		
 		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
@@ -175,8 +178,6 @@ public class RenderGun extends CustomItemRenderer {
 				
 				//Calls reload animation from the specified animation file
 				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					//Optional<StateEntry> currentState = anim.getCurrentState();
-					//float test = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, anim);
 				}
 				
@@ -201,18 +202,16 @@ public class RenderGun extends CustomItemRenderer {
 			GL11.glPushMatrix();
 			{
 				float modelScale = model.modelScale;
-				//Optional<StateEntry> currentState = anim.getCurrentState();
 				
 				/** Weapon Texture */
 				int skinId = item.getTagCompound().getInteger("skinId");
 				String path = skinId > 0 ? "skins/" + gunType.modelSkins[skinId].getSkin() : gunType.modelSkins[0].getSkin();
 				bindTexture("guns", path);
-
-				GL11.glScalef(modelScale, modelScale, modelScale);
-				GL11.glTranslatef(model.translateAll.x * f, -model.translateAll.y * f, -model.translateAll.z * f);
 				
-				//Item frame rendering properties
-				//TODO Issue with item frame lighting and entities
+				GL11.glScalef(modelScale, modelScale, modelScale);
+				GL11.glTranslatef(model.translateAll.x * worldScale, -model.translateAll.y * worldScale, -model.translateAll.z * worldScale);
+				
+				// Item frame rendering properties
 				if(renderType == CustomItemRenderType.ENTITY)
 				{
 					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
@@ -229,15 +228,15 @@ public class RenderGun extends CustomItemRenderer {
 					}
 				}
 				
-				model.renderGun(f);
+				model.renderGun(worldScale);
 				
 				//Render any attachments
 				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
-					model.renderDefaultScope(f);
-				model.renderDefaultBarrel(f);
-				model.renderDefaultStock(f);
-				model.renderDefaultGrip(f);
-				model.renderDefaultGadget(f);
+					model.renderDefaultScope(worldScale);
+				model.renderDefaultBarrel(worldScale);
+				model.renderDefaultStock(worldScale);
+				model.renderDefaultGrip(worldScale);
+				model.renderDefaultGadget(worldScale);
 				
 				
 				//Render pump action
@@ -246,12 +245,12 @@ public class RenderGun extends CustomItemRenderer {
 				{
 					GL11.glPushMatrix();
 					{
-						// TODO: Pumping current and last
 						float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
 						float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
 						
 						GL11.glTranslatef(-(anim.lastGunSlide + (anim.gunSlide - anim.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
+						
 						//Doubles as bolt action animation if set
 						if(model.rightHandBolt)
 						{
@@ -259,7 +258,7 @@ public class RenderGun extends CustomItemRenderer {
 							GL11.glRotatef(model.boltRotation * (1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)), 1, 0, 0);
 							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
 						}
-						model.renderPump(f);
+						model.renderPump(worldScale);
 					}
 					GL11.glPopMatrix();
 				}
@@ -269,11 +268,10 @@ public class RenderGun extends CustomItemRenderer {
 				{
 					GL11.glPushMatrix();
 					{
-						// TODO: Pumping current and last
 						float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
 						float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
 						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
-						model.renderCharge(f);
+						model.renderCharge(worldScale);
 					}
 					GL11.glPopMatrix();
 				}
@@ -288,9 +286,10 @@ public class RenderGun extends CustomItemRenderer {
 
 						GL11.glTranslatef(-(anim.lastGunSlide + (anim.gunSlide - anim.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(lastCharge + (currentCharge - lastCharge) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
-						model.renderSlide(f);
+						model.renderSlide(worldScale);
 						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnSlide)
-							model.renderDefaultScope(f);
+							model.renderDefaultScope(worldScale);
+						
 						//Render the scope on the slide, if its set on slide
 						if(model.switchIsOnSlide) 
 						{
@@ -301,7 +300,7 @@ public class RenderGun extends CustomItemRenderer {
 								GL11.glTranslatef(model.switchRotationPoint.x, model.switchRotationPoint.y, model.switchRotationPoint.z);
 								GL11.glRotatef(switchAngle, 0, 0, 1);
 								GL11.glTranslatef(-model.switchRotationPoint.x, -model.switchRotationPoint.y, -model.switchRotationPoint.z);
-								model.renderSwitch(f);
+								model.renderSwitch(worldScale);
 							}
 							GL11.glPopMatrix();
 						}
@@ -318,9 +317,9 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(breakAction.breakPoint.x, breakAction.breakPoint.y, breakAction.breakPoint.z);
 						GL11.glRotatef(breakProgress * -breakAction.angle, 0F, 0F, 1F);
 						GL11.glTranslatef(-breakAction.breakPoint.x, -breakAction.breakPoint.y, -breakAction.breakPoint.z);
-						model.render(breakAction.modelGroup, f);
+						model.render(breakAction.modelGroup, worldScale);
 						if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && model.scopeIsOnBreakAction && breakAction.scopePart)
-							model.renderDefaultScope(f);
+							model.renderDefaultScope(worldScale);
 					}
 					GL11.glPopMatrix();
 				}
@@ -332,45 +331,44 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glRotatef(50F, 0F, 0F, 1F);
 					GL11.glRotatef(-anim.hammerRotation * 2, 0F, 0F, 1F);
 					GL11.glTranslatef(-model.hammerRotationPoint.x, -model.hammerRotationPoint.y, -model.hammerRotationPoint.z);
-					model.renderHammer(f);
+					model.renderHammer(worldScale);
 				}
 				GL11.glPopMatrix();
 				
-				//Render lever action
+				// Render lever action
 				GL11.glPushMatrix();
 				{
-					// TODO: Pumping current and last
-					float pumpCurrent = 1f;
-					float pumpLast = 1f;
+					float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+					float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
 					GL11.glTranslatef(model.leverRotationPoint.x, model.leverRotationPoint.y, model.leverRotationPoint.z);
 					GL11.glRotatef(model.leverRotation * (1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)), 0, 0, 1);
 					GL11.glTranslatef(-model.leverRotationPoint.x, -model.leverRotationPoint.y, -model.leverRotationPoint.z);
-					model.renderLeverAction(f);
+					model.renderLeverAction(worldScale);
 				}
 				GL11.glPopMatrix();
 				
-				//Render trigger
+				// Render trigger
 				GL11.glPushMatrix();
 				{
 					GL11.glTranslatef(model.triggerRotationPoint.x, model.triggerRotationPoint.y, model.triggerRotationPoint.z);
 					GL11.glRotatef(model.triggerRotation * (triggerPullSwitch * 50), 0, 0, 1);
 					GL11.glTranslatef(-model.triggerRotationPoint.x, -model.triggerRotationPoint.y, -model.triggerRotationPoint.z);
-					model.renderTrigger(f);
+					model.renderTrigger(worldScale);
 				}
 				GL11.glPopMatrix();
 				
-				//Render fire mode switch
+				// Render fire mode switch
 				if(!model.switchIsOnSlide) {
-				GL11.glPushMatrix();
-				{
-					WeaponFireMode fireMode = gunType.getFireMode(item);
-					float switchAngle = fireMode == WeaponFireMode.SEMI ? model.switchSemiRot : fireMode == WeaponFireMode.FULL ? model.switchAutoRot : fireMode == WeaponFireMode.BURST ? model.switchBurstRot : 0F;
-					GL11.glTranslatef(model.switchRotationPoint.x, model.switchRotationPoint.y, model.switchRotationPoint.z);
-					GL11.glRotatef(switchAngle, 0, 0, 1);
-					GL11.glTranslatef(-model.switchRotationPoint.x, -model.switchRotationPoint.y, -model.switchRotationPoint.z);
-					model.renderSwitch(f);
-				}
-				GL11.glPopMatrix();
+					GL11.glPushMatrix();
+					{
+						WeaponFireMode fireMode = gunType.getFireMode(item);
+						float switchAngle = fireMode == WeaponFireMode.SEMI ? model.switchSemiRot : fireMode == WeaponFireMode.FULL ? model.switchAutoRot : fireMode == WeaponFireMode.BURST ? model.switchBurstRot : 0F;
+						GL11.glTranslatef(model.switchRotationPoint.x, model.switchRotationPoint.y, model.switchRotationPoint.z);
+						GL11.glRotatef(switchAngle, 0, 0, 1);
+						GL11.glTranslatef(-model.switchRotationPoint.x, -model.switchRotationPoint.y, -model.switchRotationPoint.z);
+						model.renderSwitch(worldScale);
+					}
+					GL11.glPopMatrix();
 				}
 				
 				// Render the revolver barrel
@@ -380,20 +378,21 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glTranslatef(model.cylinderRotationPoint.x, model.cylinderRotationPoint.y, model.cylinderRotationPoint.z);
 					GL11.glRotatef(updatedTiltProgress * model.cylinderRotation, 1F, 0F, 0F);
 					GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
-					model.renderRevolverBarrel(f);
+					model.renderRevolverBarrel(worldScale);
 				}
 				GL11.glPopMatrix();
 				
-				//Slide lock - Keeps slide in the back position when empty if true
-				boolean empty = !ItemGun.hasNextShot(item);
+				// Slide lock - Keeps slide in the back position when empty if true
+				boolean isAmmoEmpty = !ItemGun.hasNextShot(item);
 				if (model.slideLockOnEmpty)
 				{
-					if (empty)
+					if (isAmmoEmpty)
 						anim.isGunEmpty = true;
-					else if (!empty && !anim.reloading)
+					else if (!isAmmoEmpty && !anim.reloading)
 						anim.isGunEmpty = false;
 				}
 				
+				// Ammo
 				GL11.glPushMatrix();
 				{
 					boolean cachedUnload = (anim.isReloadType(ReloadType.Unload) && anim.cachedAmmoStack != null);
@@ -425,7 +424,6 @@ public class RenderGun extends CustomItemRenderer {
 									int magCount = stackAmmo.getTagCompound().getInteger("magcount");
 									if(!anim.reloading)
 										oldMagCount = magCount;
-									//else if(animations.reloading && reloadProgress < 0.5f)
 									else if(anim.reloading) 
 										 magCount = oldMagCount;
 																		
@@ -454,7 +452,7 @@ public class RenderGun extends CustomItemRenderer {
 												if(!cachedUnload)
 													anim.cachedAmmoStack = stackAmmo;
 												
-												modelAmmo.renderAmmo(f);
+												modelAmmo.renderAmmo(worldScale);
 											}
 										}
 										GL11.glPopMatrix();
@@ -475,7 +473,7 @@ public class RenderGun extends CustomItemRenderer {
 								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
 								String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 								bindTexture("ammo", pathAmmo);
-								modelAmmo.renderAmmo(f);
+								modelAmmo.renderAmmo(worldScale);
 							}
 						} else
 						{
@@ -488,7 +486,7 @@ public class RenderGun extends CustomItemRenderer {
 								GL11.glTranslatef(model.cylinderRotationPoint.x, model.cylinderRotationPoint.y, model.cylinderRotationPoint.z);
 								GL11.glRotatef(updatedTiltProgress * model.cylinderRotation, 1F, 0F, 0F);
 								GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
-								model.renderAmmo(f);
+								model.renderAmmo(worldScale);
 							}
 						}
 					} 
@@ -523,19 +521,19 @@ public class RenderGun extends CustomItemRenderer {
 									}
 								}
 								bindTexture("bullets", itemBullet.type.modelSkins[0].getSkin());
-								bulletModel.renderBullet(f);
+								bulletModel.renderBullet(worldScale);
 							}
 							GL11.glPopMatrix();
 						}
 					}
 				}
 				
-				//Render moving arm
+				// Render moving arm
 				if(ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
 					
 					GL11.glPushMatrix();
 					{
-						GL11.glTranslatef(-model.translateAll.x * f, model.translateAll.y * f, model.translateAll.z * f);
+						GL11.glTranslatef(-model.translateAll.x * worldScale, model.translateAll.y * worldScale, model.translateAll.z * worldScale);
 						renderMovingArm(mc.player, model, anim, currentReloadState); 
 					}
 					GL11.glPopMatrix();
@@ -546,37 +544,23 @@ public class RenderGun extends CustomItemRenderer {
 				
 				GL11.glPopMatrix();
 				
-				//Rotation point dev tool
+				// Rotation point dev tool
 				if(ModularWarfare.DEV_ENV && renderType == CustomItemRenderType.ENTITY) {
-				GL11.glPushMatrix();
-				{
-					ModelRotateTool tool = rotateToolModel;
-					GL11.glTranslatef(model.rotationHelper.x, model.rotationHelper.y, model.rotationHelper.z);
-					renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "rotatetool.png"));
-					tool.renderRotateTool(f);
-				}
-				
-				GL11.glPopMatrix();
-				}
-				
-				//Test gun xray stuff
-				if(renderType == CustomItemRenderType.ENTITY)
-				{
-					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
+					GL11.glPushMatrix();
 					{
-						/** Gun Xray
-			            GlStateManager.enableLighting();
-			            GlStateManager.enableDepth();
-			            RenderHelper.enableStandardItemLighting();
-			            GlStateManager.enableRescaleNormal();*/
+						ModelRotateTool tool = rotateToolModel;
+						GL11.glTranslatef(model.rotationHelper.x, model.rotationHelper.y, model.rotationHelper.z);
+						renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "rotatetool.png"));
+						tool.renderRotateTool(worldScale);
 					}
+					GL11.glPopMatrix();
 				}
+				
 			}
 			GL11.glPopMatrix();
 			
 			GL11.glPushMatrix();
 			{
-				
 				for(AttachmentEnum attachment : AttachmentEnum.values())
 				{
 					ItemStack itemStack = GunType.getAttachment(item, attachment);
@@ -595,7 +579,7 @@ public class RenderGun extends CustomItemRenderer {
 								Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 								GL11.glTranslatef(attachmentVec.x / attachmentModel.modelScale, attachmentVec.y / attachmentModel.modelScale, attachmentVec.z / attachmentModel.modelScale);
-								attachmentModel.renderAttachment(f);
+								attachmentModel.renderAttachment(worldScale);
 							}
 							GL11.glPopMatrix();
 						}
@@ -610,16 +594,16 @@ public class RenderGun extends CustomItemRenderer {
 	
 	//Determine the state of the static arm
 	public static String getStaticArmState(ModelGun model, AnimStateMachine anim)
-	{
-		// TODO: Pumping current and last
-		
-		float pumpCurrent = 1f;
-		float pumpLast = 1f;
+	{		
+		Optional<StateEntry> currentShootState = anim.getShootState();
+		Optional<StateEntry> currentReloadState = anim.getReloadState();
+		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+		float chargeCurrent = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : 1f;
 		
 		if(model.leftHandAmmo) 
 		{
 			if(!anim.reloading && model.righthandPump) return "Pump";
-			else if(pumpCurrent < 0.66 && model.rightHandCharge && pumpCurrent != -1.0F) return "Charge";
+			else if(chargeCurrent < 0.66 && model.rightHandCharge && chargeCurrent != -1.0F) return "Charge";
 			else if(pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
 			else if(!anim.reloading && !model.righthandPump) return "Default";
 			else return "Reload";
@@ -627,7 +611,7 @@ public class RenderGun extends CustomItemRenderer {
 		else 
 		{
 			if (!anim.reloading && model.lefthandPump) return "Pump";
-			else if (pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Charge";
+			else if (chargeCurrent < 0.9 && model.rightHandCharge && chargeCurrent != -1.0F) return "Charge";
 			else if (pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
 			else if (!anim.reloading && !model.lefthandPump) return "Default";
 			else return "Reload";
@@ -638,16 +622,16 @@ public class RenderGun extends CustomItemRenderer {
 	public static String getMovingArmState(ModelGun model, AnimStateMachine anim)
 	{
 		WeaponAnimation wepAnim = WeaponAnimations.getAnimation(model.reloadAnimation);
-		// TODO: Pumping current and last
-		float pumpCurrent = 1f;
-		float pumpLast = 1f;
-		//float reloadProgress = getReloadProgress(anim);
+		Optional<StateEntry> currentShootState = anim.getShootState();
+		Optional<StateEntry> currentReloadState = anim.getReloadState();
+		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+		float chargeCurrent = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : 1f;
 		
 		//Calls reload animation from the specified animation file
 		if(!model.leftHandAmmo) 
 		{
-			if(/*anim.isAnimState(StateType.Charge) && */pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Pump";
-			else if(/*anim.isAnimState(StateType.Charge) && */ pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
+			if((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) && pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Pump";
+			else if(anim.isReloadState(StateType.Charge) &&  pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
 			else if(!anim.reloading) return "Default";
 			else if(anim.isReloadState(StateType.Load)) return "Load";
 			//else if() movingArmState = "Unload";
@@ -655,8 +639,8 @@ public class RenderGun extends CustomItemRenderer {
 		}
 		else 
 		{
-			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) return "Charge";
-			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) return "Pump";
+			if (anim.isReloadState(StateType.Charge) && model.leftHandCharge && chargeCurrent != -1.0F) return "Charge";
+			else if ((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) &&  !anim.reloading && model.lefthandPump) return "Pump";
 			else if (!anim.reloading) return "Default";
 			else if(anim.isReloadState(StateType.Load)) return "Load";
 			else if(anim.isReloadState(StateType.Unload)) return "Unload";

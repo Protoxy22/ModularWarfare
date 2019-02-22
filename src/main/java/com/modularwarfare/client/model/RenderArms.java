@@ -26,9 +26,10 @@ public class RenderArms {
 	// right hand pump action animation
 	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
-		// TODO: Pumping current and last
-		float pumpCurrent = 1f;
-		float pumpLast = 1f;
+		Optional<StateEntry> currentShootState = anim.getShootState();
+		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+		float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
+		
 		GL11.glTranslatef((reloadPos.x + Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.pumpHandleDistance * model.modelScale)), reloadPos.y, reloadPos.z);
 		if(leftHand)
 			handleRotateLeft(reloadRot);
@@ -41,11 +42,13 @@ public class RenderArms {
 	public static void renderArmCharge(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, Vector3f defaultRot, Vector3f defaultPos, boolean leftHand)
 	{
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), 1f);
-		// TODO: Pumping current and last
-		float pumpCurrent = 1f;
-		float pumpLast = 1f;
+		Optional<StateEntry> currentReloadState = anim.getReloadState();
+		float chargeCurrent = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : 1f;
+		float chargeLast = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().lastValue : 1f : 1f;
+		
 		//GL11.glTranslatef((reloadPos.x + Math.abs(anim.lastCharged + (anim.charged - anim.lastCharged) * smoothing) * (model.chargeHandleDistance * model.modelScale)), 0F, 0F);
-		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
+		GL11.glTranslatef(defaultPos.x + offsetPosition.x + Math.abs(chargeLast + (chargeCurrent - chargeLast) * smoothing) * (model.chargeHandleDistance * model.modelScale), 0F, 0F);
+		
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y, 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z);
 		
@@ -71,9 +74,10 @@ public class RenderArms {
 	// reload with right hand bolt action)
 	public static void renderArmBolt(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
-		// TODO: Pumping current and last
-		float pumpCurrent = 1f;
-		float pumpLast = 1f;
+		Optional<StateEntry> currentShootState = anim.getShootState();
+		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+		float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
+		
 		GL11.glTranslatef(reloadPos.x + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
 		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
 		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.z * model.modelScale)));

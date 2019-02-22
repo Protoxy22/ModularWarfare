@@ -48,10 +48,6 @@ public class stf12 extends ModelGun //Same as Filename
 		gunSlideDistance = 0F;
 		lefthandPump = true;
 		reloadAnimation = WeaponAnimations.SHOTGUN;
-		/*tiltGunTime = 0.10F;
-		unloadClipTime = 0.00F;
-		loadClipTime = 0.80F;
-		untiltGunTime = 0.10F;*/
 		endLoadedAmmoDistance = 0F;
 		numBulletsInReloadAnimation = 7F;
 		
