@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.client.anim.AnimStateMachine;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.utility.NumberHelper;
@@ -95,8 +96,8 @@ public class RenderArms {
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
-		Optional<StateEntry> currentState = anim.getCurrentState();
-		Vector3f ammoLoadOffset = anim.isLoadOnly() && currentState.isPresent() && currentState.get().stateType != StateType.Load && currentState.get().stateType != StateType.Untilt ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
+		Optional<StateEntry> currentState = anim.getReloadState();
+		Vector3f ammoLoadOffset = anim.isReloadType(ReloadType.Load) && currentState.isPresent() && currentState.get().stateType != StateType.Load && currentState.get().stateType != StateType.Untilt ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
 		//System.out.println(tiltProgress);
 		//System.out.println(anim.isLoadOnly());
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
@@ -149,8 +150,8 @@ public class RenderArms {
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
-		Optional<StateEntry> currentState = anim.getCurrentState();
-		Vector3f ammoLoadOffset = anim.isLoadOnly() && currentState .isPresent() && currentState.get().stateType != StateType.Load ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
+		Optional<StateEntry> currentState = anim.getReloadState();
+		Vector3f ammoLoadOffset = anim.isReloadType(ReloadType.Load) && currentState .isPresent() && currentState.get().stateType != StateType.Load ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
 		//System.out.println(ammoLoadOffset);
 		//System.out.println(anim.isLoadOnly());
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
@@ -178,7 +179,7 @@ public class RenderArms {
 	{
 		//Translation
 		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(reloadPos, defaultPos), tiltProgress);
-		Vector3f ammoLoadOffset = anim.isUnloadOnly() ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
+		Vector3f ammoLoadOffset = anim.isReloadType(ReloadType.Load) ? animation.ammoLoadOffset != null ? animation.ammoLoadOffset : new Vector3f(0f, 0f, 0f) : new Vector3f(0f, 0f, 0f);
 		GL11.glTranslatef(defaultPos.x + offsetPosition.x + (ammoLoadOffset.x * tiltProgress), 0F, 0F);
 		GL11.glTranslatef(0F, defaultPos.y + offsetPosition.y + (ammoLoadOffset.y * tiltProgress), 0F);
 		GL11.glTranslatef(0F, 0F, defaultPos.z + offsetPosition.z + (ammoLoadOffset.z * tiltProgress));

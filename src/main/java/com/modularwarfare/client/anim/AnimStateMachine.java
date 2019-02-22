@@ -12,52 +12,60 @@ import net.minecraft.item.ItemStack;
 
 public class AnimStateMachine {
 
-	public boolean tiltHold = false;
+	/** Reload State Machine */
 	public boolean reloading = false;
-	public float reloadProgress = 0f;
-	private int stateIndex = 0;
-	
-	private ArrayList<StateEntry> stateEntries;
-	private StateEntry currentState;
 	private float reloadTime;
 	private ReloadType reloadType;
+	private float reloadProgress = 0f;
+	private ArrayList<StateEntry> reloadStateEntries;
+	private StateEntry currentReloadState;
+	private int reloadStateIndex = 0;
+	public boolean tiltHold = false;
+	
+	/** Shoot State Machine */
+	public boolean shooting = false;
+	private float shootTime;
+	private float shootProgress = 0f;
+	private ArrayList<StateEntry> shootStateEntries;
+	private StateEntry currentShootState;
+	private int shootStateIndex = 0;
+	
 	/** Recoil */
 	public float gunRecoil = 0F, lastGunRecoil = 0F;
+	
 	/** Slide */
 	public float gunSlide = 0F, lastGunSlide = 0F;
+	
+	/** Hammer */
 	public float hammerRotation = 0F;
 	public int timeUntilPullback = 0;
 	public float gunPullback = -1F, lastGunPullback = -1F;
-	//THESE ARE ALL AUTOGENED TO TEMP FIX ERRORS
-
-	public boolean isGunEmpty = false;
+	public boolean isFired = false;
+	
+	/** Misc */
 	public ItemStack cachedAmmoStack;
 	public int reloadAmmoCount = 1;
-	public boolean isFired = false;
+	public boolean isGunEmpty = false;
 	
 	public void onTickUpdate()
 	{	
 		if(reloading)
 		{	
-			if(stateEntries != null)
+			if(currentReloadState == null)
+				currentReloadState = reloadStateEntries.get(0);
+															
+			if(currentReloadState.stateType == StateType.Tilt)
+				tiltHold = true;
+			if(currentReloadState.stateType == StateType.Untilt)
+				tiltHold = false;
+			
+			if(reloadProgress >= currentReloadState.cutOffTime)
 			{
-				if(currentState == null)
-					currentState = stateEntries.get(0);
-																
-				if(currentState.stateType == StateType.Tilt)
-					tiltHold = true;
-				if(currentState.stateType == StateType.Untilt)
-					tiltHold = false;
-				
-				if(reloadProgress >= currentState.cutOffTime)
+				if(reloadStateIndex+1 < reloadStateEntries.size())
 				{
-					if(stateIndex+1 < stateEntries.size())
-					{
-						stateIndex++;
-						currentState.finished = true;
-						currentState = stateEntries.get(stateIndex);
-						onRenderTickUpdate();
-					}
+					reloadStateIndex++;
+					currentReloadState.finished = true;
+					currentReloadState = reloadStateEntries.get(reloadStateIndex);
 				}
 			}
 			
@@ -67,11 +75,36 @@ public class AnimStateMachine {
 			if(reloadProgress >= 1F) {
 				reloading = false;
 				reloadProgress = 0f;
-				stateEntries = null;
-				currentState = null;
-				stateIndex = 0;
-				tiltHold = false;
+				reloadStateEntries = null;
+				currentReloadState = null;
+				reloadStateIndex = 0;
 				reloadType = null;
+			}
+		}
+		
+		if(shooting)
+		{
+			if(currentShootState == null)
+				currentShootState = shootStateEntries.get(0);
+			
+			if(shootProgress >= currentShootState.cutOffTime)
+			{
+				if(shootStateIndex+1 < shootStateEntries.size())
+				{
+					shootStateIndex++;
+					currentShootState.finished = true;
+					currentShootState = shootStateEntries.get(shootStateIndex);
+				}
+			}
+			
+			shootProgress += 1F / shootTime;
+
+			if(shootProgress >= 1F) {
+				shooting = false;
+				shootProgress = 0f;
+				shootStateEntries = null;
+				currentShootState = null;
+				shootStateIndex = 0;
 			}
 		}
 		
@@ -111,23 +144,14 @@ public class AnimStateMachine {
 	
 	public void onRenderTickUpdate()
 	{
-		if(reloading && currentState != null)
-		{
-			currentState.onTick(reloadTime);
-		}
+		if(reloading && currentReloadState != null)
+			currentReloadState.onTick(reloadTime);
+		
+		if(shooting && currentShootState != null)
+			currentShootState.onTick(shootTime);
 	}
 	
-	public ArrayList<StateEntry> getDefaultEntries(int reloadCount)
-	{
-		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
-		states.add(new StateEntry(StateType.Tilt, 0.15f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Unload, 0.35f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Load, 0.35f, 1f, MathType.Sub, reloadCount));
-		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, MathType.Sub));
-		return states;
-	}
-	
-	public void triggerShoot(ModelGun model)
+	public void triggerShoot(ModelGun model, int shootDelay)
 	{
 		Random r = new Random();
 		
@@ -136,6 +160,15 @@ public class AnimStateMachine {
 		lastGunSlide = gunSlide = 1F;
 		hammerRotation = model.hammerAngle;
 		timeUntilPullback = model.hammerDelay;
+		
+		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getShootStates(model);
+		if(animEntries.size() > 0)
+		{
+			shootStateEntries = adjustTiming(animEntries);
+			shooting = true;
+			shootTime = shootDelay;
+		}
+		
 		/*timeUntilPump = model.pumpDelay;
 		timeToPumpFor = model.pumpTime;
 		timeUntilCasing = model.casingDelay;
@@ -161,8 +194,8 @@ public class AnimStateMachine {
 	
 	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType)
 	{
-		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getAnimStates(reloadType, reloadCount);
-		stateEntries = adjustTiming(animEntries != null ? animEntries : getDefaultEntries(reloadCount));
+		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getReloadStates(reloadType, reloadCount);
+		reloadStateEntries = adjustTiming(animEntries);
 		
 		this.reloadTime = reloadType != ReloadType.Full ? reloadTime*0.65f : reloadTime;
 		//this.reloadTime = 200;
@@ -170,55 +203,24 @@ public class AnimStateMachine {
 		this.reloading = true;
 	}
 	
-	public Optional<StateEntry> getState(StateType stateType)
+	public Optional<StateEntry> getReloadState()
 	{
-		StateEntry stateEntry = null;
-		
-		if(stateEntries == null)
-			return Optional.ofNullable(stateEntry);
-		
-		for(StateEntry entry : stateEntries)
-		{
-			if(entry.stateType == stateType)
-			{
-				stateEntry = entry;
-				break;
-			}
-		}
-		return Optional.ofNullable(stateEntry);
+		return Optional.ofNullable(currentReloadState);
 	}
 	
-	public Optional<StateEntry> getCurrentState()
+	public boolean isReloadState(StateType stateType)
 	{
-		return Optional.ofNullable(currentState);
+		return currentReloadState != null ? currentReloadState.stateType == stateType : false;
 	}
 	
-	public boolean isState(StateType stateType)
+	public Optional<StateEntry> getShootState()
 	{
-		return currentState != null ? currentState.stateType == stateType : false;
+		return Optional.ofNullable(currentShootState);
 	}
 	
-	public ArrayList<StateEntry> adjustTiming(ArrayList<StateEntry> animEntries)
+	public boolean isShootState(StateType stateType)
 	{
-		float currentTiming = 0f;
-		float dividedAmount = 0f;
-		float cutOffTime = 0f;
-		for(StateEntry entry : animEntries)
-			currentTiming += entry.stateTime;
-		if(currentTiming < 1f)
-			dividedAmount = (1f-currentTiming) / animEntries.size();
-		if(dividedAmount > 0f)
-		{
-			for(StateEntry entry : animEntries) {
-				entry.stateTime += dividedAmount;
-			}
-		}
-		for(StateEntry entry : animEntries)
-		{
-			cutOffTime += entry.stateTime;
-			entry.cutOffTime += cutOffTime;
-		}
-		return animEntries;
+		return currentShootState != null ? currentShootState.stateType == stateType : false;
 	}
 	
 	public boolean shouldRenderAmmo()
@@ -245,19 +247,51 @@ public class AnimStateMachine {
 		return true;
 	}
 	
-	public Optional<ReloadType> getReloadType()
+	public boolean isReloadType(ReloadType type)
 	{
-		return Optional.ofNullable(reloadType);
+		return reloadType != null && reloadType == type; 
 	}
 	
-	public boolean isUnloadOnly()
+	// Internal Methods
+	private ArrayList<StateEntry> adjustTiming(ArrayList<StateEntry> animEntries)
 	{
-		return reloadType != null && reloadType == ReloadType.Unload;
+		float currentTiming = 0f;
+		float dividedAmount = 0f;
+		float cutOffTime = 0f;
+		for(StateEntry entry : animEntries)
+			currentTiming += entry.stateTime;
+		if(currentTiming < 1f)
+			dividedAmount = (1f-currentTiming) / animEntries.size();
+		if(dividedAmount > 0f)
+		{
+			for(StateEntry entry : animEntries) {
+				entry.stateTime += dividedAmount;
+			}
+		}
+		for(StateEntry entry : animEntries)
+		{
+			cutOffTime += entry.stateTime;
+			entry.cutOffTime += cutOffTime;
+		}
+		return animEntries;
 	}
 	
-	public boolean isLoadOnly()
+	private Optional<StateEntry> getState(StateType stateType)
 	{
-		return reloadType != null && reloadType == ReloadType.Load;
+		StateEntry stateEntry = null;
+		
+		if(reloadStateEntries == null)
+			return Optional.ofNullable(stateEntry);
+		
+		for(StateEntry entry : reloadStateEntries)
+		{
+			if(entry.stateType == stateType)
+			{
+				stateEntry = entry;
+				break;
+			}
+		}
+		return Optional.ofNullable(stateEntry);
 	}
 	
 }

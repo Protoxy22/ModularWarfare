@@ -70,7 +70,7 @@ public class AnimationRifle extends WeaponAnimation {
 	}
 	
 	@Override
-	public ArrayList<StateEntry> getAnimStates(ReloadType reloadType, int reloadCount)
+	public ArrayList<StateEntry> getReloadStates(ReloadType reloadType, int reloadCount)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
 		states.add(new StateEntry(StateType.Tilt, 0.15f, 0f, MathType.Add));

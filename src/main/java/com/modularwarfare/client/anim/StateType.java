@@ -7,6 +7,8 @@ public enum StateType {
 	Load,
 	Untilt,
 	Charge,
-	Uncharge;
-
+	Uncharge,
+	PumpOut,
+	PumpIn;
+	
 }

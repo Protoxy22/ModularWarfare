@@ -58,7 +58,7 @@ public class stf12 extends ModelGun //Same as Filename
 		pumpDelayAfterReload = 115;
 		pumpDelay = 6;
 		pumpTime = 9;
-		pumpHandleDistance = 1.5F;
+		pumpHandleDistance = 0.5F;
 		
 		rotateGunVertical = 30F;
 		rotateGunHorizontal = -0F;

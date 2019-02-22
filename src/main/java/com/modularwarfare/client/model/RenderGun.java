@@ -77,7 +77,6 @@ public class RenderGun extends CustomItemRenderer {
 		if (model == null)
 			return;
 		{
-			//StateMachine animations = data.length >= 2 ? (EntityLivingBase) data[1] instanceof EntityPlayer ? ClientRenderHooks.getAnimations((EntityPlayer) data[1]) : new StateMachine() : new StateMachine();
 			AnimStateMachine anim = data.length >= 2 ? (EntityLivingBase) data[1] instanceof EntityPlayer ? ClientRenderHooks.getAnimMachine((EntityPlayer) data[1]) : new AnimStateMachine() : new AnimStateMachine();
 			renderGun(type, item, anim, gunType, data);
 		}
@@ -90,10 +89,11 @@ public class RenderGun extends CustomItemRenderer {
         float max = 1.5f;
         float randomNum = new Random().nextFloat();
         float randomShake = min + (randomNum * (max - min));
-        //float reloadProgress = getReloadProgress(animations);
-		Optional<StateEntry> currentState = anim.getCurrentState();
-		float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
-		//System.out.println(tiltProgress);
+        
+		Optional<StateEntry> currentReloadState = anim.getReloadState();
+		Optional<StateEntry> currentShootState = anim.getShootState();
+		
+		float tiltProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Tilt || currentReloadState.get().stateType == StateType.Untilt) ? currentReloadState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		float f = 1F / 16F;
 		
 		if (renderEngine == null)
@@ -134,7 +134,7 @@ public class RenderGun extends CustomItemRenderer {
 				float translateX= 0;
 				float translateY = 0;
 				float translateZ = 0;
-				float crouchZoom = anim.reloading ? 0f : anim.isState(StateType.Charge) ? 0f : model.crouchZoom;
+				float crouchZoom = anim.reloading ? 0f : anim.isReloadState(StateType.Charge) ? 0f : model.crouchZoom;
 				float hipRecover = reloadSwitch;
 								
 				//Store the model settings as local variables to reduce calls
@@ -195,7 +195,7 @@ public class RenderGun extends CustomItemRenderer {
 			
 			//Render call for the static arm
 			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
-				 renderStaticArm(mc.player, model, anim); 
+				 renderStaticArm(mc.player, model, anim, currentReloadState); 
 			}
 			
 			GL11.glPushMatrix();
@@ -247,8 +247,9 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPushMatrix();
 					{
 						// TODO: Pumping current and last
-						float pumpCurrent = 1f;
-						float pumpLast = 1f;
+						float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+						float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
+						
 						GL11.glTranslatef(-(anim.lastGunSlide + (anim.gunSlide - anim.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						//Doubles as bolt action animation if set
@@ -269,8 +270,8 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPushMatrix();
 					{
 						// TODO: Pumping current and last
-						float pumpCurrent = 1f;
-						float pumpLast = 1f;
+						float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
+						float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
 						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
 						model.renderCharge(f);
 					}
@@ -282,8 +283,8 @@ public class RenderGun extends CustomItemRenderer {
 				{
 					GL11.glPushMatrix();
 					{
-						float currentCharge = currentState.isPresent() ? (currentState.get().stateType == StateType.Charge || currentState.get().stateType == StateType.Uncharge) ? currentState.get().currentValue : 1f : 1f;
-						float lastCharge = currentState.isPresent() ? (currentState.get().stateType == StateType.Charge || currentState.get().stateType == StateType.Uncharge) ? currentState.get().lastValue : 1f : 1f;
+						float currentCharge = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : 1f;
+						float lastCharge = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().lastValue : 1f : 1f;
 
 						GL11.glTranslatef(-(anim.lastGunSlide + (anim.gunSlide - anim.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						GL11.glTranslatef(-(1 - Math.abs(lastCharge + (currentCharge - lastCharge) * smoothing)) * model.chargeHandleDistance, 0F, 0F);
@@ -311,7 +312,7 @@ public class RenderGun extends CustomItemRenderer {
 				//Render break action, uses an array system to allow multiple different break action types on a gun
 				for(BreakActionData breakAction : model.breakActions)
 				{
-					float breakProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+					float breakProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Tilt || currentReloadState.get().stateType == StateType.Untilt) ? currentReloadState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 					GL11.glPushMatrix();
 					{
 						GL11.glTranslatef(breakAction.breakPoint.x, breakAction.breakPoint.y, breakAction.breakPoint.z);
@@ -375,7 +376,7 @@ public class RenderGun extends CustomItemRenderer {
 				// Render the revolver barrel
 				GL11.glPushMatrix();
 				{
-					float updatedTiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+					float updatedTiltProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Tilt || currentReloadState.get().stateType == StateType.Untilt) ? currentReloadState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 					GL11.glTranslatef(model.cylinderRotationPoint.x, model.cylinderRotationPoint.y, model.cylinderRotationPoint.z);
 					GL11.glRotatef(updatedTiltProgress * model.cylinderRotation, 1F, 0F, 0F);
 					GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
@@ -395,7 +396,7 @@ public class RenderGun extends CustomItemRenderer {
 				
 				GL11.glPushMatrix();
 				{
-					boolean cachedUnload = (anim.isUnloadOnly() && anim.cachedAmmoStack != null);
+					boolean cachedUnload = (anim.isReloadType(ReloadType.Unload) && anim.cachedAmmoStack != null);
 					if(ItemGun.hasAmmoLoaded(item) || cachedUnload)
 					{
 						ItemStack stackAmmo =  cachedUnload ? anim.cachedAmmoStack : new ItemStack(item.getTagCompound().getCompoundTag("ammo"));
@@ -406,7 +407,7 @@ public class RenderGun extends CustomItemRenderer {
 						if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
 						{
 							//Unload/Load ammo
-							float ammoProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Unload || currentState.get().stateType == StateType.Load) ? currentState.get().currentValue : 0f : 1f;
+							float ammoProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Unload || currentReloadState.get().stateType == StateType.Load) ? currentReloadState.get().currentValue : 0f : 1f;
 							WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, anim.reloadAmmoCount, anim);
 						}
 						
@@ -483,7 +484,7 @@ public class RenderGun extends CustomItemRenderer {
 								if(!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;
 								//These translates/rotate was just a test but seems to work well for moving ammo with revolver cylinder
-								float updatedTiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+								float updatedTiltProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Tilt || currentReloadState.get().stateType == StateType.Untilt) ? currentReloadState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 								GL11.glTranslatef(model.cylinderRotationPoint.x, model.cylinderRotationPoint.y, model.cylinderRotationPoint.z);
 								GL11.glRotatef(updatedTiltProgress * model.cylinderRotation, 1F, 0F, 0F);
 								GL11.glTranslatef(-model.cylinderRotationPoint.x, -model.cylinderRotationPoint.y, -model.cylinderRotationPoint.z);
@@ -500,7 +501,7 @@ public class RenderGun extends CustomItemRenderer {
 							if (anim.reloading && model.reloadAnimation != null && WeaponAnimations.getAnimation(model.reloadAnimation) != null) 
 							{
 								//Unload/Load ammo
-								float ammoProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Unload || currentState.get().stateType == StateType.Load) ? currentState.get().currentValue :  0f : 0f;	
+								float ammoProgress = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Unload || currentReloadState.get().stateType == StateType.Load) ? currentReloadState.get().currentValue :  0f : 0f;	
 								WeaponAnimations.getAnimation(model.reloadAnimation).onAmmoAnimation(model, ammoProgress, anim.reloadAmmoCount, anim);
 							}
 						}
@@ -535,12 +536,12 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPushMatrix();
 					{
 						GL11.glTranslatef(-model.translateAll.x * f, model.translateAll.y * f, model.translateAll.z * f);
-						renderMovingArm(mc.player, model, anim); 
+						renderMovingArm(mc.player, model, anim, currentReloadState); 
 					}
 					GL11.glPopMatrix();
 				}
 				else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
-					renderMovingArm(mc.player, model, anim); 
+					renderMovingArm(mc.player, model, anim, currentReloadState); 
 				}
 				
 				GL11.glPopMatrix();
@@ -611,7 +612,7 @@ public class RenderGun extends CustomItemRenderer {
 	public static String getStaticArmState(ModelGun model, AnimStateMachine anim)
 	{
 		// TODO: Pumping current and last
-
+		
 		float pumpCurrent = 1f;
 		float pumpLast = 1f;
 		
@@ -648,7 +649,7 @@ public class RenderGun extends CustomItemRenderer {
 			if(/*anim.isAnimState(StateType.Charge) && */pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Pump";
 			else if(/*anim.isAnimState(StateType.Charge) && */ pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
 			else if(!anim.reloading) return "Default";
-			else if(anim.isState(StateType.Load)) return "Load";
+			else if(anim.isReloadState(StateType.Load)) return "Load";
 			//else if() movingArmState = "Unload";
 			else return "Reload";
 		}
@@ -657,8 +658,8 @@ public class RenderGun extends CustomItemRenderer {
 			if (/*anim.isAnimState(StateType.Charge) && */ model.leftHandCharge && pumpCurrent != -1.0F) return "Charge";
 			else if (/*anim.isAnimState(StateType.Charge) && */ !anim.reloading && model.lefthandPump) return "Pump";
 			else if (!anim.reloading) return "Default";
-			else if(anim.isState(StateType.Load)) return "Load";
-			else if(anim.isState(StateType.Unload)) return "Unload";
+			else if(anim.isReloadState(StateType.Load)) return "Load";
+			else if(anim.isReloadState(StateType.Unload)) return "Unload";
 			else return "Reload";
 		}
 	}
@@ -677,10 +678,9 @@ public class RenderGun extends CustomItemRenderer {
 	}
 	
 	//Renders the static left or right hand that does not move with the ammo depending on leftHandAmmo setting
-	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
+	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
-		Optional<StateEntry> currentState = anim.getCurrentState();
         float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		String staticArmState = getStaticArmState(model, anim);
 		GL11.glPushMatrix();
@@ -720,7 +720,7 @@ public class RenderGun extends CustomItemRenderer {
 	}
 
 	//Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
-	private void renderMovingArm(EntityPlayer player, ModelGun model, AnimStateMachine anim) {
+	private void renderMovingArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
@@ -728,7 +728,6 @@ public class RenderGun extends CustomItemRenderer {
 		boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
-		Optional<StateEntry> currentState = anim.getCurrentState();
         float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		GL11.glPushMatrix();
 		{

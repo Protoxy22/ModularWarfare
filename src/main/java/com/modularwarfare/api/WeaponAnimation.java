@@ -27,7 +27,7 @@ public class WeaponAnimation {
 		
 	}
 	
-	public ArrayList<StateEntry> getAnimStates(ReloadType reloadType, int reloadCount)
+	public ArrayList<StateEntry> getReloadStates(ReloadType reloadType, int reloadCount)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
 		states.add(new StateEntry(StateType.Tilt, 0.15f, 0f, MathType.Add));
@@ -36,6 +36,17 @@ public class WeaponAnimation {
 		if(reloadType == ReloadType.Load || reloadType == ReloadType.Full)
 			states.add(new StateEntry(StateType.Load, 0.35f, 1f, MathType.Sub, reloadCount));
 		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, MathType.Sub));
+		return states;
+	}
+	
+	public ArrayList<StateEntry> getShootStates(ModelGun gunModel)
+	{
+		ArrayList<StateEntry> states = new ArrayList<StateEntry>();	
+		if(gunModel.pumpModel.length > 0)
+		{
+			states.add(new StateEntry(StateType.PumpOut, 0.5f, 1f, MathType.Sub));
+			states.add(new StateEntry(StateType.PumpIn, 0.5f, 0f, MathType.Add));
+		}
 		return states;
 	}
 	
