@@ -24,6 +24,12 @@ public class RenderArms {
 	 */
 	
 	// right hand pump action animation
+	
+	public static void renderToFrom(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
+	{
+
+	}
+	
 	public static void renderArmPump(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f reloadRot, Vector3f reloadPos, boolean leftHand)
 	{
 		Optional<StateEntry> currentShootState = anim.getShootState();

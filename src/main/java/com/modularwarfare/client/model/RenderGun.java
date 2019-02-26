@@ -610,7 +610,9 @@ public class RenderGun extends CustomItemRenderer {
 				
 		if(model.leftHandAmmo) 
 		{
-			if(!anim.reloading && model.righthandPump) return "Pump";
+			if((anim.isReloadState(StateType.MoveHands) || anim.isReloadState(StateType.ReturnHands))) return "ToFrom";
+			else if((anim.isShootState(StateType.MoveHands) || anim.isShootState(StateType.ReturnHands))) return "ToFrom";
+			else if(!anim.reloading && model.righthandPump) return "Pump";
 			else if(chargeCurrent < 0.66 && model.rightHandCharge && chargeCurrent != -1.0F) return "Charge";
 			else if((anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge)) && anim.getReloadState().get().currentValue < 0.9 && model.rightHandBolt) return "Bolt";
 			else if(pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
@@ -696,6 +698,7 @@ public class RenderGun extends CustomItemRenderer {
 			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos, !model.leftHandAmmo);
 			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, rightArm, !model.leftHandAmmo);
 			else if (staticArmState == "Reload") RenderArms.renderStaticArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos, !model.leftHandAmmo);
+			else if (staticArmState == "ToFrom") RenderArms.renderArmPump(model, anim, smoothing, armRot, armPos, !model.leftHandAmmo);
 			
 			//Render the armor model on the arm
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);

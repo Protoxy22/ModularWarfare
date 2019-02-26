@@ -6,9 +6,11 @@ public enum StateType {
 	Unload,
 	Load,
 	Untilt,
+	MoveHands,
 	Charge,
 	Uncharge,
 	PumpOut,
-	PumpIn;
+	PumpIn,
+	ReturnHands;
 	
 }
