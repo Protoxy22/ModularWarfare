@@ -249,15 +249,23 @@ public class RenderGun extends CustomItemRenderer {
 						float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
 						
 						GL11.glTranslatef(-(anim.lastGunSlide + (anim.gunSlide - anim.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
-						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						
 						//Doubles as bolt action animation if set
 						if(model.rightHandBolt)
 						{
+							if(anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge))
+							{
+								StateEntry boltState = anim.getReloadState().get();
+								pumpCurrent = boltState.currentValue;
+								pumpLast = boltState.lastValue;
+							}
+							
 							GL11.glTranslatef(model.boltRotationPoint.x, model.boltRotationPoint.y, model.boltRotationPoint.z);
 							GL11.glRotatef(model.boltRotation * (1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)), 1, 0, 0);
 							GL11.glTranslatef(-model.boltRotationPoint.x, -model.boltRotationPoint.y, -model.boltRotationPoint.z);
 						}
+						
+						GL11.glTranslatef(-(1 - Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing)) * model.pumpHandleDistance, 0F, 0F);
 						model.renderPump(worldScale);
 					}
 					GL11.glPopMatrix();
@@ -599,11 +607,12 @@ public class RenderGun extends CustomItemRenderer {
 		Optional<StateEntry> currentReloadState = anim.getReloadState();
 		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
 		float chargeCurrent = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : 1f;
-		
+				
 		if(model.leftHandAmmo) 
 		{
 			if(!anim.reloading && model.righthandPump) return "Pump";
 			else if(chargeCurrent < 0.66 && model.rightHandCharge && chargeCurrent != -1.0F) return "Charge";
+			else if((anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge)) && anim.getReloadState().get().currentValue < 0.9 && model.rightHandBolt) return "Bolt";
 			else if(pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
 			else if(!anim.reloading && !model.righthandPump) return "Default";
 			else return "Reload";

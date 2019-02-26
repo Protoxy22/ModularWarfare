@@ -31,6 +31,7 @@ import com.modularwarfare.client.model.animations.AnimationRifle2;
 import com.modularwarfare.client.model.animations.AnimationRifle3;
 import com.modularwarfare.client.model.animations.AnimationRifle4;
 import com.modularwarfare.client.model.animations.AnimationShotgun;
+import com.modularwarfare.client.model.animations.AnimationSniper;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
@@ -88,6 +89,7 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("rifle4", new AnimationRifle4());
 		WeaponAnimations.registerAnimation("pistol", new AnimationPistol());
 		WeaponAnimations.registerAnimation("shotgun", new AnimationShotgun());
+		WeaponAnimations.registerAnimation("sniper", new AnimationSniper());
 		RenderGun.rotateToolModel = new rotatetool();
 	}
 	

@@ -78,6 +78,13 @@ public class RenderArms {
 		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
 		float pumpLast = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().lastValue : 1f : 1f;
 		
+		if(anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge))
+		{
+			StateEntry boltState = anim.getReloadState().get();
+			pumpCurrent = boltState.currentValue;
+			pumpLast = boltState.lastValue;
+		}
+		
 		GL11.glTranslatef(reloadPos.x + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.x * model.modelScale)), 0F, 0F);
 		GL11.glTranslatef(0F, reloadPos.y + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.y * model.modelScale)), 0F);
 		GL11.glTranslatef(0F, 0F, reloadPos.z + (Math.abs(pumpLast + (pumpCurrent - pumpLast) * smoothing) * (model.chargeModifier.z * model.modelScale)));

@@ -11,6 +11,7 @@ package com.modularwarfare.client.model.mwp; //Path where the model is located
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -36,12 +37,13 @@ public class cslr4 extends ModelGun //Same as Filename
 		translateAll = new Vector3f(0F, -10.0F, -.35F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
+		rightHandBolt = true;
 		rotationHelper = new Vector3f(0, 1.935F, 0);
 		boltRotationPoint = new Vector3f(0, 1.935F, 0);
 		boltRotation = -90F;
 		
 		gunSlideDistance = 0F;
-		//animationType = EnumAnimationType.CUSTOM;
+		reloadAnimation = WeaponAnimations.SNIPER;
 		translateAimPosition = new Vector3f(0.05F, 0F, 0F);
 		rotateGunVertical = 05F;
 		rotateGunHorizontal = 21F;
@@ -67,7 +69,7 @@ public class cslr4 extends ModelGun //Same as Filename
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmChargePos = new Vector3f(-0.49F, -0.14F, 0.15F);
+        rightArmChargePos = new Vector3f(0.32F, -0.39F, 0.15F);
         rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
         
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);
@@ -84,7 +86,6 @@ public class cslr4 extends ModelGun //Same as Filename
 		gripIsOnPump = false;
 		pumpHandleDistance = 0.75F;
 		
-		rightHandBolt = true;
 		chargeModifier = new Vector3f (1.0F, -1.0F, 0.0F);
 		
 		crouchZoom = -0.05F;
