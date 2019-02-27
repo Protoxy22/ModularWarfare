@@ -86,8 +86,8 @@ public class AnimationSniper extends WeaponAnimation {
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();	
 		states.add(new StateEntry(StateType.MoveHands, 0.15f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.PumpOut, 0.35f, 1f, MathType.Sub));
-		states.add(new StateEntry(StateType.PumpIn, 0.35f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Charge, 0.35f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Uncharge, 0.35f, 0f, MathType.Add));
 		states.add(new StateEntry(StateType.ReturnHands, 0.15f, 1f, MathType.Sub));
 		return states;
 	}
