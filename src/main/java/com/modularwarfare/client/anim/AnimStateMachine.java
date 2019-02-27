@@ -199,7 +199,7 @@ public class AnimStateMachine {
 		
 		this.reloadTime = reloadType != ReloadType.Full ? reloadTime*0.65f : reloadTime;
 		//this.reloadTime += 20;
-		this.reloadTime = 150;
+		this.reloadTime = 110;
 		this.reloadType = reloadType;
 		this.reloading = true;
 	}

@@ -69,8 +69,10 @@ public class AnimationPistol extends WeaponAnimation {
 		states.add(new StateEntry(StateType.Unload, 0.20f, 0f, MathType.Add));
 		states.add(new StateEntry(StateType.Load, 0.20f, 1f, MathType.Sub));
 		states.add(new StateEntry(StateType.Untilt, 0.20f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.MoveHands, 0.06f, 0f, MathType.Add));
 		states.add(new StateEntry(StateType.Charge, 0.18f, 1f, MathType.Sub));
 		states.add(new StateEntry(StateType.Uncharge, 0.02f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.ReturnHands, 0.05f, 1f, MathType.Sub));
 		return states;
 	}
 

@@ -657,6 +657,8 @@ public class RenderGun extends CustomItemRenderer {
 		}
 		else 
 		{
+			if((anim.isReloadState(StateType.MoveHands) || anim.isReloadState(StateType.ReturnHands))) return "ToFrom";
+			else if((anim.isShootState(StateType.MoveHands) || anim.isShootState(StateType.ReturnHands))) return "ToFrom";
 			if (anim.isReloadState(StateType.Charge) && model.leftHandCharge && chargeCurrent != -1.0F) return "Charge";
 			else if ((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) &&  !anim.reloading && model.lefthandPump) return "Pump";
 			else if (!anim.reloading) return "Default";
@@ -762,10 +764,12 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Unload") {RenderArms.renderArmUnload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
-
+					else if (movingArmState == "ToFrom") RenderArms.renderToFrom(model, anim, smoothing, model.leftArmChargeRot, model.leftArmChargePos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 					modelplayer.bipedLeftArm.render(0.0625F);
 					renderLeftSleeve(player, modelplayer);
+					System.out.println(model.leftArmPos);
+					System.out.println(model.leftArmChargePos);
 				}
 				GL11.glPopMatrix();
 			}
