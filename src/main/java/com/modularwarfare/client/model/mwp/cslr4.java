@@ -67,10 +67,10 @@ public class cslr4 extends ModelGun //Same as Filename
  
         rightArmPos = new Vector3f(0.39F, -0.70F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.39F, -0.70F, 0.0F);
+        rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmChargePos = new Vector3f(0.32F, -0.39F, 0.15F);
-        rightArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
+        rightArmChargeRot = new Vector3f(-0.0F, 0.0F, -70.0F);
         
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);
         leftArmScale = new Vector3f(0.7F, 1.0F, 0.7F);

@@ -68,16 +68,16 @@ public class AnimationSniper extends WeaponAnimation {
 	public ArrayList<StateEntry> getReloadStates(ReloadType reloadType, int reloadCount)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();		
-		states.add(new StateEntry(StateType.Tilt, 0.10f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Tilt, 0.15f, 0f, MathType.Add));
 		if(reloadType == ReloadType.Unload || reloadType == ReloadType.Full)
-			states.add(new StateEntry(StateType.Unload, 0.25f, 0f, MathType.Add));
+			states.add(new StateEntry(StateType.Unload, 0.15f, 0f, MathType.Add));
 		if(reloadType == ReloadType.Load || reloadType == ReloadType.Full)
-			states.add(new StateEntry(StateType.Load, 0.25f, 1f, MathType.Sub, reloadCount));
-		states.add(new StateEntry(StateType.Untilt, 0.10f, 1f, MathType.Sub));
-		states.add(new StateEntry(StateType.MoveHands, 0.06f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Charge, 0.12f, 1f, MathType.Sub));
-		states.add(new StateEntry(StateType.Uncharge, 0.07f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.ReturnHands, 0.05f, 1f, MathType.Sub));
+			states.add(new StateEntry(StateType.Load, 0.15f, 1f, MathType.Sub, reloadCount));
+		states.add(new StateEntry(StateType.Untilt, 0.15f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.MoveHands, 0.10f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.Charge, 0.10f, 1f, MathType.Sub));
+		states.add(new StateEntry(StateType.Uncharge, 0.10f, 0f, MathType.Add));
+		states.add(new StateEntry(StateType.ReturnHands, 0.10f, 1f, MathType.Sub));
 		return states;
 	}
 	
