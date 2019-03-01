@@ -59,15 +59,16 @@ public class ModelGun extends TurboBase
 	public Vector3f leftArmChargeRot;
 	public Vector3f rightArmChargePos;
 	public Vector3f rightArmChargeRot;
-	/** If true, move the hands with the pump action */
-	public boolean lefthandPump = false;
-	public boolean righthandPump = false;
-	/** If true, move the hands with the charge action */
-	public boolean rightHandCharge = false;
-	public boolean leftHandCharge = false;
-	/** If true, move the hands with the bolt action */
-	public boolean rightHandBolt = false;
-	public boolean leftHandBolt = false;
+	
+	// Arm used for loading ammo
+	public EnumArm loadingArm = EnumArm.Left;
+	
+	// Arm used for actions I.E pump, bolt, etc
+	public EnumArm actionArm = EnumArm.Left;
+	
+	// Action used by the weapon
+	public EnumAction actionType;
+	
 	public Vector3f chargeModifier = new Vector3f(1F, 0F, 0F);
 	
 	//Rotation helper tool
@@ -365,37 +366,25 @@ public class ModelGun extends TurboBase
 		flip(triggerModel);
 		flip(switchModel);
 	}
-
-	/**@Override
-	public void translateAll(float x, float y, float z)
-	{
-		translateAll = new Vector3f(x, y, z);
-    	{
-    		translate(gunModel, x, y, z);
-    		translate(defaultBarrelModel, x, y, z);
-    		translate(defaultScopeModel, x, y, z);
-    		translate(defaultStockModel, x, y, z);
-    		translate(defaultGripModel, x, y, z);
-    		translate(defaultGadgetModel, x, y, z);
-    		translate(ammoModel, x, y, z);
-    		translate(fullammoModel, x, y, z);
-    		translate(slideModel, x, y, z);
-    		translate(altslideModel, x, y, z);
-    		translate(pumpModel, x, y, z);
-    		translate(altpumpModel, x, y, z);
-    		translate(chargeModel, x, y, z);
-    		translate(revolverBarrelModel, x, y, z);
-    		translate(breakActionModel, x, y, z);
-    		translate(hammerModel, x, y, z);
-    		translate(leverActionModel, x, y, z);
-    		translate(triggerModel, x, y, z);
-    		translate(switchModel, x, y, z);
-    	}
-	}*/
 	
 	public boolean hasArms()
 	{
 		return leftArmPos != null || rightArmPos != null;
+	}
+	
+	public boolean isType(EnumArm arm, EnumAction action)
+	{
+		return actionArm == arm && actionType == action;
+	}
+	
+	public enum EnumArm 
+	{
+		Left, Right;
+	}
+	
+	public enum EnumAction 
+	{
+		Bolt, Pump, Charge
 	}
 	
 }

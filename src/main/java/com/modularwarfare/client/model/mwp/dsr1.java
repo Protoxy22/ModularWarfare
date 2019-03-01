@@ -13,6 +13,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelGun.EnumAction;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class dsr1 extends ModelGun //Same as Filename
@@ -38,7 +40,8 @@ public class dsr1 extends ModelGun //Same as Filename
 		modelScale = 0.09F;
 		translateAll = new Vector3f(0F, -13F, 0F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/?
-		rightHandBolt = true;
+	    actionArm = EnumArm.Right;
+	    actionType = EnumAction.Bolt;
 
 		gunSlideDistance = 0F;
 		reloadAnimation = WeaponAnimations.RIFLE3;

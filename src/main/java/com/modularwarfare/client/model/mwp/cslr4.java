@@ -13,6 +13,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelGun.EnumAction;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class cslr4 extends ModelGun //Same as Filename
@@ -37,7 +39,8 @@ public class cslr4 extends ModelGun //Same as Filename
 		translateAll = new Vector3f(0F, -10.0F, -.35F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/? 
 
-		rightHandBolt = true;
+	    actionArm = EnumArm.Right;
+	    actionType = EnumAction.Bolt;
 		rotationHelper = new Vector3f(0, 1.935F, 0);
 		boltRotationPoint = new Vector3f(0, 1.935F, 0);
 		boltRotation = -90F;

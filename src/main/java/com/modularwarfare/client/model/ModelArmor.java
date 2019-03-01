@@ -29,6 +29,8 @@ public class ModelArmor extends TurboBipedBase {
 	public ModelRendererTurbo[] rightLegModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] leftFootModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] rightFootModel = new ModelRendererTurbo[0];
+	public ModelRendererTurbo[] skirtFrontModel = new ModelRendererTurbo[0];
+	public ModelRendererTurbo[] skirtRearModel = new ModelRendererTurbo[0];
 	
 	/** For big scopes, so that the player actually looks through them properly */
 	public float renderOffset = 0F;
@@ -62,11 +64,18 @@ public class ModelArmor extends TurboBipedBase {
 			}
 	        
 			render(headModel, bipedHead, scale, modelScale);
+			
 			render(bodyModel, bipedBody, scale, modelScale);
 			render(leftArmModel, bipedLeftArm, scale, modelScale);
 			render(rightArmModel, bipedRightArm, scale, modelScale);
+			render(skirtFrontModel, bipedLeftLeg, scale, modelScale);
+			render(skirtRearModel, bipedRightLeg, scale, modelScale);
+			
 			render(leftLegModel, bipedLeftLeg, scale, modelScale);
 			render(rightLegModel, bipedRightLeg, scale, modelScale);
+			
+			render(leftFootModel, bipedLeftLeg, scale, modelScale);
+			render(rightFootModel, bipedRightLeg, scale, modelScale);
 		}
 		GL11.glPopMatrix();
 	}
@@ -95,44 +104,33 @@ public class ModelArmor extends TurboBipedBase {
 	
 	public void showHead(boolean result)
 	{
-		for(ModelRendererTurbo model : headModel)
-			if(model != null)
-				model.showModel = result;
+		showGroup(headModel, result);
 	}
 	
 	public void showChest(boolean result)
 	{
-		for(ModelRendererTurbo model : bodyModel)
-			if(model != null)
-				model.showModel = result;
-		
-		for(ModelRendererTurbo model : leftArmModel)
-			if(model != null)
-				model.showModel = result;
-		
-		for(ModelRendererTurbo model : rightArmModel)
-			if(model != null)
-				model.showModel = result;
+		showGroup(bodyModel, result);
+		showGroup(leftArmModel, result);
+		showGroup(rightArmModel, result);
+		showGroup(skirtFrontModel, result);
+		showGroup(skirtRearModel, result);
 	}
 	
 	public void showLegs(boolean result)
 	{
-		for(ModelRendererTurbo model : leftLegModel)
-			if(model != null)
-				model.showModel = result;
-		
-		for(ModelRendererTurbo model : rightLegModel)
-			if(model != null)
-				model.showModel = result;
+		showGroup(leftLegModel, result);
+		showGroup(rightLegModel, result);
 	}
 	
 	public void showFeet(boolean result)
+	{		
+		showGroup(leftFootModel, result);
+		showGroup(rightFootModel, result);
+	}
+	
+	public void showGroup(ModelRendererTurbo[] modelGroup, boolean result)
 	{
-		for(ModelRendererTurbo model : leftFootModel)
-			if(model != null)
-				model.showModel = result;
-		
-		for(ModelRendererTurbo model : rightLegModel)
+		for(ModelRendererTurbo model : modelGroup)
 			if(model != null)
 				model.showModel = result;
 	}

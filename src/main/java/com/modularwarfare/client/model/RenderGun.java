@@ -14,6 +14,8 @@ import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
+import com.modularwarfare.client.model.ModelGun.EnumAction;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.model.objects.CustomItemRenderType;
 import com.modularwarfare.client.model.objects.CustomItemRenderer;
@@ -251,7 +253,7 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(-(anim.lastGunSlide + (anim.gunSlide - anim.lastGunSlide) * smoothing) * model.gunSlideDistance, 0F, 0F);
 						
 						//Doubles as bolt action animation if set
-						if(model.rightHandBolt)
+						if(model.actionType == EnumAction.Bolt)
 						{
 							if(anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge))
 							{
@@ -619,19 +621,19 @@ public class RenderGun extends CustomItemRenderer {
 		{
 			if((anim.isReloadState(StateType.MoveHands) || anim.isReloadState(StateType.ReturnHands))) return "ToFrom";
 			else if((anim.isShootState(StateType.MoveHands) || anim.isShootState(StateType.ReturnHands))) return "ToFrom";
-			else if(!anim.reloading && model.righthandPump) return "Pump";
-			else if(chargeCurrent < 0.66 && model.rightHandCharge && chargeCurrent != -1.0F) return "Charge";
-			else if((anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge)) && model.rightHandBolt) return "Bolt";
-			else if((anim.isShootState(StateType.Charge) || anim.isShootState(StateType.Uncharge)) && model.rightHandBolt) return "Bolt";
-			else if(!anim.reloading && !model.righthandPump) return "Default";
+			else if(!anim.reloading && model.isType(EnumArm.Right, EnumAction.Pump)) return "Pump";
+			else if(chargeCurrent < 0.66 &&model.isType(EnumArm.Right, EnumAction.Charge) && chargeCurrent != -1.0F) return "Charge";
+			else if((anim.isReloadState(StateType.Charge) || anim.isReloadState(StateType.Uncharge)) && model.isType(EnumArm.Right, EnumAction.Bolt)) return "Bolt";
+			else if((anim.isShootState(StateType.Charge) || anim.isShootState(StateType.Uncharge)) && model.isType(EnumArm.Right, EnumAction.Bolt)) return "Bolt";
+			else if(!anim.reloading && !model.isType(EnumArm.Right, EnumAction.Pump)) return "Default";
 			else return "Reload";
 		}
 		else 
 		{
-			if (!anim.reloading && model.lefthandPump) return "Pump";
-			else if (chargeCurrent < 0.9 && model.rightHandCharge && chargeCurrent != -1.0F) return "Charge";
-			else if (pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
-			else if (!anim.reloading && !model.lefthandPump) return "Default";
+			if (!anim.reloading && model.isType(EnumArm.Left, EnumAction.Pump)) return "Pump";
+			else if (chargeCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Charge) && chargeCurrent != -1.0F) return "Charge";
+			else if (chargeCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Bolt)) return "Bolt";
+			else if (!anim.reloading && !model.isType(EnumArm.Left, EnumAction.Pump)) return "Default";
 			else return "Reload";
 		}
 	}
@@ -648,8 +650,8 @@ public class RenderGun extends CustomItemRenderer {
 		//Calls reload animation from the specified animation file
 		if(!model.leftHandAmmo) 
 		{
-			if((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) && pumpCurrent < 0.9 && model.rightHandCharge && pumpCurrent != -1.0F) return "Pump";
-			else if(anim.isReloadState(StateType.Charge) &&  pumpCurrent < 0.9 && model.rightHandBolt) return "Bolt";
+			if((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) && pumpCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Charge) && pumpCurrent != -1.0F) return "Pump";
+			else if(anim.isReloadState(StateType.Charge) && chargeCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Bolt)) return "Bolt";
 			else if(!anim.reloading) return "Default";
 			else if(anim.isReloadState(StateType.Load)) return "Load";
 			//else if() movingArmState = "Unload";
@@ -657,8 +659,8 @@ public class RenderGun extends CustomItemRenderer {
 		}
 		else 
 		{
-			if (anim.isReloadState(StateType.Charge) && model.leftHandCharge && chargeCurrent != -1.0F) return "Charge";
-			else if ((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) &&  !anim.reloading && model.lefthandPump) return "Pump";
+			if (anim.isReloadState(StateType.Charge) && model.isType(EnumArm.Left, EnumAction.Charge) && chargeCurrent != -1.0F) return "Charge";
+			else if ((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) &&  !anim.reloading && model.isType(EnumArm.Left, EnumAction.Pump)) return "Pump";
 			else if (!anim.reloading) return "Default";
 			else if(anim.isReloadState(StateType.Load)) return "Load";
 			else if(anim.isReloadState(StateType.Unload)) return "Unload";

@@ -13,6 +13,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelGun.EnumAction;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class aughbar extends ModelGun //Same as Filename
@@ -86,11 +88,13 @@ public class aughbar extends ModelGun //Same as Filename
 		sprintRotate = new Vector3f(-10.0F, 60.0F, 10.0F);
 		sprintTranslate = new Vector3f(1.9F, -0.2F, -0.9F);
 
+	    actionArm = EnumArm.Left;
+	    actionType = EnumAction.Charge;
+		
 		chargeHandleDistance = 1.6F;
 		chargeDelay = 0;
 		chargeDelayAfterReload = 85;
 		chargeTime = 10;
-		leftHandCharge = false;
 		chargeModifier = new Vector3f (8.0F, 8.0F, 20.0F);
 
 

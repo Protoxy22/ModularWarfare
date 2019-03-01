@@ -90,13 +90,13 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 			{
 				ArmorType armorType = ((ItemMWArmor)stack.getItem()).type;
 				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-				
+										
 				if(slot != slot.MAINHAND && slot != slot.OFFHAND)
 				{
-					armorModel.showChest(slot == EntityEquipmentSlot.CHEST);
-					armorModel.showFeet(slot == EntityEquipmentSlot.FEET);
 					armorModel.showHead(slot == EntityEquipmentSlot.HEAD);
+					armorModel.showChest(slot == EntityEquipmentSlot.CHEST);
 					armorModel.showLegs(slot == EntityEquipmentSlot.LEGS);
+					armorModel.showFeet(slot == EntityEquipmentSlot.FEET);
 				}
 				
 				armorModel.isSneak = defaultModel.isSneak;

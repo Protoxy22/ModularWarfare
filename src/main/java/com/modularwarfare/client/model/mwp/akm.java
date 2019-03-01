@@ -87,7 +87,9 @@ public class akm extends ModelGun //Same as Filename
 	    chargeDelayAfterReload = 65;
 	    chargeTime = 20;
 	    
-	    rightHandCharge = true;
+	    actionArm = EnumArm.Right;
+	    actionType = EnumAction.Charge;
+	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 	    
 	    reloadAnimation = WeaponAnimations.RIFLE;

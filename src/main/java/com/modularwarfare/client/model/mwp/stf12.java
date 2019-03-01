@@ -13,6 +13,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelGun.EnumAction;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
@@ -46,7 +48,8 @@ public class stf12 extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/? 
 
 		gunSlideDistance = 0F;
-		lefthandPump = true;
+	    actionArm = EnumArm.Left;
+	    actionType = EnumAction.Pump;
 		reloadAnimation = WeaponAnimations.SHOTGUN;
 		endLoadedAmmoDistance = 0F;
 		numBulletsInReloadAnimation = 7F;

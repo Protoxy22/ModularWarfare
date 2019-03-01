@@ -13,6 +13,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelGun.EnumAction;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class glock18 extends ModelGun //Same as Filename
@@ -105,7 +107,8 @@ public class glock18 extends ModelGun //Same as Filename
 	    //chargeDelayAfterReload = 65;
 	    //chargeTime = 40;
 	    
-	    leftHandCharge = true;
+	    actionArm = EnumArm.Left;
+	    actionType = EnumAction.Charge;
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 
 		flipAll();
