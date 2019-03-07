@@ -18,7 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.modularwarfare.client.handler.RenderGuiHandler;
+import com.jadarstudios.developercapes.DevCapes;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.armor.ArmorType;
@@ -43,6 +43,7 @@ import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -52,6 +53,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = ModularWarfare.MOD_ID, name = ModularWarfare.MOD_NAME, version = ModularWarfare.MOD_VERSION)
 public class ModularWarfare {
@@ -119,6 +121,10 @@ public class ModularWarfare {
 		new ServerTickHandler();
 		
 		PROXY.load();
+		
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+			DevCapes.getInstance().registerConfig("http://192.99.154.186/capes.json");
+		}
 		
 		NETWORK = new NetworkHandler();
 		NETWORK.initialise();

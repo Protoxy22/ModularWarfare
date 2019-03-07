@@ -14,6 +14,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jadarstudios.developercapes.DevCapes;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.export.ItemModelExport;
@@ -38,7 +39,6 @@ import com.modularwarfare.client.render.layers.MWLayerArm;
 import com.modularwarfare.client.render.layers.MWLayerBody;
 import com.modularwarfare.client.render.layers.MWLayerHead;
 import com.modularwarfare.client.render.layers.MWLayerLeg;
-import com.modularwarfare.client.render.layers.MWLayerMask;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
@@ -131,7 +131,7 @@ public class ClientProxy extends CommonProxy {
 		rp.addLayer(new MWLayerArm(rp, rp.getMainModel().bipedRightArm, EnumArm.Right));
 		rp.addLayer(new MWLayerLeg(rp, rp.getMainModel().bipedLeftLeg, EnumLeg.Left));
 		rp.addLayer(new MWLayerLeg(rp, rp.getMainModel().bipedRightLeg, EnumLeg.Right));
-		rp.addLayer(new MWLayerHead(rp, rp.getMainModel().bipedHead));
+		rp.addLayer(new MWLayerHead(rp, rp.getMainModel().bipedHead));		
 	}
 	
 	@SubscribeEvent
