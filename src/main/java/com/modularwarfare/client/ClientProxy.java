@@ -21,6 +21,8 @@ import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.handler.RenderGuiHandler;
+import com.modularwarfare.client.model.ModelArmor.EnumLeg;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
@@ -32,6 +34,11 @@ import com.modularwarfare.client.model.animations.AnimationRifle3;
 import com.modularwarfare.client.model.animations.AnimationRifle4;
 import com.modularwarfare.client.model.animations.AnimationShotgun;
 import com.modularwarfare.client.model.animations.AnimationSniper;
+import com.modularwarfare.client.render.layers.MWLayerArm;
+import com.modularwarfare.client.render.layers.MWLayerBody;
+import com.modularwarfare.client.render.layers.MWLayerHead;
+import com.modularwarfare.client.render.layers.MWLayerLeg;
+import com.modularwarfare.client.render.layers.MWLayerMask;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
@@ -48,6 +55,8 @@ import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -91,6 +100,38 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("shotgun", new AnimationShotgun());
 		WeaponAnimations.registerAnimation("sniper", new AnimationSniper());
 		RenderGun.rotateToolModel = new rotatetool();
+		
+		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+//		Field skinMapField = ReflectionHelper.findField(renderManager.getClass(), "skinMap", "field_178636_l");
+//		Map<String, RenderPlayer> skinMap = Maps.<String, RenderPlayer>newHashMap();
+//		skinMap.put("default", new MWRenderPlayer(renderManager));
+//		skinMap.put("slim", new MWRenderPlayer(renderManager, true));
+//		try {
+//			skinMapField.set(skinMapField.get(Maps.<String, RenderPlayer>newHashMap()), skinMap);
+//		} catch (IllegalArgumentException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		//ReflectionHelper.setPrivateValue(classToAccess, instance, value, fieldIndex);
+		
+		RenderPlayer rp = renderManager.getSkinMap().get("default");
+		rp.addLayer(new MWLayerBody(rp, rp.getMainModel().bipedBodyWear));
+		rp.addLayer(new MWLayerArm(rp, rp.getMainModel().bipedLeftArm, EnumArm.Left));
+		rp.addLayer(new MWLayerArm(rp, rp.getMainModel().bipedRightArm, EnumArm.Right));
+		rp.addLayer(new MWLayerLeg(rp, rp.getMainModel().bipedLeftLeg, EnumLeg.Left));
+		rp.addLayer(new MWLayerLeg(rp, rp.getMainModel().bipedRightLeg, EnumLeg.Right));
+		rp.addLayer(new MWLayerHead(rp, rp.getMainModel().bipedHead));
+
+		rp = renderManager.getSkinMap().get("slim");
+		rp.addLayer(new MWLayerBody(rp, rp.getMainModel().bipedBodyWear));
+		rp.addLayer(new MWLayerArm(rp, rp.getMainModel().bipedLeftArm, EnumArm.Left));
+		rp.addLayer(new MWLayerArm(rp, rp.getMainModel().bipedRightArm, EnumArm.Right));
+		rp.addLayer(new MWLayerLeg(rp, rp.getMainModel().bipedLeftLeg, EnumLeg.Left));
+		rp.addLayer(new MWLayerLeg(rp, rp.getMainModel().bipedRightLeg, EnumLeg.Right));
+		rp.addLayer(new MWLayerHead(rp, rp.getMainModel().bipedHead));
 	}
 	
 	@SubscribeEvent

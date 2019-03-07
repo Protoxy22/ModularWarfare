@@ -16,6 +16,7 @@ import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun.EnumAction;
 import com.modularwarfare.client.model.ModelGun.EnumArm;
+import com.modularwarfare.client.model.mwp.armor.outfit;
 import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.model.objects.CustomItemRenderType;
 import com.modularwarfare.client.model.objects.CustomItemRenderer;
@@ -546,7 +547,7 @@ public class RenderGun extends CustomItemRenderer {
 				}
 				
 				// Render moving arm
-				if(ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
+				if(!ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
 					
 					GL11.glPushMatrix();
 					{
@@ -775,48 +776,67 @@ public class RenderGun extends CustomItemRenderer {
 		GL11.glPopMatrix();
 	}
 	
+    private final outfit outfitmodel = new outfit();
+	
 	public void renderLeftSleeve(EntityPlayer player, ModelBiped modelplayer)
 	{
-		if(player.inventory.armorItemInSlot(2) != null)
+//		if(player.inventory.armorItemInSlot(2) != null)
+//		{
+//			ItemStack armorStack = player.inventory.armorItemInSlot(2);
+//			if(armorStack.getItem() instanceof ItemMWArmor) {
+//				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+//				modelArmor.showChest(true);
+//				int skinId = armorStack.getTagCompound().getInteger("skinId");
+//				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
+//				bindTexture("armor", path);
+//				GL11.glPushMatrix();
+//				{
+//					float modelScale = modelArmor.modelScale;
+//					GL11.glScalef(modelScale, modelScale, modelScale);
+//					modelArmor.render(modelArmor.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
+//				}
+//				GL11.glPopMatrix();
+//			}
+//		}
+		
+        Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/hd/armor/mwp.desertcamo.png"));
+		GL11.glPushMatrix();
 		{
-			ItemStack armorStack = player.inventory.armorItemInSlot(2);
-			if(armorStack.getItem() instanceof ItemMWArmor) {
-				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
-				modelArmor.showChest(true);
-				int skinId = armorStack.getTagCompound().getInteger("skinId");
-				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
-				bindTexture("armor", path);
-				GL11.glPushMatrix();
-				{
-					float modelScale = modelArmor.modelScale;
-					GL11.glScalef(modelScale, modelScale, modelScale);
-					modelArmor.render(modelArmor.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
-				}
-				GL11.glPopMatrix();
-			}
+			float modelScale = outfitmodel.modelScale;
+			GL11.glScalef(modelScale, modelScale, modelScale);
+			outfitmodel.render(outfitmodel.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
 		}
+		GL11.glPopMatrix();
 	}
 	
 	public void renderRightSleeve(EntityPlayer player, ModelBiped modelplayer)
 	{
-		if(player.inventory.armorItemInSlot(2) != null)
+//		if(player.inventory.armorItemInSlot(2) != null)
+//		{
+//			ItemStack armorStack = player.inventory.armorItemInSlot(2);
+//			if(armorStack.getItem() instanceof ItemMWArmor) {
+//				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+//				modelArmor.showChest(true);
+//				int skinId = armorStack.getTagCompound().getInteger("skinId");
+//				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
+//				bindTexture("armor", path);
+//				GL11.glPushMatrix();
+//				{
+//					float modelScale = modelArmor.modelScale;
+//					GL11.glScalef(modelScale, modelScale, modelScale);
+//					modelArmor.render(modelArmor.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
+//				}
+//				GL11.glPopMatrix();
+//			}
+//		}
+        Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/hd/armor/mwp.desertcamo.png"));
+		GL11.glPushMatrix();
 		{
-			ItemStack armorStack = player.inventory.armorItemInSlot(2);
-			if(armorStack.getItem() instanceof ItemMWArmor) {
-				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
-				modelArmor.showChest(true);
-				int skinId = armorStack.getTagCompound().getInteger("skinId");
-				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
-				bindTexture("armor", path);
-				GL11.glPushMatrix();
-				{
-					float modelScale = modelArmor.modelScale;
-					GL11.glScalef(modelScale, modelScale, modelScale);
-					modelArmor.render(modelArmor.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
-				}
-				GL11.glPopMatrix();
-			}
+			float modelScale = outfitmodel.modelScale;
+			GL11.glScalef(modelScale, modelScale, modelScale);
+			outfitmodel.render(outfitmodel.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
 		}
+		GL11.glPopMatrix();
 	}
 
 }

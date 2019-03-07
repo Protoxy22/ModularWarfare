@@ -105,7 +105,6 @@ public class ModularWarfare {
 		loadContentPacks(false);
 		
 		// Client side loading
-		PROXY.load();
 		PROXY.forceReload();
 		
 		MinecraftForge.EVENT_BUS.register(this);
@@ -118,6 +117,8 @@ public class ModularWarfare {
 	@EventHandler
 	public void onInitialization(FMLInitializationEvent event) {
 		new ServerTickHandler();
+		
+		PROXY.load();
 		
 		NETWORK = new NetworkHandler();
 		NETWORK.initialise();

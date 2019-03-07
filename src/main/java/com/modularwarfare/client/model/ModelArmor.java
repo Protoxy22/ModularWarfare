@@ -102,6 +102,48 @@ public class ModelArmor extends TurboBipedBase {
 		}
 	}
 	
+	public void renderAll(float scale)
+	{
+		render(headModel, bipedHead, scale, modelScale);
+		render(bodyModel, bipedBody, scale, modelScale);
+		render(leftArmModel, bipedLeftArm, scale, modelScale);
+		render(rightArmModel, bipedRightArm, scale, modelScale);
+		render(leftLegModel, bipedLeftLeg, scale, modelScale);
+		render(rightLegModel, bipedRightLeg, scale, modelScale);
+		render(leftFootModel, bipedLeftLeg, scale, modelScale);
+		render(rightFootModel, bipedRightLeg, scale, modelScale);
+	}
+	
+	public void renderHead(float scale)
+	{
+		render(headModel, bipedHead, scale, modelScale);
+	}
+	
+	public void renderChest(float scale)
+	{
+		render(bodyModel, bipedBody, scale, modelScale);
+	}
+	
+	public void renderLeftLeg(float scale)
+	{
+		render(leftLegModel, bipedLeftLeg, scale, modelScale);
+	}
+	
+	public void renderRightLeg(float scale)
+	{
+		render(rightLegModel, bipedRightLeg, scale, modelScale);
+	}
+	
+	public void renderLeftArm(float scale)
+	{
+		render(leftArmModel, bipedLeftArm, scale, modelScale);
+	}
+	
+	public void renderRightArm(float scale)
+	{
+		render(rightArmModel, bipedRightArm, scale, modelScale);
+	}
+	
 	public void showHead(boolean result)
 	{
 		showGroup(headModel, result);
@@ -158,6 +200,10 @@ public class ModelArmor extends TurboBipedBase {
 		translate(rightLegModel, x , y, z);
 		translate(leftFootModel, x , y, z);
 		translate(rightFootModel, x , y, z);
+	}
+	
+	public enum EnumLeg {
+		Left, Right
 	}
 
 }
