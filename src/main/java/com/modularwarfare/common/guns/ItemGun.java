@@ -10,7 +10,7 @@ import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
-import com.modularwarfare.utility.RaytraceHelper.Line;
+import com.modularwarfare.utility.RayHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -22,9 +22,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionType;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -141,11 +138,13 @@ public class ItemGun extends BaseItem {
 			return;
 		
 		// Raytrace
-		Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
-		List<Entity> entities = line.getEntities(world, Entity.class, false);
+//		Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
+//		List<Entity> entities = line.getEntities(world, Entity.class, false);
+		RayHelper ah = new RayHelper(this);
+		ah.attack(entityPlayer, 200.0);
 		
 		// Weapon post fire event
-		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, entities);
+		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, null);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
 		
 		ItemBullet bulletItem = getUsedBullet(gunStack, gunType);
@@ -153,35 +152,35 @@ public class ItemGun extends BaseItem {
 		if(bulletItem != null)
 			bulletType = bulletItem.type;
 		
-		for(Entity e : postFireEvent.getAffectedEntities())
-		{
-			if(e instanceof EntityLivingBase)
-			{
-				EntityLivingBase targetLiving = (EntityLivingBase) e;
-				if(targetLiving != entityPlayer)
-				{
-					float damage = postFireEvent.getDamage();
-					if(bulletType != null)
-					{
-						BulletProperty bulletProperty = bulletType.bulletProperties.get(targetLiving.getName()) != null ? bulletType.bulletProperties.get(targetLiving.getName()) : bulletType.bulletProperties.get("All");
-						if(bulletProperty != null)
-						{
-							damage *= bulletProperty.bulletDamage;
-							
-							if(bulletProperty.potionEffects != null)
-							{
-								for(PotionEntry potionEntry : bulletProperty.potionEffects)
-								{
-									targetLiving.addPotionEffect(new PotionEffect(potionEntry.potionEffect.getPotion(), potionEntry.duration, potionEntry.level));
-								}
-							}
-						}
-					}
-					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
-					targetLiving.hurtResistantTime = 0;
-				}
-			}
-		}
+//		for(Entity e : postFireEvent.getAffectedEntities())
+//		{
+//			if(e instanceof EntityLivingBase)
+//			{
+//				EntityLivingBase targetLiving = (EntityLivingBase) e;
+//				if(targetLiving != entityPlayer)
+//				{
+//					float damage = postFireEvent.getDamage();
+//					if(bulletType != null)
+//					{
+//						BulletProperty bulletProperty = bulletType.bulletProperties.get(targetLiving.getName()) != null ? bulletType.bulletProperties.get(targetLiving.getName()) : bulletType.bulletProperties.get("All");
+//						if(bulletProperty != null)
+//						{
+//							damage *= bulletProperty.bulletDamage;
+//							
+//							if(bulletProperty.potionEffects != null)
+//							{
+//								for(PotionEntry potionEntry : bulletProperty.potionEffects)
+//								{
+//									targetLiving.addPotionEffect(new PotionEffect(potionEntry.potionEffect.getPotion(), potionEntry.duration, potionEntry.level));
+//								}
+//							}
+//						}
+//					}
+//					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
+//					targetLiving.hurtResistantTime = 0;
+//				}
+//			}
+//		}
 		
 		consumeShot(gunStack);
 		canDryFire = true;
