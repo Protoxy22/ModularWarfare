@@ -14,7 +14,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jadarstudios.developercapes.DevCapes;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.export.ItemModelExport;
@@ -34,6 +33,7 @@ import com.modularwarfare.client.model.animations.AnimationRifle2;
 import com.modularwarfare.client.model.animations.AnimationRifle3;
 import com.modularwarfare.client.model.animations.AnimationRifle4;
 import com.modularwarfare.client.model.animations.AnimationShotgun;
+import com.modularwarfare.client.model.animations.AnimationSideClip;
 import com.modularwarfare.client.model.animations.AnimationSniper;
 import com.modularwarfare.client.render.layers.MWLayerArm;
 import com.modularwarfare.client.render.layers.MWLayerBody;
@@ -99,6 +99,7 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("pistol", new AnimationPistol());
 		WeaponAnimations.registerAnimation("shotgun", new AnimationShotgun());
 		WeaponAnimations.registerAnimation("sniper", new AnimationSniper());
+		WeaponAnimations.registerAnimation("sideclip", new AnimationSideClip());
 		RenderGun.rotateToolModel = new rotatetool();
 		
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();

@@ -42,7 +42,6 @@ public class AnimationPistol extends WeaponAnimation {
 	@Override
 	public void onAmmoAnimation(ModelGun gunModel, float ammoProgress, int reloadAmmoCount, AnimStateMachine animation)
 	{
-		//System.out.println(ammoProgress);
 		float multiAmmoPosition = ammoProgress * 1;
 		int bulletNum = MathHelper.floor(multiAmmoPosition);
 		float bulletProgress = multiAmmoPosition - bulletNum;

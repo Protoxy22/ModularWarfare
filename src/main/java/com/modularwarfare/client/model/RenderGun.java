@@ -113,7 +113,6 @@ public class RenderGun extends CustomItemRenderer {
 			switch (renderType) {
 
 			case ENTITY: {
-				
 				GL11.glTranslatef(-0.5F + model.itemFrameOffset.x, model.itemFrameOffset.y, model.itemFrameOffset.z);
 				GL11.glRotatef(0, 0F, 0F, 1F); //ANGLE UP-DOWN
 				break;
@@ -143,13 +142,13 @@ public class RenderGun extends CustomItemRenderer {
 				float crouchZoom = anim.reloading ? 0f : anim.isReloadState(StateType.Charge) ? 0f : model.crouchZoom;
 				float hipRecover = reloadSwitch;
 								
-				//Store the model settings as local variables to reduce calls
+				// Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
 				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
 				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 				
-				//Default render position calculation, set up to be compatible with existing gun configuration
+				// Default render position calculation, set up to be compatible with existing gun configuration
 				adsSwitch = anim.reloading ? 0f : adsSwitch;
 				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
 				rotateY = (46F + customHipRotation.y + swayHorizontal) - (1F + customAimRotation.y + customHipRotation.y + swayHorizontal) * adsSwitch;
@@ -158,7 +157,7 @@ public class RenderGun extends CustomItemRenderer {
 				translateY = (0.834F + customHipTranslate.y) - (-0.064F + customAimTranslate.y + customHipTranslate.y) * adsSwitch;//0.898
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
 			
-				//Custom view bobbing applies to gun models
+				// Custom view bobbing applies to gun models
 				float bobModifier = !entityLivingBase.isSprinting() ? adsSwitch == 0F ? !anim.reloading ? 0.7F : 0.2F: 0F : !anim.reloading ? adsSwitch == 0 ? 0.75F : 0.15F : 0.4F;
 				EntityPlayer entityplayer = (EntityPlayer)Minecraft.getMinecraft().getRenderViewEntity();
 				float f1 = (entityplayer.distanceWalkedModified - entityplayer.prevDistanceWalkedModified) * bobModifier;
@@ -170,7 +169,7 @@ public class RenderGun extends CustomItemRenderer {
 				GlStateManager.rotate(Math.abs(MathHelper.cos(f2 * (float)Math.PI - 0.2F) * f3) * 5.0F, 1.0F, 0.0F, 0.0F);
 				GlStateManager.rotate(f4, 1.0F, 0.0F, 0.0F);
 				
-				//Position calls and apply a special position if player is sprinting or crouching
+				// Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
 				GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
@@ -179,12 +178,13 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
 				
-				//Calls reload animation from the specified animation file
+				// Calls reload animation from the specified animation file
 				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
+					System.out.println(model.reloadAnimation);
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, anim);
 				}
 				
-				//Recoil
+				// Recoil
 				GL11.glTranslatef(-(anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);
 				GL11.glRotatef((anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
 				GL11.glRotatef(((-anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 0.0f, 1.0f, 0.0f);
@@ -219,11 +219,6 @@ public class RenderGun extends CustomItemRenderer {
 				{
 					if(!(Minecraft.getMinecraft().currentScreen instanceof GuiInventory))
 					{
-						/** Gun Xray
-						GlStateManager.disableRescaleNormal();
-			            RenderHelper.disableStandardItemLighting();
-			            GlStateManager.disableLighting();
-			            GlStateManager.disableDepth();*/
 						GlStateManager.enableRescaleNormal();
 						RenderHelper.enableStandardItemLighting();
 						GlStateManager.enableLighting();
