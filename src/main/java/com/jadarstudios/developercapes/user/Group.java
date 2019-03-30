@@ -40,7 +40,8 @@ public class Group {
         }
     }
 
-    public void removeUser(User user) {
+    @SuppressWarnings("unlikely-arg-type")
+	public void removeUser(User user) {
         if (this.users.containsValue(user)) {
             this.users.remove(user);
             user.capes.remove(this.cape);

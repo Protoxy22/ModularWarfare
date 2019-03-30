@@ -174,7 +174,7 @@ public class ClientRenderHooks extends ForgeEvent {
 				
 				float separation = 0.07F;
 				
-				Project.gluPerspective(getFOVModifier(partialTicks), (float)mc.displayWidth / (float)mc.displayHeight, 0.05F, farPlaneDistance * 2.0F);
+				Project.gluPerspective(getFOVModifier(partialTicks), (float)mc.displayWidth / (float)mc.displayHeight, 0.0001F, farPlaneDistance * 2.0F);
 				GlStateManager.matrixMode(5888);
 				GlStateManager.loadIdentity();
 				
