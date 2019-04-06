@@ -2,7 +2,9 @@ package com.modularwarfare.common.network;
 
 import java.util.HashMap;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponReloadEvent;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
@@ -496,6 +498,9 @@ public class PacketGunReload extends PacketBase {
 				gunType.playSound(entityPlayer, WeaponSoundType.Load, gunStack);				
 			else if(!postReloadEvent.isLoadOnly() && !postReloadEvent.isUnload())
 				gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
+			
+			int reloadType = (postReloadEvent.isLoadOnly() ? ReloadType.Load : postReloadEvent.isUnload() ? ReloadType.Unload : ReloadType.Full).i;
+			ModularWarfare.NETWORK.sendTo(new PacketClientAnimation(gunType.internalName, postReloadEvent.getReloadTime(), postReloadEvent.getReloadCount(), reloadType), entityPlayer);
 
 			ServerTickHandler.playerReloadCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
 		} else

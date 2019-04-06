@@ -2,8 +2,26 @@ package com.modularwarfare.client.anim;
 
 public enum ReloadType {
 	
-	Unload,
-	Load,
-	Full
+	Unload(0),
+	Load(1),
+	Full(2);
+	
+	public int i;
+	ReloadType(int i)
+	{
+		this.i = i;
+	}
+	
+	public static ReloadType getTypeFromInt(int i)
+	{
+		for(ReloadType type : values())
+		{
+			if(type.i == i)
+			{
+				return type;
+			}
+		}
+		return null;
+	}
 
 }

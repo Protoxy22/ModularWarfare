@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.common.handler.ServerTickHandler;
+import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
@@ -18,6 +19,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
@@ -138,8 +140,6 @@ public class ItemGun extends BaseItem {
 			return;
 		
 		// Raytrace
-//		Line line = Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
-//		List<Entity> entities = line.getEntities(world, Entity.class, false);
 		RayHelper ah = new RayHelper(this);
 		ah.attack(entityPlayer, 200.0);
 		
@@ -187,6 +187,9 @@ public class ItemGun extends BaseItem {
 		
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire, gunStack);
+		
+		// Shoot Packet
+		ModularWarfare.NETWORK.sendTo(new PacketClientAnimation(gunType.internalName, postFireEvent.getFireDelay(), postFireEvent.getRecoilPitch(), postFireEvent.getRecoilYaw()), (EntityPlayerMP) entityPlayer);
 		
 		// Burst Stuff
 		if(fireMode == WeaponFireMode.BURST)
