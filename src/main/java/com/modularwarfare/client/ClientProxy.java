@@ -531,10 +531,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void onShootAnimation(EntityPlayer player, String wepType, int fireDelay, float recoilPitch, float recoilYaw) 
 	{
-		ItemGun gunType = ModularWarfare.gunTypes.get(wepType);
+		GunType gunType = ModularWarfare.gunTypes.get(wepType).type;
 		if(gunType != null)
 		{
-			ClientRenderHooks.getAnimMachine(player).triggerShoot((ModelGun) gunType.type.model, fireDelay);
+			ClientRenderHooks.getAnimMachine(player).triggerShoot((ModelGun) gunType.model, gunType, fireDelay);
 			ClientTickHandler.playerRecoilPitch += recoilPitch * new Random().nextFloat();
 			ClientTickHandler.playerRecoilYaw += recoilYaw * new Random().nextFloat();
 		}

@@ -10,6 +10,7 @@ import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.anim.StateEntry.MathType;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.common.guns.GunType;
 
 public class WeaponAnimation {
 	
@@ -37,7 +38,7 @@ public class WeaponAnimation {
 		return states;
 	}
 	
-	public ArrayList<StateEntry> getShootStates(ModelGun gunModel)
+	public ArrayList<StateEntry> getShootStates(ModelGun gunModel, GunType gunType)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();	
 		if(gunModel.pumpModel.length > 0)

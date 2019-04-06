@@ -688,11 +688,12 @@ public class RenderGun extends CustomItemRenderer {
 			else bindTexture("arms", "armskin");
 			
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
+			System.out.println(staticArmState + " - " + rightArm);
 			Vector3f armScale = rightArm ? model.rightArmScale : model.leftArmScale;
 			Vector3f armRot = rightArm ? model.rightArmRot : model.leftArmRot;
 			Vector3f armPos = rightArm ? model.rightArmPos : model.leftArmPos;
-			Vector3f chargeArmRot = rightArm ? model.rightArmChargeRot : model.leftArmChargeRot;
-			Vector3f chargeArmPos = rightArm ? model.rightArmChargePos : model.leftArmChargePos;
+			Vector3f chargeArmRot = model.actionArm == EnumArm.Right ? model.rightArmChargeRot : model.leftArmChargeRot;
+			Vector3f chargeArmPos = model.actionArm == EnumArm.Right ? model.rightArmChargePos : model.leftArmChargePos;
 			Vector3f reloadArmRot = rightArm ? model.rightArmReloadRot : model.leftArmReloadRot;
 			Vector3f reloadArmPos = rightArm ? model.rightArmReloadPos : model.leftArmReloadPos;
 			
@@ -718,7 +719,7 @@ public class RenderGun extends CustomItemRenderer {
 		GL11.glPopMatrix();
 	}
 
-	//Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
+	// Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
 	private void renderMovingArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);

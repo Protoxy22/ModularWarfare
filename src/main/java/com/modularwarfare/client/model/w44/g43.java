@@ -612,8 +612,8 @@ public class g43 extends ModelGun //Same as Filename
 	    rightArmReloadPos = new Vector3f(0.28F, -0.55F, 0.0F);
 	    rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
 	    
-	    rightArmChargePos = new Vector3f(0.47F, -0.39F, 0.14F);
-	    rightArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
+	    leftArmChargePos = new Vector3f(0.47F, -0.39F, 0.14F);
+	    leftArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
 	    
 	    rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
 	    leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
@@ -635,7 +635,7 @@ public class g43 extends ModelGun //Same as Filename
 	    chargeDelayAfterReload = 65;
 	    chargeTime = 20;
 	    
-	    actionArm = EnumArm.Right;
+	    actionArm = EnumArm.Left;
 	    actionType = EnumAction.Charge;
 	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);

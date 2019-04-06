@@ -5,8 +5,8 @@ import java.util.Optional;
 import java.util.Random;
 
 import com.modularwarfare.api.WeaponAnimations;
-import com.modularwarfare.client.anim.StateEntry.MathType;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.common.guns.GunType;
 
 import net.minecraft.item.ItemStack;
 
@@ -151,7 +151,7 @@ public class AnimStateMachine {
 			currentShootState.onTick(shootTime);
 	}
 	
-	public void triggerShoot(ModelGun model, int shootDelay)
+	public void triggerShoot(ModelGun model, GunType gunType, int shootDelay)
 	{
 		Random r = new Random();
 		
@@ -161,7 +161,7 @@ public class AnimStateMachine {
 		hammerRotation = model.hammerAngle;
 		timeUntilPullback = model.hammerDelay;
 		
-		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getShootStates(model);
+		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getShootStates(model, gunType);
 		if(animEntries.size() > 0)
 		{
 			shootStateEntries = adjustTiming(animEntries);

@@ -703,7 +703,7 @@ public class kar98k extends ModelGun //Same as Filename
         
 		//RecoilSlideDistance = 0.16F;
 		//RotateSlideDistance = -1F;
-
+        
 		pumpDelayAfterReload = 65;
 		pumpDelay = 10;
 		pumpTime = 20;
