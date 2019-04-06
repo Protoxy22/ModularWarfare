@@ -1,0 +1,41 @@
+{
+  "displayName": "kar98k",
+  "internalName": "w44.kar98k",
+  "iconName": "w44.kar98k",
+  "gunDamage": 18,
+  "roundsPerMin": 34,
+  "acceptedAmmo": ["w44.kar98kammo"],
+  "fireModes": ["semi"],
+  
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  
+  "modelName": "w44.kar98k",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "kar98kshoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "kar98kreload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_kar98k",
+      "displayName": "Kar98k - Default"
+    }
+  ]
+}

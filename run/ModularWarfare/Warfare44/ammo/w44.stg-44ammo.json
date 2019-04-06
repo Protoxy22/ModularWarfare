@@ -1,0 +1,7 @@
+{
+  "displayName": "StG-44 Ammo",
+  "internalName": "w44.stg-44ammo",
+  "iconName": "w44.stg-44ammo",
+  "skinAsset": "default",
+  "ammoCapacity": 30
+}

@@ -1,0 +1,7 @@
+{
+  "displayName": "MP-40 Ammo",
+  "internalName": "w44.mp-40ammo",
+  "iconName": "w44.mp-40ammo",
+  "skinAsset": "default",
+  "ammoCapacity": 32
+}

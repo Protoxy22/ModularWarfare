@@ -1,0 +1,7 @@
+{
+  "displayName": "MG-42 Ammo",
+  "internalName": "w44.mg-42ammo",
+  "iconName": "w44.mg-42ammo",
+  "skinAsset": "default",
+  "ammoCapacity": 50
+}

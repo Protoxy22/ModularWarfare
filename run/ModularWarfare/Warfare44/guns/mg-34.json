@@ -1,0 +1,41 @@
+{
+  "displayName": "MG-34",
+  "internalName": "w44.mg-34",
+  "iconName": "w44.mg-34",
+  "gunDamage": 5,
+  "roundsPerMin": 850,
+  "acceptedAmmo": ["w44.mg-34ammo"],
+  "fireModes": ["full"],
+  
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  
+  "modelName": "w44.mg34",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "mg34shoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "mg34reload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_mg-34",
+      "displayName": "MG-34 - Default"
+    }
+  ]
+}
