@@ -635,7 +635,7 @@ public class g43 extends ModelGun //Same as Filename
 	    chargeDelayAfterReload = 65;
 	    chargeTime = 20;
 	    
-	    actionArm = EnumArm.Right;
+	    actionArm = EnumArm.Left;
 	    actionType = EnumAction.Charge;
 	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
