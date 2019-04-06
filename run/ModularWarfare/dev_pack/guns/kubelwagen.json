@@ -1,0 +1,36 @@
+{
+    "displayName": "Kubelwagen",
+    "internalName": "mwp.kubelwagen",
+    "iconName": "mwp.kubelwagen",
+    "gunDamage": 5,
+    "roundsPerMin": 600,
+    "acceptedAmmo": [],
+    "fireModes": ["full", "semi"],
+    "modelName": "mwp.kubelwagen",
+    "weaponSounds": [
+      {
+        "soundEvent": "weaponFire",
+        "soundName": "shoot.mwp.ak1",
+        "soundNameDistant": "shoot.mwp.ak1.far",
+        "soundRange": 64,
+        "soundMaxRange": 96,
+        "soundFadeMultiplier": 1
+      },
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "reload.mwp.g.60"
+      }
+    ],
+    "acceptedAttachments": 
+    {
+      "sight": [""]
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "mwp.kubelwagen",
+        "displayName": "Kubelwagen - Default"
+      }
+    ]
+  }
+  

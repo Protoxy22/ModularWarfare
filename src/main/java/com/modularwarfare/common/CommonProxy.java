@@ -13,6 +13,8 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.MWSound;
 import com.modularwarfare.utility.event.ForgeEvent;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 public class CommonProxy extends ForgeEvent {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
@@ -48,5 +50,9 @@ public class CommonProxy extends ForgeEvent {
 	public void playSound(MWSound sound) {}
 	
 	public void registerSound(String soundName) {}
+	
+	public void onShootAnimation(EntityPlayer player, String wepType, int fireDelay, float recoilPitch, float recoilYaw) {}
+	
+	public void onReloadAnimation(EntityPlayer player, String wepType, int reloadTime, int reloadCount, int reloadType) {}
 
 }

@@ -180,7 +180,6 @@ public class RenderGun extends CustomItemRenderer {
 				
 				// Calls reload animation from the specified animation file
 				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
-					System.out.println(model.reloadAnimation);
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, anim);
 				}
 				
@@ -234,8 +233,7 @@ public class RenderGun extends CustomItemRenderer {
 				model.renderDefaultBarrel(worldScale);
 				model.renderDefaultStock(worldScale);
 				model.renderDefaultGrip(worldScale);
-				model.renderDefaultGadget(worldScale);
-				
+				model.renderDefaultGadget(worldScale);				
 				
 				//Render pump action
 				ItemStack pumpAttachment = null;

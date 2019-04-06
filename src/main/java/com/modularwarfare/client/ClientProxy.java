@@ -11,11 +11,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.export.ItemModelExport;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
@@ -23,6 +25,7 @@ import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.handler.RenderGuiHandler;
 import com.modularwarfare.client.model.ModelArmor.EnumLeg;
 import com.modularwarfare.client.model.ModelGun.EnumArm;
+import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
@@ -57,6 +60,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -521,6 +525,29 @@ public class ClientProxy extends CommonProxy {
 				registerSound(weaponSoundType.defaultSound);
 				registry.register(modSounds.get(weaponSoundType.defaultSound));
 			}
+		}
+	}
+	
+	@Override
+	public void onShootAnimation(EntityPlayer player, String wepType, int fireDelay, float recoilPitch, float recoilYaw) 
+	{
+		ItemGun gunType = ModularWarfare.gunTypes.get(wepType);
+		if(gunType != null)
+		{
+			ClientRenderHooks.getAnimMachine(player).triggerShoot((ModelGun) gunType.type.model, fireDelay);
+			ClientTickHandler.playerRecoilPitch += recoilPitch * new Random().nextFloat();
+			ClientTickHandler.playerRecoilYaw += recoilYaw * new Random().nextFloat();
+		}
+	}
+	
+	@Override
+	public void onReloadAnimation(EntityPlayer player, String wepType, int reloadTime, int reloadCount, int reloadType) 
+	{
+		ItemGun gunType = ModularWarfare.gunTypes.get(wepType);
+		if(gunType != null)
+		{
+			System.out.println(ReloadType.getTypeFromInt(reloadType));
+			ClientRenderHooks.getAnimMachine(player).triggerReload(reloadTime, reloadCount, (ModelGun) gunType.type.model, ReloadType.getTypeFromInt(reloadType));
 		}
 	}
 	
