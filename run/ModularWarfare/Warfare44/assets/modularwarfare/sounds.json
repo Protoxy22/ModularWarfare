@@ -1,10 +1,11 @@
 {
 "mg34shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mg34shoot"]},
 "shoot.mwp.ak1.far":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.ak1.far"]},
+"fg42shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:fg42shoot"]},
+"g43shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:g43shoot"]},
 "mg42shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mg42shoot"]},
 "stg44shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:stg44shoot"]},
 "mp40shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mp40shoot"]},
-"fg42shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:fg42shoot"]},
 "kar98kshoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:kar98kshoot"]},
-"g43shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:g43shoot"]}
+"c96shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:c96shoot"]}
 }

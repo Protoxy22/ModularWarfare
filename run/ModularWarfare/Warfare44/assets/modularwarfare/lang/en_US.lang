@@ -1,3 +1,4 @@
+item.w44.c-96.name=Mauser C-96
 item.w44.fg-42.name=FG-42
 item.w44.g-43.name=Gewehr-43
 item.w44.kar98k.name=kar98k
@@ -5,6 +6,7 @@ item.w44.mg-34.name=MG-34
 item.w44.mg-42.name=MG-42
 item.w44.mp-40.name=MP-40
 item.w44.stg-44.name=StG-44
+item.w44.c-96ammo.name=Mauser C-96 Ammo
 item.w44.fg-42ammo.name=FG-42 Ammo
 item.w44.g-43ammo.name=Gewehr-43 Ammo
 item.w44.kar98kammo.name=Kar98k Ammo

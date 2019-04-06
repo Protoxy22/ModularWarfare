@@ -544,7 +544,7 @@ public class mp40 extends ModelGun //Same as Filename
 	    
 		hasFlash = false;
 	    
-	    leftArmPos = new Vector3f(0.28F, -0.74F, 0.05F);
+	    leftArmPos = new Vector3f(0.18F, -0.64F, 0.05F);
 	    leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
 		leftArmReloadPos = new Vector3f(0.350F, -0.80F, 0.02F);
 	    leftArmReloadRot = new Vector3f(35.0F, 0.0F, -45.0F);
