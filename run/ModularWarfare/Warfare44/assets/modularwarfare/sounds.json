@@ -1,6 +1,7 @@
 {
-"mg34shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mg34shoot"]},
+"ppkshoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:ppkshoot"]},
 "shoot.mwp.ak1.far":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.ak1.far"]},
+"mg34shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mg34shoot"]},
 "lugershoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:lugershoot"]},
 "fg42shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:fg42shoot"]},
 "g43shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:g43shoot"]},
@@ -8,5 +9,8 @@
 "mg42shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mg42shoot"]},
 "stg44shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:stg44shoot"]},
 "mp40shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:mp40shoot"]},
-"kar98kshoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:kar98kshoot"]}
+"kar98kshoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:kar98kshoot"]},
+"oldmg34shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:oldmg34shoot"]},
+"modell1915shoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:modell1915shoot"]},
+"planemgshoot":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:planemgshoot"]}
 }

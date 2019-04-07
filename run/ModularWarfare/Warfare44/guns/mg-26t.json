@@ -1,0 +1,41 @@
+{
+  "displayName": "MG-26(t)",
+  "internalName": "w44.mg-26t",
+  "iconName": "w44.mg-26t",
+  "gunDamage": 5,
+  "roundsPerMin": 500,
+  "acceptedAmmo": ["w44.mg-26tammo"],
+  "fireModes": ["full"],
+  
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  
+  "modelName": "w44.mg26t",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "oldmg34shoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "mg26treload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_mg-26t",
+      "displayName": "MG-26(t) - Default"
+    }
+  ]
+}

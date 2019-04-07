@@ -262,8 +262,8 @@ public class luger extends ModelGun //Same as Filename
         
         rightArmPos = new Vector3f(0.53F, -0.5F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -85.0F);
-        rightArmReloadPos = new Vector3f(0.53F, -0.5F, 0.0F);
-        rightArmReloadRot = new Vector3f(0.0F, 0.0F, -85.0F);
+        rightArmReloadPos = new Vector3f(0.53F, -0.5F, 0.03F);
+        rightArmReloadRot = new Vector3f(0.0F, 8.0F, -85.0F);
         
         leftHandAmmo = true;
         
