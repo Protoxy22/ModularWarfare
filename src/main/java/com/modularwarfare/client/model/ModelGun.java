@@ -206,6 +206,8 @@ public class ModelGun extends TurboBase
 	public ArrayList<BreakActionData> breakActions = new ArrayList<BreakActionData>();
 		
 	public float triggerDistance = 0.02f;
+	
+	public boolean boltOnFire = false;
 
 	public static void glowOn()
 	{

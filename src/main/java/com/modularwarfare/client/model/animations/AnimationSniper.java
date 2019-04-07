@@ -9,9 +9,11 @@ import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.anim.StateEntry;
-import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.anim.StateEntry.MathType;
+import com.modularwarfare.client.anim.StateType;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.WeaponType;
 
 import net.minecraft.util.math.MathHelper;
 
@@ -82,13 +84,16 @@ public class AnimationSniper extends WeaponAnimation {
 	}
 	
 	@Override
-	public ArrayList<StateEntry> getShootStates(ModelGun gunModel)
+	public ArrayList<StateEntry> getShootStates(ModelGun gunModel, GunType gunType)
 	{
 		ArrayList<StateEntry> states = new ArrayList<StateEntry>();	
-		states.add(new StateEntry(StateType.MoveHands, 0.15f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.Charge, 0.35f, 1f, MathType.Sub));
-		states.add(new StateEntry(StateType.Uncharge, 0.35f, 0f, MathType.Add));
-		states.add(new StateEntry(StateType.ReturnHands, 0.15f, 1f, MathType.Sub));
+		if(gunType.weaponType == WeaponType.BoltSniper)
+		{
+			states.add(new StateEntry(StateType.MoveHands, 0.15f, 0f, MathType.Add));
+			states.add(new StateEntry(StateType.Charge, 0.35f, 1f, MathType.Sub));
+			states.add(new StateEntry(StateType.Uncharge, 0.35f, 0f, MathType.Add));
+			states.add(new StateEntry(StateType.ReturnHands, 0.15f, 1f, MathType.Sub));
+		}
 		return states;
 	}
 
