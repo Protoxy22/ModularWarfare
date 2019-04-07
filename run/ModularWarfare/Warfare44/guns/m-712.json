@@ -1,18 +1,18 @@
 {
-  "displayName": "Mauser C-96",
-  "internalName": "w44.c-96",
-  "iconName": "w44.c-96",
+  "displayName": "Mauser M-712",
+  "internalName": "w44.m-712",
+  "iconName": "w44.m-712",
   "gunDamage": 8,
-  "roundsPerMin": 300,
-  "acceptedAmmo": ["w44.c-96ammo"],
-  "fireModes": ["semi"],
+  "roundsPerMin": 1000,
+  "acceptedAmmo": ["w44.m-712ammo"],
+  "fireModes": ["full", "semi"],
   
   "recoilPitch": 10.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,
   
-  "modelName": "w44.c96",
+  "modelName": "w44.m712",
   "weaponSounds": [
     {
       "soundEvent": "weaponFire",
@@ -24,7 +24,7 @@
     },
     {
       "soundEvent": "weaponReload",
-      "soundName": "c-96reload"
+      "soundName": "m-712reload"
     }
   ],
   "acceptedAttachments": 
@@ -34,8 +34,8 @@
   "modelSkins":
   [
     {
-      "skinAsset": "w44.skin_c-96",
-      "displayName": "Mauser C-96 - Default"
+      "skinAsset": "w44.skin_m-712",
+      "displayName": "Mauser m-712 - Default"
     }
   ]
 }

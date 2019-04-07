@@ -1,10 +1,10 @@
 {
-  "displayName": "Mauser C-96",
-  "internalName": "w44.c-96",
-  "iconName": "w44.c-96",
+  "displayName": "P-08 Luger",
+  "internalName": "w44.luger",
+  "iconName": "w44.luger",
   "gunDamage": 8,
-  "roundsPerMin": 300,
-  "acceptedAmmo": ["w44.c-96ammo"],
+  "roundsPerMin": 250,
+  "acceptedAmmo": ["w44.lugerammo"],
   "fireModes": ["semi"],
   
   "recoilPitch": 10.0,
@@ -12,11 +12,11 @@
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,
   
-  "modelName": "w44.c96",
+  "modelName": "w44.luger",
   "weaponSounds": [
     {
       "soundEvent": "weaponFire",
-      "soundName": "c96shoot",
+      "soundName": "lugershoot",
       "soundNameDistant": "shoot.mwp.ak1.far",
       "soundRange": 64,
       "soundMaxRange": 96,
@@ -24,7 +24,7 @@
     },
     {
       "soundEvent": "weaponReload",
-      "soundName": "c-96reload"
+      "soundName": "lugerreload"
     }
   ],
   "acceptedAttachments": 
@@ -34,8 +34,8 @@
   "modelSkins":
   [
     {
-      "skinAsset": "w44.skin_c-96",
-      "displayName": "Mauser C-96 - Default"
+      "skinAsset": "w44.skin_luger",
+      "displayName": "P-08 Luger - Default"
     }
   ]
 }
