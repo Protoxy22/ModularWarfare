@@ -10,9 +10,9 @@
 "shoot.mwp.mg1":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.mg1"]},
 "shoot.mwp.smg3":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.smg3"]},
 "shoot.mwp.sniper1":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.sniper1"]},
-"shoot.mwp.pistol3":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.pistol3"]},
-"load.mwp.pistol1":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:load.mwp.pistol1"]},
 "charge.mwp.pistol1":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:charge.mwp.pistol1"]},
+"load.mwp.pistol1":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:load.mwp.pistol1"]},
 "unload.mwp.pistol1":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:unload.mwp.pistol1"]},
+"shoot.mwp.pistol3":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.pistol3"]},
 "shoot.mwp.dmr3":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:shoot.mwp.dmr3"]}
 }
