@@ -1,0 +1,40 @@
+{
+  "displayName": "Winchester Model 70",
+  "internalName": "w44.winchestermodel70",
+  "iconName": "w44.winchestermodel70",
+  "weaponType": "boltsniper",
+  "gunDamage": 18,
+  "roundsPerMin": 34,
+  "acceptedAmmo": ["w44.winchestermodel70ammo"],
+  "fireModes": ["semi"],
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "w44.winchestermodel70",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "winchestermodel70shoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "winchestermodel70reload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_winchestermodel70",
+      "displayName": "Winchester Model 70 - Default"
+    }
+  ]
+}

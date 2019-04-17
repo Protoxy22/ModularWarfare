@@ -1,0 +1,7 @@
+{
+  "displayName": "Model M10 Trenchgun Ammo",
+  "internalName": "w44.modelm10trenchgunammo",
+  "iconName": "w44.modelm10trenchgunammo",
+  "skinAsset": "default",
+  "ammoCapacity": 8
+}

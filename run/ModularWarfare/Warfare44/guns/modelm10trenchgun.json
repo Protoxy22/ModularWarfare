@@ -1,0 +1,40 @@
+{
+  "displayName": "Model M10 Trenchgun",
+  "internalName": "w44.modelm10trenchgun",
+  "iconName": "w44.modelm10trenchgun",
+  "weaponType": "boltsniper",
+  "gunDamage": 100,
+  "roundsPerMin": 34,
+  "acceptedAmmo": ["w44.modelm10trenchgunammo"],
+  "fireModes": ["semi"],
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "w44.modelm10trenchgun",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "modelm10trenchgunshoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "modelm10trenchgunreload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_modelm10trenchgun",
+      "displayName": "Model M10 Trenchgun - Default"
+    }
+  ]
+}

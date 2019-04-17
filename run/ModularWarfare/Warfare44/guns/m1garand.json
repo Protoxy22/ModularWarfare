@@ -1,10 +1,10 @@
 {
-  "displayName": "Gewehr-43",
-  "internalName": "w44.g-43",
-  "iconName": "w44.g-43",
+  "displayName": "M1 Garand",
+  "internalName": "w44.m1garand",
+  "iconName": "w44.m1garand",
   "gunDamage": 10,
-  "roundsPerMin": 400,
-  "acceptedAmmo": ["w44.g-43ammo"],
+  "roundsPerMin": 250,
+  "acceptedAmmo": ["w44.m1garandammo"],
   "fireModes": ["semi"],
   
   "recoilPitch": 10.0,
@@ -12,11 +12,11 @@
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,
   
-  "modelName": "w44.g43",
+  "modelName": "w44.m1garand",
   "weaponSounds": [
     {
       "soundEvent": "weaponFire",
-      "soundName": "g43shoot",
+      "soundName": "m1garandshoot",
       "soundNameDistant": "shoot.mwp.ak1.far",
       "soundRange": 64,
       "soundMaxRange": 96,
@@ -34,8 +34,8 @@
   "modelSkins":
   [
     {
-      "skinAsset": "w44.skin_g-43",
-      "displayName": "Gewehr-43 - Default"
+      "skinAsset": "w44.skin_m1garand",
+      "displayName": "M1 Garand - Default"
     }
   ]
 }
