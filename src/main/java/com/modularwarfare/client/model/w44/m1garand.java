@@ -575,7 +575,7 @@ public class m1garand extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
 
 		gunSlideDistance = .75F;
-	    reloadAnimation = WeaponAnimations.SNIPER;
+	    reloadAnimation = WeaponAnimations.TOP_RIFLE;
 	    
 		hasFlash = false;
 	    

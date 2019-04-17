@@ -16,9 +16,9 @@ import com.modularwarfare.client.model.ModelGun;
 
 import net.minecraft.util.math.MathHelper;
 
-public class AnimationSideClip extends WeaponAnimation {
+public class AnimationTopRifle extends WeaponAnimation {
 	
-	public AnimationSideClip()
+	public AnimationTopRifle()
 	{
 		ammoLoadOffset = new Vector3f(0, -1.5F, 0);
 	}
@@ -26,6 +26,8 @@ public class AnimationSideClip extends WeaponAnimation {
 	@Override
 	public void onGunAnimation(float tiltProgress, AnimStateMachine animation)
 	{
+		//System.out.println(tiltProgress);
+		
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
 		//Translate Y - Up/Down
@@ -47,10 +49,11 @@ public class AnimationSideClip extends WeaponAnimation {
 		float multiAmmoPosition = ammoProgress * 1;
 		int bulletNum = MathHelper.floor(multiAmmoPosition);
 		float bulletProgress = multiAmmoPosition - bulletNum;
+		float modelScale = gunModel.modelScale;
 		
-		GL11.glRotatef(180F * bulletProgress, 0F, 1F, 0F);
-		GL11.glRotatef(60F * bulletProgress, 0F, 1F, 0F);
-		GL11.glTranslatef(0.5F * bulletProgress * 1 / gunModel.modelScale, 0F, 0F);
+		GL11.glRotatef(bulletProgress * 55F, 0F, 1F, 0F);
+		GL11.glRotatef(bulletProgress * 95F, 0F, 0F, 1F);
+		GL11.glTranslatef(bulletProgress * -0.1F * 1 / modelScale, bulletProgress * 1F * 1 / modelScale, bulletProgress * 0.5F * 1 / modelScale);
 	}
 	
 	@Override

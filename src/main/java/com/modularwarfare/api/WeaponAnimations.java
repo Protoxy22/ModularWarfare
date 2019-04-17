@@ -19,6 +19,7 @@ public class WeaponAnimations {
 	public static String SHOTGUN = "shotgun";
 	public static String SNIPER = "sniper";
 	public static String SIDE_CLIP = "sideclip";
+	public static String TOP_RIFLE = "toprifle";
 	
 	public static String registerAnimation(String internalName, WeaponAnimation animation)
 	{

@@ -24,8 +24,8 @@ import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.handler.RenderGuiHandler;
 import com.modularwarfare.client.model.ModelArmor.EnumLeg;
-import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelGun.EnumArm;
 import com.modularwarfare.client.model.RenderAmmo;
 import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
@@ -38,6 +38,7 @@ import com.modularwarfare.client.model.animations.AnimationRifle4;
 import com.modularwarfare.client.model.animations.AnimationShotgun;
 import com.modularwarfare.client.model.animations.AnimationSideClip;
 import com.modularwarfare.client.model.animations.AnimationSniper;
+import com.modularwarfare.client.model.animations.AnimationTopRifle;
 import com.modularwarfare.client.render.layers.MWLayerArm;
 import com.modularwarfare.client.render.layers.MWLayerBody;
 import com.modularwarfare.client.render.layers.MWLayerHead;
@@ -46,6 +47,7 @@ import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
+import com.modularwarfare.common.blocks.CustomBlock;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
@@ -61,6 +63,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -104,6 +107,7 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("shotgun", new AnimationShotgun());
 		WeaponAnimations.registerAnimation("sniper", new AnimationSniper());
 		WeaponAnimations.registerAnimation("sideclip", new AnimationSideClip());
+		WeaponAnimations.registerAnimation("toprifle", new AnimationTopRifle());
 		RenderGun.rotateToolModel = new rotatetool();
 		
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
@@ -165,6 +169,11 @@ public class ClientProxy extends CommonProxy {
 		for(ItemMWArmor itemArmor : ModularWarfare.armorTypes.values())
 		{
 			ModelLoader.setCustomModelResourceLocation(itemArmor, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemArmor.internalName));
+		}
+		
+		for(CustomBlock block : ModularWarfare.blockTypes.values())
+		{
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + block.type.internalName));
 		}
 	}
 	
@@ -546,7 +555,6 @@ public class ClientProxy extends CommonProxy {
 		ItemGun gunType = ModularWarfare.gunTypes.get(wepType);
 		if(gunType != null)
 		{
-			System.out.println(ReloadType.getTypeFromInt(reloadType));
 			ClientRenderHooks.getAnimMachine(player).triggerReload(reloadTime, reloadCount, (ModelGun) gunType.type.model, ReloadType.getTypeFromInt(reloadType));
 		}
 	}

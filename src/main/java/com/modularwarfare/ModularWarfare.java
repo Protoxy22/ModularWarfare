@@ -24,6 +24,9 @@ import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
+import com.modularwarfare.common.blocks.BlockType;
+import com.modularwarfare.common.blocks.CustomBlock;
+import com.modularwarfare.common.blocks.CustomItemBlock;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.BulletType;
@@ -38,8 +41,10 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.type.ContentTypes;
 import com.modularwarfare.common.type.TypeEntry;
 
+import net.minecraft.block.Block;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -82,6 +87,7 @@ public class ModularWarfare {
 	public static LinkedHashMap<String, ItemMWArmor> armorTypes = new LinkedHashMap<String, ItemMWArmor>();
 	public static HashMap<String, ItemBullet> bulletTypes = new HashMap<String, ItemBullet>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
+	public static HashMap<String, CustomBlock> blockTypes = new HashMap<String, CustomBlock>();
 
 	/**
 	 * Registers items, blocks, renders, etc
@@ -177,7 +183,22 @@ public class ModularWarfare {
 	    	event.getRegistry().register(itemAttachment);
 	    	tabOrder.add(itemAttachment);
 	    }
+	    for(CustomBlock block : blockTypes.values())
+	    {
+	    	ItemBlock itemBlock = new CustomItemBlock(block);
+	    	event.getRegistry().register(itemBlock);
+	    	tabOrder.add(itemBlock);
+	    }
 	    MOD_TAB.preInitialize(tabOrder);
+	}
+	
+	@SubscribeEvent
+	public void registerBlocks(RegistryEvent.Register<Block> event)
+	{
+		for(CustomBlock block : blockTypes.values())
+		{
+			event.getRegistry().register(block);
+		}
 	}
 	
 	@SubscribeEvent
@@ -238,6 +259,7 @@ public class ModularWarfare {
 						break;
 					}
 					case 4: {bulletTypes.put(baseType.internalName, new ItemBullet((BulletType) baseType));break;}
+					case 5: {blockTypes.put(baseType.internalName, new CustomBlock((BlockType) baseType));break;}
 				}
 			}
 		}

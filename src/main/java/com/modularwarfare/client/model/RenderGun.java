@@ -688,7 +688,10 @@ public class RenderGun extends CustomItemRenderer {
 			else bindTexture("arms", "armskin");
 			
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
-			System.out.println(staticArmState + " - " + rightArm);
+			if(staticArmState == "ToFrom" && rightArm && model.actionArm == EnumArm.Left)
+			{
+				rightArm = false;
+			}
 			Vector3f armScale = rightArm ? model.rightArmScale : model.leftArmScale;
 			Vector3f armRot = rightArm ? model.rightArmRot : model.leftArmRot;
 			Vector3f armPos = rightArm ? model.rightArmPos : model.leftArmPos;
