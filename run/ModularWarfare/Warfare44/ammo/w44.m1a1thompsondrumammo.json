@@ -1,0 +1,8 @@
+{
+  "displayName": "M1A1 Thompson Drum Magazine [Ammo]",
+  "internalName": "w44.m1a1thompsondrumammo",
+  "iconName": "w44.m1a1thompsondrumammo",
+  "modelName": "w44.ammo.m1a1thompsondrumammo",
+  "skinAsset": "w44.skin_m1a1thompsonsdrumammo",
+  "ammoCapacity": 50
+}

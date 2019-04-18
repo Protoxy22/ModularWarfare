@@ -15,6 +15,7 @@ import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.ModelGun.EnumAction;
 import com.modularwarfare.client.model.ModelGun.EnumArm;
+import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class m1a1thompson extends ModelGun //Same as Filename
@@ -488,6 +489,8 @@ public class m1a1thompson extends ModelGun //Same as Filename
 	    actionType = EnumAction.Charge;
 	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
+	    
+        ammoMap.put("w44.m1a1thompsondrumammo", new RenderVariables(new Vector3f(0.6F, 0.12F, 0F), 0.3F));
 	    
 		flipAll();
 	}
