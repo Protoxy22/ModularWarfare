@@ -283,6 +283,7 @@ public class ClientProxy extends CommonProxy {
 						for(ArmorInfo armorInfo : armorType.armorTypes.values())
 						{
 							String internalName = armorInfo.internalName != null ? armorInfo.internalName : armorType.internalName;
+							System.out.println(internalName);
 							typeModel = new File(itemModelsDir, internalName + ".json");
 
 							try {

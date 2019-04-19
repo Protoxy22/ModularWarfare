@@ -22,7 +22,10 @@ public class ArmorType extends BaseType {
 	{	
 		for(MWArmorType armorType : armorTypes.keySet())
 		{
-			armorTypes.get(armorType).internalName = internalName + (armorTypes.size() > 1 ? "_" + slot : "");
+			if(armorType.name().toLowerCase().equalsIgnoreCase(slot))
+			{
+				armorTypes.get(armorType).internalName = internalName + (armorTypes.size() > 1 ? "_" + slot : "");
+			}
 		}
 	}
 	
