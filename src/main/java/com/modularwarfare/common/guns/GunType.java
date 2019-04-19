@@ -36,8 +36,6 @@ public class GunType extends BaseType {
 	public int weaponEffectiveRange = 50;
 	/** The number of bullet entities created by each shot */
 	public int numBullets = 1;
-	/** The speed of bullets upon leaving this gun */
-	public float bulletSpeed = 5.0F;
 	/** The amount that bullets spread out when fired from this gun */
 	public float bulletSpread;
 	/** The fire rate of the gun in RPM, 1200 = MAX */
@@ -114,37 +112,53 @@ public class GunType extends BaseType {
 		loadBaseValues();
 		fireTickDelay = 1200 / roundsPerMin;
 		
-		weaponSoundMap = new HashMap<WeaponSoundType, ArrayList<SoundEntry>>();
-		if(weaponSounds != null)
+		for(ArrayList<SoundEntry> entryList : weaponSoundMap.values())
 		{
-			for(SoundEntry soundEntry : weaponSounds)
+			for(SoundEntry soundEntry : entryList)
 			{
-				WeaponSoundType weaponSoundType = soundEntry.soundEvent;
-				if(weaponSoundType != null)
+				if(soundEntry.soundName != null)
 				{
-					if(soundEntry.soundName != null)
-					{
-						if(weaponSoundMap.containsKey(weaponSoundType))
-						{
-							weaponSoundMap.get(weaponSoundType).add(soundEntry);
-						} else
-						{
-							ArrayList<SoundEntry> soundEntries = new ArrayList<>(Arrays.asList(soundEntry));
-							weaponSoundMap.put(weaponSoundType, soundEntries);
-						}
-						ModularWarfare.PROXY.registerSound(soundEntry.soundName);
-						if(soundEntry.soundNameDistant != null)
-							ModularWarfare.PROXY.registerSound(soundEntry.soundNameDistant);
-					} else
-					{
-						ModularWarfare.LOGGER.error(String.format("Sound entry event '%s' has null soundName for type '%s'", soundEntry.soundEvent, internalName));
-					}
+					ModularWarfare.PROXY.registerSound(soundEntry.soundName);
+					if(soundEntry.soundNameDistant != null)
+						ModularWarfare.PROXY.registerSound(soundEntry.soundNameDistant);
 				} else
 				{
-					ModularWarfare.LOGGER.error(String.format("Sound event '%s' is not a valid weapon sound event for type '%s'", soundEntry.soundEvent != null ? soundEntry.soundEvent : "null", internalName));
+					ModularWarfare.LOGGER.error(String.format("Sound entry event '%s' has null soundName for type '%s'", soundEntry.soundEvent, internalName));
 				}
 			}
-		}		
+		}
+		
+//		weaponSoundMap = new HashMap<WeaponSoundType, ArrayList<SoundEntry>>();
+//		if(weaponSounds != null)
+//		{
+//			for(SoundEntry soundEntry : weaponSounds)
+//			{
+//				WeaponSoundType weaponSoundType = soundEntry.soundEvent;
+//				if(weaponSoundType != null)
+//				{
+//					if(soundEntry.soundName != null)
+//					{
+//						if(weaponSoundMap.containsKey(weaponSoundType))
+//						{
+//							weaponSoundMap.get(weaponSoundType).add(soundEntry);
+//						} else
+//						{
+//							ArrayList<SoundEntry> soundEntries = new ArrayList<>(Arrays.asList(soundEntry));
+//							weaponSoundMap.put(weaponSoundType, soundEntries);
+//						}
+//						ModularWarfare.PROXY.registerSound(soundEntry.soundName);
+//						if(soundEntry.soundNameDistant != null)
+//							ModularWarfare.PROXY.registerSound(soundEntry.soundNameDistant);
+//					} else
+//					{
+//						ModularWarfare.LOGGER.error(String.format("Sound entry event '%s' has null soundName for type '%s'", soundEntry.soundEvent, internalName));
+//					}
+//				} else
+//				{
+//					ModularWarfare.LOGGER.error(String.format("Sound event '%s' is not a valid weapon sound event for type '%s'", soundEntry.soundEvent != null ? soundEntry.soundEvent : "null", internalName));
+//				}
+//			}
+//		}		
 	}
 	
 	@Override

@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.tacticalgloves",
+    "modelName": "omw.armor.tacticalgloves",
+    "armorTypes": 
+    {
+        "gloves": 
+        {
+            "displayName": "Tactical Gloves"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.tacticalgloves",
+        "displayName": "Tactical Gloves - Default"
+      }
+    ]
+}

@@ -1,0 +1,26 @@
+{
+    "internalName": "omw.uniform",
+    "modelName": "omw.armor.uniform",
+    "armorTypes": 
+    {
+        "chest": 
+        {
+            "displayName": "Uniform Chest"
+        },
+        "legs": 
+        {
+            "displayName": "Uniform Pants"
+        },
+        "feet": 
+        {
+            "displayName": "Uniform Boots"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.uniform",
+        "displayName": "Uniform - Default"
+      }
+    ]
+}

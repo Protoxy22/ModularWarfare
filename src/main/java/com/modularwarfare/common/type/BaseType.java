@@ -63,7 +63,7 @@ public class BaseType {
 	 */
 	public boolean hasModel()
 	{
-		return model != null;
+		return model != null || bipedModel != null;
 	}
 	
 	/**

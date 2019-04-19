@@ -356,7 +356,7 @@ public class ClientRenderHooks extends ForgeEvent {
 				//Render main hand item
 				{
 					GlStateManager.pushMatrix();
-					if(hand == EnumHand.MAIN_HAND)
+					if(hand == EnumHand.MAIN_HAND && customRenderers[type.id] != null)
 					{
 						biped.bipedRightArm.postRender(0.0625F);
 						GlStateManager.translate(-0.05F, 0.4F, 0.05F);

@@ -25,9 +25,7 @@ public class AnimationTopRifle extends WeaponAnimation {
 	
 	@Override
 	public void onGunAnimation(float tiltProgress, AnimStateMachine animation)
-	{
-		//System.out.println(tiltProgress);
-		
+	{		
 		//Translate X - Forwards/Backwards
 		GL11.glTranslatef(0.0F * tiltProgress, 0F, 0F);
 		//Translate Y - Up/Down

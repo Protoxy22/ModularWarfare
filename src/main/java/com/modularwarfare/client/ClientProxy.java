@@ -19,6 +19,8 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.export.ItemModelExport;
+import com.modularwarfare.client.gui.GuiEvents;
+import com.modularwarfare.client.gui.GuiPlayerExpanded;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
@@ -47,7 +49,7 @@ import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
-import com.modularwarfare.common.blocks.CustomBlock;
+import com.modularwarfare.common.armor.ItemSpecialArmor;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemAttachment;
@@ -59,28 +61,29 @@ import com.modularwarfare.objects.SoundEntry;
 import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.MetadataCollection;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.discovery.ContainerType;
 import net.minecraftforge.fml.common.discovery.ModCandidate;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(value = Side.CLIENT)
+@Mod.EventBusSubscriber
 public class ClientProxy extends CommonProxy {
 
 	public List<File> contentPacks;
@@ -111,21 +114,6 @@ public class ClientProxy extends CommonProxy {
 		RenderGun.rotateToolModel = new rotatetool();
 		
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-//		Field skinMapField = ReflectionHelper.findField(renderManager.getClass(), "skinMap", "field_178636_l");
-//		Map<String, RenderPlayer> skinMap = Maps.<String, RenderPlayer>newHashMap();
-//		skinMap.put("default", new MWRenderPlayer(renderManager));
-//		skinMap.put("slim", new MWRenderPlayer(renderManager, true));
-//		try {
-//			skinMapField.set(skinMapField.get(Maps.<String, RenderPlayer>newHashMap()), skinMap);
-//		} catch (IllegalArgumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		//ReflectionHelper.setPrivateValue(classToAccess, instance, value, fieldIndex);
-		
 		RenderPlayer rp = renderManager.getSkinMap().get("default");
 		rp.addLayer(new MWLayerBody(rp, rp.getMainModel().bipedBodyWear));
 		rp.addLayer(new MWLayerArm(rp, rp.getMainModel().bipedLeftArm, EnumArm.Left));
@@ -171,9 +159,9 @@ public class ClientProxy extends CommonProxy {
 			ModelLoader.setCustomModelResourceLocation(itemArmor, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemArmor.internalName));
 		}
 		
-		for(CustomBlock block : ModularWarfare.blockTypes.values())
+		for(ItemSpecialArmor itemArmor : ModularWarfare.specialArmorTypes.values())
 		{
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + block.type.internalName));
+			ModelLoader.setCustomModelResourceLocation(itemArmor, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemArmor.type.internalName));
 		}
 	}
 	
@@ -292,14 +280,14 @@ public class ClientProxy extends CommonProxy {
 					if(type instanceof ArmorType)
 					{
 						ArmorType armorType = (ArmorType) type;
-						for(ArmorInfo armorInfo : armorType.armorInfoMap.values())
+						for(ArmorInfo armorInfo : armorType.armorTypes.values())
 						{
-							String newInternalName = type.internalName + "_" + armorInfo.armorType.toString();
-							typeModel = new File(itemModelsDir, newInternalName + ".json");
+							String internalName = armorInfo.internalName != null ? armorInfo.internalName : armorType.internalName;
+							typeModel = new File(itemModelsDir, internalName + ".json");
 
 							try {
 								FileWriter fileWriter = new FileWriter(typeModel, false);
-								gson.toJson(createJson(type, newInternalName), fileWriter);
+								gson.toJson(createJson(type, internalName), fileWriter);
 								fileWriter.flush();
 								fileWriter.close();
 							} catch (Exception e) {
@@ -426,6 +414,9 @@ public class ClientProxy extends CommonProxy {
 			
 			if(baseType.displayName != null && !langEntryMap.get(contentPack).contains(baseType))
 				langEntryMap.get(contentPack).add(baseType);
+			
+			if(baseType instanceof ArmorType)
+				langEntryMap.get(contentPack).add(baseType);
 		}
 		
 		for(String contentPack : langEntryMap.keySet())
@@ -449,7 +440,7 @@ public class ClientProxy extends CommonProxy {
 						{
 							if(!soundsExists)
 								Files.createFile(langPath);
-							
+														
 							ArrayList<String> jsonEntries = new ArrayList<String>();
 							String format = "item.%s.name=%s";
 							for(int i = 0; i < langEntries.size(); i++)
@@ -458,9 +449,10 @@ public class ClientProxy extends CommonProxy {
 								if(type instanceof ArmorType)
 								{
 									ArmorType armorType = (ArmorType) type;
-									for(ArmorInfo armorInfo : armorType.armorInfoMap.values())
+									for(ArmorInfo armorInfo : armorType.armorTypes.values())
 									{
-										jsonEntries.add(String.format(format, type.internalName + "_" + armorInfo.armorType.toString(), armorInfo.displayName));
+										String internalName = armorInfo.internalName != null ? armorInfo.internalName : armorType.internalName;
+										jsonEntries.add(String.format(format, internalName, armorInfo.displayName));
 									}
 								} else
 								{
@@ -557,6 +549,40 @@ public class ClientProxy extends CommonProxy {
 		{
 			ClientRenderHooks.getAnimMachine(player).triggerReload(reloadTime, reloadCount, (ModelGun) gunType.type.model, ReloadType.getTypeFromInt(reloadType));
 		}
+	}
+	
+	@Override
+	public World getClientWorld() {
+		return FMLClientHandler.instance().getClient().world;
+	}
+	
+	@Override
+	public void registerEventHandlers() {
+		super.registerEventHandlers();
+
+		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+		MinecraftForge.EVENT_BUS.register(new GuiEvents());
+	}
+
+	@Override
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		if (world instanceof WorldClient) {
+			switch (ID) {
+				case ModularWarfare.GUI: return new GuiPlayerExpanded(player);
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void init() {
+//		Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
+//		RenderPlayer render;
+//		render = skinMap.get("default");
+//		render.addLayer(new BaublesRenderLayer());
+//
+//		render = skinMap.get("slim");
+//		render.addLayer(new BaublesRenderLayer());
 	}
 	
 }

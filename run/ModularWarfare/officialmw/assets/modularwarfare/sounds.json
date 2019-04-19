@@ -1,0 +1,4 @@
+{
+"omw.shoot.m4":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:omw.shoot.m4"]},
+"owm.shoot.m4_distant":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:owm.shoot.m4_distant"]}
+}

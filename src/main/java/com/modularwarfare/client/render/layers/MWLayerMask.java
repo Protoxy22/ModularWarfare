@@ -31,7 +31,7 @@ public class MWLayerMask implements LayerRenderer<EntityPlayer> {
 
     @Override
     public void doRenderLayer(EntityPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-           if (facemask == null) return;
+           /*if (facemask == null) return;
            GlStateManager.pushMatrix();
 
            if (player.isSneaking()) {
@@ -46,7 +46,7 @@ public class MWLayerMask implements LayerRenderer<EntityPlayer> {
            Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/hd/armor/mwp.mask.png"));
            facemask.renderAll(scale);
            GlStateManager.popMatrix();
-
+           */
     }
 
     @Override

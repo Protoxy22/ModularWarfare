@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.tacticalshades",
+    "modelName": "omw.armor.tacticalshades",
+    "armorTypes": 
+    {
+        "upperface": 
+        {
+            "displayName": "Tactical Shades"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.tacticalheadwear",
+        "displayName": "Tactical Shades - Default"
+      }
+    ]
+}

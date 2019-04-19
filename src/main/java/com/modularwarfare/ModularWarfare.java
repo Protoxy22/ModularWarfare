@@ -19,14 +19,19 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.jadarstudios.developercapes.DevCapes;
+import com.modularwarfare.api.IArmor;
+import com.modularwarfare.api.MWArmorType;
+import com.modularwarfare.api.cap.BaubleItem;
+import com.modularwarfare.api.cap.BaublesCapabilities;
+import com.modularwarfare.api.cap.BaublesContainer;
+import com.modularwarfare.api.cap.IBaublesItemHandler;
+import com.modularwarfare.api.cap.BaublesCapabilities.CapabilityBaubles;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
-import com.modularwarfare.common.blocks.BlockType;
-import com.modularwarfare.common.blocks.CustomBlock;
-import com.modularwarfare.common.blocks.CustomItemBlock;
+import com.modularwarfare.common.armor.ItemSpecialArmor;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.BulletType;
@@ -47,32 +52,43 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = ModularWarfare.MOD_ID, name = ModularWarfare.MOD_NAME, version = ModularWarfare.MOD_VERSION)
+@Mod(
+modid = ModularWarfare.MOD_ID, 
+name = ModularWarfare.MOD_NAME, 
+version = ModularWarfare.MOD_VERSION,
+dependencies = "required-after:forge@[14.21.0.2348,);")
 public class ModularWarfare {
 
+	// Mod Info
 	public static final String MOD_ID = "modularwarfare";
 	public static final String MOD_NAME = "Modular Warfare";
 	public static final String MOD_VERSION = "1.0.0";
-	public static MWTab MOD_TAB = new MWTab();
-
+	// Main instance
+	@Instance(ModularWarfare.MOD_ID)
+	public static ModularWarfare INSTANCE;
+	// Proxy
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
-	
 	// Development Environment
 	public static boolean DEV_ENV = false;
+	// Creative Tabs
+	public static MWTab MOD_TAB = new MWTab();
 	// Logger
 	public static Logger LOGGER;
 	// Network Handler
@@ -85,10 +101,12 @@ public class ModularWarfare {
 	public static HashMap<String, ItemAmmo> ammoTypes = new HashMap<String, ItemAmmo>();
 	public static HashMap<String, ItemAttachment> attachmentTypes = new HashMap<String, ItemAttachment>();
 	public static LinkedHashMap<String, ItemMWArmor> armorTypes = new LinkedHashMap<String, ItemMWArmor>();
+	public static LinkedHashMap<String, ItemSpecialArmor> specialArmorTypes = new LinkedHashMap<String, ItemSpecialArmor>();
 	public static HashMap<String, ItemBullet> bulletTypes = new HashMap<String, ItemBullet>();
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
-	public static HashMap<String, CustomBlock> blockTypes = new HashMap<String, CustomBlock>();
 
+	public static final int GUI = 0;
+	
 	/**
 	 * Registers items, blocks, renders, etc
 	 * @param event
@@ -115,6 +133,14 @@ public class ModularWarfare {
 		// Client side loading
 		PROXY.forceReload();
 		
+		CapabilityManager.INSTANCE.register(IBaublesItemHandler.class,
+				new CapabilityBaubles<IBaublesItemHandler>(), BaublesContainer.class);
+
+		CapabilityManager.INSTANCE
+				.register(IArmor.class, new BaublesCapabilities.CapabilityItemBaubleStorage(), () -> new BaubleItem(MWArmorType.Any));
+
+		PROXY.registerEventHandlers();
+		
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
@@ -129,11 +155,14 @@ public class ModularWarfare {
 		PROXY.load();
 		
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
-			DevCapes.getInstance().registerConfig("http://192.99.154.186/capes.json");
+			//DevCapes.getInstance().registerConfig("http://192.99.154.186/capes.json");
 		}
 		
 		NETWORK = new NetworkHandler();
 		NETWORK.initialise();
+		
+		NetworkRegistry.INSTANCE.registerGuiHandler(ModularWarfare.INSTANCE, PROXY);
+		PROXY.init();
 	}
 	
 	/**
@@ -178,16 +207,15 @@ public class ModularWarfare {
 	    	event.getRegistry().register(itemArmor);
 	    	tabOrder.add(itemArmor);
 	    }
+	    for(ItemSpecialArmor itemSpecialArmor : specialArmorTypes.values())
+	    {
+	    	event.getRegistry().register(itemSpecialArmor);
+	    	tabOrder.add(itemSpecialArmor);
+	    }
 	    for(ItemAttachment itemAttachment : attachmentTypes.values()) 
 	    {
 	    	event.getRegistry().register(itemAttachment);
 	    	tabOrder.add(itemAttachment);
-	    }
-	    for(CustomBlock block : blockTypes.values())
-	    {
-	    	ItemBlock itemBlock = new CustomItemBlock(block);
-	    	event.getRegistry().register(itemBlock);
-	    	tabOrder.add(itemBlock);
 	    }
 	    MOD_TAB.preInitialize(tabOrder);
 	}
@@ -195,10 +223,7 @@ public class ModularWarfare {
 	@SubscribeEvent
 	public void registerBlocks(RegistryEvent.Register<Block> event)
 	{
-		for(CustomBlock block : blockTypes.values())
-		{
-			event.getRegistry().register(block);
-		}
+		
 	}
 	
 	@SubscribeEvent
@@ -251,15 +276,19 @@ public class ModularWarfare {
 					case 2: {attachmentTypes.put(baseType.internalName, new ItemAttachment((AttachmentType) baseType));break;}
 					case 3: {
 						ArmorType armorType = (ArmorType) baseType;
-						for(ArmorInfo armorInfo : armorType.armorTypes)
+						for(MWArmorType mwArmorType : armorType.armorTypes.keySet())
 						{
-							String armorSlot = armorInfo.armorType.toString();
-							armorTypes.put(baseType.internalName + "_" + armorSlot, new ItemMWArmor(armorType, EntityEquipmentSlot.fromString(armorSlot)));
+							if(MWArmorType.isVanilla(mwArmorType))
+							{
+								armorTypes.put(armorType.internalName + "_" + mwArmorType.name().toLowerCase(), new ItemMWArmor(armorType, mwArmorType));
+							} else 
+							{
+								specialArmorTypes.put(armorType.internalName, new ItemSpecialArmor(armorType, mwArmorType));
+							}
 						}
 						break;
 					}
 					case 4: {bulletTypes.put(baseType.internalName, new ItemBullet((BulletType) baseType));break;}
-					case 5: {blockTypes.put(baseType.internalName, new CustomBlock((BlockType) baseType));break;}
 				}
 			}
 		}

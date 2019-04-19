@@ -196,17 +196,6 @@ public class ClientTickHandler extends ForgeEvent {
 		{
 			stateMachine.onTickUpdate();
 		}
-		
-		// Gun Animation State Machine
-//		for(StateMachine gunAnimation : ClientRenderHooks.gunAnimations.values())
-//		{
-//			gunAnimation.onUpdate();
-//		}
-		
-//		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
-//		{
-//			stateMachine.onUpdate();
-//		}
 	}
 
 }

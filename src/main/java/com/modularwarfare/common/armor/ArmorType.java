@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.google.gson.annotations.SerializedName;
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.common.type.BaseType;
 
@@ -14,19 +15,14 @@ public class ArmorType extends BaseType {
 	public Integer durability;
 	public double defense = 0;
 	
-	public ArmorInfo[] armorTypes;
-	public HashMap<String, ArmorInfo> armorInfoMap = new HashMap<String, ArmorInfo>();
+	public HashMap<MWArmorType, ArmorInfo> armorTypes = new HashMap<MWArmorType, ArmorInfo>();
 	
 	
-	public void initializeArmor(EntityEquipmentSlot slot)
+	public void initializeArmor(String slot)
 	{	
-		for(ArmorInfo armorInfo : armorTypes)
+		for(MWArmorType armorType : armorTypes.keySet())
 		{
-			if(armorInfo.armorType.toString().equalsIgnoreCase(slot.getName()))
-			{
-				armorInfo.internalName = internalName + "_" + armorInfo.armorType.toString();
-				armorInfoMap.put(slot.getName(), armorInfo);
-			}
+			armorTypes.get(armorType).internalName = internalName + (armorTypes.size() > 1 ? "_" + slot : "");
 		}
 	}
 	
@@ -53,35 +49,8 @@ public class ArmorType extends BaseType {
 	
 	public static class ArmorInfo
 	{
-		public ArmorTypeEnum armorType;
 		public String displayName;
 		public transient String internalName;
-	}
-	
-	public static enum ArmorTypeEnum
-	{
-		
-		@SerializedName("head") Head(4),
-		
-		@SerializedName("chest") Chest(3),
-		
-		@SerializedName("legs") Legs(2),
-		
-		@SerializedName("feet") Feet(1);
-		
-		public int slot;
-		
-		ArmorTypeEnum(int slot)
-		{
-			this.slot = slot;
-		}
-		
-		@Override
-		public String toString()
-		{
-			return name().toLowerCase();
-		}
-		
 	}
 	
 }

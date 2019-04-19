@@ -8,18 +8,26 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.container.ContainerPlayerExpanded;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.handler.EventHandlerEntity;
+import com.modularwarfare.common.handler.EventHandlerItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.MWSound;
 import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class CommonProxy extends ForgeEvent {
+public class CommonProxy extends ForgeEvent implements IGuiHandler {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
 	
-	public void load() {}
+	public void load() {
+		
+	}
 	
 	public void forceReload() {}
 	
@@ -54,5 +62,27 @@ public class CommonProxy extends ForgeEvent {
 	public void onShootAnimation(EntityPlayer player, String wepType, int fireDelay, float recoilPitch, float recoilYaw) {}
 	
 	public void onReloadAnimation(EntityPlayer player, String wepType, int reloadTime, int reloadCount, int reloadType) {}
+	
+	public World getClientWorld() {return null;}
+
+	@Override
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		return null;
+	}
+
+	@Override
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		switch (ID) {
+			case ModularWarfare.GUI: return new ContainerPlayerExpanded(player.inventory, !world.isRemote, player);
+		}
+		return null;
+	}
+	
+	public void registerEventHandlers() {
+		MinecraftForge.EVENT_BUS.register(new EventHandlerEntity());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerItem());
+	}
+
+	public void init() { }
 
 }

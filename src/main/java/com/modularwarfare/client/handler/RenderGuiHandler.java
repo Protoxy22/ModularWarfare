@@ -21,7 +21,6 @@ public class RenderGuiHandler extends ForgeEvent {
 	@SubscribeEvent
 	public void onRenderGui(RenderGameOverlayEvent.Post event)
 	{
-		
 		if(event.getType() != ElementType.EXPERIENCE) return;
 		
 		if(Minecraft.getMinecraft().player != null)

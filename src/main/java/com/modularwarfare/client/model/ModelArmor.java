@@ -134,6 +134,16 @@ public class ModelArmor extends TurboBipedBase {
 		render(rightLegModel, bipedRightLeg, scale, modelScale);
 	}
 	
+	public void renderLeftFoot(float scale)
+	{
+		render(leftFootModel, bipedLeftLeg, scale, modelScale);
+	}
+	
+	public void renderRightFoot(float scale)
+	{
+		render(rightFootModel, bipedRightLeg, scale, modelScale);
+	}
+	
 	public void renderLeftArm(float scale)
 	{
 		render(leftArmModel, bipedLeftArm, scale, modelScale);

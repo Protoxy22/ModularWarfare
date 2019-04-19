@@ -1,0 +1,22 @@
+{
+    "internalName": "omw.m4a1",
+    "displayName": "M4A1",
+    "modelName": "omw.guns.m4a1",
+    "weaponType": "carbine",
+    "gunDamage": 6,
+    "roundsPerMin": 700,
+    "fireModes": ["full"],
+    "acceptedAmmo": ["omw.m4a1ammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "omw.shoot.m4",
+                "soundNameDistant": "owm.shoot.m4_distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ]
+    }
+}

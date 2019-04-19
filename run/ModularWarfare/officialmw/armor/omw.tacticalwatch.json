@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.tacticalwatch",
+    "modelName": "omw.armor.tacticalwatch",
+    "armorTypes": 
+    {
+        "arms": 
+        {
+            "displayName": "Tactical Watch"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.tacticalwatch",
+        "displayName": "Tactical Watch - Default"
+      }
+    ]
+}
