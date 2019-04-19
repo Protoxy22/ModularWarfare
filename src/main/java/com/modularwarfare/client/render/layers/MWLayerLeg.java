@@ -97,6 +97,42 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer> {
                 GlStateManager.popMatrix();
 			}
     	}
+    	
+    	ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+    	if(!boots.isEmpty() && boots.getItem() instanceof ItemMWArmor)
+    	{
+    		ArmorType armorType = ((ItemMWArmor) boots.getItem()).type;
+			if(armorType.hasModel())
+			{
+				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
+                GlStateManager.pushMatrix(); 
+                {
+                	if (player.isSneaking()) {
+                        GlStateManager.translate(0.0f, 0.2f, 0.0f);
+                    }
+                    this.modelRenderer.postRender(scale);
+                    
+                    if(legType == EnumLeg.Left)
+                 	   GL11.glTranslatef(-0.12f, -0.75f, 0f);
+                    else
+                 	   GL11.glTranslatef(0.12f, -0.75f, 0f);
+                    
+                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                    GlStateManager.enableRescaleNormal();
+                    
+                    int skinId = 0;
+            		String path = skinId > 0 ? "skins/" + armorType.modelSkins[skinId].getSkin() : armorType.modelSkins[0].getSkin();
+                    Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/hd/armor/" + path + ".png"));
+                    GL11.glScalef(1f, 1f, 1f);
+                    
+                    if(legType == EnumLeg.Left)
+                    	armorModel.renderLeftFoot(scale);
+                    else
+                    	armorModel.renderRightFoot(scale);
+                }
+                GlStateManager.popMatrix();
+			}
+    	}
     }
 
     @Override
