@@ -816,19 +816,19 @@ public class mg26t extends ModelGun //Same as Filename
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
 
 		gunSlideDistance = .75F;
-	    reloadAnimation = WeaponAnimations.RIFLE;
+	    reloadAnimation = WeaponAnimations.TOP_RIFLE;
 	    
 		hasFlash = false;
 	    
-	    leftArmPos = new Vector3f(0.2F, -0.63F, 0.02F);
+	    leftArmPos = new Vector3f(0.2F, -0.5F, 0.02F);
 	    leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
-		leftArmReloadPos = new Vector3f(0.150F, -0.72F, 0.02F);
-	    leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
+		leftArmReloadPos = new Vector3f(0.10F, -0.52F, 0.02F);
+	    leftArmReloadRot = new Vector3f(65.0F, 12.0F, -55.0F);
 	    
-	    rightArmPos = new Vector3f(0.3F, -0.62F, 0.0F);
+	    rightArmPos = new Vector3f(0.28F, -0.76F, 0.0F);
 	    rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-	    rightArmReloadPos = new Vector3f(0.3F, -0.62F, 0.0F);
-	    rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
+	    rightArmReloadPos = new Vector3f(0.5F, -0.45F, 0.07F);
+	    rightArmReloadRot = new Vector3f(5.0F, 15.0F, -100.0F);
 	    
 	    rightArmChargePos = new Vector3f(0.47F, -0.39F, 0.14F);
 	    rightArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
@@ -836,7 +836,7 @@ public class mg26t extends ModelGun //Same as Filename
 	    rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
 	    leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
 
-	    leftHandAmmo = true;
+	    leftHandAmmo = false;
 	    
 		casingAnimDistance = new Vector3f(-5, -1, 12);
 	    casingAnimSpread = new Vector3f(2, 2, 0);

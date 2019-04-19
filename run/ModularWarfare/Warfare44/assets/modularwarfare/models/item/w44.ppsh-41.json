@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modularwarfare:items/ammo/w44.m1a1thompsonammo"
+    "layer0": "modularwarfare:items/guns/w44.ppsh-41"
   },
   "display": {
     "thirdperson_lefthand": {

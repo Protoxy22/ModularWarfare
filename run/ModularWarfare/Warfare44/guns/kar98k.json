@@ -1,5 +1,5 @@
 {
-  "displayName": "kar98k",
+  "displayName": "Kar-98k",
   "internalName": "w44.kar98k",
   "iconName": "w44.kar98k",
   "weaponType": "boltsniper",
@@ -34,7 +34,7 @@
   [
     {
       "skinAsset": "w44.skin_kar98k",
-      "displayName": "Kar98k - Default"
+      "displayName": "Kar-98k - Default"
     }
   ]
 }

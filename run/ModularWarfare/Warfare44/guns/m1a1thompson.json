@@ -4,9 +4,9 @@
   "iconName": "w44.m1a1thompson",
   "gunDamage": 8,
   "roundsPerMin": 450,
-  "acceptedAmmo": ["w44.m1a1thompsonammo"],
+  "acceptedAmmo": ["w44.m1a1thompsonstickammo","w44.m1a1thompsondrumammo"],
   "fireModes": ["full", "semi"],
-  
+  "dynamicAmmo": true,
   "recoilPitch": 10.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,

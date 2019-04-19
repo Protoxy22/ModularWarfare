@@ -1,0 +1,41 @@
+{
+  "displayName": "PPSh-41",
+  "internalName": "w44.ppsh-41",
+  "iconName": "w44.ppsh-41",
+  "gunDamage": 8,
+  "roundsPerMin": 1000,
+  "acceptedAmmo": ["w44.ppsh-41ammo","w44.ppsh-41drumammo"],
+  "fireModes": ["full", "semi"],
+  
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  
+  "modelName": "w44.ppsh41",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "ppsh41shoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "stg44reload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_ppsh-41",
+      "displayName": "PPSh-41 - Default"
+    }
+  ]
+}

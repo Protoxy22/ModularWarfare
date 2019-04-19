@@ -1,0 +1,40 @@
+{
+  "displayName": "Mosin-Nagant",
+  "internalName": "w44.mosinnagant",
+  "iconName": "w44.mosinnagant",
+  "weaponType": "boltsniper",
+  "gunDamage": 18,
+  "roundsPerMin": 30,
+  "acceptedAmmo": ["w44.mosinnagantammo"],
+  "fireModes": ["semi"],
+  "recoilPitch": 10.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "w44.mosinnagant",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "mosinnagantshoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "mosinnagantreload"
+    }
+  ],
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_mosinnagant",
+      "displayName": "Mosin-Nagant - Default"
+    }
+  ]
+}
