@@ -1,0 +1,18 @@
+{
+    "internalName": "w44.americanchestrig",
+    "modelName": "w44.armor.americanchestrig",
+    "armorTypes": 
+    {
+        "vest": 
+        {
+            "displayName": "American Chest Rig"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "w44.skin_americanm41fielduniform",
+        "displayName": "American Chest Rig - Default"
+      }
+    ]
+}

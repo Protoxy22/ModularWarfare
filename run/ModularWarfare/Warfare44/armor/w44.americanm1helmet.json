@@ -1,0 +1,18 @@
+{
+    "internalName": "w44.americanm41fieldhelmet",
+    "modelName": "w44.armor.americanm41fieldhelmet",
+    "armorTypes": 
+    {
+		"head": 
+        {
+            "displayName": "American M-41 Field Helmet (No Netting)"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "w44.skin_americanm41fielduniform",
+        "displayName": "American M-41 Field Helmet (No Netting) - Default"
+      }
+    ]
+}

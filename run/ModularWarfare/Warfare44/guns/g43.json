@@ -3,7 +3,7 @@
   "internalName": "w44.g-43",
   "iconName": "w44.g-43",
   "gunDamage": 10,
-  "roundsPerMin": 400,
+  "roundsPerMin": 275,
   "acceptedAmmo": ["w44.g-43ammo"],
   "fireModes": ["semi"],
   

@@ -1,0 +1,8 @@
+{
+  "displayName": "PPs-41/43 Magazine [Ammo]",
+  "internalName": "w44.pps4143ammo",
+  "iconName": "w44.pps-43ammo",
+  "modelName": "w44.ammo.pps4143stickammo",
+  "skinAsset": "w44.skin_pps4143stickammo",
+  "ammoCapacity": 35
+}

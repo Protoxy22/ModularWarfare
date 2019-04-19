@@ -1,0 +1,18 @@
+{
+    "internalName": "w44.americangreatcoat",
+    "modelName": "w44.armor.americangreatcoat",
+    "armorTypes": 
+    {
+        "vest": 
+        {
+            "displayName": "American Great Coat"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "w44.skin_americangreatcoat",
+        "displayName": "American Great Coat - Default"
+      }
+    ]
+}

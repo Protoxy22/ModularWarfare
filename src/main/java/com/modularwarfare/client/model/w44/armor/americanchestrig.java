@@ -14,8 +14,8 @@ import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class americanchestrig extends ModelArmor //Same as Filename
 {
-	int textureX = 512;
-	int textureY = 512;
+	int textureX = 128;
+	int textureY = 128;
 
 	public americanchestrig() //Same as Filename
 	{

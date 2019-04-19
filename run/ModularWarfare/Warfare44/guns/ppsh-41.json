@@ -4,9 +4,9 @@
   "iconName": "w44.ppsh-41",
   "gunDamage": 8,
   "roundsPerMin": 1000,
-  "acceptedAmmo": ["w44.ppsh-41ammo","w44.ppsh-41drumammo"],
+  "acceptedAmmo": ["w44.pps4143ammo","w44.ppsh-41drumammo"],
   "fireModes": ["full", "semi"],
-  
+  "dynamicAmmo": true,
   "recoilPitch": 10.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,

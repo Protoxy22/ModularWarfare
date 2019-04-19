@@ -15,6 +15,7 @@ import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.ModelGun.EnumAction;
 import com.modularwarfare.client.model.ModelGun.EnumArm;
+import com.modularwarfare.client.model.objects.RenderVariables;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class pps43 extends ModelGun //Same as Filename
@@ -651,7 +652,7 @@ public class pps43 extends ModelGun //Same as Filename
 	    
 		hasFlash = false;
 	    
-	    leftArmPos = new Vector3f(0.18F, -0.57F, 0.0F);
+	    leftArmPos = new Vector3f(1.18F, -0.57F, 0.0F);
 	    leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
 		leftArmReloadPos = new Vector3f(0.450F, -0.80F, 0.02F);
 	    leftArmReloadRot = new Vector3f(35.0F, 0.0F, -45.0F);
@@ -688,6 +689,8 @@ public class pps43 extends ModelGun //Same as Filename
 	    actionType = EnumAction.Charge;
 	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
+	    
+        ammoMap.put("w44.pps4143stickammo", new RenderVariables(new Vector3f(0.6F, 0.12F, 0F), 0.3F));
 	    
 		flipAll();
 	}

@@ -3,7 +3,7 @@
   "internalName": "w44.m1garand",
   "iconName": "w44.m1garand",
   "gunDamage": 10,
-  "roundsPerMin": 250,
+  "roundsPerMin": 200,
   "acceptedAmmo": ["w44.m1garandammo"],
   "fireModes": ["semi"],
   

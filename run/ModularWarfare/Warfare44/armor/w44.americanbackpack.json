@@ -1,0 +1,18 @@
+{
+    "internalName": "w44.americanbackpack",
+    "modelName": "w44.armor.americanbackpack",
+    "armorTypes": 
+    {
+        "backpack": 
+        {
+            "displayName": "American Back Pack"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "w44.skin_americanm41fielduniform",
+        "displayName": "American Back Pack - Default"
+      }
+    ]
+}

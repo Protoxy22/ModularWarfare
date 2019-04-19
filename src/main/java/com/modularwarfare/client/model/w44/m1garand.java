@@ -574,7 +574,7 @@ public class m1garand extends ModelGun //Same as Filename
 		translateAll = new Vector3f(0F, -10.5F, -0.15F);//forward/down/right
 		thirdPersonOffset = new Vector3f(0F, -.12F, 0F);//forward/up/?
 
-		gunSlideDistance = .75F;
+		gunSlideDistance = .44F;
 	    reloadAnimation = WeaponAnimations.TOP_RIFLE;
 	    
 		hasFlash = false;
@@ -584,7 +584,7 @@ public class m1garand extends ModelGun //Same as Filename
 		leftArmReloadPos = new Vector3f(0.1F, -0.7F, 0.02F);
         leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
 	    
-	    rightArmPos = new Vector3f(0.28F, -0.55F, 0.0F);
+	    rightArmPos = new Vector3f(0.28F, -0.58F, 0.0F);
 	    rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
 	    rightArmReloadPos = new Vector3f(0.28F, -0.55F, 0.0F);
 	    rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
