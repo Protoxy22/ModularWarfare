@@ -111,20 +111,26 @@ public class GunType extends BaseType {
 		loadBaseValues();
 		fireTickDelay = 1200 / roundsPerMin;
 		
-		for(ArrayList<SoundEntry> entryList : weaponSoundMap.values())
+		try
 		{
-			for(SoundEntry soundEntry : entryList)
+			for(ArrayList<SoundEntry> entryList : weaponSoundMap.values())
 			{
-				if(soundEntry.soundName != null)
+				for(SoundEntry soundEntry : entryList)
 				{
-					ModularWarfare.PROXY.registerSound(soundEntry.soundName);
-					if(soundEntry.soundNameDistant != null)
-						ModularWarfare.PROXY.registerSound(soundEntry.soundNameDistant);
-				} else
-				{
-					ModularWarfare.LOGGER.error(String.format("Sound entry event '%s' has null soundName for type '%s'", soundEntry.soundEvent, internalName));
+					if(soundEntry.soundName != null)
+					{
+						ModularWarfare.PROXY.registerSound(soundEntry.soundName);
+						if(soundEntry.soundNameDistant != null)
+							ModularWarfare.PROXY.registerSound(soundEntry.soundNameDistant);
+					} else
+					{
+						ModularWarfare.LOGGER.error(String.format("Sound entry event '%s' has null soundName for type '%s'", soundEntry.soundEvent, internalName));
+					}
 				}
 			}
+		} catch(Exception exception)
+		{
+			exception.printStackTrace();
 		}
 		
 //		weaponSoundMap = new HashMap<WeaponSoundType, ArrayList<SoundEntry>>();
