@@ -6,7 +6,6 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.BaublesApi;
 import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.client.model.ModelGun.EnumArm;
-import com.modularwarfare.client.model.mwp.armor.outfit;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
@@ -29,9 +28,7 @@ public class MWLayerArm implements LayerRenderer<EntityPlayer> {
     
     private final ModelRenderer modelRenderer;
     private final RenderPlayer renderer;
-    
-    private final outfit outfitmodel = new outfit();
-    
+        
     public EnumArm armType;
     
     public MWLayerArm(RenderPlayer renderer, ModelRenderer modelRenderer, EnumArm armType) {

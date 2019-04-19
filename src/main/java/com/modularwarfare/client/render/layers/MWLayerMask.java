@@ -3,8 +3,6 @@ package com.modularwarfare.client.render.layers;
 import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.model.mwp.armor.facemask;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,9 +19,7 @@ public class MWLayerMask implements LayerRenderer<EntityPlayer> {
     
     private final ModelRenderer modelRenderer;
     private final RenderPlayer renderer;
-    
-    private final facemask facemask = new facemask();
-    
+        
     public MWLayerMask(RenderPlayer renderer, ModelRenderer modelRenderer) {
         this.modelRenderer = modelRenderer;
         this.renderer = renderer;

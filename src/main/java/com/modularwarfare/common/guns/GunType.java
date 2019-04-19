@@ -7,7 +7,6 @@ import java.util.Random;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
-import com.modularwarfare.client.model.mwp.akm;
 import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;

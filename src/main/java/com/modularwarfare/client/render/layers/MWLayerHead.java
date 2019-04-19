@@ -5,8 +5,6 @@ import org.lwjgl.opengl.GL11;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.BaublesApi;
 import com.modularwarfare.client.model.ModelArmor;
-import com.modularwarfare.client.model.mwp.armor.facemask;
-import com.modularwarfare.client.model.mwp.armor.hat;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
@@ -28,9 +26,6 @@ public class MWLayerHead implements LayerRenderer<EntityPlayer> {
     
     private final ModelRenderer modelRenderer;
     private final RenderPlayer renderer;
-    
-    private final hat hat = new hat();
-    private final facemask facemask = new facemask();
     
     public MWLayerHead(RenderPlayer renderer, ModelRenderer modelRenderer) {
         this.modelRenderer = modelRenderer;

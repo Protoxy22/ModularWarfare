@@ -6,7 +6,6 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.client.model.ModelArmor.EnumLeg;
 import com.modularwarfare.client.model.ModelGun.EnumArm;
-import com.modularwarfare.client.model.mwp.armor.outfit;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
 
@@ -28,9 +27,7 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer> {
     
     private final ModelRenderer modelRenderer;
     private final RenderPlayer renderer;
-    
-    private final outfit outfitmodel = new outfit();
-    
+        
     public EnumLeg legType;
     
     public MWLayerLeg(RenderPlayer renderer, ModelRenderer modelRenderer, EnumLeg armType) {
