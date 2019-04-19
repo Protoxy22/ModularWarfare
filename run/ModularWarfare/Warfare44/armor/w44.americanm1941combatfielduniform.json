@@ -1,0 +1,30 @@
+{
+    "internalName": "w44.americanm41fielduniform",
+    "modelName": "w44.armor.americanm41fielduniform",
+    "armorTypes": 
+    {
+		"head": 
+        {
+            "displayName": "American M-41 Field Helmet"
+        },
+        "chest": 
+        {
+            "displayName": "American M-41 Field Jacket"
+        },
+        "legs": 
+        {
+            "displayName": "American M-41 Field Pants"
+        },
+        "feet": 
+        {
+            "displayName": "American Standard-Issue Boots"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "w44.skin_americanm41fielduniform",
+        "displayName": "American M-41 Field Uniform - Default"
+      }
+    ]
+}
