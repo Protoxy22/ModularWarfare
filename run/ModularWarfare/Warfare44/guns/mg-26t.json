@@ -13,20 +13,23 @@
   "randomRecoilYaw": 0.5,
   
   "modelName": "w44.mg26t",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "oldmg34shoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "mg26treload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "oldmg34shoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "mg26treload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

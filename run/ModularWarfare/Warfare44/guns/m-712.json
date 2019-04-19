@@ -13,20 +13,23 @@
   "randomRecoilYaw": 0.5,
   
   "modelName": "w44.m712",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "c96shoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "m-712reload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "c96shoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "m-712reload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

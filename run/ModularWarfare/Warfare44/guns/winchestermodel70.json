@@ -12,20 +12,23 @@
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,
   "modelName": "w44.winchestermodel70",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "winchestermodel70shoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "winchestermodel70reload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "winchestermodel70shoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "winchestermodel70reload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

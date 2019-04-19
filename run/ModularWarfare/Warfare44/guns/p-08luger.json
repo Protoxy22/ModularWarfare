@@ -13,20 +13,23 @@
   "randomRecoilYaw": 0.5,
   
   "modelName": "w44.luger",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "lugershoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "lugerreload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "lugershoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "lugerreload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

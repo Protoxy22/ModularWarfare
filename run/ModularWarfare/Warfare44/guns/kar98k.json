@@ -26,6 +26,23 @@
       "soundName": "kar98kreload"
     }
   ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "kar98kshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "kar98kreload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

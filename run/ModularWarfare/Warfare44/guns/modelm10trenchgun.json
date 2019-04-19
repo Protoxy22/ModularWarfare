@@ -12,20 +12,23 @@
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,
   "modelName": "w44.modelm10trenchgun",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "modelm10trenchgunshoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "modelm10trenchgunreload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "modelm10trenchgunshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "modelm10trenchgunreload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

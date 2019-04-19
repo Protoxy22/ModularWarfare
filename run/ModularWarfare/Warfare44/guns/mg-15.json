@@ -13,20 +13,23 @@
   "randomRecoilYaw": 0.5,
   
   "modelName": "w44.mg15",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "planemgshoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "mg15reload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "planemgshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "mg15reload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

@@ -13,20 +13,23 @@
   "randomRecoilYaw": 0.5,
   
   "modelName": "w44.m1918bar",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "barshoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 64,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "stg44reload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "barshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "stg44reload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]

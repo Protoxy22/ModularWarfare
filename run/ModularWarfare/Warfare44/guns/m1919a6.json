@@ -13,20 +13,23 @@
   "randomRecoilYaw": 0.5,
   
   "modelName": "w44.m1919a6",
-  "weaponSounds": [
-    {
-      "soundEvent": "weaponFire",
-      "soundName": "30calshoot",
-      "soundNameDistant": "shoot.mwp.ak1.far",
-      "soundRange": 66,
-      "soundMaxRange": 96,
-      "soundFadeMultiplier": 1
-    },
-    {
-      "soundEvent": "weaponReload",
-      "soundName": "mg34reload"
-    }
-  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "30calshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "mg34reload"
+      }
+    ]
+  },
   "acceptedAttachments": 
   {
     "sight": [""]
