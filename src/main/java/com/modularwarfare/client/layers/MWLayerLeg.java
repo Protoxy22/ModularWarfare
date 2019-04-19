@@ -1,4 +1,4 @@
-package com.modularwarfare.client.render.layers;
+package com.modularwarfare.client.layers;
 
 import org.lwjgl.opengl.GL11;
 
