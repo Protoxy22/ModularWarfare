@@ -113,9 +113,9 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer> {
                     this.modelRenderer.postRender(scale);
                     
                     if(legType == EnumLeg.Left)
-                 	   GL11.glTranslatef(-0.12f, -0.75f, 0f);
+                 	   GL11.glTranslatef(-0.25f, -0.75f, 0f);
                     else
-                 	   GL11.glTranslatef(0.12f, -0.75f, 0f);
+                 	   GL11.glTranslatef(0.25f, -0.75f, 0f);
                     
                     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                     GlStateManager.enableRescaleNormal();
