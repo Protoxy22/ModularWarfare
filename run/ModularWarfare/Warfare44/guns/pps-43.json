@@ -4,7 +4,7 @@
   "iconName": "w44.pps-43",
   "gunDamage": 8,
   "roundsPerMin": 600,
-  "acceptedAmmo": ["w44.pps4143ammo"],
+  "acceptedAmmo": ["w44.pps4143stickammo"],
   "fireModes": ["full", "semi"],
   "dynamicAmmo": true,
   "recoilPitch": 10.0,

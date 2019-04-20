@@ -793,7 +793,7 @@ public class ppsh41 extends ModelGun //Same as Filename
 	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 	    
-        ammoMap.put("w44.pps4143stickammo", new RenderVariables(new Vector3f(0.6F, 0.12F, 0F), 0.3F));
+        ammoMap.put("w44.pps4143stickammo", new RenderVariables(new Vector3f(1.25F, 0.7F, 0F), 0.3F));
 	    
 		flipAll();
 	}
