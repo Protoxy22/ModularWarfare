@@ -681,7 +681,6 @@ public class ppsh41 extends ModelGun //Same as Filename
 		gunModel[162].addShapeBox(0F, 0F, 0F, 1, 2, 4, 0F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F, 0F, 0.15F, -0.12F); // Box 174
 		gunModel[162].setRotationPoint(-28F, -4F, -2F);
 
-
 		ammoModel = new ModelRendererTurbo[12];
 		ammoModel[0] = new ModelRendererTurbo(this, 25, 81, textureX, textureY); // Box 4
 		ammoModel[1] = new ModelRendererTurbo(this, 57, 81, textureX, textureY); // Box 5

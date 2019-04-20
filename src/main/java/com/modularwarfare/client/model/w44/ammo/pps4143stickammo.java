@@ -9,10 +9,10 @@
 
 package com.modularwarfare.client.model.w44.ammo; //Path where the model is located
 
-import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
-public class pps4143stickammo extends ModelGun //Same as Filename
+public class pps4143stickammo extends ModelAmmo //Same as Filename
 {
 	int textureX = 32;
 	int textureY = 32;
@@ -32,8 +32,6 @@ public class pps4143stickammo extends ModelGun //Same as Filename
 
 		ammoModel[2].addShapeBox(0F, 0F, 0F, 4, 9, 2, 0F, -1F, 1F, 0.15F, 1.5F, 1F, 0.15F, 1.5F, 1F, 0.15F, -1F, 1F, 0.15F, -2F, 0F, 0.15F, 2.5F, -1F, 0.15F, 2.5F, -1F, 0.15F, -2F, 0F, 0.15F); // Box 156
 		ammoModel[2].setRotationPoint(-3F, 0F, -1F);
-
-
 
 		translateAll(0F, 0F, 0F);
 

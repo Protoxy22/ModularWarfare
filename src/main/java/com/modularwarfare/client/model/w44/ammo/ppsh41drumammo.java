@@ -10,9 +10,10 @@
 package com.modularwarfare.client.model.w44.ammo; //Path where the model is located
 
 import com.modularwarfare.client.model.ModelGun;
+import com.modularwarfare.client.model.ModelAmmo;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
-public class ppsh41drumammo extends ModelGun //Same as Filename
+public class ppsh41drumammo extends ModelAmmo //Same as Filename
 {
 	int textureX = 128;
 	int textureY = 64;
