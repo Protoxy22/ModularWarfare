@@ -4,6 +4,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
+import com.modularwarfare.common.guns.AttachmentEnum;
 
 public class m4a1 extends ModelGun //Same as Filename
 {
@@ -12,7 +13,7 @@ public class m4a1 extends ModelGun //Same as Filename
 
 	public m4a1() //Same as Filename
 	{
-		gunModel = new ModelRendererTurbo[215];
+		gunModel = new ModelRendererTurbo[202];
 		gunModel[0] = new ModelRendererTurbo(this, 1, 1, textureX, textureY); // Box 4
 		gunModel[1] = new ModelRendererTurbo(this, 25, 1, textureX, textureY); // Box 7
 		gunModel[2] = new ModelRendererTurbo(this, 49, 1, textureX, textureY); // Box 8
@@ -73,161 +74,148 @@ public class m4a1 extends ModelGun //Same as Filename
 		gunModel[57] = new ModelRendererTurbo(this, 81, 57, textureX, textureY); // Box 66
 		gunModel[58] = new ModelRendererTurbo(this, 161, 57, textureX, textureY); // Box 67
 		gunModel[59] = new ModelRendererTurbo(this, 1, 65, textureX, textureY); // Box 68
-		gunModel[60] = new ModelRendererTurbo(this, 73, 1, textureX, textureY); // Box 131
-		gunModel[61] = new ModelRendererTurbo(this, 113, 1, textureX, textureY); // Box 132
-		gunModel[62] = new ModelRendererTurbo(this, 129, 1, textureX, textureY); // Box 133
-		gunModel[63] = new ModelRendererTurbo(this, 241, 57, textureX, textureY); // Box 134
-		gunModel[64] = new ModelRendererTurbo(this, 89, 65, textureX, textureY); // Box 135
-		gunModel[65] = new ModelRendererTurbo(this, 185, 1, textureX, textureY); // Box 136
-		gunModel[66] = new ModelRendererTurbo(this, 169, 1, textureX, textureY); // Box 137
-		gunModel[67] = new ModelRendererTurbo(this, 209, 1, textureX, textureY); // Box 138
-		gunModel[68] = new ModelRendererTurbo(this, 105, 65, textureX, textureY); // Box 139
-		gunModel[69] = new ModelRendererTurbo(this, 113, 65, textureX, textureY); // Box 140
-		gunModel[70] = new ModelRendererTurbo(this, 137, 65, textureX, textureY); // Box 141
-		gunModel[71] = new ModelRendererTurbo(this, 153, 65, textureX, textureY); // Box 142
-		gunModel[72] = new ModelRendererTurbo(this, 177, 65, textureX, textureY); // Box 143
-		gunModel[73] = new ModelRendererTurbo(this, 145, 73, textureX, textureY); // Box 82
-		gunModel[74] = new ModelRendererTurbo(this, 217, 65, textureX, textureY); // Box 83
-		gunModel[75] = new ModelRendererTurbo(this, 1, 81, textureX, textureY); // Box 84
-		gunModel[76] = new ModelRendererTurbo(this, 201, 65, textureX, textureY); // Box 85
-		gunModel[77] = new ModelRendererTurbo(this, 233, 65, textureX, textureY); // Box 86
-		gunModel[78] = new ModelRendererTurbo(this, 49, 81, textureX, textureY); // Box 87
-		gunModel[79] = new ModelRendererTurbo(this, 89, 73, textureX, textureY); // Box 88
-		gunModel[80] = new ModelRendererTurbo(this, 81, 81, textureX, textureY); // Box 89
-		gunModel[81] = new ModelRendererTurbo(this, 81, 89, textureX, textureY); // Box 90
-		gunModel[82] = new ModelRendererTurbo(this, 145, 89, textureX, textureY); // Box 91
-		gunModel[83] = new ModelRendererTurbo(this, 1, 97, textureX, textureY); // Box 92
-		gunModel[84] = new ModelRendererTurbo(this, 113, 81, textureX, textureY); // Box 93
-		gunModel[85] = new ModelRendererTurbo(this, 65, 97, textureX, textureY); // Box 94
-		gunModel[86] = new ModelRendererTurbo(this, 129, 73, textureX, textureY); // Box 95
-		gunModel[87] = new ModelRendererTurbo(this, 209, 89, textureX, textureY); // Box 96
-		gunModel[88] = new ModelRendererTurbo(this, 217, 81, textureX, textureY); // Box 97
-		gunModel[89] = new ModelRendererTurbo(this, 41, 89, textureX, textureY); // Box 98
-		gunModel[90] = new ModelRendererTurbo(this, 17, 9, textureX, textureY); // Box 99
-		gunModel[91] = new ModelRendererTurbo(this, 73, 9, textureX, textureY); // Box 100
-		gunModel[92] = new ModelRendererTurbo(this, 249, 9, textureX, textureY); // Box 101
-		gunModel[93] = new ModelRendererTurbo(this, 57, 17, textureX, textureY); // Box 102
-		gunModel[94] = new ModelRendererTurbo(this, 25, 105, textureX, textureY); // Box 124
-		gunModel[95] = new ModelRendererTurbo(this, 113, 113, textureX, textureY); // Box 125
-		gunModel[96] = new ModelRendererTurbo(this, 105, 105, textureX, textureY); // Box 126
-		gunModel[97] = new ModelRendererTurbo(this, 201, 113, textureX, textureY); // Box 127
-		gunModel[98] = new ModelRendererTurbo(this, 217, 113, textureX, textureY); // Box 128
-		gunModel[99] = new ModelRendererTurbo(this, 25, 105, textureX, textureY); // Box 129
-		gunModel[100] = new ModelRendererTurbo(this, 1, 121, textureX, textureY); // Box 130
-		gunModel[101] = new ModelRendererTurbo(this, 121, 105, textureX, textureY); // Box 131
-		gunModel[102] = new ModelRendererTurbo(this, 233, 113, textureX, textureY); // Box 132
-		gunModel[103] = new ModelRendererTurbo(this, 241, 113, textureX, textureY); // Box 133
-		gunModel[104] = new ModelRendererTurbo(this, 249, 113, textureX, textureY); // Box 134
-		gunModel[105] = new ModelRendererTurbo(this, 81, 121, textureX, textureY); // Box 135
-		gunModel[106] = new ModelRendererTurbo(this, 89, 121, textureX, textureY); // Box 136
-		gunModel[107] = new ModelRendererTurbo(this, 97, 121, textureX, textureY); // Box 137
-		gunModel[108] = new ModelRendererTurbo(this, 105, 121, textureX, textureY); // Box 138
-		gunModel[109] = new ModelRendererTurbo(this, 113, 121, textureX, textureY); // Box 139
-		gunModel[110] = new ModelRendererTurbo(this, 121, 121, textureX, textureY); // Box 140
-		gunModel[111] = new ModelRendererTurbo(this, 129, 121, textureX, textureY); // Box 141
-		gunModel[112] = new ModelRendererTurbo(this, 137, 121, textureX, textureY); // Box 142
-		gunModel[113] = new ModelRendererTurbo(this, 145, 121, textureX, textureY); // Box 143
-		gunModel[114] = new ModelRendererTurbo(this, 153, 121, textureX, textureY); // Box 144
-		gunModel[115] = new ModelRendererTurbo(this, 161, 121, textureX, textureY); // Box 145
-		gunModel[116] = new ModelRendererTurbo(this, 169, 121, textureX, textureY); // Box 147
-		gunModel[117] = new ModelRendererTurbo(this, 177, 121, textureX, textureY); // Box 148
-		gunModel[118] = new ModelRendererTurbo(this, 185, 121, textureX, textureY); // Box 149
-		gunModel[119] = new ModelRendererTurbo(this, 193, 121, textureX, textureY); // Box 150
-		gunModel[120] = new ModelRendererTurbo(this, 201, 121, textureX, textureY); // Box 151
-		gunModel[121] = new ModelRendererTurbo(this, 209, 121, textureX, textureY); // Box 152
-		gunModel[122] = new ModelRendererTurbo(this, 217, 121, textureX, textureY); // Box 153
-		gunModel[123] = new ModelRendererTurbo(this, 1, 129, textureX, textureY); // Box 154
-		gunModel[124] = new ModelRendererTurbo(this, 81, 129, textureX, textureY); // Box 155
-		gunModel[125] = new ModelRendererTurbo(this, 161, 129, textureX, textureY); // Box 156
-		gunModel[126] = new ModelRendererTurbo(this, 1, 137, textureX, textureY); // Box 157
-		gunModel[127] = new ModelRendererTurbo(this, 241, 121, textureX, textureY); // Box 158
-		gunModel[128] = new ModelRendererTurbo(this, 81, 137, textureX, textureY); // Box 159
-		gunModel[129] = new ModelRendererTurbo(this, 225, 121, textureX, textureY); // Box 160
-		gunModel[130] = new ModelRendererTurbo(this, 233, 121, textureX, textureY); // Box 161
-		gunModel[131] = new ModelRendererTurbo(this, 249, 121, textureX, textureY); // Box 162
-		gunModel[132] = new ModelRendererTurbo(this, 249, 129, textureX, textureY); // Box 163
-		gunModel[133] = new ModelRendererTurbo(this, 161, 137, textureX, textureY); // Box 164
-		gunModel[134] = new ModelRendererTurbo(this, 169, 137, textureX, textureY); // Box 165
-		gunModel[135] = new ModelRendererTurbo(this, 177, 137, textureX, textureY); // Box 166
-		gunModel[136] = new ModelRendererTurbo(this, 185, 137, textureX, textureY); // Box 167
-		gunModel[137] = new ModelRendererTurbo(this, 193, 137, textureX, textureY); // Box 168
-		gunModel[138] = new ModelRendererTurbo(this, 201, 137, textureX, textureY); // Box 169
-		gunModel[139] = new ModelRendererTurbo(this, 209, 137, textureX, textureY); // Box 170
-		gunModel[140] = new ModelRendererTurbo(this, 217, 137, textureX, textureY); // Box 171
-		gunModel[141] = new ModelRendererTurbo(this, 225, 137, textureX, textureY); // Box 172
-		gunModel[142] = new ModelRendererTurbo(this, 233, 137, textureX, textureY); // Box 173
-		gunModel[143] = new ModelRendererTurbo(this, 241, 137, textureX, textureY); // Box 174
-		gunModel[144] = new ModelRendererTurbo(this, 249, 137, textureX, textureY); // Box 175
-		gunModel[145] = new ModelRendererTurbo(this, 1, 145, textureX, textureY); // Box 176
-		gunModel[146] = new ModelRendererTurbo(this, 9, 145, textureX, textureY); // Box 177
-		gunModel[147] = new ModelRendererTurbo(this, 17, 145, textureX, textureY); // Box 178
-		gunModel[148] = new ModelRendererTurbo(this, 25, 145, textureX, textureY); // Box 179
-		gunModel[149] = new ModelRendererTurbo(this, 33, 145, textureX, textureY); // Box 180
-		gunModel[150] = new ModelRendererTurbo(this, 41, 145, textureX, textureY); // Box 181
-		gunModel[151] = new ModelRendererTurbo(this, 49, 145, textureX, textureY); // Box 182
-		gunModel[152] = new ModelRendererTurbo(this, 57, 145, textureX, textureY); // Box 183
-		gunModel[153] = new ModelRendererTurbo(this, 73, 145, textureX, textureY); // Box 184
-		gunModel[154] = new ModelRendererTurbo(this, 89, 145, textureX, textureY); // Box 185
-		gunModel[155] = new ModelRendererTurbo(this, 105, 145, textureX, textureY); // Box 186
-		gunModel[156] = new ModelRendererTurbo(this, 121, 145, textureX, textureY); // Box 187
-		gunModel[157] = new ModelRendererTurbo(this, 145, 145, textureX, textureY); // Box 188
-		gunModel[158] = new ModelRendererTurbo(this, 161, 145, textureX, textureY); // Box 189
-		gunModel[159] = new ModelRendererTurbo(this, 177, 145, textureX, textureY); // Box 190
-		gunModel[160] = new ModelRendererTurbo(this, 193, 145, textureX, textureY); // Box 191
-		gunModel[161] = new ModelRendererTurbo(this, 209, 145, textureX, textureY); // Box 192
-		gunModel[162] = new ModelRendererTurbo(this, 217, 145, textureX, textureY); // Box 193
-		gunModel[163] = new ModelRendererTurbo(this, 225, 145, textureX, textureY); // Box 194
-		gunModel[164] = new ModelRendererTurbo(this, 233, 145, textureX, textureY); // Box 195
-		gunModel[165] = new ModelRendererTurbo(this, 241, 145, textureX, textureY); // Box 196
-		gunModel[166] = new ModelRendererTurbo(this, 1, 153, textureX, textureY); // Box 197
-		gunModel[167] = new ModelRendererTurbo(this, 17, 153, textureX, textureY); // Box 198
-		gunModel[168] = new ModelRendererTurbo(this, 33, 153, textureX, textureY); // Box 199
-		gunModel[169] = new ModelRendererTurbo(this, 49, 153, textureX, textureY); // Box 200
-		gunModel[170] = new ModelRendererTurbo(this, 65, 153, textureX, textureY); // Box 201
-		gunModel[171] = new ModelRendererTurbo(this, 89, 153, textureX, textureY); // Box 202
-		gunModel[172] = new ModelRendererTurbo(this, 73, 17, textureX, textureY); // Box 203
-		gunModel[173] = new ModelRendererTurbo(this, 89, 17, textureX, textureY); // Box 204
-		gunModel[174] = new ModelRendererTurbo(this, 105, 17, textureX, textureY); // Box 205
-		gunModel[175] = new ModelRendererTurbo(this, 233, 17, textureX, textureY); // Box 206
-		gunModel[176] = new ModelRendererTurbo(this, 113, 153, textureX, textureY); // Box 207
-		gunModel[177] = new ModelRendererTurbo(this, 129, 153, textureX, textureY); // Box 208
-		gunModel[178] = new ModelRendererTurbo(this, 145, 153, textureX, textureY); // Box 209
-		gunModel[179] = new ModelRendererTurbo(this, 161, 153, textureX, textureY); // Box 210
-		gunModel[180] = new ModelRendererTurbo(this, 177, 153, textureX, textureY); // Box 211
-		gunModel[181] = new ModelRendererTurbo(this, 193, 153, textureX, textureY); // Box 212
-		gunModel[182] = new ModelRendererTurbo(this, 209, 153, textureX, textureY); // Box 213
-		gunModel[183] = new ModelRendererTurbo(this, 225, 153, textureX, textureY); // Box 214
-		gunModel[184] = new ModelRendererTurbo(this, 241, 153, textureX, textureY); // Box 215
-		gunModel[185] = new ModelRendererTurbo(this, 1, 161, textureX, textureY); // Box 216
-		gunModel[186] = new ModelRendererTurbo(this, 17, 161, textureX, textureY); // Box 217
-		gunModel[187] = new ModelRendererTurbo(this, 33, 161, textureX, textureY); // Box 221
-		gunModel[188] = new ModelRendererTurbo(this, 49, 161, textureX, textureY); // Box 222
-		gunModel[189] = new ModelRendererTurbo(this, 65, 161, textureX, textureY); // Box 223
-		gunModel[190] = new ModelRendererTurbo(this, 81, 161, textureX, textureY); // Box 224
-		gunModel[191] = new ModelRendererTurbo(this, 97, 161, textureX, textureY); // Box 225
-		gunModel[192] = new ModelRendererTurbo(this, 113, 161, textureX, textureY); // Box 226
-		gunModel[193] = new ModelRendererTurbo(this, 129, 161, textureX, textureY); // Box 227
-		gunModel[194] = new ModelRendererTurbo(this, 145, 161, textureX, textureY); // Box 228
-		gunModel[195] = new ModelRendererTurbo(this, 161, 161, textureX, textureY); // Box 229
-		gunModel[196] = new ModelRendererTurbo(this, 177, 161, textureX, textureY); // Box 230
-		gunModel[197] = new ModelRendererTurbo(this, 193, 161, textureX, textureY); // Box 231
-		gunModel[198] = new ModelRendererTurbo(this, 209, 161, textureX, textureY); // Box 232
-		gunModel[199] = new ModelRendererTurbo(this, 145, 65, textureX, textureY); // Box 233
-		gunModel[200] = new ModelRendererTurbo(this, 217, 161, textureX, textureY); // Box 234
-		gunModel[201] = new ModelRendererTurbo(this, 169, 65, textureX, textureY); // Box 235
-		gunModel[202] = new ModelRendererTurbo(this, 233, 161, textureX, textureY); // Box 236
-		gunModel[203] = new ModelRendererTurbo(this, 193, 65, textureX, textureY); // Box 238
-		gunModel[204] = new ModelRendererTurbo(this, 1, 169, textureX, textureY); // Box 240
-		gunModel[205] = new ModelRendererTurbo(this, 241, 161, textureX, textureY); // Box 241
-		gunModel[206] = new ModelRendererTurbo(this, 249, 17, textureX, textureY); // Box 242
-		gunModel[207] = new ModelRendererTurbo(this, 25, 169, textureX, textureY); // Box 243
-		gunModel[208] = new ModelRendererTurbo(this, 41, 169, textureX, textureY); // Box 244
-		gunModel[209] = new ModelRendererTurbo(this, 57, 169, textureX, textureY); // Box 245
-		gunModel[210] = new ModelRendererTurbo(this, 89, 169, textureX, textureY); // Box 246
-		gunModel[211] = new ModelRendererTurbo(this, 105, 169, textureX, textureY); // Box 247
-		gunModel[212] = new ModelRendererTurbo(this, 249, 161, textureX, textureY); // Box 248
-		gunModel[213] = new ModelRendererTurbo(this, 145, 25, textureX, textureY); // Box 249
-		gunModel[214] = new ModelRendererTurbo(this, 105, 81, textureX, textureY); // Box 250
+		gunModel[60] = new ModelRendererTurbo(this, 145, 73, textureX, textureY); // Box 82
+		gunModel[61] = new ModelRendererTurbo(this, 217, 65, textureX, textureY); // Box 83
+		gunModel[62] = new ModelRendererTurbo(this, 1, 81, textureX, textureY); // Box 84
+		gunModel[63] = new ModelRendererTurbo(this, 201, 65, textureX, textureY); // Box 85
+		gunModel[64] = new ModelRendererTurbo(this, 233, 65, textureX, textureY); // Box 86
+		gunModel[65] = new ModelRendererTurbo(this, 49, 81, textureX, textureY); // Box 87
+		gunModel[66] = new ModelRendererTurbo(this, 89, 73, textureX, textureY); // Box 88
+		gunModel[67] = new ModelRendererTurbo(this, 81, 81, textureX, textureY); // Box 89
+		gunModel[68] = new ModelRendererTurbo(this, 81, 89, textureX, textureY); // Box 90
+		gunModel[69] = new ModelRendererTurbo(this, 145, 89, textureX, textureY); // Box 91
+		gunModel[70] = new ModelRendererTurbo(this, 1, 97, textureX, textureY); // Box 92
+		gunModel[71] = new ModelRendererTurbo(this, 113, 81, textureX, textureY); // Box 93
+		gunModel[72] = new ModelRendererTurbo(this, 65, 97, textureX, textureY); // Box 94
+		gunModel[73] = new ModelRendererTurbo(this, 129, 73, textureX, textureY); // Box 95
+		gunModel[74] = new ModelRendererTurbo(this, 209, 89, textureX, textureY); // Box 96
+		gunModel[75] = new ModelRendererTurbo(this, 217, 81, textureX, textureY); // Box 97
+		gunModel[76] = new ModelRendererTurbo(this, 41, 89, textureX, textureY); // Box 98
+		gunModel[77] = new ModelRendererTurbo(this, 17, 9, textureX, textureY); // Box 99
+		gunModel[78] = new ModelRendererTurbo(this, 73, 9, textureX, textureY); // Box 100
+		gunModel[79] = new ModelRendererTurbo(this, 249, 9, textureX, textureY); // Box 101
+		gunModel[80] = new ModelRendererTurbo(this, 57, 17, textureX, textureY); // Box 102
+		gunModel[81] = new ModelRendererTurbo(this, 25, 105, textureX, textureY); // Box 124
+		gunModel[82] = new ModelRendererTurbo(this, 113, 113, textureX, textureY); // Box 125
+		gunModel[83] = new ModelRendererTurbo(this, 105, 105, textureX, textureY); // Box 126
+		gunModel[84] = new ModelRendererTurbo(this, 201, 113, textureX, textureY); // Box 127
+		gunModel[85] = new ModelRendererTurbo(this, 217, 113, textureX, textureY); // Box 128
+		gunModel[86] = new ModelRendererTurbo(this, 25, 105, textureX, textureY); // Box 129
+		gunModel[87] = new ModelRendererTurbo(this, 1, 121, textureX, textureY); // Box 130
+		gunModel[88] = new ModelRendererTurbo(this, 121, 105, textureX, textureY); // Box 131
+		gunModel[89] = new ModelRendererTurbo(this, 233, 113, textureX, textureY); // Box 132
+		gunModel[90] = new ModelRendererTurbo(this, 241, 113, textureX, textureY); // Box 133
+		gunModel[91] = new ModelRendererTurbo(this, 249, 113, textureX, textureY); // Box 134
+		gunModel[92] = new ModelRendererTurbo(this, 81, 121, textureX, textureY); // Box 135
+		gunModel[93] = new ModelRendererTurbo(this, 89, 121, textureX, textureY); // Box 136
+		gunModel[94] = new ModelRendererTurbo(this, 97, 121, textureX, textureY); // Box 137
+		gunModel[95] = new ModelRendererTurbo(this, 105, 121, textureX, textureY); // Box 138
+		gunModel[96] = new ModelRendererTurbo(this, 113, 121, textureX, textureY); // Box 139
+		gunModel[97] = new ModelRendererTurbo(this, 121, 121, textureX, textureY); // Box 140
+		gunModel[98] = new ModelRendererTurbo(this, 129, 121, textureX, textureY); // Box 141
+		gunModel[99] = new ModelRendererTurbo(this, 137, 121, textureX, textureY); // Box 142
+		gunModel[100] = new ModelRendererTurbo(this, 145, 121, textureX, textureY); // Box 143
+		gunModel[101] = new ModelRendererTurbo(this, 153, 121, textureX, textureY); // Box 144
+		gunModel[102] = new ModelRendererTurbo(this, 161, 121, textureX, textureY); // Box 145
+		gunModel[103] = new ModelRendererTurbo(this, 169, 121, textureX, textureY); // Box 147
+		gunModel[104] = new ModelRendererTurbo(this, 177, 121, textureX, textureY); // Box 148
+		gunModel[105] = new ModelRendererTurbo(this, 185, 121, textureX, textureY); // Box 149
+		gunModel[106] = new ModelRendererTurbo(this, 193, 121, textureX, textureY); // Box 150
+		gunModel[107] = new ModelRendererTurbo(this, 201, 121, textureX, textureY); // Box 151
+		gunModel[108] = new ModelRendererTurbo(this, 209, 121, textureX, textureY); // Box 152
+		gunModel[109] = new ModelRendererTurbo(this, 217, 121, textureX, textureY); // Box 153
+		gunModel[110] = new ModelRendererTurbo(this, 1, 129, textureX, textureY); // Box 154
+		gunModel[111] = new ModelRendererTurbo(this, 81, 129, textureX, textureY); // Box 155
+		gunModel[112] = new ModelRendererTurbo(this, 161, 129, textureX, textureY); // Box 156
+		gunModel[113] = new ModelRendererTurbo(this, 1, 137, textureX, textureY); // Box 157
+		gunModel[114] = new ModelRendererTurbo(this, 241, 121, textureX, textureY); // Box 158
+		gunModel[115] = new ModelRendererTurbo(this, 81, 137, textureX, textureY); // Box 159
+		gunModel[116] = new ModelRendererTurbo(this, 225, 121, textureX, textureY); // Box 160
+		gunModel[117] = new ModelRendererTurbo(this, 233, 121, textureX, textureY); // Box 161
+		gunModel[118] = new ModelRendererTurbo(this, 249, 121, textureX, textureY); // Box 162
+		gunModel[119] = new ModelRendererTurbo(this, 249, 129, textureX, textureY); // Box 163
+		gunModel[120] = new ModelRendererTurbo(this, 161, 137, textureX, textureY); // Box 164
+		gunModel[121] = new ModelRendererTurbo(this, 169, 137, textureX, textureY); // Box 165
+		gunModel[122] = new ModelRendererTurbo(this, 177, 137, textureX, textureY); // Box 166
+		gunModel[123] = new ModelRendererTurbo(this, 185, 137, textureX, textureY); // Box 167
+		gunModel[124] = new ModelRendererTurbo(this, 193, 137, textureX, textureY); // Box 168
+		gunModel[125] = new ModelRendererTurbo(this, 201, 137, textureX, textureY); // Box 169
+		gunModel[126] = new ModelRendererTurbo(this, 209, 137, textureX, textureY); // Box 170
+		gunModel[127] = new ModelRendererTurbo(this, 217, 137, textureX, textureY); // Box 171
+		gunModel[128] = new ModelRendererTurbo(this, 225, 137, textureX, textureY); // Box 172
+		gunModel[129] = new ModelRendererTurbo(this, 233, 137, textureX, textureY); // Box 173
+		gunModel[130] = new ModelRendererTurbo(this, 241, 137, textureX, textureY); // Box 174
+		gunModel[131] = new ModelRendererTurbo(this, 249, 137, textureX, textureY); // Box 175
+		gunModel[132] = new ModelRendererTurbo(this, 1, 145, textureX, textureY); // Box 176
+		gunModel[133] = new ModelRendererTurbo(this, 9, 145, textureX, textureY); // Box 177
+		gunModel[134] = new ModelRendererTurbo(this, 17, 145, textureX, textureY); // Box 178
+		gunModel[135] = new ModelRendererTurbo(this, 25, 145, textureX, textureY); // Box 179
+		gunModel[136] = new ModelRendererTurbo(this, 33, 145, textureX, textureY); // Box 180
+		gunModel[137] = new ModelRendererTurbo(this, 41, 145, textureX, textureY); // Box 181
+		gunModel[138] = new ModelRendererTurbo(this, 49, 145, textureX, textureY); // Box 182
+		gunModel[139] = new ModelRendererTurbo(this, 57, 145, textureX, textureY); // Box 183
+		gunModel[140] = new ModelRendererTurbo(this, 73, 145, textureX, textureY); // Box 184
+		gunModel[141] = new ModelRendererTurbo(this, 89, 145, textureX, textureY); // Box 185
+		gunModel[142] = new ModelRendererTurbo(this, 105, 145, textureX, textureY); // Box 186
+		gunModel[143] = new ModelRendererTurbo(this, 121, 145, textureX, textureY); // Box 187
+		gunModel[144] = new ModelRendererTurbo(this, 145, 145, textureX, textureY); // Box 188
+		gunModel[145] = new ModelRendererTurbo(this, 161, 145, textureX, textureY); // Box 189
+		gunModel[146] = new ModelRendererTurbo(this, 177, 145, textureX, textureY); // Box 190
+		gunModel[147] = new ModelRendererTurbo(this, 193, 145, textureX, textureY); // Box 191
+		gunModel[148] = new ModelRendererTurbo(this, 209, 145, textureX, textureY); // Box 192
+		gunModel[149] = new ModelRendererTurbo(this, 217, 145, textureX, textureY); // Box 193
+		gunModel[150] = new ModelRendererTurbo(this, 225, 145, textureX, textureY); // Box 194
+		gunModel[151] = new ModelRendererTurbo(this, 233, 145, textureX, textureY); // Box 195
+		gunModel[152] = new ModelRendererTurbo(this, 241, 145, textureX, textureY); // Box 196
+		gunModel[153] = new ModelRendererTurbo(this, 1, 153, textureX, textureY); // Box 197
+		gunModel[154] = new ModelRendererTurbo(this, 17, 153, textureX, textureY); // Box 198
+		gunModel[155] = new ModelRendererTurbo(this, 33, 153, textureX, textureY); // Box 199
+		gunModel[156] = new ModelRendererTurbo(this, 49, 153, textureX, textureY); // Box 200
+		gunModel[157] = new ModelRendererTurbo(this, 65, 153, textureX, textureY); // Box 201
+		gunModel[158] = new ModelRendererTurbo(this, 89, 153, textureX, textureY); // Box 202
+		gunModel[159] = new ModelRendererTurbo(this, 73, 17, textureX, textureY); // Box 203
+		gunModel[160] = new ModelRendererTurbo(this, 89, 17, textureX, textureY); // Box 204
+		gunModel[161] = new ModelRendererTurbo(this, 105, 17, textureX, textureY); // Box 205
+		gunModel[162] = new ModelRendererTurbo(this, 233, 17, textureX, textureY); // Box 206
+		gunModel[163] = new ModelRendererTurbo(this, 113, 153, textureX, textureY); // Box 207
+		gunModel[164] = new ModelRendererTurbo(this, 129, 153, textureX, textureY); // Box 208
+		gunModel[165] = new ModelRendererTurbo(this, 145, 153, textureX, textureY); // Box 209
+		gunModel[166] = new ModelRendererTurbo(this, 161, 153, textureX, textureY); // Box 210
+		gunModel[167] = new ModelRendererTurbo(this, 177, 153, textureX, textureY); // Box 211
+		gunModel[168] = new ModelRendererTurbo(this, 193, 153, textureX, textureY); // Box 212
+		gunModel[169] = new ModelRendererTurbo(this, 209, 153, textureX, textureY); // Box 213
+		gunModel[170] = new ModelRendererTurbo(this, 225, 153, textureX, textureY); // Box 214
+		gunModel[171] = new ModelRendererTurbo(this, 241, 153, textureX, textureY); // Box 215
+		gunModel[172] = new ModelRendererTurbo(this, 1, 161, textureX, textureY); // Box 216
+		gunModel[173] = new ModelRendererTurbo(this, 17, 161, textureX, textureY); // Box 217
+		gunModel[174] = new ModelRendererTurbo(this, 33, 161, textureX, textureY); // Box 221
+		gunModel[175] = new ModelRendererTurbo(this, 49, 161, textureX, textureY); // Box 222
+		gunModel[176] = new ModelRendererTurbo(this, 65, 161, textureX, textureY); // Box 223
+		gunModel[177] = new ModelRendererTurbo(this, 81, 161, textureX, textureY); // Box 224
+		gunModel[178] = new ModelRendererTurbo(this, 97, 161, textureX, textureY); // Box 225
+		gunModel[179] = new ModelRendererTurbo(this, 113, 161, textureX, textureY); // Box 226
+		gunModel[180] = new ModelRendererTurbo(this, 129, 161, textureX, textureY); // Box 227
+		gunModel[181] = new ModelRendererTurbo(this, 145, 161, textureX, textureY); // Box 228
+		gunModel[182] = new ModelRendererTurbo(this, 161, 161, textureX, textureY); // Box 229
+		gunModel[183] = new ModelRendererTurbo(this, 177, 161, textureX, textureY); // Box 230
+		gunModel[184] = new ModelRendererTurbo(this, 193, 161, textureX, textureY); // Box 231
+		gunModel[185] = new ModelRendererTurbo(this, 209, 161, textureX, textureY); // Box 232
+		gunModel[186] = new ModelRendererTurbo(this, 145, 65, textureX, textureY); // Box 233
+		gunModel[187] = new ModelRendererTurbo(this, 217, 161, textureX, textureY); // Box 234
+		gunModel[188] = new ModelRendererTurbo(this, 169, 65, textureX, textureY); // Box 235
+		gunModel[189] = new ModelRendererTurbo(this, 233, 161, textureX, textureY); // Box 236
+		gunModel[190] = new ModelRendererTurbo(this, 193, 65, textureX, textureY); // Box 238
+		gunModel[191] = new ModelRendererTurbo(this, 1, 169, textureX, textureY); // Box 240
+		gunModel[192] = new ModelRendererTurbo(this, 241, 161, textureX, textureY); // Box 241
+		gunModel[193] = new ModelRendererTurbo(this, 249, 17, textureX, textureY); // Box 242
+		gunModel[194] = new ModelRendererTurbo(this, 25, 169, textureX, textureY); // Box 243
+		gunModel[195] = new ModelRendererTurbo(this, 41, 169, textureX, textureY); // Box 244
+		gunModel[196] = new ModelRendererTurbo(this, 57, 169, textureX, textureY); // Box 245
+		gunModel[197] = new ModelRendererTurbo(this, 89, 169, textureX, textureY); // Box 246
+		gunModel[198] = new ModelRendererTurbo(this, 105, 169, textureX, textureY); // Box 247
+		gunModel[199] = new ModelRendererTurbo(this, 249, 161, textureX, textureY); // Box 248
+		gunModel[200] = new ModelRendererTurbo(this, 145, 25, textureX, textureY); // Box 249
+		gunModel[201] = new ModelRendererTurbo(this, 105, 81, textureX, textureY); // Box 250
 
 		gunModel[0].addBox(0F, 0F, 0F, 6, 1, 4, 0F); // Box 4
 		gunModel[0].setRotationPoint(-24.5F, -17.2F, -2F);
@@ -421,494 +409,510 @@ public class m4a1 extends ModelGun //Same as Filename
 		gunModel[59].addBox(0F, 0F, 0F, 38, 4, 4, 0F); // Box 68
 		gunModel[59].setRotationPoint(-66F, -32.75F, -2F);
 
-		gunModel[60].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 131
-		gunModel[60].setRotationPoint(-17.5F, -41F, -1.99F);
+		gunModel[60].addBox(0F, 0F, 0F, 28, 7, 6, 0F); // Box 82
+		gunModel[60].setRotationPoint(-66F, -32.5F, -3F);
 
-		gunModel[61].addBox(0F, 0F, 0F, 2, 1, 1, 0F); // Box 132
-		gunModel[61].setRotationPoint(-15.5F, -41F, -2.01F);
-		gunModel[61].rotateAngleZ = -0.78539816F;
+		gunModel[61].addBox(0F, 0F, 0F, 3, 11, 3, 0F); // Box 83
+		gunModel[61].setRotationPoint(-66F, -25.5F, -1.51F);
 
-		gunModel[62].addBox(-2F, 0F, 0F, 2, 1, 1, 0F); // Box 133
-		gunModel[62].setRotationPoint(-17.5F, -41F, -2.01F);
-		gunModel[62].rotateAngleZ = 0.78539816F;
+		gunModel[62].addBox(0F, -6F, 0F, 18, 6, 3, 0F); // Box 84
+		gunModel[62].setRotationPoint(-63F, -14.5F, -1.5F);
+		gunModel[62].rotateAngleZ = 0.6981317F;
 
-		gunModel[63].addBox(0F, 0F, 0F, 3, 4, 1, 0F); // Box 134
-		gunModel[63].setRotationPoint(-18.9F, -39.6F, -2.02F);
+		gunModel[63].addBox(0F, 0F, 0F, 3, 2, 3, 0F); // Box 85
+		gunModel[63].setRotationPoint(-63F, -24.5F, -1.49F);
 
-		gunModel[64].addBox(0F, 0F, 0F, 3, 4, 1, 0F); // Box 135
-		gunModel[64].setRotationPoint(-17.1F, -39.6F, 1F);
+		gunModel[64].addBox(0F, 0F, 0F, 3, 20, 6, 0F); // Box 86
+		gunModel[64].setRotationPoint(-69F, -33.5F, -3F);
 
-		gunModel[65].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 136
-		gunModel[65].setRotationPoint(-17.5F, -41F, 0.99F);
+		gunModel[65].addBox(0F, -7F, 0F, 11, 7, 4, 0F); // Box 87
+		gunModel[65].setRotationPoint(-53F, -23F, -2F);
 
-		gunModel[66].addBox(0F, 0F, 0F, 2, 1, 1, 0F); // Box 137
-		gunModel[66].setRotationPoint(-15.5F, -41F, 1.01F);
-		gunModel[66].rotateAngleZ = -0.78539816F;
+		gunModel[66].addBox(0F, -3F, 0F, 5, 3, 3, 0F); // Box 88
+		gunModel[66].setRotationPoint(-42F, -23F, -1.5F);
+		gunModel[66].rotateAngleZ = 0.76794487F;
 
-		gunModel[67].addBox(-2F, 0F, 0F, 2, 1, 1, 0F); // Box 138
-		gunModel[67].setRotationPoint(-17.5F, -41F, 1.01F);
-		gunModel[67].rotateAngleZ = 0.78539816F;
+		gunModel[67].addBox(0F, -3F, 0F, 8, 3, 4, 0F); // Box 89
+		gunModel[67].setRotationPoint(-55F, -18F, -2F);
+		gunModel[67].rotateAngleZ = 0.6981317F;
 
-		gunModel[68].addBox(0F, 0F, 0F, 3, 4, 1, 0F); // Box 139
-		gunModel[68].setRotationPoint(-18.9F, -39.6F, 1.02F);
+		gunModel[68].addBox(0F, 0F, 0F, 28, 1, 3, 0F); // Box 90
+		gunModel[68].setRotationPoint(-66F, -33.5F, -1.5F);
 
-		gunModel[69].addBox(0F, 0F, 0F, 2, 2, 6, 0F); // Box 140
-		gunModel[69].setRotationPoint(-17.6F, -39F, -2.98F);
+		gunModel[69].addBox(0F, 0F, 0F, 28, 1, 2, 0F); // Box 91
+		gunModel[69].setRotationPoint(-66F, -33.5F, 1.5F);
+		gunModel[69].rotateAngleX = -0.80285146F;
 
-		gunModel[70].addBox(0F, -1F, -1F, 1, 4, 4, 0F); // Box 141
-		gunModel[70].setRotationPoint(-16.9F, -40.5F, -0.97F);
+		gunModel[70].addBox(0F, 0F, -2F, 28, 1, 2, 0F); // Box 92
+		gunModel[70].setRotationPoint(-66F, -33.5F, -1.5F);
+		gunModel[70].rotateAngleX = 0.80285146F;
 
-		gunModel[71].addBox(0F, 0F, 0F, 4, 2, 4, 0F); // Box 142
-		gunModel[71].setRotationPoint(-16.1F, -37.5F, -2.01F);
+		gunModel[71].addBox(0F, -3F, 0F, 5, 2, 3, 0F); // Box 93
+		gunModel[71].setRotationPoint(-38F, -26.25F, -1.5F);
 
-		gunModel[72].addBox(0F, 0F, 0F, 4, 1, 4, 0F); // Box 143
-		gunModel[72].setRotationPoint(-16.1F, -38.5F, -2F);
-		gunModel[72].rotateAngleZ = -0.15707963F;
+		gunModel[72].addBox(-6F, 0F, 0F, 14, 1, 1, 0F); // Box 94
+		gunModel[72].setRotationPoint(-4.25F, -29.1F, -3F);
 
-		gunModel[73].addBox(0F, 0F, 0F, 28, 7, 6, 0F); // Box 82
-		gunModel[73].setRotationPoint(-66F, -32.5F, -3F);
+		gunModel[73].addBox(0F, -7F, 0F, 2, 2, 2, 0F); // Box 95
+		gunModel[73].setRotationPoint(-48F, -16F, -1F);
 
-		gunModel[74].addBox(0F, 0F, 0F, 3, 11, 3, 0F); // Box 83
-		gunModel[74].setRotationPoint(-66F, -25.5F, -1.51F);
+		gunModel[74].addBox(0F, 0F, 0F, 8, 1, 2, 0F); // Box 96
+		gunModel[74].setRotationPoint(-25F, -35.75F, -1F);
 
-		gunModel[75].addBox(0F, -6F, 0F, 18, 6, 3, 0F); // Box 84
-		gunModel[75].setRotationPoint(-63F, -14.5F, -1.5F);
-		gunModel[75].rotateAngleZ = 0.6981317F;
+		gunModel[75].addBox(0F, 0F, 0F, 1, 1, 4, 0F); // Box 97
+		gunModel[75].setRotationPoint(-25F, -35.8F, -1.99F);
 
-		gunModel[76].addBox(0F, 0F, 0F, 3, 2, 3, 0F); // Box 85
-		gunModel[76].setRotationPoint(-63F, -24.5F, -1.49F);
+		gunModel[76].addBox(0F, 0F, 0F, 1, 1, 4, 0F); // Box 98
+		gunModel[76].setRotationPoint(-25F, -35.3F, -2F);
 
-		gunModel[77].addBox(0F, 0F, 0F, 3, 20, 6, 0F); // Box 86
-		gunModel[77].setRotationPoint(-69F, -33.5F, -3F);
+		gunModel[77].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 99
+		gunModel[77].setRotationPoint(-24F, -35.8F, -1.99F);
 
-		gunModel[78].addBox(0F, -7F, 0F, 11, 7, 4, 0F); // Box 87
-		gunModel[78].setRotationPoint(-53F, -23F, -2F);
+		gunModel[78].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 100
+		gunModel[78].setRotationPoint(-24F, -35.3F, -2F);
 
-		gunModel[79].addBox(0F, -3F, 0F, 5, 3, 3, 0F); // Box 88
-		gunModel[79].setRotationPoint(-42F, -23F, -1.5F);
-		gunModel[79].rotateAngleZ = 0.76794487F;
+		gunModel[79].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 101
+		gunModel[79].setRotationPoint(-24F, -35.8F, 1.01F);
 
-		gunModel[80].addBox(0F, -3F, 0F, 8, 3, 4, 0F); // Box 89
-		gunModel[80].setRotationPoint(-55F, -18F, -2F);
-		gunModel[80].rotateAngleZ = 0.6981317F;
+		gunModel[80].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 102
+		gunModel[80].setRotationPoint(-24F, -35.3F, 1F);
 
-		gunModel[81].addBox(0F, 0F, 0F, 28, 1, 3, 0F); // Box 90
-		gunModel[81].setRotationPoint(-66F, -33.5F, -1.5F);
+		gunModel[81].addBox(0F, 0F, 0F, 37, 5, 5, 0F); // Box 124
+		gunModel[81].setRotationPoint(5F, -33F, -2.5F);
 
-		gunModel[82].addBox(0F, 0F, 0F, 28, 1, 2, 0F); // Box 91
-		gunModel[82].setRotationPoint(-66F, -33.5F, 1.5F);
-		gunModel[82].rotateAngleX = -0.80285146F;
+		gunModel[82].addBox(0F, 0F, 0F, 37, 1, 4, 0F); // Box 125
+		gunModel[82].setRotationPoint(5F, -28F, -2F);
 
-		gunModel[83].addBox(0F, 0F, -2F, 28, 1, 2, 0F); // Box 92
-		gunModel[83].setRotationPoint(-66F, -33.5F, -1.5F);
-		gunModel[83].rotateAngleX = 0.80285146F;
+		gunModel[83].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 126
+		gunModel[83].setRotationPoint(37F, -27F, -1.51F);
 
-		gunModel[84].addBox(0F, -3F, 0F, 5, 2, 3, 0F); // Box 93
-		gunModel[84].setRotationPoint(-38F, -26.25F, -1.5F);
+		gunModel[84].addBox(0F, 0F, 0F, 2, 1, 3, 0F); // Box 127
+		gunModel[84].setRotationPoint(5.75F, -27F, -1.51F);
 
-		gunModel[85].addBox(-6F, 0F, 0F, 14, 1, 1, 0F); // Box 94
-		gunModel[85].setRotationPoint(-4.25F, -29.1F, -3F);
+		gunModel[85].addBox(0F, 0F, 0F, 2, 1, 3, 0F); // Box 128
+		gunModel[85].setRotationPoint(38.5F, -27F, -1.51F);
 
-		gunModel[86].addBox(0F, -7F, 0F, 2, 2, 2, 0F); // Box 95
-		gunModel[86].setRotationPoint(-48F, -16F, -1F);
+		gunModel[86].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 129
+		gunModel[86].setRotationPoint(6.5F, -32F, 2.5F);
 
-		gunModel[87].addBox(0F, 0F, 0F, 8, 1, 2, 0F); // Box 96
-		gunModel[87].setRotationPoint(-25F, -35.75F, -1F);
+		gunModel[87].addBox(0F, 0.01F, 0F, 35, 3, 1, 0F); // Box 130
+		gunModel[87].setRotationPoint(6F, -32F, 2F);
 
-		gunModel[88].addBox(0F, 0F, 0F, 1, 1, 4, 0F); // Box 97
-		gunModel[88].setRotationPoint(-25F, -35.8F, -1.99F);
+		gunModel[88].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 131
+		gunModel[88].setRotationPoint(8F, -32F, 2.5F);
 
-		gunModel[89].addBox(0F, 0F, 0F, 1, 1, 4, 0F); // Box 98
-		gunModel[89].setRotationPoint(-25F, -35.3F, -2F);
+		gunModel[89].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 132
+		gunModel[89].setRotationPoint(11F, -32F, 2.5F);
 
-		gunModel[90].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 99
-		gunModel[90].setRotationPoint(-24F, -35.8F, -1.99F);
+		gunModel[90].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 133
+		gunModel[90].setRotationPoint(9.5F, -32F, 2.5F);
 
-		gunModel[91].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 100
-		gunModel[91].setRotationPoint(-24F, -35.3F, -2F);
+		gunModel[91].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 134
+		gunModel[91].setRotationPoint(17F, -32F, 2.5F);
 
-		gunModel[92].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 101
-		gunModel[92].setRotationPoint(-24F, -35.8F, 1.01F);
+		gunModel[92].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 135
+		gunModel[92].setRotationPoint(15.5F, -32F, 2.5F);
 
-		gunModel[93].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 102
-		gunModel[93].setRotationPoint(-24F, -35.3F, 1F);
+		gunModel[93].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 136
+		gunModel[93].setRotationPoint(12.5F, -32F, 2.5F);
 
-		gunModel[94].addBox(0F, 0F, 0F, 37, 5, 5, 0F); // Box 124
-		gunModel[94].setRotationPoint(5F, -33F, -2.5F);
+		gunModel[94].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 137
+		gunModel[94].setRotationPoint(14F, -32F, 2.5F);
 
-		gunModel[95].addBox(0F, 0F, 0F, 37, 1, 4, 0F); // Box 125
-		gunModel[95].setRotationPoint(5F, -28F, -2F);
+		gunModel[95].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 138
+		gunModel[95].setRotationPoint(29F, -32F, 2.5F);
 
-		gunModel[96].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 126
-		gunModel[96].setRotationPoint(37F, -27F, -1.51F);
+		gunModel[96].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 139
+		gunModel[96].setRotationPoint(27.5F, -32F, 2.5F);
 
-		gunModel[97].addBox(0F, 0F, 0F, 2, 1, 3, 0F); // Box 127
-		gunModel[97].setRotationPoint(5.75F, -27F, -1.51F);
+		gunModel[97].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 140
+		gunModel[97].setRotationPoint(24.5F, -32F, 2.5F);
 
-		gunModel[98].addBox(0F, 0F, 0F, 2, 1, 3, 0F); // Box 128
-		gunModel[98].setRotationPoint(38.5F, -27F, -1.51F);
+		gunModel[98].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 141
+		gunModel[98].setRotationPoint(26F, -32F, 2.5F);
 
-		gunModel[99].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 129
-		gunModel[99].setRotationPoint(6.5F, -32F, 2.5F);
+		gunModel[99].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 142
+		gunModel[99].setRotationPoint(23F, -32F, 2.5F);
 
-		gunModel[100].addBox(0F, 0.01F, 0F, 35, 3, 1, 0F); // Box 130
-		gunModel[100].setRotationPoint(6F, -32F, 2F);
+		gunModel[100].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 143
+		gunModel[100].setRotationPoint(21.5F, -32F, 2.5F);
 
-		gunModel[101].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 131
-		gunModel[101].setRotationPoint(8F, -32F, 2.5F);
+		gunModel[101].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 144
+		gunModel[101].setRotationPoint(20F, -32F, 2.5F);
 
-		gunModel[102].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 132
-		gunModel[102].setRotationPoint(11F, -32F, 2.5F);
+		gunModel[102].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 145
+		gunModel[102].setRotationPoint(18.5F, -32F, 2.5F);
 
-		gunModel[103].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 133
-		gunModel[103].setRotationPoint(9.5F, -32F, 2.5F);
+		gunModel[103].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 147
+		gunModel[103].setRotationPoint(39.5F, -32F, 2.5F);
 
-		gunModel[104].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 134
-		gunModel[104].setRotationPoint(17F, -32F, 2.5F);
+		gunModel[104].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 148
+		gunModel[104].setRotationPoint(36.5F, -32F, 2.5F);
 
-		gunModel[105].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 135
-		gunModel[105].setRotationPoint(15.5F, -32F, 2.5F);
+		gunModel[105].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 149
+		gunModel[105].setRotationPoint(38F, -32F, 2.5F);
 
-		gunModel[106].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 136
-		gunModel[106].setRotationPoint(12.5F, -32F, 2.5F);
+		gunModel[106].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 150
+		gunModel[106].setRotationPoint(35F, -32F, 2.5F);
 
-		gunModel[107].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 137
-		gunModel[107].setRotationPoint(14F, -32F, 2.5F);
+		gunModel[107].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 151
+		gunModel[107].setRotationPoint(33.5F, -32F, 2.5F);
 
-		gunModel[108].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 138
-		gunModel[108].setRotationPoint(29F, -32F, 2.5F);
+		gunModel[108].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 152
+		gunModel[108].setRotationPoint(32F, -32F, 2.5F);
 
-		gunModel[109].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 139
-		gunModel[109].setRotationPoint(27.5F, -32F, 2.5F);
+		gunModel[109].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 153
+		gunModel[109].setRotationPoint(30.5F, -32F, 2.5F);
 
-		gunModel[110].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 140
-		gunModel[110].setRotationPoint(24.5F, -32F, 2.5F);
+		gunModel[110].addBox(0F, 0F, -1F, 37, 3, 1, 0F); // Box 154
+		gunModel[110].setRotationPoint(5F, -35F, 1.5F);
+		gunModel[110].rotateAngleX = 0.48869219F;
 
-		gunModel[111].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 141
-		gunModel[111].setRotationPoint(26F, -32F, 2.5F);
+		gunModel[111].addBox(0F, 0F, 0F, 37, 3, 1, 0F); // Box 155
+		gunModel[111].setRotationPoint(5F, -35F, -1.5F);
+		gunModel[111].rotateAngleX = -0.48869219F;
 
-		gunModel[112].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 142
-		gunModel[112].setRotationPoint(23F, -32F, 2.5F);
+		gunModel[112].addBox(0F, 0F, -1F, 37, 1, 1, 0F); // Box 156
+		gunModel[112].setRotationPoint(5F, -28F, 2.5F);
+		gunModel[112].rotateAngleX = -0.48869219F;
 
-		gunModel[113].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 143
-		gunModel[113].setRotationPoint(21.5F, -32F, 2.5F);
+		gunModel[113].addBox(0F, 0F, 0F, 37, 1, 1, 0F); // Box 157
+		gunModel[113].setRotationPoint(5F, -28F, -2.5F);
+		gunModel[113].rotateAngleX = 0.48869219F;
 
-		gunModel[114].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 144
-		gunModel[114].setRotationPoint(20F, -32F, 2.5F);
+		gunModel[114].addBox(-0.01F, 0F, 0F, 1, 10, 1, 0F); // Box 158
+		gunModel[114].setRotationPoint(2.75F, -28.1F, -3F);
 
-		gunModel[115].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 145
-		gunModel[115].setRotationPoint(18.5F, -32F, 2.5F);
+		gunModel[115].addBox(0F, 0.01F, 0F, 35, 3, 1, 0F); // Box 159
+		gunModel[115].setRotationPoint(6F, -32F, -3F);
 
-		gunModel[116].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 147
-		gunModel[116].setRotationPoint(39.5F, -32F, 2.5F);
+		gunModel[116].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 160
+		gunModel[116].setRotationPoint(39.5F, -32F, -3.5F);
 
-		gunModel[117].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 148
-		gunModel[117].setRotationPoint(36.5F, -32F, 2.5F);
+		gunModel[117].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 161
+		gunModel[117].setRotationPoint(38F, -32F, -3.5F);
 
-		gunModel[118].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 149
-		gunModel[118].setRotationPoint(38F, -32F, 2.5F);
+		gunModel[118].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 162
+		gunModel[118].setRotationPoint(36.5F, -32F, -3.5F);
 
-		gunModel[119].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 150
-		gunModel[119].setRotationPoint(35F, -32F, 2.5F);
+		gunModel[119].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 163
+		gunModel[119].setRotationPoint(35F, -32F, -3.5F);
 
-		gunModel[120].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 151
-		gunModel[120].setRotationPoint(33.5F, -32F, 2.5F);
+		gunModel[120].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 164
+		gunModel[120].setRotationPoint(33.5F, -32F, -3.5F);
 
-		gunModel[121].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 152
-		gunModel[121].setRotationPoint(32F, -32F, 2.5F);
+		gunModel[121].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 165
+		gunModel[121].setRotationPoint(30.5F, -32F, -3.5F);
 
-		gunModel[122].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 153
-		gunModel[122].setRotationPoint(30.5F, -32F, 2.5F);
+		gunModel[122].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 166
+		gunModel[122].setRotationPoint(29F, -32F, -3.5F);
 
-		gunModel[123].addBox(0F, 0F, -1F, 37, 3, 1, 0F); // Box 154
-		gunModel[123].setRotationPoint(5F, -35F, 1.5F);
-		gunModel[123].rotateAngleX = 0.48869219F;
+		gunModel[123].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 167
+		gunModel[123].setRotationPoint(27.5F, -32F, -3.5F);
 
-		gunModel[124].addBox(0F, 0F, 0F, 37, 3, 1, 0F); // Box 155
-		gunModel[124].setRotationPoint(5F, -35F, -1.5F);
-		gunModel[124].rotateAngleX = -0.48869219F;
+		gunModel[124].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 168
+		gunModel[124].setRotationPoint(26F, -32F, -3.5F);
 
-		gunModel[125].addBox(0F, 0F, -1F, 37, 1, 1, 0F); // Box 156
-		gunModel[125].setRotationPoint(5F, -28F, 2.5F);
-		gunModel[125].rotateAngleX = -0.48869219F;
+		gunModel[125].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 169
+		gunModel[125].setRotationPoint(24.5F, -32F, -3.5F);
 
-		gunModel[126].addBox(0F, 0F, 0F, 37, 1, 1, 0F); // Box 157
-		gunModel[126].setRotationPoint(5F, -28F, -2.5F);
-		gunModel[126].rotateAngleX = 0.48869219F;
+		gunModel[126].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 170
+		gunModel[126].setRotationPoint(18.5F, -32F, -3.5F);
 
-		gunModel[127].addBox(-0.01F, 0F, 0F, 1, 10, 1, 0F); // Box 158
-		gunModel[127].setRotationPoint(2.75F, -28.1F, -3F);
+		gunModel[127].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 171
+		gunModel[127].setRotationPoint(17F, -32F, -3.5F);
 
-		gunModel[128].addBox(0F, 0.01F, 0F, 35, 3, 1, 0F); // Box 159
-		gunModel[128].setRotationPoint(6F, -32F, -3F);
+		gunModel[128].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 172
+		gunModel[128].setRotationPoint(15.5F, -32F, -3.5F);
 
-		gunModel[129].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 160
-		gunModel[129].setRotationPoint(39.5F, -32F, -3.5F);
+		gunModel[129].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 173
+		gunModel[129].setRotationPoint(14F, -32F, -3.5F);
 
-		gunModel[130].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 161
-		gunModel[130].setRotationPoint(38F, -32F, -3.5F);
+		gunModel[130].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 174
+		gunModel[130].setRotationPoint(11F, -32F, -3.5F);
 
-		gunModel[131].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 162
-		gunModel[131].setRotationPoint(36.5F, -32F, -3.5F);
+		gunModel[131].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 175
+		gunModel[131].setRotationPoint(9.5F, -32F, -3.5F);
 
-		gunModel[132].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 163
-		gunModel[132].setRotationPoint(35F, -32F, -3.5F);
+		gunModel[132].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 176
+		gunModel[132].setRotationPoint(8F, -32F, -3.5F);
 
-		gunModel[133].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 164
-		gunModel[133].setRotationPoint(33.5F, -32F, -3.5F);
+		gunModel[133].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 177
+		gunModel[133].setRotationPoint(6.5F, -32F, -3.5F);
 
-		gunModel[134].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 165
-		gunModel[134].setRotationPoint(30.5F, -32F, -3.5F);
+		gunModel[134].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 178
+		gunModel[134].setRotationPoint(23F, -32F, -3.5F);
 
-		gunModel[135].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 166
-		gunModel[135].setRotationPoint(29F, -32F, -3.5F);
+		gunModel[135].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 179
+		gunModel[135].setRotationPoint(21.5F, -32F, -3.5F);
 
-		gunModel[136].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 167
-		gunModel[136].setRotationPoint(27.5F, -32F, -3.5F);
+		gunModel[136].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 180
+		gunModel[136].setRotationPoint(20F, -32F, -3.5F);
 
-		gunModel[137].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 168
-		gunModel[137].setRotationPoint(26F, -32F, -3.5F);
+		gunModel[137].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 181
+		gunModel[137].setRotationPoint(32F, -32F, -3.5F);
 
-		gunModel[138].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 169
-		gunModel[138].setRotationPoint(24.5F, -32F, -3.5F);
+		gunModel[138].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 182
+		gunModel[138].setRotationPoint(12.5F, -32F, -3.5F);
 
-		gunModel[139].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 170
-		gunModel[139].setRotationPoint(18.5F, -32F, -3.5F);
+		gunModel[139].addBox(0F, 0F, 0F, 2, 3, 4, 0F); // Box 183
+		gunModel[139].setRotationPoint(42F, -32.25F, -2.5F);
 
-		gunModel[140].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 171
-		gunModel[140].setRotationPoint(17F, -32F, -3.5F);
+		gunModel[140].addBox(0F, 0F, 0F, 2, 2, 3, 0F); // Box 184
+		gunModel[140].setRotationPoint(42F, -34.25F, -2F);
 
-		gunModel[141].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 172
-		gunModel[141].setRotationPoint(15.5F, -32F, -3.5F);
+		gunModel[141].addBox(0F, 0F, 0F, 2, 2, 3, 0F); // Box 185
+		gunModel[141].setRotationPoint(42F, -29.25F, -2F);
 
-		gunModel[142].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 173
-		gunModel[142].setRotationPoint(14F, -32F, -3.5F);
+		gunModel[142].addBox(0F, 0F, 0F, 4, 3, 3, 0F); // Box 186
+		gunModel[142].setRotationPoint(44F, -32.25F, -2F);
 
-		gunModel[143].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 174
-		gunModel[143].setRotationPoint(11F, -32F, -3.5F);
+		gunModel[143].addBox(0F, 0F, 0F, 6, 3, 3, 0F); // Box 187
+		gunModel[143].setRotationPoint(51.5F, -32.25F, -2F);
 
-		gunModel[144].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 175
-		gunModel[144].setRotationPoint(9.5F, -32F, -3.5F);
+		gunModel[144].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 188
+		gunModel[144].setRotationPoint(47.75F, -32.01F, -1.23F);
 
-		gunModel[145].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 176
-		gunModel[145].setRotationPoint(8F, -32F, -3.5F);
+		gunModel[145].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 189
+		gunModel[145].setRotationPoint(47.75F, -32F, -1.74F);
 
-		gunModel[146].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 177
-		gunModel[146].setRotationPoint(6.5F, -32F, -3.5F);
+		gunModel[146].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 190
+		gunModel[146].setRotationPoint(47.75F, -31.4F, -1.24F);
 
-		gunModel[147].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 178
-		gunModel[147].setRotationPoint(23F, -32F, -3.5F);
+		gunModel[147].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 191
+		gunModel[147].setRotationPoint(47.75F, -31.4F, -1.75F);
 
-		gunModel[148].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 179
-		gunModel[148].setRotationPoint(21.5F, -32F, -3.5F);
+		gunModel[148].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 192
+		gunModel[148].setRotationPoint(57F, -31.4F, -1.25F);
 
-		gunModel[149].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 180
-		gunModel[149].setRotationPoint(20F, -32F, -3.5F);
+		gunModel[149].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 193
+		gunModel[149].setRotationPoint(57F, -31.4F, -1.75F);
 
-		gunModel[150].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 181
-		gunModel[150].setRotationPoint(32F, -32F, -3.5F);
+		gunModel[150].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 194
+		gunModel[150].setRotationPoint(57F, -32F, -1.75F);
 
-		gunModel[151].addBox(0F, 0F, 0F, 1, 3, 1, 0F); // Box 182
-		gunModel[151].setRotationPoint(12.5F, -32F, -3.5F);
+		gunModel[151].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 195
+		gunModel[151].setRotationPoint(57F, -32F, -1.25F);
 
-		gunModel[152].addBox(0F, 0F, 0F, 2, 3, 4, 0F); // Box 183
-		gunModel[152].setRotationPoint(42F, -32.25F, -2.5F);
+		gunModel[152].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 196
+		gunModel[152].setRotationPoint(61F, -31.4F, -1.25F);
 
-		gunModel[153].addBox(0F, 0F, 0F, 2, 2, 3, 0F); // Box 184
-		gunModel[153].setRotationPoint(42F, -34.25F, -2F);
+		gunModel[153].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 197
+		gunModel[153].setRotationPoint(61F, -31.4F, -1.75F);
 
-		gunModel[154].addBox(0F, 0F, 0F, 2, 2, 3, 0F); // Box 185
-		gunModel[154].setRotationPoint(42F, -29.25F, -2F);
+		gunModel[154].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 198
+		gunModel[154].setRotationPoint(61F, -32F, -1.75F);
 
-		gunModel[155].addBox(0F, 0F, 0F, 4, 3, 3, 0F); // Box 186
-		gunModel[155].setRotationPoint(44F, -32.25F, -2F);
+		gunModel[155].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 199
+		gunModel[155].setRotationPoint(61F, -32F, -1.25F);
 
-		gunModel[156].addBox(0F, 0F, 0F, 6, 3, 3, 0F); // Box 187
-		gunModel[156].setRotationPoint(51.5F, -32.25F, -2F);
+		gunModel[156].addBox(0F, 0F, 0F, 4, 3, 3, 0F); // Box 200
+		gunModel[156].setRotationPoint(58F, -32.25F, -2F);
 
-		gunModel[157].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 188
-		gunModel[157].setRotationPoint(47.75F, -32.01F, -1.23F);
+		gunModel[157].addBox(0F, 0F, 0F, 5, 1, 3, 0F); // Box 201
+		gunModel[157].setRotationPoint(62.5F, -32.25F, -2F);
 
-		gunModel[158].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 189
-		gunModel[158].setRotationPoint(47.75F, -32F, -1.74F);
+		gunModel[158].addBox(0F, 0F, 0F, 5, 1, 3, 0F); // Box 202
+		gunModel[158].setRotationPoint(62.5F, -30.25F, -2F);
 
-		gunModel[159].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 190
-		gunModel[159].setRotationPoint(47.75F, -31.4F, -1.24F);
+		gunModel[159].addBox(0F, 0F, 0F, 3, 1, 1, 0F); // Box 203
+		gunModel[159].setRotationPoint(62.5F, -31.25F, -2F);
 
-		gunModel[160].addBox(0F, 0F, 0F, 4, 2, 2, 0F); // Box 191
-		gunModel[160].setRotationPoint(47.75F, -31.4F, -1.75F);
+		gunModel[160].addBox(0F, 0F, 0F, 3, 1, 1, 0F); // Box 204
+		gunModel[160].setRotationPoint(62.5F, -31.25F, 0F);
 
-		gunModel[161].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 192
-		gunModel[161].setRotationPoint(57F, -31.4F, -1.25F);
+		gunModel[161].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 205
+		gunModel[161].setRotationPoint(66.5F, -31.25F, 0F);
 
-		gunModel[162].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 193
-		gunModel[162].setRotationPoint(57F, -31.4F, -1.75F);
+		gunModel[162].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 206
+		gunModel[162].setRotationPoint(66.5F, -31.25F, -2F);
 
-		gunModel[163].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 194
-		gunModel[163].setRotationPoint(57F, -32F, -1.75F);
+		gunModel[163].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 207
+		gunModel[163].setRotationPoint(23F, -36.5F, -1.51F);
 
-		gunModel[164].addBox(0F, 0F, 0F, 1, 2, 2, 0F); // Box 195
-		gunModel[164].setRotationPoint(57F, -32F, -1.25F);
+		gunModel[164].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 208
+		gunModel[164].setRotationPoint(21.5F, -36.5F, -1.51F);
 
-		gunModel[165].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 196
-		gunModel[165].setRotationPoint(61F, -31.4F, -1.25F);
+		gunModel[165].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 209
+		gunModel[165].setRotationPoint(20F, -36.5F, -1.51F);
 
-		gunModel[166].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 197
-		gunModel[166].setRotationPoint(61F, -31.4F, -1.75F);
+		gunModel[166].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 210
+		gunModel[166].setRotationPoint(18.5F, -36.5F, -1.51F);
 
-		gunModel[167].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 198
-		gunModel[167].setRotationPoint(61F, -32F, -1.75F);
+		gunModel[167].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 211
+		gunModel[167].setRotationPoint(17F, -36.5F, -1.51F);
 
-		gunModel[168].addBox(0F, 0F, 0F, 2, 2, 2, 0F); // Box 199
-		gunModel[168].setRotationPoint(61F, -32F, -1.25F);
+		gunModel[168].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 212
+		gunModel[168].setRotationPoint(14F, -36.5F, -1.51F);
 
-		gunModel[169].addBox(0F, 0F, 0F, 4, 3, 3, 0F); // Box 200
-		gunModel[169].setRotationPoint(58F, -32.25F, -2F);
+		gunModel[169].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 213
+		gunModel[169].setRotationPoint(15.5F, -36.5F, -1.51F);
 
-		gunModel[170].addBox(0F, 0F, 0F, 5, 1, 3, 0F); // Box 201
-		gunModel[170].setRotationPoint(62.5F, -32.25F, -2F);
+		gunModel[170].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 214
+		gunModel[170].setRotationPoint(12.5F, -36.5F, -1.51F);
 
-		gunModel[171].addBox(0F, 0F, 0F, 5, 1, 3, 0F); // Box 202
-		gunModel[171].setRotationPoint(62.5F, -30.25F, -2F);
+		gunModel[171].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 215
+		gunModel[171].setRotationPoint(11F, -36.5F, -1.51F);
 
-		gunModel[172].addBox(0F, 0F, 0F, 3, 1, 1, 0F); // Box 203
-		gunModel[172].setRotationPoint(62.5F, -31.25F, -2F);
+		gunModel[172].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 216
+		gunModel[172].setRotationPoint(9.5F, -36.5F, -1.51F);
 
-		gunModel[173].addBox(0F, 0F, 0F, 3, 1, 1, 0F); // Box 204
-		gunModel[173].setRotationPoint(62.5F, -31.25F, 0F);
+		gunModel[173].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 217
+		gunModel[173].setRotationPoint(8F, -36.5F, -1.51F);
 
-		gunModel[174].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 205
-		gunModel[174].setRotationPoint(66.5F, -31.25F, 0F);
+		gunModel[174].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 221
+		gunModel[174].setRotationPoint(35F, -36.5F, -1.51F);
 
-		gunModel[175].addBox(0F, 0F, 0F, 1, 1, 1, 0F); // Box 206
-		gunModel[175].setRotationPoint(66.5F, -31.25F, -2F);
+		gunModel[175].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 222
+		gunModel[175].setRotationPoint(33.5F, -36.5F, -1.51F);
 
-		gunModel[176].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 207
-		gunModel[176].setRotationPoint(23F, -36.5F, -1.51F);
+		gunModel[176].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 223
+		gunModel[176].setRotationPoint(30.5F, -36.5F, -1.51F);
 
-		gunModel[177].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 208
-		gunModel[177].setRotationPoint(21.5F, -36.5F, -1.51F);
+		gunModel[177].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 224
+		gunModel[177].setRotationPoint(32F, -36.5F, -1.51F);
 
-		gunModel[178].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 209
-		gunModel[178].setRotationPoint(20F, -36.5F, -1.51F);
+		gunModel[178].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 225
+		gunModel[178].setRotationPoint(29F, -36.5F, -1.51F);
 
-		gunModel[179].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 210
-		gunModel[179].setRotationPoint(18.5F, -36.5F, -1.51F);
+		gunModel[179].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 226
+		gunModel[179].setRotationPoint(27.5F, -36.5F, -1.51F);
 
-		gunModel[180].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 211
-		gunModel[180].setRotationPoint(17F, -36.5F, -1.51F);
+		gunModel[180].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 227
+		gunModel[180].setRotationPoint(26F, -36.5F, -1.51F);
 
-		gunModel[181].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 212
-		gunModel[181].setRotationPoint(14F, -36.5F, -1.51F);
+		gunModel[181].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 228
+		gunModel[181].setRotationPoint(24.5F, -36.5F, -1.51F);
 
-		gunModel[182].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 213
-		gunModel[182].setRotationPoint(15.5F, -36.5F, -1.51F);
+		gunModel[182].addBox(0F, 0F, 0F, 4, 1, 3, 0F); // Box 229
+		gunModel[182].setRotationPoint(36.3F, -37F, -1.5F);
 
-		gunModel[183].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 214
-		gunModel[183].setRotationPoint(12.5F, -36.5F, -1.51F);
+		gunModel[183].addBox(0F, 0F, 0F, 3, 1, 3, 0F); // Box 230
+		gunModel[183].setRotationPoint(37.3F, -38F, -1.51F);
 
-		gunModel[184].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 215
-		gunModel[184].setRotationPoint(11F, -36.5F, -1.51F);
+		gunModel[184].addBox(0F, 0F, 0F, 2, 1, 4, 0F); // Box 231
+		gunModel[184].setRotationPoint(38.3F, -39F, -2F);
 
-		gunModel[185].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 216
-		gunModel[185].setRotationPoint(9.5F, -36.5F, -1.51F);
+		gunModel[185].addBox(0F, 0F, 0F, 2, 4, 1, 0F); // Box 232
+		gunModel[185].setRotationPoint(37.45F, -41.75F, 0.98F);
 
-		gunModel[186].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 217
-		gunModel[186].setRotationPoint(8F, -36.5F, -1.51F);
+		gunModel[186].addBox(0F, -1F, 0F, 3, 2, 1, 0F); // Box 233
+		gunModel[186].setRotationPoint(38.5F, -41.5F, 1F);
+		gunModel[186].rotateAngleZ = -1.29154365F;
 
-		gunModel[187].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 221
-		gunModel[187].setRotationPoint(35F, -36.5F, -1.51F);
+		gunModel[187].addBox(-2F, 0F, 0F, 4, 2, 3, 0F); // Box 234
+		gunModel[187].setRotationPoint(37F, -38F, -1.5F);
+		gunModel[187].rotateAngleZ = 1.15191731F;
 
-		gunModel[188].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 222
-		gunModel[188].setRotationPoint(33.5F, -36.5F, -1.51F);
+		gunModel[188].addBox(0F, -1F, 0F, 3, 2, 1, 0F); // Box 235
+		gunModel[188].setRotationPoint(38.5F, -41.5F, -2F);
+		gunModel[188].rotateAngleZ = -1.29154365F;
 
-		gunModel[189].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 223
-		gunModel[189].setRotationPoint(30.5F, -36.5F, -1.51F);
+		gunModel[189].addBox(0F, 0F, 0F, 2, 4, 1, 0F); // Box 236
+		gunModel[189].setRotationPoint(37.45F, -41.75F, -2.02F);
 
-		gunModel[190].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 224
-		gunModel[190].setRotationPoint(32F, -36.5F, -1.51F);
+		gunModel[190].addBox(0F, -1F, 0F, 1, 2, 1, 0F); // Box 238
+		gunModel[190].setRotationPoint(38F, -40F, -0.5F);
 
-		gunModel[191].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 225
-		gunModel[191].setRotationPoint(29F, -36.5F, -1.51F);
+		gunModel[191].addBox(0F, 0F, 0F, 7, 2, 2, 0F); // Box 240
+		gunModel[191].setRotationPoint(-26F, -32F, -4.5F);
+		gunModel[191].rotateAngleY = 0.33161256F;
 
-		gunModel[192].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 226
-		gunModel[192].setRotationPoint(27.5F, -36.5F, -1.51F);
+		gunModel[192].addBox(-1.5F, 0F, 0F, 1, 2, 2, 0F); // Box 241
+		gunModel[192].setRotationPoint(-26F, -32F, -4.5F);
+		gunModel[192].rotateAngleY = 0.33161256F;
 
-		gunModel[193].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 227
-		gunModel[193].setRotationPoint(26F, -36.5F, -1.51F);
+		gunModel[193].addBox(-1F, 0.5F, 0F, 1, 1, 1, 0F); // Box 242
+		gunModel[193].setRotationPoint(-26F, -32F, -4F);
+		gunModel[193].rotateAngleY = 0.33161256F;
 
-		gunModel[194].addBox(0F, 0F, 0F, 1, 1, 3, 0F); // Box 228
-		gunModel[194].setRotationPoint(24.5F, -36.5F, -1.51F);
+		gunModel[194].addBox(0F, 0F, 0F, 2, 3, 2, 0F); // Box 243
+		gunModel[194].setRotationPoint(-13F, -33F, -3.5F);
 
-		gunModel[195].addBox(0F, 0F, 0F, 4, 1, 3, 0F); // Box 229
-		gunModel[195].setRotationPoint(36.3F, -37F, -1.5F);
+		gunModel[195].addBox(-3F, 0F, 0F, 3, 3, 2, 0F); // Box 244
+		gunModel[195].setRotationPoint(-13F, -33F, -3.5F);
+		gunModel[195].rotateAngleY = -0.61086524F;
 
-		gunModel[196].addBox(0F, 0F, 0F, 3, 1, 3, 0F); // Box 230
-		gunModel[196].setRotationPoint(37.3F, -38F, -1.51F);
+		gunModel[196].addBox(0F, 0F, 0F, 14, 3, 1, 0F); // Box 245
+		gunModel[196].setRotationPoint(-10F, -33.5F, -2.5F);
+		gunModel[196].rotateAngleX = -0.15707963F;
 
-		gunModel[197].addBox(0F, 0F, 0F, 2, 1, 4, 0F); // Box 231
-		gunModel[197].setRotationPoint(38.3F, -39F, -2F);
+		gunModel[197].addBox(5F, 0.2F, -0.5F, 4, 2, 1, 0F); // Box 246
+		gunModel[197].setRotationPoint(-10F, -33.25F, -2F);
+		gunModel[197].rotateAngleX = -0.40142573F;
 
-		gunModel[198].addBox(0F, 0F, 0F, 2, 4, 1, 0F); // Box 232
-		gunModel[198].setRotationPoint(37.45F, -41.75F, 0.98F);
+		gunModel[198].addBox(0F, -1.25F, 0F, 14, 1, 1, 0F); // Box 247
+		gunModel[198].setRotationPoint(-10F, -33.5F, -2F);
+		gunModel[198].rotateAngleX = -0.15707963F;
 
-		gunModel[199].addBox(0F, -1F, 0F, 3, 2, 1, 0F); // Box 233
-		gunModel[199].setRotationPoint(38.5F, -41.5F, 1F);
-		gunModel[199].rotateAngleZ = -1.29154365F;
+		gunModel[199].addBox(0F, 0F, 0F, 1, 5, 1, 0F); // Box 248
+		gunModel[199].setRotationPoint(-6.25F, -28.1F, -3F);
 
-		gunModel[200].addBox(-2F, 0F, 0F, 4, 2, 3, 0F); // Box 234
-		gunModel[200].setRotationPoint(37F, -38F, -1.5F);
-		gunModel[200].rotateAngleZ = 1.15191731F;
+		gunModel[200].addBox(0F, 0F, 0F, 3, 1, 1, 0F); // Box 249
+		gunModel[200].setRotationPoint(-9.25F, -24.1F, -3F);
 
-		gunModel[201].addBox(0F, -1F, 0F, 3, 2, 1, 0F); // Box 235
-		gunModel[201].setRotationPoint(38.5F, -41.5F, -2F);
-		gunModel[201].rotateAngleZ = -1.29154365F;
+		gunModel[201].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 250
+		gunModel[201].setRotationPoint(-9F, -27.1F, -3F);
 
-		gunModel[202].addBox(0F, 0F, 0F, 2, 4, 1, 0F); // Box 236
-		gunModel[202].setRotationPoint(37.45F, -41.75F, -2.02F);
 
-		gunModel[203].addBox(0F, -1F, 0F, 1, 2, 1, 0F); // Box 238
-		gunModel[203].setRotationPoint(38F, -40F, -0.5F);
+		defaultScopeModel = new ModelRendererTurbo[13];
+		defaultScopeModel[0] = new ModelRendererTurbo(this, 73, 1, textureX, textureY); // Box 131
+		defaultScopeModel[1] = new ModelRendererTurbo(this, 113, 1, textureX, textureY); // Box 132
+		defaultScopeModel[2] = new ModelRendererTurbo(this, 129, 1, textureX, textureY); // Box 133
+		defaultScopeModel[3] = new ModelRendererTurbo(this, 241, 57, textureX, textureY); // Box 134
+		defaultScopeModel[4] = new ModelRendererTurbo(this, 89, 65, textureX, textureY); // Box 135
+		defaultScopeModel[5] = new ModelRendererTurbo(this, 185, 1, textureX, textureY); // Box 136
+		defaultScopeModel[6] = new ModelRendererTurbo(this, 169, 1, textureX, textureY); // Box 137
+		defaultScopeModel[7] = new ModelRendererTurbo(this, 209, 1, textureX, textureY); // Box 138
+		defaultScopeModel[8] = new ModelRendererTurbo(this, 105, 65, textureX, textureY); // Box 139
+		defaultScopeModel[9] = new ModelRendererTurbo(this, 113, 65, textureX, textureY); // Box 140
+		defaultScopeModel[10] = new ModelRendererTurbo(this, 137, 65, textureX, textureY); // Box 141
+		defaultScopeModel[11] = new ModelRendererTurbo(this, 153, 65, textureX, textureY); // Box 142
+		defaultScopeModel[12] = new ModelRendererTurbo(this, 177, 65, textureX, textureY); // Box 143
 
-		gunModel[204].addBox(0F, 0F, 0F, 7, 2, 2, 0F); // Box 240
-		gunModel[204].setRotationPoint(-26F, -32F, -4.5F);
-		gunModel[204].rotateAngleY = 0.33161256F;
+		defaultScopeModel[0].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 131
+		defaultScopeModel[0].setRotationPoint(-17.5F, -41F, -1.99F);
 
-		gunModel[205].addBox(-1.5F, 0F, 0F, 1, 2, 2, 0F); // Box 241
-		gunModel[205].setRotationPoint(-26F, -32F, -4.5F);
-		gunModel[205].rotateAngleY = 0.33161256F;
+		defaultScopeModel[1].addBox(0F, 0F, 0F, 2, 1, 1, 0F); // Box 132
+		defaultScopeModel[1].setRotationPoint(-15.5F, -41F, -2.01F);
+		defaultScopeModel[1].rotateAngleZ = -0.78539816F;
 
-		gunModel[206].addBox(-1F, 0.5F, 0F, 1, 1, 1, 0F); // Box 242
-		gunModel[206].setRotationPoint(-26F, -32F, -4F);
-		gunModel[206].rotateAngleY = 0.33161256F;
+		defaultScopeModel[2].addBox(-2F, 0F, 0F, 2, 1, 1, 0F); // Box 133
+		defaultScopeModel[2].setRotationPoint(-17.5F, -41F, -2.01F);
+		defaultScopeModel[2].rotateAngleZ = 0.78539816F;
 
-		gunModel[207].addBox(0F, 0F, 0F, 2, 3, 2, 0F); // Box 243
-		gunModel[207].setRotationPoint(-13F, -33F, -3.5F);
+		defaultScopeModel[3].addBox(0F, 0F, 0F, 3, 4, 1, 0F); // Box 134
+		defaultScopeModel[3].setRotationPoint(-18.9F, -39.6F, -2.02F);
 
-		gunModel[208].addBox(-3F, 0F, 0F, 3, 3, 2, 0F); // Box 244
-		gunModel[208].setRotationPoint(-13F, -33F, -3.5F);
-		gunModel[208].rotateAngleY = -0.61086524F;
+		defaultScopeModel[4].addBox(0F, 0F, 0F, 3, 4, 1, 0F); // Box 135
+		defaultScopeModel[4].setRotationPoint(-17.1F, -39.6F, 1F);
 
-		gunModel[209].addBox(0F, 0F, 0F, 14, 3, 1, 0F); // Box 245
-		gunModel[209].setRotationPoint(-10F, -33.5F, -2.5F);
-		gunModel[209].rotateAngleX = -0.15707963F;
+		defaultScopeModel[5].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 136
+		defaultScopeModel[5].setRotationPoint(-17.5F, -41F, 0.99F);
 
-		gunModel[210].addBox(5F, 0.2F, -0.5F, 4, 2, 1, 0F); // Box 246
-		gunModel[210].setRotationPoint(-10F, -33.25F, -2F);
-		gunModel[210].rotateAngleX = -0.40142573F;
+		defaultScopeModel[6].addBox(0F, 0F, 0F, 2, 1, 1, 0F); // Box 137
+		defaultScopeModel[6].setRotationPoint(-15.5F, -41F, 1.01F);
+		defaultScopeModel[6].rotateAngleZ = -0.78539816F;
 
-		gunModel[211].addBox(0F, -1.25F, 0F, 14, 1, 1, 0F); // Box 247
-		gunModel[211].setRotationPoint(-10F, -33.5F, -2F);
-		gunModel[211].rotateAngleX = -0.15707963F;
+		defaultScopeModel[7].addBox(-2F, 0F, 0F, 2, 1, 1, 0F); // Box 138
+		defaultScopeModel[7].setRotationPoint(-17.5F, -41F, 1.01F);
+		defaultScopeModel[7].rotateAngleZ = 0.78539816F;
 
-		gunModel[212].addBox(0F, 0F, 0F, 1, 5, 1, 0F); // Box 248
-		gunModel[212].setRotationPoint(-6.25F, -28.1F, -3F);
+		defaultScopeModel[8].addBox(0F, 0F, 0F, 3, 4, 1, 0F); // Box 139
+		defaultScopeModel[8].setRotationPoint(-18.9F, -39.6F, 1.02F);
 
-		gunModel[213].addBox(0F, 0F, 0F, 3, 1, 1, 0F); // Box 249
-		gunModel[213].setRotationPoint(-9.25F, -24.1F, -3F);
+		defaultScopeModel[9].addBox(0F, 0F, 0F, 2, 2, 6, 0F); // Box 140
+		defaultScopeModel[9].setRotationPoint(-17.6F, -39F, -2.98F);
 
-		gunModel[214].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 250
-		gunModel[214].setRotationPoint(-9F, -27.1F, -3F);
+		defaultScopeModel[10].addBox(0F, -1F, -1F, 1, 4, 4, 0F); // Box 141
+		defaultScopeModel[10].setRotationPoint(-16.9F, -40.5F, -0.97F);
+
+		defaultScopeModel[11].addBox(0F, 0F, 0F, 4, 2, 4, 0F); // Box 142
+		defaultScopeModel[11].setRotationPoint(-16.1F, -37.5F, -2.01F);
+
+		defaultScopeModel[12].addBox(0F, 0F, 0F, 4, 1, 4, 0F); // Box 143
+		defaultScopeModel[12].setRotationPoint(-16.1F, -38.5F, -2F);
+		defaultScopeModel[12].rotateAngleZ = -0.15707963F;
 
 
 		ammoModel = new ModelRendererTurbo[21];
@@ -1018,10 +1022,15 @@ public class m4a1 extends ModelGun //Same as Filename
 		ammoModel[20].setRotationPoint(-6F, -8.15F, -2.15F);
 		ammoModel[20].rotateAngleZ = 0.36651914F;
 
-
+		thirdPersonOffset = new Vector3f(0f, -0.1f, 0f);
+		
+		attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(0.05f, 0.35f, 0f));
+		
 		this.modelScale = 0.2f;
 		translateAll = new Vector3f(18F, 7.5F, 0F);
 		this.crouchZoom = -0.2f;
+		
+		this.gunOffset = 0F;
 		
 		leftArmPos = new Vector3f(0.1F, -0.40F, 0F);
         leftArmRot = new Vector3f(65.0F, 32.0F, -46.0F);

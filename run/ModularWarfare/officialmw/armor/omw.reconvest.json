@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.reconvest",
+    "modelName": "omw.armor.reconvest",
+    "armorTypes": 
+    {
+        "vest": 
+        {
+            "displayName": "Recon Vest"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.reconvest",
+        "displayName": "Recon Vest - Default"
+      }
+    ]
+}

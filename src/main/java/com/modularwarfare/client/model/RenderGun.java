@@ -39,14 +39,15 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 
 public class RenderGun extends CustomItemRenderer {
@@ -172,12 +173,20 @@ public class RenderGun extends CustomItemRenderer {
 				GlStateManager.rotate(Math.abs(MathHelper.cos(f2 * (float)Math.PI - 0.2F) * f3) * 5.0F, 1.0F, 0.0F, 0.0F);
 				GlStateManager.rotate(f4, 1.0F, 0.0F, 0.0F);
 				
+				// Aim offset
+				float aimOffset = 0f;
+				if(GunType.getAttachment(item, AttachmentEnum.Sight) != null)
+				{
+					AttachmentType sightType = (AttachmentType) ((ItemAttachment) GunType.getAttachment(item, AttachmentEnum.Sight).getItem()).type;
+					aimOffset = model.gunOffset + ((ModelAttachment)sightType.model).renderOffset;
+				}
+				
 				// Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
 				GL11.glRotatef(rotateZ, 0F, 0F, 1F); //ANGLE UP-DOWN
 				GL11.glTranslatef(translateX + (crouchZoom * crouchSwitch), 0F, 0F);
-				GL11.glTranslatef(0F, translateY, 0F);
+				GL11.glTranslatef(0F, translateY + (aimOffset), 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
 				
 				
@@ -584,6 +593,46 @@ public class RenderGun extends CustomItemRenderer {
 						ModelAttachment attachmentModel = (ModelAttachment) attachmentType.model;
 						if(attachmentModel != null)
 						{
+//							Minecraft ue = Minecraft.getMinecraft();
+//					        GL11.glPushMatrix();
+//					        GL11.glViewport(0, 0, ue.displayWidth, ue.displayHeight);
+//					        int width = ue.displayWidth;
+//					        int height = ue.displayHeight;
+//					 
+//					 
+//					        GL11.glDisable(GL11.GL_LIGHTING);
+//					        float uezoom = 4F;
+//					        int uesize = (int) (Math.min(width, height) / uezoom);
+//					        GL11.glCopyTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, width / 2 - uesize / 2, height / 2 - uesize / 2, uesize, uesize, 0);
+//					        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+//					        GL11.glPopMatrix();
+//					        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+//					        GL11.glDisable(GL11.GL_CULL_FACE);
+//					        GL11.glScalef(2, 2, 2);
+//					        GL11.glRotatef(180, 0, 0, 1);
+//					        GL11.glEnable(GL11.GL_CULL_FACE);
+//					        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+//					 
+//					        GL11.glEnable(GL11.GL_BLEND);
+//					        GL11.glDisable(GL11.GL_CULL_FACE);
+//					        //GL11.glRotatef(180, 0, 0, 1);
+//					        GL11.glTranslatef(0, 0, 0f);
+//					        /*Модель таже самая что и выше
+//					         * но, на ней уже рендериться оверлей текстура*/
+//					        GL11.glDisable(GL11.GL_BLEND);
+//					        GL11.glEnable(GL11.GL_CULL_FACE);
+//					        int uei = (int) ue.world.getLightBrightness(new BlockPos(MathHelper.floor(ue.player.posX), MathHelper.floor(ue.player.posY), MathHelper.floor(ue.player.posZ)));
+//					        int uej = uei % 65536;
+//					        int uek = uei / 65536;
+//					        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, uej / 1.0F, uek / 1.0F);
+//					        GL11.glPopMatrix();
+//					        GL11.glPushMatrix();
+//					 
+//					        //  GL11.glRotated(-90, 0, 0, 1);
+//					        //  GL11.glRotated(5, 0, 1, 0);
+//					        //  GL11.glTranslated(-0.4, -2, 2.2);
+//					        //  GL11.glScaled(30, 30, 30);
+//					        GL11.glPopMatrix();
 							GL11.glPushMatrix();
 							{
 								int skinId = itemStack.getTagCompound().getInteger("skinId");

@@ -1,0 +1,13 @@
+{
+    "displayName": "Aimpoint Sight",
+    "internalName": "omw.aimpoint",
+    "modelName": "omw.attachments.aimpoint",
+    "attachmentType": "sight",
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.aimpoint",
+        "displayName": "Aimpoint - Default"
+      }
+    ]
+}

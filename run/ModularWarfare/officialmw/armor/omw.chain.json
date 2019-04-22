@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.chain",
+    "modelName": "omw.armor.chain",
+    "armorTypes": 
+    {
+        "accessory": 
+        {
+            "displayName": "Silver Chain"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.chain",
+        "displayName": "Silver Chain - Default"
+      }
+    ]
+}

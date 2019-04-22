@@ -22,17 +22,12 @@ import scala.actors.threadpool.Arrays;
 public class DevGui extends Gui
 {
 
-	//private final ResourceLocation gunStats = new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "gunstats.png");
-	//private final int boxWidth = 100, boxHeight = 200;
-
-	
 	public DevGui(Minecraft mc, ItemStack itemStack, ItemGun itemGun, RenderGun renderGun, AnimStateMachine anim)
 	{
     	GunType gunType = ((ItemGun) itemStack.getItem()).type;
     	ModelGun gunModel = (ModelGun) gunType.model;
     	
         ScaledResolution scaled = new ScaledResolution(mc);
-        //TODO Add GUI scale command
         float textScale = 0.75f;
         int width = (int) ((scaled.getScaledWidth() / 50) * textScale);
         int height = (int) ((scaled.getScaledHeight() / 50) * textScale);

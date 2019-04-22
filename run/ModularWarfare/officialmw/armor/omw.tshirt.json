@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.tshirt",
+    "modelName": "omw.armor.tshirt",
+    "armorTypes": 
+    {
+        "chest": 
+        {
+            "displayName": "Turtle Shirt"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.turtleshirt",
+        "displayName": "Turtle Shirt - Default"
+      }
+    ]
+}

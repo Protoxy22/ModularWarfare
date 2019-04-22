@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.heavyvest",
+    "modelName": "omw.armor.heavyvest",
+    "armorTypes": 
+    {
+        "vest": 
+        {
+            "displayName": "Heavy Vest"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.heavyvest",
+        "displayName": "Heavy Vest - Default"
+      }
+    ]
+}

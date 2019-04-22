@@ -3,21 +3,29 @@ package com.modularwarfare.client.handler;
 import java.util.Random;
 
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.ClientRenderHooks;
 import com.modularwarfare.client.StateMachine;
 import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.anim.StateEntry;
+import com.modularwarfare.client.model.ModelAttachment;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
+import com.modularwarfare.common.guns.AttachmentEnum;
+import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.utility.NumberHelper;
 import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -107,7 +115,7 @@ public class ClientTickHandler extends ForgeEvent {
 			RenderGun.sprintSwitch = Math.max(0, Math.min(1, sprintValue));;
 			
 			float crouchSpeed = 0.15f * renderTick;
-			float crouchValue = player.isSneaking() ? RenderGun.crouchSwitch + crouchSpeed : RenderGun.crouchSwitch - crouchSpeed;
+			float crouchValue = player.isSneaking() && RenderGun.adsSwitch > 0f ? RenderGun.crouchSwitch + crouchSpeed : RenderGun.crouchSwitch - crouchSpeed;
 			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));;
 			
 			float reloadSpeed = 0.15f * renderTick;
@@ -155,8 +163,19 @@ public class ClientTickHandler extends ForgeEvent {
 			{
 				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
 				{
-					GunType gunType = (GunType) ((ItemGun) player.getHeldItemMainhand().getItem()).type;
+					ItemStack gunStack = player.getHeldItemMainhand();
+					GunType gunType = (GunType) ((ItemGun) gunStack.getItem()).type;
 					gunType.reloadModel();
+					
+					for(AttachmentEnum attachment : AttachmentEnum.values())
+					{
+						ItemStack itemStack = GunType.getAttachment(gunStack, attachment);
+						if(itemStack != null && itemStack.getItem() != Items.AIR)
+						{
+							AttachmentType attachmentType = ((ItemAttachment)itemStack.getItem()).type;
+							attachmentType.reloadModel();
+						}
+					}
 				}
 			}
 			

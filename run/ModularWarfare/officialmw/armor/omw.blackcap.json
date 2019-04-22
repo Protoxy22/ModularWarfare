@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.blackcap",
+    "modelName": "omw.armor.blackcap",
+    "armorTypes": 
+    {
+        "head": 
+        {
+            "displayName": "Black Cap"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.blackcap",
+        "displayName": "Black Cap - Default"
+      }
+    ]
+}

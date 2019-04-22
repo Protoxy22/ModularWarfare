@@ -26,21 +26,15 @@ public class KeyInputHandler extends ForgeEvent {
 	public KeyInputHandler() 
 	{
 		keyBinds = new ArrayList<KeyEntry>();
-		keyBinds.add(new KeyEntry(KeyType.GunReload));
-		keyBinds.add(new KeyEntry(KeyType.ClientReload));
-		keyBinds.add(new KeyEntry(KeyType.FireMode));
-		keyBinds.add(new KeyEntry(KeyType.GunUnload));
-		keyBinds.add(new KeyEntry(KeyType.AddAttachment));
+		
+		for(KeyType keyType : KeyType.values())
+			keyBinds.add(new KeyEntry(keyType));
 		
 		if(ModularWarfare.DEV_ENV)
-		{
 			keyBinds.add(new KeyEntry(KeyType.DebugMode));
-		}
 		
 		for(KeyEntry keyEntry : keyBinds)
-		{
 			ClientRegistry.registerKeyBinding(keyEntry.keyBinding);
-		}
 	}
 	
 	@SubscribeEvent

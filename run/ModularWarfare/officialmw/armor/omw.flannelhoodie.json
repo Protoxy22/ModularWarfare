@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.flannelhoodie",
+    "modelName": "omw.armor.flannelhoodie",
+    "armorTypes": 
+    {
+        "chest": 
+        {
+            "displayName": "Flannel Hoodie"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.flannelhoodie",
+        "displayName": "Flannel Hoodie - Default"
+      }
+    ]
+}

@@ -18,5 +18,9 @@
                 "soundFadeMultiplier": 1
             }
         ]
+    },
+    "acceptedAttachments":
+    {
+        "sight": ["omw.aimpoint"]
     }
 }

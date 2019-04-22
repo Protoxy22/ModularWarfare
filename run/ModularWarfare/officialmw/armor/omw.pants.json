@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.pants",
+    "modelName": "omw.armor.pants",
+    "armorTypes": 
+    {
+        "legs": 
+        {
+            "displayName": "Black Pants"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.pants",
+        "displayName": "Black Pants"
+      }
+    ]
+}
