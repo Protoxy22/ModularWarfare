@@ -234,8 +234,8 @@ public class ItemGun extends BaseItem {
 	
 	public static boolean hasAmmoLoaded(ItemStack gunStack)
 	{
-		return !(gunStack.getItem() instanceof ItemAir) ? gunStack.hasTagCompound() ? gunStack.getTagCompound().hasKey("ammo") ? gunStack.getTagCompound().getTag("ammo") != null : false : false : false;
-	}
+		return !gunStack.isEmpty() ? !(gunStack.getItem() instanceof ItemAir) ? gunStack.hasTagCompound() ? gunStack.getTagCompound().hasKey("ammo") ? gunStack.getTagCompound().getTag("ammo") != null : false : false : false : false;	
+		}
 	
 	public static int getMagazineBullets(ItemStack gunStack)
 	{

@@ -652,7 +652,7 @@ public class pps43 extends ModelGun //Same as Filename
 	    
 		hasFlash = false;
 	    
-	    leftArmPos = new Vector3f(1.18F, -0.57F, 0.0F);
+	    leftArmPos = new Vector3f(-0.3F, -0.73F, 0.05F);
 	    leftArmRot = new Vector3f(65.0F, 30.0F, -45.0F);
 		leftArmReloadPos = new Vector3f(0.450F, -0.80F, 0.02F);
 	    leftArmReloadRot = new Vector3f(35.0F, 0.0F, -45.0F);
@@ -690,7 +690,7 @@ public class pps43 extends ModelGun //Same as Filename
 	    
 	    chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 	    
-        ammoMap.put("w44.pps4143stickammo", new RenderVariables(new Vector3f(0.6F, 0.12F, 0F), 0.3F));
+        ammoMap.put("w44.pps4143stickammo", new RenderVariables(new Vector3f(2.3F, 0.5F, 0F), 0.3F));
 	    
 		flipAll();
 	}
