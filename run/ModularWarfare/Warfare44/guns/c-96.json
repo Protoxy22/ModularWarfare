@@ -7,7 +7,7 @@
   "acceptedAmmo": ["w44.c-96ammo"],
   "fireModes": ["semi"],
   
-  "recoilPitch": 10.0,
+  "recoilPitch": 7.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,

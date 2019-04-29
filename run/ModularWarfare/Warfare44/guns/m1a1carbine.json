@@ -7,7 +7,7 @@
   "acceptedAmmo": ["w44.m1a1carbineammo"],
   "fireModes": ["semi"],
   
-  "recoilPitch": 10.0,
+  "recoilPitch": 6.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,

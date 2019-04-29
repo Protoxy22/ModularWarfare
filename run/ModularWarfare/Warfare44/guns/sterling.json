@@ -1,0 +1,42 @@
+{
+  "displayName": "Sterling L2A3 Mk. IV",
+  "internalName": "w44.sterling",
+  "iconName": "w44.sterling",
+  "gunDamage": 7,
+  "roundsPerMin": 450,
+  "acceptedAmmo": ["w44.sterlingammo"],
+  "fireModes": ["full", "semi"],
+  "recoilPitch": 5.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "w44.sterling",
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "sterlingshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "stg44reload"
+      }
+    ]
+  },
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_sterling",
+      "displayName": "Sterling L2A3 Mk. IV - Default"
+    }
+  ]
+}

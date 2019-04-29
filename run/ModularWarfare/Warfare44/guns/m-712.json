@@ -7,7 +7,7 @@
   "acceptedAmmo": ["w44.m-712ammo"],
   "fireModes": ["full", "semi"],
   
-  "recoilPitch": 10.0,
+  "recoilPitch": 7.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,

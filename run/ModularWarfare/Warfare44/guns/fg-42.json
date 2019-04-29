@@ -2,7 +2,7 @@
   "displayName": "FG-42",
   "internalName": "w44.fg-42",
   "iconName": "w44.fg-42",
-  "gunDamage": 12,
+  "gunDamage": 16,
   "roundsPerMin": 800,
   "acceptedAmmo": ["w44.fg-42ammo"],
   "fireModes": ["full", "semi"],

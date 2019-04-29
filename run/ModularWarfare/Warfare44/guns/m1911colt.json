@@ -2,12 +2,12 @@
   "displayName": "M-1911 Colt",
   "internalName": "w44.m1911colt",
   "iconName": "w44.m1911colt",
-  "gunDamage": 8,
+  "gunDamage": 9,
   "roundsPerMin": 250,
   "acceptedAmmo": ["w44.m1911coltammo"],
   "fireModes": ["semi"],
   
-  "recoilPitch": 10.0,
+  "recoilPitch": 8.0,
   "recoilYaw": 1.0,
   "randomRecoilPitch": 0.5,
   "randomRecoilYaw": 0.5,
@@ -38,7 +38,7 @@
   [
     {
       "skinAsset": "w44.skin_m1911colt",
-      "displayName": "P-08 m1911colt - Default"
+      "displayName": "M-1911 Colt - Default"
     }
   ]
 }

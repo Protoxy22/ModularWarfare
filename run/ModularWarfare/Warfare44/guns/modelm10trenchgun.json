@@ -3,7 +3,7 @@
   "internalName": "w44.modelm10trenchgun",
   "iconName": "w44.modelm10trenchgun",
   "weaponType": "boltsniper",
-  "gunDamage": 100,
+  "gunDamage": 19,
   "roundsPerMin": 34,
   "acceptedAmmo": ["w44.modelm10trenchgunammo"],
   "fireModes": ["semi"],

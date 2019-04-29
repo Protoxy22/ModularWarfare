@@ -1,0 +1,57 @@
+{
+  "displayName": "Lee-Enfield Mk3 No.1",
+  "internalName": "w44.leeenfield3",
+  "iconName": "w44.leeenfield3",
+  "weaponType": "boltsniper",
+  "gunDamage": 16,
+  "roundsPerMin": 37,
+  "acceptedAmmo": ["w44.leeenfieldammo"],
+  "fireModes": ["semi"],
+  "recoilPitch": 12.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "w44.leeenfield3",
+  "weaponSounds": [
+    {
+      "soundEvent": "weaponFire",
+      "soundName": "leeenfield3shoot",
+      "soundNameDistant": "shoot.mwp.ak1.far",
+      "soundRange": 64,
+      "soundMaxRange": 96,
+      "soundFadeMultiplier": 1
+    },
+    {
+      "soundEvent": "weaponReload",
+      "soundName": "leeenfieldreload"
+    }
+  ],
+  "weaponSoundMap": {
+    "weaponFire": [
+        {
+            "soundEvent": "weaponFire",
+            "soundName": "leeenfieldshoot",
+            "soundRange": 64,
+            "soundMaxRange": 96,
+            "soundFadeMultiplier": 1
+        }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "leeenfieldreload"
+      }
+    ]
+  },
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "w44.skin_leeenfield3",
+      "displayName": "Lee-Enfield Mk3 No.1 - Default"
+    }
+  ]
+}

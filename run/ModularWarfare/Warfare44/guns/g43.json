@@ -2,7 +2,7 @@
   "displayName": "Gewehr-43",
   "internalName": "w44.g-43",
   "iconName": "w44.g-43",
-  "gunDamage": 10,
+  "gunDamage": 16,
   "roundsPerMin": 275,
   "acceptedAmmo": ["w44.g-43ammo"],
   "fireModes": ["semi"],
