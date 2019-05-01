@@ -24,7 +24,11 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class CommonProxy extends ForgeEvent implements IGuiHandler {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
-	
+
+	public void preload() {
+
+	}
+
 	public void load() {
 		
 	}
@@ -63,7 +67,8 @@ public class CommonProxy extends ForgeEvent implements IGuiHandler {
 	
 	public void onReloadAnimation(EntityPlayer player, String wepType, int reloadTime, int reloadCount, int reloadType) {}
 	
-	public World getClientWorld() {return null;}
+	public World getClientWorld() {
+		return null;}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
