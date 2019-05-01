@@ -1,8 +1,0 @@
-{
-  "displayName": "M1A1 Thompson Magazine [Ammo]",
-  "internalName": "w44.m1a1thompsonstickammo",
-  "iconName": "w44.m1a1thompsonstickammo",
-  "modelName": "w44.ammo.m1a1thompsonstickammo",
-  "skinAsset": "w44.skin_m1a1thompsonstickammo",
-  "ammoCapacity": 20
-}

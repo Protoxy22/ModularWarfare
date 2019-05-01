@@ -1,9 +1,0 @@
-{
-    "internalName": "mwp.holopointrounds",
-    "displayName": "Holo Point Rounds",
-    "bulletProperties": {
-        "All": {
-            "bulletDamage": 1.5
-        }
-    }
-}
