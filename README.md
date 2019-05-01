@@ -1,2 +1,5 @@
 # Modular Warfare
-The mod where sticks go bang
+
+New features:
+ - Better arms rendering and optimization
+ - Added ammo hud
