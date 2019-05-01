@@ -83,7 +83,6 @@ import net.minecraftforge.fml.common.discovery.ModCandidate;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod.EventBusSubscriber
 public class ClientProxy extends CommonProxy {
 
 	public List<File> contentPacks;
@@ -92,10 +91,15 @@ public class ClientProxy extends CommonProxy {
 	public static RenderAmmo ammoRenderer;
 	public static RenderAttachment attachmentRenderer;
 	public static HashMap<String, SoundEvent> modSounds = new HashMap<String, SoundEvent>();
-		
+
+
 	@Override
-	public void load() 
-	{
+	public void preload() {
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	@Override
+	public void load() {
 		new KeyInputHandler();
 		new ClientRenderHooks();
 		new ClientTickHandler();
@@ -132,7 +136,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@SubscribeEvent
-	public static void onModelRegistry(ModelRegistryEvent event) 
+	public void onModelRegistry(ModelRegistryEvent event)
 	{
 		for(ItemGun itemGun : ModularWarfare.gunTypes.values())
 		{
@@ -166,8 +170,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@Override
-	public void forceReload()
-	{
+	public void forceReload() {
 		FMLClientHandler.instance().refreshResources();
 	}
 	
