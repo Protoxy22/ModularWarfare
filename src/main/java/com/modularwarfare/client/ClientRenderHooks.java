@@ -52,7 +52,8 @@ public class ClientRenderHooks extends ForgeEvent {
 	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[4];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
 	private float partialTicks;
-	
+	private static RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
+
 	public ClientRenderHooks()
 	{
 		mc = Minecraft.getMinecraft();
@@ -108,9 +109,15 @@ public class ClientRenderHooks extends ForgeEvent {
 	}
 	
 	@SubscribeEvent
-	public void renderGameOverlay(RenderGameOverlayEvent.Pre event)
-	{
+	public void renderGameOverlay(RenderGameOverlayEvent.Pre event){
 		EntityPlayer player = mc.player;
+		
+		if(event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+			ScaledResolution scaledresolution = new ScaledResolution(mc);
+			int i = scaledresolution.getScaledWidth();
+			int j = scaledresolution.getScaledHeight();
+			RenderPlayerAmmo(i, j);
+		}
 		
 		ItemStack stack = player.getHeldItemMainhand();
 		if(stack != null && stack.getItem() instanceof ItemGun)
@@ -376,6 +383,44 @@ public class ClientRenderHooks extends ForgeEvent {
 		}
 	}
 	
+	private void RenderPlayerAmmo(int i, int j) {
+		ItemStack stack = mc.player.getHeldItem(EnumHand.MAIN_HAND);
+		if (stack != null && stack.getItem() instanceof ItemGun) {
+			int currentAmmoCount = ItemGun.getMagazineBullets(stack);
+
+			if(stack.getTagCompound() != null) {
+				ItemStack ammoStack = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
+				if(ammoStack.getTagCompound() != null) {
+					ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
+					int x = 0;
+					final int top = j - 38;
+					final int left = 2;
+					final int right = Math.min(left + 110, i / 2 - 91);
+					final int bottom = top + 22;
+					Gui.drawRect(left + right, top, right * 2 - 50, bottom, Integer.MIN_VALUE);
+
+
+					RenderHelper.enableGUIStandardItemLighting();
+					GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+					OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
+					drawSlotInventory(mc.fontRenderer, ammoStack, left + 115, j - 35);
+					GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+					RenderHelper.disableStandardItemLighting();
+					String s = String.valueOf(currentAmmoCount) + "/" + itemAmmo.type.ammoCapacity;
+
+					mc.fontRenderer.drawStringWithShadow(String.valueOf(s), left + 135, j - 30, 0xffffff);
+					x += 16 + mc.fontRenderer.getStringWidth(s);
+				}
+			}
+		}
+	}
+	
+	private void drawSlotInventory(FontRenderer fontRenderer, ItemStack itemstack, int i, int j){
+		if(itemstack == null || itemstack.isEmpty())
+			return;
+		itemRenderer.renderItemIntoGUI(itemstack, i, j);
+		itemRenderer.renderItemOverlayIntoGUI(fontRenderer, itemstack, i, j, null); //May be something other than null
+	}
 	private float getFOVModifier(float partialTicks)
 	{
 		Entity entity = this.mc.getRenderViewEntity();
