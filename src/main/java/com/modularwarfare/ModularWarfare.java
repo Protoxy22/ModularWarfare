@@ -72,7 +72,7 @@ import net.minecraftforge.fml.relauncher.Side;
 modid = ModularWarfare.MOD_ID, 
 name = ModularWarfare.MOD_NAME, 
 version = ModularWarfare.MOD_VERSION,
-dependencies = "required-after:forge@[14.21.0.2348,);")
+dependencies = "required-after:forge@[14.21.0.2815,);")
 public class ModularWarfare {
 
 	// Mod Info
@@ -115,7 +115,7 @@ public class ModularWarfare {
 	public void onPreInitialization(FMLPreInitializationEvent event) {
 		DEV_ENV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 		LOGGER = event.getModLog();
-		
+		PROXY.preload();
 		// Creates directory if doesn't exist
 		 MOD_DIR = new File(event.getModConfigurationDirectory().getParentFile(), "ModularWarfare");
 		if(!MOD_DIR.exists())
@@ -299,7 +299,7 @@ public class ModularWarfare {
 			// TODO: Fix content pack file reload
 			if(reload)
 				return;
-			PROXY.generateJsonSounds(gunTypes.values(), DEV_ENV);
+			//PROXY.generateJsonSounds(gunTypes.values(), DEV_ENV);
 			PROXY.generateLangFiles(baseTypes, DEV_ENV);
 		}
 	}
