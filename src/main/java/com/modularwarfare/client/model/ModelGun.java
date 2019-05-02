@@ -70,7 +70,8 @@ public class ModelGun extends TurboBase
 	public EnumAction actionType;
 	
 	public Vector3f chargeModifier = new Vector3f(1F, 0F, 0F);
-	
+
+	public float thirdPersonScale = 1F;
 	//Rotation helper tool
 	public Vector3f rotationHelper = new Vector3f(0F, 0F, 0F);
 

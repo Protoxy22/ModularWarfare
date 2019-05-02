@@ -33,3 +33,5 @@ run/ModularWarfare/dev_pack/assets/modularwarfare/sounds.json
 run/ModularWarfare/dev_pack/assets/modularwarfare/sounds.json
 ModularWarfare_Client.launch
 ModularWarfare_Server.launch
+run/ModularWarfare/minegrounds
+src/main/java/com/modularwarfare/client/model/minegrounds

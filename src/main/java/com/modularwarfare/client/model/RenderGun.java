@@ -132,7 +132,9 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glRotatef(90F, 0F, 0F, 1F);
 				GL11.glTranslatef(0.25F, 0F, -0.05F);
 				GL11.glScalef(1F, 1F, 1F);
+
 				GL11.glScalef(model.thirdPersonScale, model.thirdPersonScale, model.thirdPersonScale);
+
 				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y + crouchOffset, model.thirdPersonOffset.z);
 				break;
 			}
