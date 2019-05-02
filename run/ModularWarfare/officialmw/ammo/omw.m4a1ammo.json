@@ -3,6 +3,6 @@
     "displayName": "M4A1 Ammo",
     "numBullets": 1,
     "ammoCapacity": 30,
-    "magazineCount": 3,
-    "reloadTime": 4    
+    "magazineCount": 1,
+    "reloadTime": 4
 }
