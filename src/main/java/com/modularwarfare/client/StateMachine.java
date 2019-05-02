@@ -1,9 +1,10 @@
 package com.modularwarfare.client;
 
-import java.util.Random;
-
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.ModelGun;
 
+import com.modularwarfare.common.guns.WeaponSoundType;
+import com.modularwarfare.common.network.PacketGunReloadSound;
 import net.minecraft.item.ItemStack;
 
 public class StateMachine {
@@ -62,7 +63,7 @@ public class StateMachine {
 	public ItemStack cachedAmmoStack;
 //	public static float renderTick;
 //	
-//	boolean playedLoadSound = false;
+	boolean playedLoadSound = false;
 	
 	public void onUpdate()
 	{
@@ -132,33 +133,32 @@ public class StateMachine {
 		if(unloadOnly && reloadAnimationProgress >= 0.5f) {
 			renderAmmo = false;
 		}
-//		
-//		if(reloadAnimationProgress >= 0.75f && !playedLoadSound && !unloadOnly && !loadOnly)
-//		{
-//			ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Load));
-//			playedLoadSound = true;
-//		}
-//		
-//		//Reload
-//		lastReloadAnimationProgress = reloadAnimationProgress;
-//		if(reloading)
-//			reloadAnimationProgress += 1F / reloadAnimationTime;
-//		if(reloading && reloadAnimationProgress >= 0.9F)	//reset if slide locked
-//			isGunEmpty = false;
-//		if(reloading && reloadAnimationProgress >= 1F)
-//		{
-//			//renderAmmo = true;
-//			reloading = false;
-//			loadOnly = false;
-//			unloadOnly = false;
-//			cachedAmmoStack = null;
-//			lastReloadAnimationProgress = reloadAnimationProgress = 0;
-//		}
-//				
+
+		if(reloadAnimationProgress >= 0.75f && !playedLoadSound && !unloadOnly && !loadOnly)
+		{
+			ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Load));
+			playedLoadSound = true;
+		}
+
+		//Reload
+		lastReloadAnimationProgress = reloadAnimationProgress;
+		if(reloading)
+			reloadAnimationProgress += 1F / reloadAnimationTime;
+		if(reloading && reloadAnimationProgress >= 0.9F)	//reset if slide locked
+			isGunEmpty = false;
+		if(reloading && reloadAnimationProgress >= 1F)
+		{
+			//renderAmmo = true;
+			reloading = false;
+			loadOnly = false;
+			unloadOnly = false;
+			cachedAmmoStack = null;
+			lastReloadAnimationProgress = reloadAnimationProgress = 0;
+		}
+
 	}
 		
-	public void triggerReload(int reloadTime, ModelGun model, boolean isLoadOnly, boolean isUnload, int reloadCount)
-	{
+	public void triggerReload(int reloadTime, ModelGun model, boolean isLoadOnly, boolean isUnload, int reloadCount) {
 		reloading = true;
 				
 		lastReloadAnimationProgress = reloadAnimationProgress = 0F;
@@ -172,7 +172,7 @@ public class StateMachine {
 		loadOnly = isLoadOnly;
 		renderAmmo = !loadOnly;
 		unloadOnly = isUnload;
-		//playedLoadSound = false;
+		playedLoadSound = false;
 		reloadAmmoCount = reloadCount;
 		//FlansModClient.lastBulletReload = ammoCount - 1;
 	}

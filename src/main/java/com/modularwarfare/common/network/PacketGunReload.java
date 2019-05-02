@@ -64,8 +64,7 @@ public class PacketGunReload extends PacketBase {
 		}
 	}
 	
-	public void handleAmmoReload(EntityPlayerMP entityPlayer)
-	{
+	public void handleAmmoReload(EntityPlayerMP entityPlayer) {
 		ItemStack ammoStack = entityPlayer.getHeldItemMainhand();
 		ItemAmmo itemAmmo = (ItemAmmo) entityPlayer.getHeldItemMainhand().getItem();
 		AmmoType ammoType = itemAmmo.type;
@@ -337,8 +336,7 @@ public class PacketGunReload extends PacketBase {
 		if(ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID()))
 			return;
 					
-		if(!unload)
-		{				
+		if(!unload) {
 			NBTTagCompound nbtTagCompound = gunStack.getTagCompound();
 			boolean hasAmmoLoaded = ItemGun.hasAmmoLoaded(gunStack);
 			boolean offhandedReload = false;
@@ -493,18 +491,19 @@ public class PacketGunReload extends PacketBase {
 			/** Post Reload */
 			WeaponReloadEvent.Post postReloadEvent = new WeaponReloadEvent.Post(entityPlayer, gunStack, itemGun, offhandedReload, multiMagReload, loadOnly, false, preReloadEvent.getReloadTime());
 			MinecraftForge.EVENT_BUS.post(postReloadEvent);
-			
-			if(postReloadEvent.isLoadOnly())
-				gunType.playSound(entityPlayer, WeaponSoundType.Load, gunStack);				
-			else if(!postReloadEvent.isLoadOnly() && !postReloadEvent.isUnload())
-				gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
-			
+
+			if(postReloadEvent.isLoadOnly()) {
+				ModularWarfare.LOGGER.info("LOAD #1");
+				gunType.playSound(entityPlayer, WeaponSoundType.Load, gunStack);
+			} else if(!postReloadEvent.isLoadOnly() && !postReloadEvent.isUnload()) {
+				gunType.playSound(entityPlayer, WeaponSoundType.Reload, gunStack);
+				ModularWarfare.LOGGER.info("LOAD #2");
+			}
 			int reloadType = (postReloadEvent.isLoadOnly() ? ReloadType.Load : postReloadEvent.isUnload() ? ReloadType.Unload : ReloadType.Full).i;
 			ModularWarfare.NETWORK.sendTo(new PacketClientAnimation(gunType.internalName, postReloadEvent.getReloadTime(), postReloadEvent.getReloadCount(), reloadType), entityPlayer);
 
 			ServerTickHandler.playerReloadCooldown.put(entityPlayer.getUniqueID(), preReloadEvent.getReloadTime());
-		} else
-		{
+		} else {
 			WeaponReloadEvent.Pre preReloadEvent = new WeaponReloadEvent.Pre(entityPlayer, gunStack, itemGun, false, false);
 			MinecraftForge.EVENT_BUS.post(preReloadEvent);
 			if(preReloadEvent.isCanceled())
@@ -516,7 +515,7 @@ public class PacketGunReload extends PacketBase {
 				MinecraftForge.EVENT_BUS.post(postReloadEvent);
 				
 				if(postReloadEvent.isUnload())
-					gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
+				gunType.playSound(entityPlayer, WeaponSoundType.Unload, gunStack);
 			}
 		}
 	}

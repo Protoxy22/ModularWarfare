@@ -722,6 +722,8 @@ public class RenderGun extends CustomItemRenderer {
 			
 			//Render the armor model on the arm
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
+			renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+			renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
 			if(rightArm) {
 				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
 				renderRightSleeve(player, renderplayer.getMainModel());
@@ -782,6 +784,8 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+					renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
 					renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
 					renderLeftSleeve(player, renderplayer.getMainModel());
 				}
@@ -830,6 +834,8 @@ public class RenderGun extends CustomItemRenderer {
         				{
         					float modelScale = armorModel.modelScale;
         					GL11.glScalef(modelScale, modelScale, modelScale);
+							armorModel.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+							armorModel.bipedRightArm.offsetY = 0F;
         					armorModel.render(armorModel.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
         				}
         				GL11.glPopMatrix();

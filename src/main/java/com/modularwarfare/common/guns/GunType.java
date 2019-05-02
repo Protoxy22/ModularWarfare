@@ -64,7 +64,7 @@ public class GunType extends BaseType {
 	
 	// Reload Variables
 	/** The time (in ticks) it takes to reload this gun */
-	public int reloadTime = 60;
+	public int reloadTime = 40;
 	/** The time (in ticks) it takes to offhand reload this gun */
 	public Integer offhandReloadTime;
 	
@@ -163,7 +163,7 @@ public class GunType extends BaseType {
 //					ModularWarfare.LOGGER.error(String.format("Sound event '%s' is not a valid weapon sound event for type '%s'", soundEntry.soundEvent != null ? soundEntry.soundEvent : "null", internalName));
 //				}
 //			}
-//		}		
+//		}
 	}
 	
 	@Override
@@ -174,18 +174,14 @@ public class GunType extends BaseType {
 	
 	public void playSound(EntityPlayer entityPlayer, WeaponSoundType weaponSoundType, ItemStack gunStack)
 	{
-		if(weaponSoundType != null)
-		{
-			if(weaponSoundMap.containsKey(weaponSoundType))
-			{
+		if(weaponSoundType != null) {
+			if(weaponSoundMap.containsKey(weaponSoundType)) {
 				BlockPos originPos = entityPlayer.getPosition();
 				World world = entityPlayer.world;
 				Random random = new Random();			
-				for(SoundEntry soundEntry : weaponSoundMap.get(weaponSoundType))
-				{
+				for(SoundEntry soundEntry : weaponSoundMap.get(weaponSoundType)) {
 					int soundRange = soundEntry.soundRange != null ? soundEntry.soundRange : weaponSoundType.defaultRange;
-					if(soundEntry.soundNameDistant != null && soundEntry.soundMaxRange != null)
-					{
+					if(soundEntry.soundNameDistant != null && soundEntry.soundMaxRange != null) {
 						int maxSoundRange = soundEntry.soundMaxRange;
 						for(EntityPlayer hearingPlayer : world.getEntities(EntityPlayer.class, e -> e.getPosition().getDistance(originPos.getX(), originPos.getY(), originPos.getZ()) <= maxSoundRange))
 						{

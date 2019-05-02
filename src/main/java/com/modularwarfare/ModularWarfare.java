@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import com.jadarstudios.developercapes.DevCapes;
 import com.modularwarfare.api.IArmor;
 import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.api.cap.BaubleItem;
@@ -29,7 +28,6 @@ import com.modularwarfare.api.cap.BaublesCapabilities.CapabilityBaubles;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.armor.ArmorType;
-import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
 import com.modularwarfare.common.guns.AmmoType;

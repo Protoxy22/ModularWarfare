@@ -52,13 +52,13 @@ public class PacketGunReloadSound extends PacketBase {
 				GunType gunType = itemGun.type;
 				InventoryPlayer inventory = entityPlayer.inventory;
 								
-//				if(!ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID()))
-//					return;
+				if(!ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID()))
+					return;
 								
 				if(soundType == null)
 					return;
 				
-				//System.out.println(soundType.eventName);
+				System.out.println(soundType.eventName);
 				gunType.playSound(entityPlayer, soundType, gunStack);
 			}
 		}

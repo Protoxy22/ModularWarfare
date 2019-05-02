@@ -16,7 +16,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class RenderGuiHandler extends ForgeEvent {
+public class  RenderGuiHandler extends ForgeEvent {
 
 	@SubscribeEvent
 	public void onRenderGui(RenderGameOverlayEvent.Post event)

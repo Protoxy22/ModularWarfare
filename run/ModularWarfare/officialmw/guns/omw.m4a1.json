@@ -4,7 +4,7 @@
     "modelName": "omw.guns.m4a1",
     "weaponType": "carbine",
     "gunDamage": 6,
-    "roundsPerMin": 700,
+    "roundsPerMin": 500,
     "fireModes": ["full"],
     "acceptedAmmo": ["omw.m4a1ammo"],
     "weaponSoundMap": {
@@ -12,10 +12,28 @@
             {
                 "soundEvent": "weaponFire",
                 "soundName": "omw.shoot.m4",
-                "soundNameDistant": "owm.shoot.m4_distant",
+                "soundNameDistant": "omw.shoot.m4_distant",
                 "soundRange": 64,
                 "soundMaxRange": 96,
                 "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponReload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "omw.reload.m4"
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponUnload",
+                "soundName": "omw.unload.m4"
+            }
+        ],
+        "weaponLoad": [
+            {
+                "soundEvent": "weaponLoad",
+                "soundName": "omw.load.m4"
             }
         ]
     }

@@ -156,7 +156,8 @@ public class ClientTickHandler extends ForgeEvent {
 				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
 				{
 					GunType gunType = (GunType) ((ItemGun) player.getHeldItemMainhand().getItem()).type;
-					gunType.reloadModel();
+					//IDK WHY YOU RELOAD THE MODEL
+					//gunType.reloadModel();
 				}
 			}
 			

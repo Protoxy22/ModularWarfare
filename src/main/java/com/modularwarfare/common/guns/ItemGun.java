@@ -227,8 +227,7 @@ public class ItemGun extends BaseItem {
 	 * @param entityPlayer
 	 * @return reload cooldown
 	 */
-	public static boolean isReloading(EntityPlayer entityPlayer)
-	{
+	public static boolean isReloading(EntityPlayer entityPlayer) {
 		return ServerTickHandler.playerReloadCooldown.containsKey(entityPlayer.getUniqueID());
 	}
 	

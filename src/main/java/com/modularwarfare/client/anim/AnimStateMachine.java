@@ -192,8 +192,7 @@ public class AnimStateMachine {
 		}*/
 	}
 	
-	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType)
-	{
+	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType) {
 		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getReloadStates(reloadType, reloadCount);
 		reloadStateEntries = adjustTiming(animEntries);
 		
