@@ -35,3 +35,12 @@ ModularWarfare_Client.launch
 ModularWarfare_Server.launch
 run/ModularWarfare/minegrounds
 src/main/java/com/modularwarfare/client/model/minegrounds
+src/main/resources/assets/minecraft/textures/akm/gray.png
+src/main/resources/assets/minecraft/textures/akm/lightgray.png
+src/main/resources/assets/minecraft/textures/akm/wood.png
+src/main/resources/assets/minecraft/textures/fnx45/black.png
+src/main/resources/assets/minecraft/textures/fnx45/gray.png
+src/main/resources/assets/minecraft/textures/fnx45/tan.png
+src/main/resources/assets/minecraft/textures/hamr/ammo.jpg
+src/main/resources/assets/minecraft/textures/hamr/camo.jpg
+src/main/resources/assets/minecraft/textures/mp28/mp28mag.png
