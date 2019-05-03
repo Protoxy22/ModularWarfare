@@ -13,8 +13,11 @@ import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RayHelper;
 
+import com.modularwarfare.utility.RaytraceHelper;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,7 +27,13 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -140,66 +149,58 @@ public class ItemGun extends BaseItem {
 			return;
 		
 		// Raytrace
-		RayHelper ah = new RayHelper(this);
-		ah.attack(entityPlayer, 200.0);
-		
+		//RayHelper ah = new RayHelper(this);
+		//ah.attack(entityPlayer, 200.0);
+
+
+		List<Entity> entities = null;
+		// Raytrace
+		RaytraceHelper.Line line1 = RaytraceHelper.Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
+		RaytraceHelper.Line line2 = line1.toNearestBlock(world, false, 1);
+		if(line1 != line2){
+			if(!world.isRemote){
+				RaytraceHelper.Position impact = line2.getPosition(2);
+				Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), impact.x, impact.y, impact.z, 0, 0, 0);
+				entities = line2.getEntities(world, Entity.class, false);
+			}
+		}
+
 		// Weapon post fire event
-		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, null);
+		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, entities);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
-		
-		ItemBullet bulletItem = getUsedBullet(gunStack, gunType);
-		BulletType bulletType = null;			
-		if(bulletItem != null)
-			bulletType = bulletItem.type;
-		
-//		for(Entity e : postFireEvent.getAffectedEntities())
-//		{
-//			if(e instanceof EntityLivingBase)
-//			{
-//				EntityLivingBase targetLiving = (EntityLivingBase) e;
-//				if(targetLiving != entityPlayer)
-//				{
-//					float damage = postFireEvent.getDamage();
-//					if(bulletType != null)
-//					{
-//						BulletProperty bulletProperty = bulletType.bulletProperties.get(targetLiving.getName()) != null ? bulletType.bulletProperties.get(targetLiving.getName()) : bulletType.bulletProperties.get("All");
-//						if(bulletProperty != null)
-//						{
-//							damage *= bulletProperty.bulletDamage;
-//							
-//							if(bulletProperty.potionEffects != null)
-//							{
-//								for(PotionEntry potionEntry : bulletProperty.potionEffects)
-//								{
-//									targetLiving.addPotionEffect(new PotionEffect(potionEntry.potionEffect.getPotion(), potionEntry.duration, potionEntry.level));
-//								}
-//							}
-//						}
-//					}
-//					targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
-//					targetLiving.hurtResistantTime = 0;
-//				}
-//			}
-//		}
-		
+
+		if(entities != null){
+			for(Entity e : postFireEvent.getAffectedEntities()) {
+				if(e instanceof EntityLivingBase) {
+					EntityLivingBase targetLiving = (EntityLivingBase) e;
+					if(targetLiving != entityPlayer) {
+						float damage = postFireEvent.getDamage();
+						targetLiving.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
+						targetLiving.hurtResistantTime = 0;
+					}
+				}
+			}
+		}
 		consumeShot(gunStack);
 		canDryFire = true;
-		
+
 		// Sound
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire, gunStack);
-		
+
 		// Shoot Packet
 		ModularWarfare.NETWORK.sendTo(new PacketClientAnimation(gunType.internalName, postFireEvent.getFireDelay(), postFireEvent.getRecoilPitch(), postFireEvent.getRecoilYaw()), (EntityPlayerMP) entityPlayer);
-		
+
 		// Burst Stuff
 		if(fireMode == WeaponFireMode.BURST)
 		{
 			shotCount = shotCount - 1;
 			gunStack.getTagCompound().setInteger("shotsremaining", shotCount);
 		}
-		
+
 		// Fire Delay
 		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
+
+
 	}
 	
 	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack gunStack, ItemGun itemGun, WeaponFireMode fireMode)
