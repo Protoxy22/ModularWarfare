@@ -94,11 +94,12 @@ public class ModelGun extends TurboBase
 	public Vector3f sprintRotate = new Vector3f(0F, 0F, 0F);
 	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)
 	public float adsSpeed = 0.00F;
-	
+
 	//Muzzle flash variables
 	public boolean hasFlash = false;
 	public float flashScale = 1F;
 	public Vector3f muzzleFlashPoint = new Vector3f(0,0,0);
+	public Vector3f defaultBarrelFlashPoint = new Vector3f(0,0,0);
 
 	//Model based recoil variables
 	public float gunSlideDistance = 1F / 4F;
@@ -240,8 +241,7 @@ public class ModelGun extends TurboBase
         }
     }
 
-    public static void glowOff()
-    {
+    public static void glowOff() {
         GL11.glEnable(GL11.GL_LIGHTING);
     	if(!optifineBreak)
     	{

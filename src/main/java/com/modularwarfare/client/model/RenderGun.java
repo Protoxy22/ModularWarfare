@@ -204,10 +204,10 @@ public class RenderGun extends CustomItemRenderer {
 				break;
 
 			}
-			
+
 			//Render call for the static arm
 			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
-				 renderStaticArm(mc.player, model, anim, currentReloadState); 
+				 renderStaticArm(mc.player, model, anim, currentReloadState);
 			}
 			
 			GL11.glPushMatrix();
@@ -485,7 +485,6 @@ public class RenderGun extends CustomItemRenderer {
 									GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 								}
 							}
-							
 							if(shouldNormalRender && anim.shouldRenderAmmo())
 							{
 								if(!cachedUnload)
@@ -547,7 +546,20 @@ public class RenderGun extends CustomItemRenderer {
 						}
 					}
 				}
-				
+
+				if (anim.muzzleFlashTime > 0 && model.hasFlash) {
+					GL11.glPushMatrix();
+					ModelFlash flash = new com.modularwarfare.client.model.omw.ModelFlash();
+					GL11.glScalef(model.flashScale, model.flashScale, model.flashScale);{
+						GL11.glTranslatef(model.muzzleFlashPoint.x, model.muzzleFlashPoint.y , model.muzzleFlashPoint.z);
+						renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "flash.png"));
+						ModelGun.glowOn();
+						flash.renderFlash(worldScale, anim.flashInt);
+						ModelGun.glowOff();
+					}
+					GL11.glPopMatrix();
+				}
+
 				// Render moving arm
 				if(!ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
 					
@@ -699,7 +711,6 @@ public class RenderGun extends CustomItemRenderer {
 			} else {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
 			}
-			
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 			if(staticArmState == "ToFrom" && rightArm && model.actionArm == EnumArm.Left)
 			{
@@ -765,7 +776,9 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true, model.leftHandAmmo);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
-					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
+					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
+					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+					renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
 					renderplayer.renderRightArm(Minecraft.getMinecraft().player);
 					renderRightSleeve(player, renderplayer.getMainModel());
 				}
@@ -785,7 +798,7 @@ public class RenderGun extends CustomItemRenderer {
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-					renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
+					renderplayer.getMainModel().bipedLeftArm.offsetY = 0F;
 					renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
 					renderLeftSleeve(player, renderplayer.getMainModel());
 				}

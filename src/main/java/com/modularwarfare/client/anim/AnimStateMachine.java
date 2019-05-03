@@ -46,11 +46,14 @@ public class AnimStateMachine {
 	public ItemStack cachedAmmoStack;
 	public int reloadAmmoCount = 1;
 	public boolean isGunEmpty = false;
-	
-	public void onTickUpdate()
-	{	
-		if(reloading)
-		{	
+
+	/** Muzzleflash */
+	public int muzzleFlashTime = 0;
+	public int flashInt = 0;
+
+
+	public void onTickUpdate() {
+		if(reloading) {
 			if(currentReloadState == null)
 				currentReloadState = reloadStateEntries.get(0);
 															
@@ -82,8 +85,7 @@ public class AnimStateMachine {
 			}
 		}
 		
-		if(shooting)
-		{
+		if(shooting) {
 			if(currentShootState == null)
 				currentShootState = shootStateEntries.get(0);
 			
@@ -140,6 +142,9 @@ public class AnimStateMachine {
 		} else {
 			hammerRotation *= 0.6F;
 		}
+
+		if(muzzleFlashTime > 0)
+			muzzleFlashTime--;
 	}
 	
 	public void onRenderTickUpdate()
@@ -160,7 +165,15 @@ public class AnimStateMachine {
 		lastGunSlide = gunSlide = 1F;
 		hammerRotation = model.hammerAngle;
 		timeUntilPullback = model.hammerDelay;
-		
+		muzzleFlashTime = 2;
+
+		int Low = -1;
+		int High = 3;
+		int result = r.nextInt(High-Low) + Low;
+		if(result == -1) result = 0;
+		if(result == 3) result = 2;
+		flashInt = result;
+
 		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getShootStates(model, gunType);
 		if(animEntries.size() > 0)
 		{

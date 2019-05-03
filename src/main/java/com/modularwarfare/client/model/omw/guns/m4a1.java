@@ -1023,24 +1023,28 @@ public class m4a1 extends ModelGun //Same as Filename
 		translateAll = new Vector3f(18F, 7.5F, 0F);
 		this.crouchZoom = -0.2f;
 		
-		leftArmPos = new Vector3f(0.1F, -0.40F, 0F);
+		leftArmPos = new Vector3f(0.1F, -0.45F, 0.15F);
         leftArmRot = new Vector3f(65.0F, 32.0F, -46.0F);
-		leftArmReloadPos = new Vector3f(0.150F, -0.72F, 0.02F);
+		leftArmReloadPos = new Vector3f(0.F, -0.72F, 0.02F);
         leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
         
-        rightArmPos = new Vector3f(0.26F, -0.60F, 0.0F);
+        rightArmPos = new Vector3f(0.35F, -0.80F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        rightArmReloadPos = new Vector3f(0.27F, -0.59F, 0.04F);
+        rightArmReloadPos = new Vector3f(0.35F, -0.80F, 0.0F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        
+
         rightArmChargePos = new Vector3f(0.47F, -0.39F, 0.14F);
         rightArmChargeRot = new Vector3f(0.0F, 0.0F, -90.0F);
-        
-        rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
-        leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
+
+		rightArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
+		leftArmScale = new Vector3f(0.8F, 1.0F, 0.8F);
  
         leftHandAmmo = true;
-        
+
+		hasFlash = true;
+		flashScale = 2F;
+		this.muzzleFlashPoint = new Vector3f(1.2F, 1.45F, 0.9F);
+
 		fancyStance = true;
 		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
 		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
