@@ -6,6 +6,7 @@ import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.client.model.ModelArmor;
+import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.common.type.BaseType;
 
 import net.minecraft.client.model.ModelBiped;
@@ -27,7 +28,7 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 	public ArmorType type;
 	public BaseType baseType;
 	public String internalName;
-	
+
 	public ItemMWArmor(ArmorType type, MWArmorType armorSlot) {
 		super(ItemArmor.ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.fromString(armorSlot.name().toLowerCase()));
 		type.initializeArmor(armorSlot.name().toLowerCase());
@@ -41,12 +42,12 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 		this.baseType = type;
 		this.type = type;
 	}
-	
+
 	public void setType(BaseType type)
 	{
 		this.type = (ArmorType) type;
 	}
-	
+
 	@Override
     public void onUpdate(ItemStack unused, World world, Entity holdingEntity, int intI, boolean flag)
     {
@@ -55,60 +56,61 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 			EntityPlayer entityPlayer = (EntityPlayer) holdingEntity;
 
 			if(unused != null && unused.getItem() instanceof ItemMWArmor)
-			{				
+			{
 				if(unused.getTagCompound() == null)
 				{
 					NBTTagCompound nbtTagCompound = new NBTTagCompound();
 					nbtTagCompound.setInteger("skinId", 0);
 					unused.setTagCompound(nbtTagCompound);
 				}
-			}	
+			}
 		}
     }
-	
+
 	@Override
     public boolean getShareTag()
     {
         return true;
     }
-	
+
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String armourType)
-	{
-		return ModularWarfare.MOD_ID + ":skins/hd/armor/blank.png";
+	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String armourType) {
+		int skinId = stack.getTagCompound().getInteger("skinId");
+		String path = skinId > 0 ? "skins/" + type.modelSkins[skinId].getSkin() : type.modelSkins[0].getSkin();
+		return ModularWarfare.MOD_ID + ":skins/" + (ModConfig.INSTANCE.detailedSkins ? "hd" : "default") + "/armor/" + path + ".png";
 	}
-	
-//	@Override
-//	@SideOnly(Side.CLIENT)
-//	@Nullable
-//	public ModelBiped getArmorModel(EntityLivingBase living, ItemStack stack, EntityEquipmentSlot slot, ModelBiped defaultModel)
-//	{
-//		if(!stack.isEmpty())
-//		{
-//			if(stack.getItem() instanceof ItemMWArmor)
-//			{
-//				ArmorType armorType = ((ItemMWArmor)stack.getItem()).type;
-//				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-//
-//				if(slot != slot.MAINHAND && slot != slot.OFFHAND)
-//				{
-//					armorModel.showHead(slot == EntityEquipmentSlot.HEAD);
-//					armorModel.showChest(slot == EntityEquipmentSlot.CHEST);
-//					armorModel.showLegs(slot == EntityEquipmentSlot.LEGS);
-//					armorModel.showFeet(slot == EntityEquipmentSlot.FEET);
-//				}
-//
-//				armorModel.isSneak = defaultModel.isSneak;
-//				armorModel.isRiding = defaultModel.isRiding;
-//				armorModel.isChild = defaultModel.isChild;
-//				armorModel.rightArmPose = defaultModel.rightArmPose;
-//				armorModel.leftArmPose = defaultModel.leftArmPose;
-//
-//				return armorModel;
-//			}
-//		}
-//		return null;
-//	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	@Nullable
+	public ModelBiped getArmorModel(EntityLivingBase living, ItemStack stack, EntityEquipmentSlot slot, ModelBiped defaultModel)
+	{
+		if(!stack.isEmpty())
+		{
+			if(stack.getItem() instanceof ItemMWArmor)
+			{
+				ArmorType armorType = ((ItemMWArmor)stack.getItem()).type;
+				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
+
+				if(slot != slot.MAINHAND && slot != slot.OFFHAND)
+				{
+					armorModel.showChest(slot == EntityEquipmentSlot.CHEST);
+					armorModel.showFeet(slot == EntityEquipmentSlot.FEET);
+					armorModel.showHead(slot == EntityEquipmentSlot.HEAD);
+					armorModel.showLegs(slot == EntityEquipmentSlot.LEGS);
+				}
+
+				armorModel.isSneak = defaultModel.isSneak;
+				armorModel.isRiding = defaultModel.isRiding;
+				armorModel.isChild = defaultModel.isChild;
+				armorModel.rightArmPose = defaultModel.rightArmPose;
+				armorModel.leftArmPose = defaultModel.leftArmPose;
+
+				return armorModel;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {

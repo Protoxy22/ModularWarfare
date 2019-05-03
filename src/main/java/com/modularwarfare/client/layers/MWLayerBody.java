@@ -63,31 +63,6 @@ public class MWLayerBody implements LayerRenderer<EntityPlayer> {
     			}
     		}
     	}
-    	
-    	ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-    	if(!chest.isEmpty() && chest.getItem() instanceof ItemMWArmor)
-    	{
-    		ArmorType armorType = ((ItemMWArmor) chest.getItem()).type;
-			if(armorType.hasModel())
-			{
-				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-                GlStateManager.pushMatrix(); 
-                {
-                    if (player.isSneaking() && this.renderer.getMainModel().bipedBodyWear.rotationPointY == 0) {
-                        this.renderer.getMainModel().bipedBodyWear.rotationPointY = (float)((double)this.renderer.getMainModel().bipedBodyWear.rotationPointY + 0.2);
-                    }
-                    this.renderer.getMainModel().bipedBodyWear.postRender(1f);
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.enableRescaleNormal();
-                    int skinId = 0;
-            		String path = skinId > 0 ? "skins/" + armorType.modelSkins[skinId].getSkin() : armorType.modelSkins[0].getSkin();
-                    Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/hd/armor/" + path + ".png"));
-                    GL11.glScalef(1f, 1f, 1f);
-                    armorModel.renderChest(scale);
-                }
-                GlStateManager.popMatrix();
-			}
-    	}
     }
 
     @Override

@@ -77,41 +77,6 @@ public class MWLayerArm implements LayerRenderer<EntityPlayer> {
     			}
     		}
     	}
-    	
-    	ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-    	if(!chest.isEmpty() && chest.getItem() instanceof ItemMWArmor)
-    	{
-    		ArmorType armorType = ((ItemMWArmor) chest.getItem()).type;
-			if(armorType.hasModel())
-			{
-				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-                GlStateManager.pushMatrix(); 
-                {
-                	if (player.isSneaking()) {
-                        GlStateManager.translate(0.0f, 0.2f, 0.0f);
-                    }
-                    this.renderer.getMainModel().postRenderArm(0.0625f, armType == EnumArm.Left ? EnumHandSide.LEFT : EnumHandSide.RIGHT);
-                    
-                    if(armType == EnumArm.Left)
-                 	   GL11.glTranslatef(-0.31f, -0.125f, 0f);
-                    else
-                 	   GL11.glTranslatef(0.31f, -0.125f, 0f);
-                                          
-                    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                    GlStateManager.enableRescaleNormal();
-                	
-                    int skinId = 0;
-            		String path = skinId > 0 ? "skins/" + armorType.modelSkins[skinId].getSkin() : armorType.modelSkins[0].getSkin();
-                    Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/hd/armor/" + path + ".png"));
-                    GL11.glScalef(1f, 1f, 1f);
-                    if(armType == EnumArm.Left)
-                    	armorModel.renderLeftArm(scale);
-                    else
-                    	armorModel.renderRightArm(scale);
-                }
-                GlStateManager.popMatrix();
-			}
-    	}
     }
 
     @Override

@@ -2,13 +2,11 @@ package com.modularwarfare.common.armor;
 
 import java.util.HashMap;
 
-import com.google.gson.annotations.SerializedName;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.client.model.ModelArmor;
+import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.common.type.BaseType;
-
-import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class ArmorType extends BaseType {
 	
@@ -39,8 +37,7 @@ public class ArmorType extends BaseType {
 	}
 	
 	@Override
-	public void reloadModel()
-	{
+	public void reloadModel() {
 		bipedModel = ModularWarfare.PROXY.loadModel(modelName != null ? modelName : internalName, internalName, ModelArmor.class);
 	}
 	

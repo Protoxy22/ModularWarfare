@@ -1,6 +1,7 @@
 package com.modularwarfare.client.model.omw.armor; //Path where the model is located
 
 import com.modularwarfare.client.model.ModelArmor;
+import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class uniform extends ModelArmor //Same as Filename
