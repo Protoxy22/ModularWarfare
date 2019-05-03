@@ -342,7 +342,7 @@ public class RaytraceHelper {
 
 			while (times <= maxTimes){
 				IBlockState blockstate = world.getBlockState(new BlockPos((int) x, (int) y, (int) z));
-				if(acceptWeakBlocks || blockstate.getBlock().getBlockHardness(blockstate, world, new BlockPos((int) x, (int) y, (int) z)) != 0){
+				if(acceptWeakBlocks && blockstate.getBlock().getBlockHardness(blockstate, world, new BlockPos((int) x, (int) y, (int) z)) != 0){
 					BlockBag bag = new BlockBag(blockstate, x, y, z);
 					blocks.add(bag);
 				}

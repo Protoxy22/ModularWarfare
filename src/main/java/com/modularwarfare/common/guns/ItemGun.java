@@ -156,7 +156,7 @@ public class ItemGun extends BaseItem {
 		List<Entity> entities = null;
 		// Raytrace
 		RaytraceHelper.Line line1 = RaytraceHelper.Line.fromRaytrace(entityPlayer, preFireEvent.getWeaponRange());
-		RaytraceHelper.Line line2 = line1.toNearestBlock(world, false, 1);
+		RaytraceHelper.Line line2 = line1.toNearestBlock(world, true, 1);
 		if(line1 != line2){
 			if(!world.isRemote){
 				RaytraceHelper.Position impact = line2.getPosition(2);
