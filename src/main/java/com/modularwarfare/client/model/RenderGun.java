@@ -89,6 +89,7 @@ public class RenderGun extends CustomItemRenderer {
 			AnimStateMachine anim = data.length >= 2 ? (EntityLivingBase) data[1] instanceof EntityPlayer ? ClientRenderHooks.getAnimMachine((EntityPlayer) data[1]) : new AnimStateMachine() : new AnimStateMachine();
 			renderGun(type, item, anim, gunType, data);
 		}
+
 	}
 
 	private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine anim, GunType gunType, Object... data) {
@@ -623,16 +624,16 @@ public class RenderGun extends CustomItemRenderer {
 		GL11.glPopMatrix();
 		
 	}
-	
+
 	//Determine the state of the static arm
 	public static String getStaticArmState(ModelGun model, AnimStateMachine anim)
-	{		
+	{
 		Optional<StateEntry> currentShootState = anim.getShootState();
 		Optional<StateEntry> currentReloadState = anim.getReloadState();
 		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
 		float chargeCurrent = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.Charge || currentShootState.get().stateType == StateType.Uncharge) ? currentShootState.get().currentValue : 1f : 1f;
-				
-		if(model.leftHandAmmo) 
+
+		if(model.leftHandAmmo)
 		{
 			if((anim.isReloadState(StateType.MoveHands) || anim.isReloadState(StateType.ReturnHands))) return "ToFrom";
 			else if((anim.isShootState(StateType.MoveHands) || anim.isShootState(StateType.ReturnHands))) return "ToFrom";
@@ -643,7 +644,7 @@ public class RenderGun extends CustomItemRenderer {
 			else if(!anim.reloading && !model.isType(EnumArm.Right, EnumAction.Pump)) return "Default";
 			else return "Reload";
 		}
-		else 
+		else
 		{
 			if (!anim.reloading && model.isType(EnumArm.Left, EnumAction.Pump)) return "Pump";
 			else if (chargeCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Charge) && chargeCurrent != -1.0F) return "Charge";
@@ -652,7 +653,7 @@ public class RenderGun extends CustomItemRenderer {
 			else return "Reload";
 		}
 	}
-	
+
 	//Determine the state of the moving arm
 	public static String getMovingArmState(ModelGun model, AnimStateMachine anim)
 	{
@@ -661,18 +662,18 @@ public class RenderGun extends CustomItemRenderer {
 		Optional<StateEntry> currentReloadState = anim.getReloadState();
 		float pumpCurrent = currentShootState.isPresent() ? (currentShootState.get().stateType == StateType.PumpOut || currentShootState.get().stateType == StateType.PumpIn) ? currentShootState.get().currentValue : 1f : 1f;
 		float chargeCurrent = currentReloadState.isPresent() ? (currentReloadState.get().stateType == StateType.Charge || currentReloadState.get().stateType == StateType.Uncharge) ? currentReloadState.get().currentValue : 1f : 1f;
-		
+
 		//Calls reload animation from the specified animation file
-		if(!model.leftHandAmmo) 
+		if(!model.leftHandAmmo)
 		{
 			if((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) && pumpCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Charge) && pumpCurrent != -1.0F) return "Pump";
 			else if(anim.isReloadState(StateType.Charge) && chargeCurrent < 0.9 && model.isType(EnumArm.Right, EnumAction.Bolt)) return "Bolt";
 			else if(!anim.reloading) return "Default";
 			else if(anim.isReloadState(StateType.Load)) return "Load";
-			//else if() movingArmState = "Unload";
+				//else if() movingArmState = "Unload";
 			else return "Reload";
 		}
-		else 
+		else
 		{
 			if (anim.isReloadState(StateType.Charge) && model.isType(EnumArm.Left, EnumAction.Charge) && chargeCurrent != -1.0F) return "Charge";
 			else if ((anim.isShootState(StateType.PumpIn) || anim.isShootState(StateType.PumpOut)) &&  !anim.reloading && model.isType(EnumArm.Left, EnumAction.Pump)) return "Pump";
@@ -682,7 +683,7 @@ public class RenderGun extends CustomItemRenderer {
 			else return "Reload";
 		}
 	}
-	
+
 	// Resets render modifiers
 	public static void resetRenderMods()
 	{
@@ -695,17 +696,19 @@ public class RenderGun extends CustomItemRenderer {
 		RenderGun.adsSwitch = 0f;
 		RenderGun.crouchSwitch = 0f;
 	}
-	
+
 	//Renders the static left or right hand that does not move with the ammo depending on leftHandAmmo setting
 	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
+		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
 		float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		String staticArmState = getStaticArmState(model, anim);
+		GL11.glPushMatrix();
+		{
+			if(mc.player.getSkinType() != "slim")
+				mc.renderEngine.bindTexture(mc.player.getLocationSkin());
+			else bindTexture("arms", "armskin");
 
-		Render<AbstractClientPlayer> render = Minecraft.getMinecraft().getRenderManager().<AbstractClientPlayer>getEntityRenderObject(Minecraft.getMinecraft().player);
-		RenderPlayer renderplayer = (RenderPlayer)render;
-
-		GL11.glPushMatrix();{
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 			if(staticArmState == "ToFrom" && rightArm && model.actionArm == EnumArm.Left)
 			{
@@ -718,29 +721,24 @@ public class RenderGun extends CustomItemRenderer {
 			Vector3f chargeArmPos = model.actionArm == EnumArm.Right ? model.rightArmChargePos : model.leftArmChargePos;
 			Vector3f reloadArmRot = rightArm ? model.rightArmReloadRot : model.leftArmReloadRot;
 			Vector3f reloadArmPos = rightArm ? model.rightArmReloadPos : model.leftArmReloadPos;
-			
+
 			if (staticArmState == "Pump") RenderArms.renderArmPump(model, anim, smoothing, armRot, armPos, !model.leftHandAmmo);
 			else if (staticArmState == "Charge") RenderArms.renderArmCharge(model, anim, smoothing, chargeArmRot, chargeArmPos, armRot, armPos, !model.leftHandAmmo);
 			else if (staticArmState == "Bolt") RenderArms.renderArmBolt(model, anim, smoothing, chargeArmRot, chargeArmPos, !model.leftHandAmmo);
 			else if (staticArmState == "Default") RenderArms.renderArmDefault(model, anim, smoothing, armRot, armPos, rightArm, !model.leftHandAmmo);
 			else if (staticArmState == "Reload") RenderArms.renderStaticArmReload(model, anim, smoothing, tiltProgress, reloadArmRot, reloadArmPos, armRot, armPos, !model.leftHandAmmo);
 			else if (staticArmState == "ToFrom") RenderArms.renderToFrom(model, anim, smoothing, chargeArmRot, chargeArmPos, armRot, armPos, !model.leftHandAmmo);
-			
+
 			//Render the armor model on the arm
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
-			renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-			renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
-			if(mc.player.getSkinType() != "slim"){
-				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
-			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
-			}
-			if(rightArm) {
-				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
-				renderRightSleeve(player, renderplayer.getMainModel());
-			} else {
-				renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
-				renderLeftSleeve(player, renderplayer.getMainModel());
+			if(rightArm)
+			{
+				modelplayer.bipedRightArm.render(0.0625F);
+				renderRightSleeve(player, modelplayer);
+			} else
+			{
+				modelplayer.bipedLeftArm.render(0.0625F);
+				renderLeftSleeve(player, modelplayer);
 			}
 		}
 		GL11.glPopMatrix();
@@ -749,25 +747,18 @@ public class RenderGun extends CustomItemRenderer {
 	// Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
 	private void renderMovingArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
-
-		Render<AbstractClientPlayer> render = Minecraft.getMinecraft().getRenderManager().<AbstractClientPlayer>getEntityRenderObject(Minecraft.getMinecraft().player);
-		RenderPlayer renderplayer = (RenderPlayer)render;
-
-		if(mc.player.getSkinType() != "slim") {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
-		} else {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
-		}
-
+		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
+		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
+		else bindTexture("arms", "armSkin");
 		boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
-        float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
+		float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		GL11.glPushMatrix();
 		{
 			GL11.glScalef(1 / model.modelScale, 1 / model.modelScale, 1 / model.modelScale);
-			
-			if (!model.leftHandAmmo && model.rightArmPos != null && model.rightArmReloadPos != null) 
+
+			if (!model.leftHandAmmo && model.rightArmPos != null && model.rightArmReloadPos != null)
 			{
 				GL11.glPushMatrix();
 				{
@@ -776,16 +767,14 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Default") {RenderArms.renderArmDefault(model, anim, smoothing, model.rightArmRot, model.rightArmPos, true, model.leftHandAmmo);}
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
-					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-					renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
-					renderplayer.renderRightArm(Minecraft.getMinecraft().player);
-					renderRightSleeve(player, renderplayer.getMainModel());
+					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
+					modelplayer.bipedRightArm.render(0.0625F);
+					renderRightSleeve(player, modelplayer);
 				}
 				GL11.glPopMatrix();
 			}
-			
-			if (model.leftHandAmmo && model.leftArmPos != null && model.leftArmReloadPos != null) 
+
+			if (model.leftHandAmmo && model.leftArmPos != null && model.leftArmReloadPos != null)
 			{
 				GL11.glPushMatrix();
 				{
@@ -797,17 +786,15 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-					renderplayer.getMainModel().bipedLeftArm.offsetY = 0F;
-					renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
-					renderLeftSleeve(player, renderplayer.getMainModel());
+					modelplayer.bipedLeftArm.render(0.0625F);
+					renderLeftSleeve(player, modelplayer);
 				}
 				GL11.glPopMatrix();
 			}
 		}
 		GL11.glPopMatrix();
 	}
-		
+
 	public void renderLeftSleeve(EntityPlayer player, ModelBiped modelplayer)
 	{
 		if(player.inventory.armorItemInSlot(2) != null)
@@ -827,38 +814,36 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPopMatrix();
 			}
 		}
-		
+
 		int[] slots = {1, 2, 6, 3};
-    	for(int slot : slots)
-    	{
-    		ItemStack itemStack = BaublesApi.getArmorInSlot(player, slot);
-    		if(!itemStack.isEmpty())
-    		{
-    			ArmorType armorType = ((ItemSpecialArmor) itemStack.getItem()).type;
-    			if(armorType.hasModel())
-    			{
-    				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-                    GlStateManager.pushMatrix(); 
-                    {
-                    	int skinId = 0;
-        				String path = ((ItemSpecialArmor) itemStack.getItem()).type.modelSkins[0].getSkin();
-        				bindTexture("armor", path);
-        				GL11.glPushMatrix();
-        				{
-        					float modelScale = armorModel.modelScale;
-        					GL11.glScalef(modelScale, modelScale, modelScale);
-							armorModel.setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
-							armorModel.bipedRightArm.offsetY = 0F;
-        					armorModel.render(armorModel.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
-        				}
-        				GL11.glPopMatrix();
-                    }
-                    GlStateManager.popMatrix();
-    			}
-    		}
-    	}
+		for(int slot : slots)
+		{
+			ItemStack itemStack = BaublesApi.getArmorInSlot(player, slot);
+			if(!itemStack.isEmpty())
+			{
+				ArmorType armorType = ((ItemSpecialArmor) itemStack.getItem()).type;
+				if(armorType.hasModel())
+				{
+					ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
+					GlStateManager.pushMatrix();
+					{
+						int skinId = 0;
+						String path = ((ItemSpecialArmor) itemStack.getItem()).type.modelSkins[0].getSkin();
+						bindTexture("armor", path);
+						GL11.glPushMatrix();
+						{
+							float modelScale = armorModel.modelScale;
+							GL11.glScalef(modelScale, modelScale, modelScale);
+							armorModel.render(armorModel.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
+						}
+						GL11.glPopMatrix();
+					}
+					GlStateManager.popMatrix();
+				}
+			}
+		}
 	}
-	
+
 	public void renderRightSleeve(EntityPlayer player, ModelBiped modelplayer)
 	{
 		if(player.inventory.armorItemInSlot(2) != null)
@@ -878,34 +863,34 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPopMatrix();
 			}
 		}
-		
+
 		int[] slots = {1, 2, 6, 3};
-    	for(int slot : slots)
-    	{
-    		ItemStack itemStack = BaublesApi.getArmorInSlot(player, slot);
-    		if(!itemStack.isEmpty())
-    		{
-    			ArmorType armorType = ((ItemSpecialArmor) itemStack.getItem()).type;
-    			if(armorType.hasModel())
-    			{
-    				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-                    GlStateManager.pushMatrix(); 
-                    {
-                    	int skinId = 0;
-        				String path = ((ItemSpecialArmor) itemStack.getItem()).type.modelSkins[0].getSkin();
-        				bindTexture("armor", path);
-        				GL11.glPushMatrix();
-        				{
-        					float modelScale = armorModel.modelScale;
-        					GL11.glScalef(modelScale, modelScale, modelScale);
-        					armorModel.render(armorModel.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
-        				}
-        				GL11.glPopMatrix();
-                    }
-                    GlStateManager.popMatrix();
-    			}
-    		}
-    	}
+		for(int slot : slots)
+		{
+			ItemStack itemStack = BaublesApi.getArmorInSlot(player, slot);
+			if(!itemStack.isEmpty())
+			{
+				ArmorType armorType = ((ItemSpecialArmor) itemStack.getItem()).type;
+				if(armorType.hasModel())
+				{
+					ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
+					GlStateManager.pushMatrix();
+					{
+						int skinId = 0;
+						String path = ((ItemSpecialArmor) itemStack.getItem()).type.modelSkins[0].getSkin();
+						bindTexture("armor", path);
+						GL11.glPushMatrix();
+						{
+							float modelScale = armorModel.modelScale;
+							GL11.glScalef(modelScale, modelScale, modelScale);
+							armorModel.render(armorModel.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
+						}
+						GL11.glPopMatrix();
+					}
+					GlStateManager.popMatrix();
+				}
+			}
+		}
 	}
 
 }
