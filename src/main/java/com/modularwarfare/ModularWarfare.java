@@ -200,8 +200,7 @@ public class ModularWarfare {
 	    	event.getRegistry().register(itemBullet);
 	    	tabOrder.add(itemBullet);
 	    }
-	    for(ItemMWArmor itemArmor : armorTypes.values())
-	    {
+	    for(ItemMWArmor itemArmor : armorTypes.values()) {
 	    	event.getRegistry().register(itemArmor);
 	    	tabOrder.add(itemArmor);
 	    }

@@ -160,7 +160,7 @@ public class ItemGun extends BaseItem {
 		if(line1 != line2){
 			if(!world.isRemote){
 				RaytraceHelper.Position impact = line2.getPosition(2);
-				Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), impact.x, impact.y, impact.z, 0, 0, 0);
+				//Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), impact.x, impact.y, impact.z, 0, 0, 0);
 				entities = line2.getEntities(world, Entity.class, false);
 			}
 		}

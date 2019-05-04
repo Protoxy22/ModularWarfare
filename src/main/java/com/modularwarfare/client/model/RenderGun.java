@@ -706,11 +706,6 @@ public class RenderGun extends CustomItemRenderer {
 		RenderPlayer renderplayer = (RenderPlayer)render;
 
 		GL11.glPushMatrix();{
-			if(mc.player.getSkinType() != "slim"){
-				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
-			} else {
-				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
-			}
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 			if(staticArmState == "ToFrom" && rightArm && model.actionArm == EnumArm.Left)
 			{
@@ -735,6 +730,11 @@ public class RenderGun extends CustomItemRenderer {
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
 			renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
 			renderplayer.getMainModel().bipedRightArm.offsetY = 0F;
+			if(mc.player.getSkinType() != "slim"){
+				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
+			} else {
+				Minecraft.getMinecraft().getTextureManager().bindTexture(mc.player.getLocationSkin());
+			}
 			if(rightArm) {
 				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
 				renderRightSleeve(player, renderplayer.getMainModel());
