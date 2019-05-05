@@ -66,11 +66,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(
-modid = ModularWarfare.MOD_ID, 
-name = ModularWarfare.MOD_NAME, 
-version = ModularWarfare.MOD_VERSION,
-dependencies = "required-after:forge@[14.21.0.2815,);")
+@Mod(modid = ModularWarfare.MOD_ID, name = ModularWarfare.MOD_NAME, version = ModularWarfare.MOD_VERSION)
 public class ModularWarfare {
 
 	// Mod Info
@@ -111,7 +107,7 @@ public class ModularWarfare {
 	 */
 	@EventHandler
 	public void onPreInitialization(FMLPreInitializationEvent event) {
-		DEV_ENV = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+		DEV_ENV = false;
 		LOGGER = event.getModLog();
 		PROXY.preload();
 		// Creates directory if doesn't exist
@@ -367,5 +363,4 @@ public class ModularWarfare {
 			}
 		}
 	}
-
 }

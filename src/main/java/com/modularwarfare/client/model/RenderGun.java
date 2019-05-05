@@ -135,7 +135,6 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glScalef(1F, 1F, 1F);
 
 				GL11.glScalef(model.thirdPersonScale, model.thirdPersonScale, model.thirdPersonScale);
-
 				GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y + crouchOffset, model.thirdPersonOffset.z);
 				break;
 			}
@@ -198,7 +197,7 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glRotatef((anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
 				GL11.glRotatef(((-anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 0.0f, 1.0f, 0.0f);
 		        GL11.glRotatef(((-anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 1.0f, 0.0f, 0.0f);
-				break;	
+				break;
 			}
 
 			default:
@@ -208,9 +207,9 @@ public class RenderGun extends CustomItemRenderer {
 
 			//Render call for the static arm
 			if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
-				 renderStaticArm(mc.player, model, anim, currentReloadState);
+				renderStaticArm(mc.player, model, anim, currentReloadState);
 			}
-			
+
 			GL11.glPushMatrix();
 			{
 				float modelScale = model.modelScale;
@@ -562,16 +561,14 @@ public class RenderGun extends CustomItemRenderer {
 				}
 
 				// Render moving arm
-				if(!ModularWarfare.DEV_ENV && model.hasArms() && renderType != CustomItemRenderType.ENTITY){
-					
+				if(!ModularWarfare.DEV_ENV && model.hasArms() && renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON){
 					GL11.glPushMatrix();
 					{
-						GL11.glTranslatef(-model.translateAll.x * worldScale, model.translateAll.y * worldScale, model.translateAll.z * worldScale);
+						//GL11.glTranslatef(-model.translateAll.x * worldScale, model.translateAll.y * worldScale, model.translateAll.z * worldScale);
 						renderMovingArm(mc.player, model, anim, currentReloadState); 
 					}
 					GL11.glPopMatrix();
-				}
-				else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
+				} else if (renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON && model.hasArms()) {
 					renderMovingArm(mc.player, model, anim, currentReloadState); 
 				}
 				
@@ -700,14 +697,13 @@ public class RenderGun extends CustomItemRenderer {
 	//Renders the static left or right hand that does not move with the ammo depending on leftHandAmmo setting
 	private void renderStaticArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
-		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
+		mc.getTextureManager().bindTexture(Minecraft.getMinecraft().player.getLocationSkin());
+		Render<AbstractClientPlayer> render = Minecraft.getMinecraft().getRenderManager().<AbstractClientPlayer>getEntityRenderObject(Minecraft.getMinecraft().player);
+		RenderPlayer renderplayer = (RenderPlayer)render;
+
 		float tiltProgress = currentState.isPresent() ? (currentState.get().stateType == StateType.Tilt || currentState.get().stateType == StateType.Untilt) ? currentState.get().currentValue : anim.tiltHold ? 1f : 0f : 0f;
 		String staticArmState = getStaticArmState(model, anim);
-		GL11.glPushMatrix();
-		{
-			if(mc.player.getSkinType() != "slim")
-				mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-			else bindTexture("arms", "armskin");
+		GL11.glPushMatrix();{
 
 			boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 			if(staticArmState == "ToFrom" && rightArm && model.actionArm == EnumArm.Left)
@@ -731,14 +727,14 @@ public class RenderGun extends CustomItemRenderer {
 
 			//Render the armor model on the arm
 			GL11.glScalef(armScale.x, armScale.y, armScale.z);
-			if(rightArm)
-			{
-				modelplayer.bipedRightArm.render(0.0625F);
-				renderRightSleeve(player, modelplayer);
-			} else
-			{
-				modelplayer.bipedLeftArm.render(0.0625F);
-				renderLeftSleeve(player, modelplayer);
+			renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+			renderplayer.getMainModel().bipedRightArm.offsetX = 0F;
+			if(rightArm) {
+				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
+				renderRightSleeve(player, renderplayer.getMainModel());
+			} else {
+				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
+				renderLeftSleeve(player, renderplayer.getMainModel());
 			}
 		}
 		GL11.glPopMatrix();
@@ -747,9 +743,10 @@ public class RenderGun extends CustomItemRenderer {
 	// Renders a left or right hand that moves with ammo depending on leftHandAmmo setting
 	private void renderMovingArm(EntityPlayer player, ModelGun model, AnimStateMachine anim, Optional<StateEntry> currentState) {
 		Minecraft mc = Minecraft.getMinecraft();
-		ModelPlayer modelplayer = new ModelPlayer(0.0F, false);
-		if(mc.player.getSkinType() != "slim") mc.renderEngine.bindTexture(mc.player.getLocationSkin());
-		else bindTexture("arms", "armSkin");
+		mc.getTextureManager().bindTexture(Minecraft.getMinecraft().player.getLocationSkin());
+		Render<AbstractClientPlayer> render = Minecraft.getMinecraft().getRenderManager().<AbstractClientPlayer>getEntityRenderObject(Minecraft.getMinecraft().player);
+		RenderPlayer renderplayer = (RenderPlayer)render;
+
 		boolean rightArm = model.leftHandAmmo && model.rightArmPos != null;
 		String movingArmState = getMovingArmState(model, anim);
 		WeaponAnimation weaponAnimation = WeaponAnimations.getAnimation(model.reloadAnimation);
@@ -768,8 +765,10 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Load") {RenderArms.renderArmLoad(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.rightArmReloadRot, model.rightArmReloadPos, model.rightArmRot, model.rightArmPos, model.leftHandAmmo);}
 					GL11.glScalef(model.rightArmScale.x, model.rightArmScale.y, model.rightArmScale.z);
-					modelplayer.bipedRightArm.render(0.0625F);
-					renderRightSleeve(player, modelplayer);
+					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
+					renderplayer.getMainModel().bipedRightArm.offsetX = 0F;
+					renderplayer.renderRightArm(mc.player);
+					renderRightSleeve(player, renderplayer.getMainModel());
 				}
 				GL11.glPopMatrix();
 			}
@@ -786,8 +785,9 @@ public class RenderGun extends CustomItemRenderer {
 					else if (movingArmState == "Reload") {RenderArms.renderArmReload(model, anim, weaponAnimation, smoothing, tiltProgress, model.leftArmReloadRot, model.leftArmReloadPos, model.leftArmRot, model.leftArmPos, model.leftHandAmmo);}
 
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
-					modelplayer.bipedLeftArm.render(0.0625F);
-					renderLeftSleeve(player, modelplayer);
+					renderplayer.getMainModel().bipedLeftArm.offsetY = 0F;
+					renderplayer.renderLeftArm(mc.player);
+					renderLeftSleeve(player, renderplayer.getMainModel());
 				}
 				GL11.glPopMatrix();
 			}
