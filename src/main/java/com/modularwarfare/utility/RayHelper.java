@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.guns.WeaponType;
 
@@ -556,20 +557,24 @@ public class RayHelper {
                 int l = MathHelper.floor(par1Vec3.x);
                 int i1 = MathHelper.floor(par1Vec3.y);
                 int j1 = MathHelper.floor(par1Vec3.z);
-                
+
                 double ld = par1Vec3.x;
                 double i1d = par1Vec3.y;
                 double j1d = par1Vec3.z;
-                
+
                 int k1 = 0;
-                //int blockMeta = world.getBlockMetadata(l, i1, j1);     
-                BlockPos blockPos = new BlockPos(1, i1, j1);
+                //int blockMeta = world.getBlockMetadata(l, i1, j1);
+                BlockPos blockPos = new BlockPos(l, i1, j1);
                 IBlockState blockState = world.getBlockState(blockPos);
                 Block block = blockState.getBlock();
+                if(block != null){
+
+                }
+                ModularWarfare.LOGGER.info("Block ->"+block.getUnlocalizedName());
                 if (block != null && (!par4 || block == null) && block.getBoundingBox(world.getBlockState(blockPos), world, blockPos) != null && block != Blocks.AIR /*&& block.canStopRayTrace(blockMeta, par3)*/)
                 {
                     RayTraceResult movingobjectposition = block.collisionRayTrace(blockState, world, blockPos, par1Vec3, par2Vec3);
-                    
+
                     if (movingobjectposition != null)
                     {
                         return movingobjectposition;

@@ -98,8 +98,8 @@ public class ModelGun extends TurboBase
 	//Muzzle flash variables
 	public boolean hasFlash = false;
 	public float flashScale = 1F;
-	public Vector3f muzzleFlashPoint = new Vector3f(0,0,0);
-	public Vector3f defaultBarrelFlashPoint = new Vector3f(0,0,0);
+	public Vector3f muzzleFlashPointNormal = new Vector3f(0,0,0);
+	public Vector3f muzzleFlashPointScoping = new Vector3f(0,0,0);
 
 	//Model based recoil variables
 	public float gunSlideDistance = 1F / 4F;

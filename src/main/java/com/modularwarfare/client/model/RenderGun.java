@@ -156,7 +156,7 @@ public class RenderGun extends CustomItemRenderer {
 				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
 				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
-				
+
 				// Default render position calculation, set up to be compatible with existing gun configuration
 				adsSwitch = anim.reloading ? 0f : adsSwitch;
 				rotateX = (0 + customHipRotation.x) - (0F + customAimRotation.x + customHipRotation.x * adsSwitch);
@@ -165,7 +165,8 @@ public class RenderGun extends CustomItemRenderer {
 				translateX = (-1.3F + customHipTranslate.x) - (0.0F + customAimTranslate.x + customHipTranslate.x) * adsSwitch; //-1.3
 				translateY = (0.834F + customHipTranslate.y) - (-0.064F + customAimTranslate.y + customHipTranslate.y) * adsSwitch;//0.898
 				translateZ = (-1.05F + customHipTranslate.z) - (0.35F + customAimTranslate.z + customHipTranslate.z) * adsSwitch;//-1.4
-			
+
+
 				// Custom view bobbing applies to gun models
 				float bobModifier = !entityLivingBase.isSprinting() ? adsSwitch == 0F ? !anim.reloading ? 0.7F : 0.2F: 0F : !anim.reloading ? adsSwitch == 0 ? 0.75F : 0.15F : 0.4F;
 				EntityPlayer entityplayer = (EntityPlayer)Minecraft.getMinecraft().getRenderViewEntity();
@@ -551,7 +552,11 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPushMatrix();
 					ModelFlash flash = new com.modularwarfare.client.model.omw.ModelFlash();
 					GL11.glScalef(model.flashScale, model.flashScale, model.flashScale);{
-						GL11.glTranslatef(model.muzzleFlashPoint.x, model.muzzleFlashPoint.y , model.muzzleFlashPoint.z);
+						if(adsSwitch != 1.0F){
+							GL11.glTranslatef(model.muzzleFlashPointNormal.x, model.muzzleFlashPointNormal.y , model.muzzleFlashPointNormal.z);
+						} else {
+							GL11.glTranslatef(model.muzzleFlashPointScoping.x, model.muzzleFlashPointScoping.y , model.muzzleFlashPointScoping.z);
+						}
 						renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "flash.png"));
 						ModelGun.glowOn();
 						flash.renderFlash(worldScale, anim.flashInt);

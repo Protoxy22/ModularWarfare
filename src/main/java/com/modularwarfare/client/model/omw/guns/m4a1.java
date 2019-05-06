@@ -1043,7 +1043,8 @@ public class m4a1 extends ModelGun //Same as Filename
 
 		hasFlash = true;
 		flashScale = 2F;
-		this.muzzleFlashPoint = new Vector3f(1.2F, 1.45F, 0.9F);
+		this.muzzleFlashPointNormal = new Vector3f(1F, 1.40F, 0.9F);
+		this.muzzleFlashPointScoping = new Vector3f(1.2F, 1.80F, 0.1F);
 
 		fancyStance = true;
 		sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);

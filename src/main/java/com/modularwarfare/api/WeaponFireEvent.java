@@ -56,17 +56,17 @@ public class WeaponFireEvent extends WeaponEvent {
      */
 	public static class Post extends WeaponFireEvent
 	{
-		private List<Entity> affectedEntities;
+		private Entity affectedEntity;
 		private int affectiveWeaponRange;
 		private int fireDelay;
 		private float damage;
 		private float pitchRecoil;
 		private float yawRecoil;
 		
-		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, List<Entity> affectedEntities) 
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, Entity affectedEntity)
 		{
 			super(entityPlayer, stackWeapon, itemWeapon);
-			this.affectedEntities = affectedEntities;
+			this.affectedEntity = affectedEntity;
 			
 			Random rand = new Random();
 			GunType type = itemWeapon.type;
@@ -77,14 +77,14 @@ public class WeaponFireEvent extends WeaponEvent {
 			fireDelay = type.fireTickDelay;
 		}
 		
-		public List<Entity> getAffectedEntities()
+		public Entity getAffectedEntity()
 		{
-			return affectedEntities;
+			return affectedEntity;
 		}
 		
-		public void setAffectedEntities(List<Entity> updatedList)
+		public void setAffectedEntitiey(Entity updatedList)
 		{
-			this.affectedEntities = updatedList;
+			this.affectedEntity = updatedList;
 		}
 		
 		public float getRecoilPitch()
