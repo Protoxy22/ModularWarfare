@@ -3,6 +3,7 @@ package com.modularwarfare.client.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.minecraft.client.renderer.RenderHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -211,45 +212,37 @@ public class ModelGun extends TurboBase
 	
 	public boolean boltOnFire = false;
 
-	public static void glowOn()
-	{
+	public static void glowOn() {
 		glowOn(15);
 	}
-
-    public static void glowOn(int glow)
-    {
-        GL11.glPushAttrib(GL11.GL_LIGHTING_BIT);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-
-        try
+	public static void glowOn(int glow)
+	{
+		GL11.glPushAttrib(64);
+		try
 		{
-        	lightmapLastX = OpenGlHelper.lastBrightnessX;
-        	lightmapLastY = OpenGlHelper.lastBrightnessY;
-        }
-		catch(NoSuchFieldError e)
+			lightmapLastX = OpenGlHelper.lastBrightnessX;
+			lightmapLastY = OpenGlHelper.lastBrightnessY;
+		}
+		catch (NoSuchFieldError e)
 		{
-        	optifineBreak = true;
-        }
+			optifineBreak = true;
+		}
+		RenderHelper.disableStandardItemLighting();
 
-        float glowRatioX = Math.min((glow/15F)*240F + lightmapLastX, 240);
-        float glowRatioY = Math.min((glow/15F)*240F + lightmapLastY, 240);
+		float glowRatioX = Math.min(glow / 15.0F * 240.0F + lightmapLastX, 240.0F);
+		float glowRatioY = Math.min(glow / 15.0F * 240.0F + lightmapLastY, 240.0F);
+		if (!optifineBreak) {
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, glowRatioX, glowRatioY);
+		}
+	}
 
-        if(!optifineBreak)
-        {
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, glowRatioX, glowRatioY);
-        }
-    }
-
-    public static void glowOff() {
-        GL11.glEnable(GL11.GL_LIGHTING);
-    	if(!optifineBreak)
-    	{
-    		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapLastX, lightmapLastY);
-    	}
-
-        GL11.glPopAttrib();
-    }
+	public static void glowOff()
+	{
+		if (!optifineBreak) {
+			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, lightmapLastX, lightmapLastY);
+		}
+		GL11.glPopAttrib();
+	}
 
 	public void renderGun(float f)
 	{
