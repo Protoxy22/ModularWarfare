@@ -6,12 +6,14 @@ import javax.annotation.Nullable;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
+import com.modularwarfare.client.model.InstantBulletRenderer;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
+import com.modularwarfare.common.vector.Vector3f;
 import com.modularwarfare.utility.RayHelper;
 
 import com.modularwarfare.utility.RayUtil;
@@ -141,6 +143,14 @@ public class ItemGun extends BaseItem {
 		EntityLivingBase target = null;
 		// Raytrace
 		RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, entityPlayer, 200);
+
+		double dx = entityPlayer.getLookVec().x * 200;
+		double dy = entityPlayer.getLookVec().y * 200;
+		double dz = entityPlayer.getLookVec().z * 200;
+
+		InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(new Vector3f((float)entityPlayer.posX, (float)(entityPlayer.getEntityBoundingBox().minY + entityPlayer.getEyeHeight()), (float)entityPlayer.posZ), new Vector3f((float)(entityPlayer.posX + dx), (float)(entityPlayer.posY + entityPlayer.getEyeHeight() + dy), (float)(entityPlayer.posZ + dz))));
+
+
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
 			if (!world.isRemote) {
 				if (rayTrace.entityHit != null) {

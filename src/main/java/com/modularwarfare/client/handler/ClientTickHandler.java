@@ -2,6 +2,7 @@ package com.modularwarfare.client.handler;
 
 import java.util.Random;
 
+import com.modularwarfare.client.model.InstantBulletRenderer;
 import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;
@@ -193,10 +194,10 @@ public class ClientTickHandler extends ForgeEvent {
 		antiRecoilPitch *= 0.8F;
 		antiRecoilYaw *= 0.8F;
 		
-		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
-		{
+		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
 			stateMachine.onTickUpdate();
 		}
+		InstantBulletRenderer.UpdateAllTrails();
 	}
 
 }

@@ -1,9 +1,11 @@
 package com.modularwarfare.client;
 
+import com.modularwarfare.client.model.InstantBulletRenderer;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -42,4 +44,10 @@ public class ClientEventHandler
 			event.getToolTip().add(TextFormatting.GOLD + I18n.format("name."+bt));
 		}
 	}
+
+	@SubscribeEvent
+	public void renderWorld(RenderWorldLastEvent event) {
+		InstantBulletRenderer.RenderAllTrails(event.getPartialTicks());
+	}
+
 }

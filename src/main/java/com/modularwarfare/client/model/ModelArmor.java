@@ -37,10 +37,8 @@ public class ModelArmor extends TurboBipedBase {
 
 	public HashMap<UUID, ModelBiped> bipedInstances = new HashMap<UUID, ModelBiped>();
 
-	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
-	{
-		GL11.glPushMatrix();
-		{
+	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+		GL11.glPushMatrix();{
 			GL11.glScalef(modelScale, modelScale, modelScale);
 
 			for(ModelRendererTurbo model : leftArmModel)
@@ -54,6 +52,7 @@ public class ModelArmor extends TurboBipedBase {
 			for(ModelRendererTurbo model : headModel)
 				if(model != null)
 					bipedHead.addChild(model);
+
 
 	        setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
 

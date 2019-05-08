@@ -2,6 +2,7 @@ package com.modularwarfare.common.type;
 
 import java.util.Map;
 
+import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.client.model.objects.TurboBase;
 import com.modularwarfare.client.model.objects.TurboBipedBase;

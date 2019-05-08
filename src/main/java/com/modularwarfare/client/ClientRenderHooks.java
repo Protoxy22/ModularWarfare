@@ -2,11 +2,13 @@ package com.modularwarfare.client;
 
 import java.util.HashMap;
 
+import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.guns.ItemAmmo;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.util.glu.Project;
@@ -355,8 +357,10 @@ public class ClientRenderHooks extends ForgeEvent {
 				
 				GlStateManager.enableAlpha();
 				
-				if(type.id == 0)
+				if(type.id == 0){
 					biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+				}
+
 					
 				biped.setLivingAnimations(entity, f8, f7, partialTicks);
 				biped.setRotationAngles(f8, f7, f5, f4, f9, 0.0625F, entity);

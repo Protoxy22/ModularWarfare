@@ -1,5 +1,7 @@
 package com.modularwarfare.utility;
 
+import com.modularwarfare.client.model.InstantBulletRenderer;
+import com.modularwarfare.common.vector.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
@@ -34,10 +36,7 @@ public class RayUtil {
         double dz = entity.getLookVec().z * range;
         HashSet<Entity> hashset = new HashSet<Entity>(1);
         hashset.add(entity);
-        return RayUtil.tracePath(world, (float)entity.posX,
-                (float)(entity.getEntityBoundingBox().minY + entity.getEyeHeight()), (float)entity.posZ,
-                (float)(entity.posX + dx), (float)(entity.posY + entity.getEyeHeight() + dy), (float)(entity.posZ + dz),
-                1.0f, hashset, false);
+        return RayUtil.tracePath(world, (float)entity.posX, (float)(entity.getEntityBoundingBox().minY + entity.getEyeHeight()), (float)entity.posZ, (float)(entity.posX + dx), (float)(entity.posY + entity.getEyeHeight() + dy), (float)(entity.posZ + dz), 1.0f, hashset, false);
     }
 
     /**
@@ -58,9 +57,7 @@ public class RayUtil {
         double dz = entity.getLookVec().z * range;
         HashSet<Entity> hashset = new HashSet<Entity>(1);
         hashset.add(entity);
-        return RayUtil.tracePath(world, (float)entity.posX,
-                (float)(entity.getEntityBoundingBox().minY + entity.getEyeHeight()), (float)entity.posZ,
-                (float)(entity.posX + dx), (float)(entity.posY + entity.getEyeHeight() + dy), (float)(entity.posZ + dz),
+        return RayUtil.tracePath(world, (float)entity.posX, (float)(entity.getEntityBoundingBox().minY + entity.getEyeHeight()), (float)entity.posZ, (float)(entity.posX + dx), (float)(entity.posY + entity.getEyeHeight() + dy), (float)(entity.posZ + dz),
                 borderSize, hashset, false);
     }
 
@@ -81,12 +78,12 @@ public class RayUtil {
      *         nothing hit
      */
     @Nullable
-    public static RayTraceResult tracePath(World world, float x, float y, float z, float tx, float ty, float tz,
-                                           float borderSize, HashSet<Entity> excluded, boolean collideablesOnly){
+    public static RayTraceResult tracePath(World world, float x, float y, float z, float tx, float ty, float tz, float borderSize, HashSet<Entity> excluded, boolean collideablesOnly){
 
         Vec3d startVec = new Vec3d(x, y, z);
         // Vec3d lookVec = new Vec3d(tx-x, ty-y, tz-z);
         Vec3d endVec = new Vec3d(tx, ty, tz);
+
         float minX = x < tx ? x : tx;
         float minY = y < ty ? y : ty;
         float minZ = z < tz ? z : tz;
@@ -103,6 +100,7 @@ public class RayUtil {
         if(blockHit != null){
             maxDistance = (float)blockHit.hitVec.distanceTo(startVec);
         }
+
         Entity closestHitEntity = null;
         float closestHit = maxDistance;
         float currentHit = 0.f;

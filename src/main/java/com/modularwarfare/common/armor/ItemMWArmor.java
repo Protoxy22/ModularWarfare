@@ -88,7 +88,19 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 			if(stack.getItem() instanceof ItemMWArmor) {
 				ArmorType armorType = ((ItemMWArmor)stack.getItem()).type;
 				ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
+				if(slot != slot.MAINHAND && slot != slot.OFFHAND)
+				{
+					armorModel.showChest(slot == EntityEquipmentSlot.CHEST);
+					armorModel.showFeet(slot == EntityEquipmentSlot.FEET);
+					armorModel.showHead(slot == EntityEquipmentSlot.HEAD);
+					armorModel.showLegs(slot == EntityEquipmentSlot.LEGS);
+				}
 
+				armorModel.isSneak = defaultModel.isSneak;
+				armorModel.isRiding = defaultModel.isRiding;
+				armorModel.isChild = defaultModel.isChild;
+				armorModel.rightArmPose = defaultModel.rightArmPose;
+				armorModel.leftArmPose = defaultModel.leftArmPose;
 				return armorModel;
 			}
 		}

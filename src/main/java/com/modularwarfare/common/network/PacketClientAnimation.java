@@ -2,6 +2,8 @@ package com.modularwarfare.common.network;
 
 import com.modularwarfare.ModularWarfare;
 
+import com.modularwarfare.client.model.InstantBulletRenderer;
+import com.modularwarfare.common.vector.Vector3f;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
@@ -102,15 +104,12 @@ public class PacketClientAnimation extends PacketBase {
 
 	@Override
 	public void handleClientSide(EntityPlayer clientPlayer) {
-		switch(animType)
-		{
-		case Reload:
-		{
+		switch(animType) {
+		case Reload: {
 			ModularWarfare.PROXY.onReloadAnimation(clientPlayer, wepType, reloadTime, reloadCount, reloadType);
 			break;
 		}
-		case Shoot:
-		{
+		case Shoot: {
 			ModularWarfare.PROXY.onShootAnimation(clientPlayer, wepType, fireDelay, recoilPitch, recoilYaw);
 			break;
 		}

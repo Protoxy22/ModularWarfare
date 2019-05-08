@@ -314,10 +314,9 @@ public class ModularWarfare {
 					File subFolder = new File(file, "/" + type.name + "/");
 					if(subFolder.exists())
 					{
-						for(File typeFile : subFolder.listFiles())
-						{
-							try
-							{
+						for(File typeFile : subFolder.listFiles()) {
+							try {
+								ModularWarfare.LOGGER.info("TYPE: "+type.typeClass.getName());
 								JsonReader jsonReader = new JsonReader(new FileReader(typeFile));
 								BaseType parsedType = gson.fromJson(jsonReader, type.typeClass);
 								parsedType.id = type.id;

@@ -11,13 +11,13 @@ import com.modularwarfare.common.type.BaseType;
 public class ArmorType extends BaseType {
 	
 	public Integer durability;
-	public double defense = 0;
-	
+	public double defense;
+
 	public HashMap<MWArmorType, ArmorInfo> armorTypes = new HashMap<MWArmorType, ArmorInfo>();
 	
 	
 	public void initializeArmor(String slot)
-	{	
+	{
 		for(MWArmorType armorType : armorTypes.keySet())
 		{
 			if(armorType.name().toLowerCase().equalsIgnoreCase(slot))
