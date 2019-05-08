@@ -19,6 +19,11 @@ public enum WeaponSoundType {
 	/** The sound to play upon reloading */
 	@SerializedName("weaponReload") Reload("weaponReload", 16, null),
 
+	/** The sound to play when a bullet hit a block */
+	@SerializedName("impact") Impact("impact", 16, "impact"),
+
+	/** The sound to play when an entity is damaged */
+	@SerializedName("penetration") Penetration("penetration", 16, "penetration"),
 
 	/** The sound to play upon reloading */
 	@SerializedName("weaponLoad") Load("weaponLoad", 16, null),
@@ -33,7 +38,7 @@ public enum WeaponSoundType {
 	@SerializedName("weaponCharge") Charge("weaponCharge", 16, null),
 	
 	/** The sound to play upon switching fire modes */
-	@SerializedName("weaponModeSwitch") ModeSwitch("weaponModeSwitch", 8, "defWeaponModeSwitch");
+	@SerializedName("weaponModeSwitch") ModeSwitch("weaponModeSwitch", 8, "defweaponmodeswitch");
 	
 	public String eventName;
 	public Integer defaultRange;

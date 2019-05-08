@@ -1,4 +1,75 @@
 {
-    "defWeaponModeSwitch":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:defWeaponModeSwitch"]},
-    "defemptyclick":{"category": "player","subtitle": "MW Sound","sounds": ["modularwarfare:defemptyclick"]}
+    "defweaponmodeswitch": {
+        "category": "player",
+        "subtitle": "MW Sound",
+        "sounds": [
+            "modularwarfare:defweaponmodeswitch"
+        ]
+    },
+    "defemptyclick": {
+        "category": "player",
+        "subtitle": "MW Sound",
+        "sounds": [
+            "modularwarfare:defemptyclick"
+        ]
+    },
+    "impact": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/impact/hit1",
+            "modularwarfare:bullet/impact/hit2",
+            "modularwarfare:bullet/impact/hit3",
+            "modularwarfare:bullet/impact/hit4"
+        ]
+    },
+    "flyby": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/flyby/idle1",
+            "modularwarfare:bullet/flyby/idle2",
+            "modularwarfare:bullet/flyby/idle3",
+            "modularwarfare:bullet/flyby/idle4"
+        ]
+    },
+    "close": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/shoot/close1",
+            "modularwarfare:bullet/shoot/close2",
+            "modularwarfare:bullet/shoot/close3",
+            "modularwarfare:bullet/shoot/close4",
+            "modularwarfare:bullet/shoot/close5"
+        ]
+    },
+    "far": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/shoot/far1",
+            "modularwarfare:bullet/shoot/far2",
+            "modularwarfare:bullet/shoot/far3",
+            "modularwarfare:bullet/shoot/far4",
+            "modularwarfare:bullet/shoot/far5"
+        ]
+    },
+    "distant": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/shoot/distant1"
+        ]
+    },
+    "indoors": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/shoot/indoors"
+        ]
+    },
+    "penetration": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:bullet/penetration/impact/impact1",
+            "modularwarfare:bullet/penetration/impact/impact2",
+            "modularwarfare:bullet/penetration/impact/impact3",
+            "modularwarfare:bullet/penetration/impact/impact4"
+        ]
+    }
 }

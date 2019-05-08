@@ -91,7 +91,6 @@ public class ClientProxy extends CommonProxy {
 	public static RenderAttachment attachmentRenderer;
 	public static HashMap<String, SoundEvent> modSounds = new HashMap<String, SoundEvent>();
 
-
 	@Override
 	public void preload() {
 		MinecraftForge.EVENT_BUS.register(this);
@@ -577,15 +576,4 @@ public class ClientProxy extends CommonProxy {
 		return null;
 	}
 
-	@Override
-	public void init() {
-//		Map<String, RenderPlayer> skinMap = Minecraft.getMinecraft().getRenderManager().getSkinMap();
-//		RenderPlayer render;
-//		render = skinMap.get("default");
-//		render.addLayer(new BaublesRenderLayer());
-//
-//		render = skinMap.get("slim");
-//		render.addLayer(new BaublesRenderLayer());
-	}
-	
 }

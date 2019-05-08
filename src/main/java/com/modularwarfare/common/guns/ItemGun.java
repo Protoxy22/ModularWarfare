@@ -9,6 +9,7 @@ import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
+import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.RayHelper;
@@ -144,10 +145,21 @@ public class ItemGun extends BaseItem {
 			if (!world.isRemote) {
 				if (rayTrace.entityHit != null) {
 					target = (EntityLivingBase) rayTrace.entityHit;
+					gunType.playSoundPos(target.getPosition(), world, WeaponSoundType.Penetration);
 				}
 			}
-		}
+		} else if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
+			BlockPos blockPos = rayTrace.getBlockPos();
+			IBlockState blockState = world.getBlockState(blockPos);
 
+			Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(
+					EnumParticleTypes.BLOCK_CRACK.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05,
+					Block.getIdFromBlock(blockState.getBlock()));
+			Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05);
+
+			gunType.playSoundPos(blockPos, world, WeaponSoundType.Impact);
+
+		}
 		// Weapon post fire event
 		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, target);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
