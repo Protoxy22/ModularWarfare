@@ -23,16 +23,16 @@ public enum WeaponSoundType {
 	@SerializedName("impact") Impact("impact", 16, "impact"),
 
 	/** The sound to play when an entity is damaged */
-	@SerializedName("penetration") Penetration("penetration", 16, "penetration"),
+	@SerializedName("penetration") Penetration("penetration", 20, "penetration"),
 
 	/** The sound to play upon reloading */
-	@SerializedName("weaponLoad") Load("weaponLoad", 16, null),
+	@SerializedName("weaponLoad") Load("weaponLoad", 12, null),
 	
 	/** The sound to play upon reloading */
-	@SerializedName("weaponUnload") Unload("weaponUnload", 16, null),
+	@SerializedName("weaponUnload") Unload("weaponUnload", 12, null),
 	
 	/** The sound to play upon reloading when empty */ 
-	@SerializedName("weaponReloadEmpty") ReloadEmpty("weaponReloadEmpty", 16, null),
+	@SerializedName("weaponReloadEmpty") ReloadEmpty("weaponReloadEmpty", 12, null),
 	
 	/** The sound to play upon charging */
 	@SerializedName("weaponCharge") Charge("weaponCharge", 16, null),

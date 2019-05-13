@@ -1,23 +1,17 @@
 package com.modularwarfare.common.guns;
 
 import java.util.List;
-
 import javax.annotation.Nullable;
-
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.client.model.InstantBulletRenderer;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
-import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.common.vector.Vector3f;
-import com.modularwarfare.utility.RayHelper;
-
 import com.modularwarfare.utility.RayUtil;
-import com.modularwarfare.utility.RaytraceHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -31,13 +25,10 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -144,12 +135,13 @@ public class ItemGun extends BaseItem {
 		// Raytrace
 		RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, entityPlayer, 200);
 
-		double dx = entityPlayer.getLookVec().x * 200;
-		double dy = entityPlayer.getLookVec().y * 200;
-		double dz = entityPlayer.getLookVec().z * 200;
+		double dx = entityPlayer.getLookVec().x * 50;
+		double dy = entityPlayer.getLookVec().y * 50;
+		double dz = entityPlayer.getLookVec().z * 50;
 
-		InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(new Vector3f((float)entityPlayer.posX, (float)(entityPlayer.getEntityBoundingBox().minY + entityPlayer.getEyeHeight()), (float)entityPlayer.posZ), new Vector3f((float)(entityPlayer.posX + dx), (float)(entityPlayer.posY + entityPlayer.getEyeHeight() + dy), (float)(entityPlayer.posZ + dz))));
-
+		if (!world.isRemote) {
+			InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(new Vector3f((float) entityPlayer.posX, (float) (entityPlayer.getEntityBoundingBox().minY + entityPlayer.getEyeHeight()), (float) entityPlayer.posZ), new Vector3f((float) (entityPlayer.posX + dx), (float) (entityPlayer.posY + entityPlayer.getEyeHeight() + dy), (float) (entityPlayer.posZ + dz))));
+		}
 
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
 			if (!world.isRemote) {

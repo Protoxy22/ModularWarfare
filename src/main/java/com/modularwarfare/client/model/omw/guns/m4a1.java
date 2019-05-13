@@ -1052,7 +1052,7 @@ public class m4a1 extends ModelGun //Same as Filename
 
 
 		this.thirdPersonScale = 0.75f;
-		this.thirdPersonOffset = new Vector3f(0F, -0.1F, 0F);
+		this.thirdPersonOffset = new Vector3f(-0.2F, -0.1F, 0F);
 
 		flipAll();
 	}

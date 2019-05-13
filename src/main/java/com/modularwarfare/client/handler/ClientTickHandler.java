@@ -44,17 +44,16 @@ public class ClientTickHandler extends ForgeEvent {
 	}
 	
 	@SubscribeEvent
-	public void clientTick(TickEvent.ClientTickEvent event)
-	{
-		switch(event.phase)
-		{
-		case START :
-			onClientTickStart(Minecraft.getMinecraft());
-			ModularWarfare.NETWORK.handleClientPackets();
-			break;
-		case END :
-			onClientTickEnd(Minecraft.getMinecraft());
-			break;
+	public void clientTick(TickEvent.ClientTickEvent event) {
+		switch (event.phase) {
+			case START:
+				onClientTickStart(Minecraft.getMinecraft());
+				ModularWarfare.NETWORK.handleClientPackets();
+				break;
+			case END:
+				InstantBulletRenderer.UpdateAllTrails();
+				onClientTickEnd(Minecraft.getMinecraft());
+				break;
 		}
 	}
 	
@@ -171,11 +170,10 @@ public class ClientTickHandler extends ForgeEvent {
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
 	
-	public void onClientTickEnd(Minecraft minecraft)
-	{
+	public void onClientTickEnd(Minecraft minecraft) {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
-		
+
 		EntityPlayerSP player = minecraft.player;
 		
 		if (playerRecoilPitch > 0)
@@ -197,7 +195,6 @@ public class ClientTickHandler extends ForgeEvent {
 		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
 			stateMachine.onTickUpdate();
 		}
-		InstantBulletRenderer.UpdateAllTrails();
 	}
 
 }

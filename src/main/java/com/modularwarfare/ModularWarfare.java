@@ -80,7 +80,7 @@ public class ModularWarfare {
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
 	// Development Environment
-	public static boolean DEV_ENV = false;
+	public static boolean DEV_ENV = true;
 	// Creative Tabs
 	public static MWTab MOD_TAB = new MWTab();
 	// Logger
@@ -240,10 +240,10 @@ public class ModularWarfare {
 			LOGGER.error("Failed to get class loader. All content loading will now fail.");
 			e.printStackTrace();
 		}
-		
+
 		List<File> contentPacks = PROXY.getContentList(method, classloader);
 		getTypeFiles(contentPacks);
-		
+
 		if(reload)
 		{
 			for(BaseType baseType : baseTypes)
@@ -274,7 +274,7 @@ public class ModularWarfare {
 							if(MWArmorType.isVanilla(mwArmorType))
 							{
 								armorTypes.put(armorType.internalName + "_" + mwArmorType.name().toLowerCase(), new ItemMWArmor(armorType, mwArmorType));
-							} else 
+							} else
 							{
 								specialArmorTypes.put(armorType.internalName, new ItemSpecialArmor(armorType, mwArmorType));
 							}
@@ -285,7 +285,7 @@ public class ModularWarfare {
 				}
 			}
 		}
-		
+
 		if(DEV_ENV)
 		{
 			PROXY.generateJsonModels(baseTypes);

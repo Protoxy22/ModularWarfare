@@ -50,4 +50,5 @@ public class ClientEventHandler
 		InstantBulletRenderer.RenderAllTrails(event.getPartialTicks());
 	}
 
+
 }

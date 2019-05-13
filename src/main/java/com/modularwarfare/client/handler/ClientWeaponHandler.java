@@ -15,8 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class ClientWeaponHandler extends ForgeEvent {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onWeaponFire(WeaponFireEvent.Post event)
-	{
+	public void onWeaponFire(WeaponFireEvent.Post event) {
 		//ClientRenderHooks.getAnimMachine(event.getWeaponUser()).triggerShoot((ModelGun) event.getWeaponItem().type.model, event.getFireDelay());
 		//ClientTickHandler.playerRecoilPitch += event.getRecoilPitch() * new Random().nextFloat();
 		//ClientTickHandler.playerRecoilYaw += event.getRecoilYaw() * new Random().nextFloat();
