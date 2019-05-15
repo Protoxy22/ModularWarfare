@@ -51,7 +51,6 @@ public class ClientTickHandler extends ForgeEvent {
 				ModularWarfare.NETWORK.handleClientPackets();
 				break;
 			case END:
-				InstantBulletRenderer.UpdateAllTrails();
 				onClientTickEnd(Minecraft.getMinecraft());
 				break;
 		}
@@ -195,6 +194,9 @@ public class ClientTickHandler extends ForgeEvent {
 		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
 			stateMachine.onTickUpdate();
 		}
+
+		InstantBulletRenderer.UpdateAllTrails();
+
 	}
 
 }

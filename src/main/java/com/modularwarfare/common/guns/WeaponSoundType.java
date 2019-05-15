@@ -25,6 +25,7 @@ public enum WeaponSoundType {
 	/** The sound to play when an entity is damaged */
 	@SerializedName("penetration") Penetration("penetration", 20, "penetration"),
 
+
 	/** The sound to play upon reloading */
 	@SerializedName("weaponLoad") Load("weaponLoad", 12, null),
 	

@@ -80,7 +80,7 @@ public class ModularWarfare {
 	@SidedProxy(clientSide = "com.modularwarfare.client.ClientProxy", serverSide = "com.modularwarfare.common.CommonProxy")
 	public static CommonProxy PROXY;
 	// Development Environment
-	public static boolean DEV_ENV = true;
+	public static boolean DEV_ENV = false;
 	// Creative Tabs
 	public static MWTab MOD_TAB = new MWTab();
 	// Logger

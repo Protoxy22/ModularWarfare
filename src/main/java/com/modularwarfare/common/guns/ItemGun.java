@@ -28,6 +28,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -135,13 +136,17 @@ public class ItemGun extends BaseItem {
 		// Raytrace
 		RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, entityPlayer, 200);
 
-		double dx = entityPlayer.getLookVec().x * 50;
-		double dy = entityPlayer.getLookVec().y * 50;
-		double dz = entityPlayer.getLookVec().z * 50;
-
+		/*
 		if (!world.isRemote) {
-			InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(new Vector3f((float) entityPlayer.posX, (float) (entityPlayer.getEntityBoundingBox().minY + entityPlayer.getEyeHeight()), (float) entityPlayer.posZ), new Vector3f((float) (entityPlayer.posX + dx), (float) (entityPlayer.posY + entityPlayer.getEyeHeight() + dy), (float) (entityPlayer.posZ + dz))));
+		    if(entityPlayer instanceof EntityPlayerMP) {
+                EntityPlayerMP entityPlayerMP = (EntityPlayerMP)entityPlayer;
+                final double dx = entityPlayer.getLookVec().x * 50;
+                final double dy = entityPlayer.getLookVec().y * 50;
+                final double dz = entityPlayer.getLookVec().z * 50;
+                InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(new Vector3f((float) entityPlayerMP.posX, (float) (entityPlayerMP.getEntityBoundingBox().minY + entityPlayerMP.getEyeHeight()), (float) entityPlayerMP.posZ), new Vector3f((float) (entityPlayerMP.posX + dx), (float) (entityPlayerMP.posY + entityPlayerMP.getEyeHeight() + dy), (float) (entityPlayerMP.posZ + dz))));
+            }
 		}
+		*/
 
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
 			if (!world.isRemote) {
@@ -153,15 +158,16 @@ public class ItemGun extends BaseItem {
 		} else if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
 			BlockPos blockPos = rayTrace.getBlockPos();
 			IBlockState blockState = world.getBlockState(blockPos);
-
-			Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(
-					EnumParticleTypes.BLOCK_CRACK.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05,
-					Block.getIdFromBlock(blockState.getBlock()));
-			Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05);
+			//Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(
+			//		EnumParticleTypes.BLOCK_CRACK.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05,
+			//		Block.getIdFromBlock(blockState.getBlock()));
+			//Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05);
 
 			gunType.playSoundPos(blockPos, world, WeaponSoundType.Impact);
-
 		}
+
+		isIndoors(entityPlayer);
+
 		// Weapon post fire event
 		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, target);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
@@ -178,6 +184,7 @@ public class ItemGun extends BaseItem {
 		canDryFire = true;
 
 		// Sound
+
 		gunType.playSound(entityPlayer, WeaponSoundType.Fire, gunStack);
 
 		// Shoot Packet
@@ -372,7 +379,20 @@ public class ItemGun extends BaseItem {
     	baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
 		tooltip.add(String.format(baseDisplayLine, GunType.getFireMode(stack) != null ? GunType.getFireMode(stack) : gunType.fireModes[0]));
     }
-	
+
+	public static boolean isIndoors(final EntityLivingBase givenEntity) {
+    	final BlockPos blockPos = givenEntity.world.getPrecipitationHeight(givenEntity.getPosition());
+    	if(blockPos != null) {
+    		if(blockPos.getY() > givenEntity.posY) {
+				return true;
+			} else {
+				return false;
+			}
+    	}
+    	return false;
+	}
+
+
 	@Override
     public boolean getShareTag()
     {
