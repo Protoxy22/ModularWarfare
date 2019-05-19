@@ -4,18 +4,14 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
-import com.modularwarfare.client.model.InstantBulletRenderer;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
-import com.modularwarfare.common.vector.Vector3f;
 import com.modularwarfare.utility.RayUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -26,9 +22,7 @@ import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -136,18 +130,6 @@ public class ItemGun extends BaseItem {
 		// Raytrace
 		RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, entityPlayer, 200);
 
-		/*
-		if (!world.isRemote) {
-		    if(entityPlayer instanceof EntityPlayerMP) {
-                EntityPlayerMP entityPlayerMP = (EntityPlayerMP)entityPlayer;
-                final double dx = entityPlayer.getLookVec().x * 50;
-                final double dy = entityPlayer.getLookVec().y * 50;
-                final double dz = entityPlayer.getLookVec().z * 50;
-                InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(new Vector3f((float) entityPlayerMP.posX, (float) (entityPlayerMP.getEntityBoundingBox().minY + entityPlayerMP.getEyeHeight()), (float) entityPlayerMP.posZ), new Vector3f((float) (entityPlayerMP.posX + dx), (float) (entityPlayerMP.posY + entityPlayerMP.getEyeHeight() + dy), (float) (entityPlayerMP.posZ + dz))));
-            }
-		}
-		*/
-
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
 			if (!world.isRemote) {
 				if (rayTrace.entityHit != null) {
@@ -166,7 +148,9 @@ public class ItemGun extends BaseItem {
 			gunType.playSoundPos(blockPos, world, WeaponSoundType.Impact);
 		}
 
-		isIndoors(entityPlayer);
+		if(entityPlayer instanceof EntityPlayerMP){
+			ModularWarfare.NETWORK.sendTo(new PacketGunFire(), (EntityPlayerMP)entityPlayer);
+		}
 
 		// Weapon post fire event
 		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, target);
