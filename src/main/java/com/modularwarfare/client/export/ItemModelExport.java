@@ -24,7 +24,7 @@ public class ItemModelExport {
 		
 		static class DisplayType
 		{
-			int[] scale = {1,1,1};
+			int[] scale = {0,0,0};
 		}
 		
 	}
