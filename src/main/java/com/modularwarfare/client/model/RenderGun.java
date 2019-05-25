@@ -230,7 +230,8 @@ public class RenderGun extends CustomItemRenderer {
 				float modelScale = model.modelScale;
 				
 				/** Weapon Texture */
-				int skinId = item.getTagCompound().getInteger("skinId");
+				//skinId = item.getTagCompound().getInteger("skinId");
+				int skinId = 0;
 				String path = skinId > 0 ? "skins/" + gunType.modelSkins[skinId].getSkin() : gunType.modelSkins[0].getSkin();
 				bindTexture("guns", path);
 				
