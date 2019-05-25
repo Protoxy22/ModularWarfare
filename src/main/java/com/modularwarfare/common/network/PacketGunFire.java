@@ -45,8 +45,7 @@ public class PacketGunFire extends PacketBase {
 		final double dx = entityPlayer.getLookVec().x * 100;
 		final double dy = entityPlayer.getLookVec().y * 100;
 		final double dz = entityPlayer.getLookVec().z * 100;
-		Vector3f vec = new Vector3f((float) entityPlayer.posX, (float) (entityPlayer.getEntityBoundingBox().minY + entityPlayer.getEyeHeight()), (float) entityPlayer.posZ);
-		vec.translate(0.5F, 0F, 0.5F);
+		final Vector3f vec = new Vector3f((float) entityPlayer.posX, (float) (entityPlayer.getEntityBoundingBox().minY + entityPlayer.getEyeHeight()), (float) entityPlayer.posZ);
 		InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(vec, new Vector3f((float) (entityPlayer.posX + dx), (float) (entityPlayer.posY + entityPlayer.getEyeHeight() + dy), (float) (entityPlayer.posZ + dz))));
 	}
 }

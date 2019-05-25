@@ -151,7 +151,7 @@ public class GunType extends BaseType {
 	//Sound Variables
 	private SoundEntry[] weaponSounds;
 	//Increases pitch incrementally over last 5 rounds, 0.05F recommended
-	public float emptyPitch = 0.0F;
+	public float emptyPitch = 0.05F;
 	public HashMap<WeaponSoundType, ArrayList<SoundEntry>> weaponSoundMap;
 
 	@Override

@@ -192,13 +192,27 @@ public class RenderGun extends CustomItemRenderer {
 				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
 					WeaponAnimations.getAnimation(model.reloadAnimation).onGunAnimation(tiltProgress, anim);
 				}
-				
+
 				// Recoil
 				GL11.glTranslatef(-(anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * model.modelRecoilBackwards, 0F, 0F);
 				GL11.glRotatef((anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * model.modelRecoilUpwards, 0F, 0F, 1F);
 				GL11.glRotatef(((-anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 0.0f, 1.0f, 0.0f);
 		        GL11.glRotatef(((-anim.lastGunRecoil + (anim.gunRecoil - anim.lastGunRecoil) * smoothing) * randomShake * model.modelRecoilShake), 1.0f, 0.0f, 0.0f);
-				break;
+
+
+
+				if(anim.gunRecoil > 0.1F && entityplayer.isSprinting()) {
+					RenderGun.swayHorizontal = 0f;
+					RenderGun.swayVertical = 0f;
+					RenderGun.swayHorizontalEP = 0f;
+					RenderGun.swayVerticalEP = 0f;
+					RenderGun.reloadSwitch = 0f;
+					RenderGun.sprintSwitch = 0f;
+					RenderGun.crouchSwitch = 0f;
+				}
+		        break;
+
+
 			}
 
 			default:
@@ -738,7 +752,7 @@ public class RenderGun extends CustomItemRenderer {
 				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
 				renderRightSleeve(player, renderplayer.getMainModel());
 			} else {
-				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
+				renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
 				renderLeftSleeve(player, renderplayer.getMainModel());
 			}
 		}
@@ -805,8 +819,8 @@ public class RenderGun extends CustomItemRenderer {
 		if(player.inventory.armorItemInSlot(2) != null)
 		{
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
-			if(armorStack.getItem() instanceof ItemMWArmor) {
-				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
+				if(armorStack.getItem() instanceof ItemMWArmor) {
+					ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
 				int skinId = 0;
 				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
 				bindTexture("armor", path);

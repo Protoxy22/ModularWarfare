@@ -128,6 +128,8 @@ public class ItemGun extends BaseItem {
 
 		EntityLivingBase target = null;
 		// Raytrace
+
+
 		RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, entityPlayer, 200);
 
 		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
@@ -139,12 +141,6 @@ public class ItemGun extends BaseItem {
 			}
 		} else if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
 			BlockPos blockPos = rayTrace.getBlockPos();
-			IBlockState blockState = world.getBlockState(blockPos);
-			//Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(
-			//		EnumParticleTypes.BLOCK_CRACK.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05,
-			//		Block.getIdFromBlock(blockState.getBlock()));
-			//Particle fx = Minecraft.getMinecraft().effectRenderer.spawnEffectParticle(EnumParticleTypes.CLOUD.getParticleID(), blockPos.getX(), blockPos.getY(), blockPos.getZ(), 0.05, 0.05, 0.05);
-
 			gunType.playSoundPos(blockPos, world, WeaponSoundType.Impact);
 		}
 

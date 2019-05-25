@@ -5,8 +5,8 @@
     "weaponType": "carbine",
     "gunDamage": 6,
     "roundsPerMin": 500,
-
-    "recoilPitch": 10.0,
+    "allowSprintFiring": true,
+    "recoilPitch": 5.0,
     "recoilYaw": 1.0,
     "randomRecoilPitch": 0.5,
     "randomRecoilYaw": 0.5,
