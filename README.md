@@ -8,3 +8,4 @@ New features:
  - Added ammo hud
  - Better sounds managment
  - Added muzzleflashes
+ - Added Blood effect
