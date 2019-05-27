@@ -16,6 +16,7 @@ import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.MWSound;
 import com.modularwarfare.utility.event.ForgeEvent;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -82,7 +83,12 @@ public class CommonProxy extends ForgeEvent implements IGuiHandler {
 		}
 		return null;
 	}
-	
+
+	public void addBlood(final EntityLivingBase living, final int amount) {
+	}
+
+	public void addBlood(final EntityLivingBase living, final int amount, final boolean onhit) {
+	}
 	public void registerEventHandlers() {
 		MinecraftForge.EVENT_BUS.register(new EventHandlerEntity());
 		MinecraftForge.EVENT_BUS.register(new EventHandlerItem());

@@ -56,19 +56,23 @@ import com.modularwarfare.common.guns.ItemAttachment;
 import com.modularwarfare.common.guns.ItemBullet;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.guns.WeaponSoundType;
+import com.modularwarfare.common.particle.EntityBloodFX;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
 import com.modularwarfare.utility.MWSound;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -576,4 +580,28 @@ public class ClientProxy extends CommonProxy {
 		return null;
 	}
 
+	@Override
+	public void addBlood(final EntityLivingBase living, final int amount, final boolean onhit) {
+		if (onhit) {
+			this.addBlood(living, amount);
+		}
+	}
+
+	@Override
+	public void addBlood(final EntityLivingBase living, final int amount) {
+		for (int k = 0; k < amount; ++k) {
+			float var4 = 0.3f;
+			double mX = -MathHelper.sin(living.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(living.rotationPitch / 180.0f * 3.1415927f) * var4;
+			double mZ = MathHelper.cos(living.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(living.rotationPitch / 180.0f * 3.1415927f) * var4;
+			double mY = -MathHelper.sin(living.rotationPitch / 180.0f * 3.1415927f) * var4 + 0.1f;
+			var4 = 0.02f;
+			final float var5 = living.getRNG().nextFloat() * 3.1415927f * 2.0f;
+			var4 *= living.getRNG().nextFloat();
+			mX += Math.cos(var5) * var4;
+			mY += (living.getRNG().nextFloat() - living.getRNG().nextFloat()) * 0.1f;
+			mZ += Math.sin(var5) * var4;
+			final Particle blood = new EntityBloodFX(living.getEntityWorld(), living.posX, living.posY + 0.5 + living.getRNG().nextDouble() * 0.7, living.posZ, living.motionX * 2.0 + mX, living.motionY + mY, living.motionZ * 2.0 + mZ, 0.0);
+			Minecraft.getMinecraft().effectRenderer.addEffect(blood);
+		}
+	}
 }
