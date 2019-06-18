@@ -1,22 +1,21 @@
 package com.modularwarfare;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Writer;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
+import com.google.gsonapi.Gson;
+import com.google.gsonapi.GsonBuilder;
+import com.google.gsonapi.stream.JsonReader;
 
 public class ModConfig {
 	
 	public transient static ModConfig INSTANCE;
 	
 	public boolean detailedSkins = true;
-	
+	public boolean hitmarkerenabled = true;
+
 	public ModConfig(File configFile)
 	{
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();

@@ -8,21 +8,18 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.common.container.ContainerPlayerExpanded;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.handler.EventHandlerEntity;
-import com.modularwarfare.common.handler.EventHandlerItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.MWSound;
 import com.modularwarfare.utility.event.ForgeEvent;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class CommonProxy extends ForgeEvent implements IGuiHandler {
+
+public class CommonProxy extends ForgeEvent {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
 
@@ -61,7 +58,9 @@ public class CommonProxy extends ForgeEvent implements IGuiHandler {
 	public void generateLangFiles(ArrayList<BaseType> types, boolean replace) {}
 	
 	public void playSound(MWSound sound) {}
-	
+
+	public void playHitmarker() {}
+
 	public void registerSound(String soundName) {}
 	
 	public void onShootAnimation(EntityPlayer player, String wepType, int fireDelay, float recoilPitch, float recoilYaw) {}
@@ -71,29 +70,17 @@ public class CommonProxy extends ForgeEvent implements IGuiHandler {
 	public World getClientWorld() {
 		return null;}
 
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return null;
-	}
-
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		switch (ID) {
-			case ModularWarfare.GUI: return new ContainerPlayerExpanded(player.inventory, !world.isRemote, player);
-		}
-		return null;
-	}
-
 	public void addBlood(final EntityLivingBase living, final int amount) {
 	}
 
 	public void addBlood(final EntityLivingBase living, final int amount, final boolean onhit) {
 	}
+
 	public void registerEventHandlers() {
 		MinecraftForge.EVENT_BUS.register(new EventHandlerEntity());
-		MinecraftForge.EVENT_BUS.register(new EventHandlerItem());
 	}
 
-	public void init() { }
+	public void init() {
+	}
 
 }

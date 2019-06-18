@@ -94,7 +94,7 @@ public class ModelGun extends TurboBase
 	public Vector3f sprintTranslate = new Vector3f(0F, 0F, 0F);
 	public Vector3f sprintRotate = new Vector3f(0F, 0F, 0F);
 	//Allows you to modify the ADS speed per gun, adjust in small increments (+/- 0.01)
-	public float adsSpeed = 0.00F;
+	public float adsSpeed = 0.02F;
 
 	//Muzzle flash variables
 	public boolean hasFlash = false;
@@ -204,7 +204,11 @@ public class ModelGun extends TurboBase
 	
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
 	public HashMap<String, RenderVariables> bulletMap = new HashMap<String, RenderVariables>();
+
 	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
+	public Vector3f translateSight = new Vector3f(0F, 0F, 0F);
+	public Vector3f rotateSight = new Vector3f(0F, 0F, 0F);
+
 	public Vector3f gunRenderOffset = new Vector3f(0f, 0f, 0f);
 	public ArrayList<BreakActionData> breakActions = new ArrayList<BreakActionData>();
 		

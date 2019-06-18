@@ -93,7 +93,7 @@ public class RayUtil {
         AxisAlignedBB bb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ).grow(borderSize, borderSize,
                 borderSize);
         List<Entity> allEntities = world.getEntitiesWithinAABBExcludingEntity(null, bb);
-        RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec);
+        RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec, true, true, false);
         startVec = new Vec3d(x, y, z);
         endVec = new Vec3d(tx, ty, tz);
         float maxDistance = (float)endVec.distanceTo(startVec);

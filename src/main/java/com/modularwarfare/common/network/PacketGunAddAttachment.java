@@ -1,7 +1,5 @@
 package com.modularwarfare.common.network;
 
-import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.common.guns.AttachmentEnum;
 import com.modularwarfare.common.guns.AttachmentType;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemAttachment;
@@ -16,42 +14,40 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class PacketGunAddAttachment extends PacketBase {
-	
-	public PacketGunAddAttachment() {}
+
+	public PacketGunAddAttachment() {
+	}
 
 	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf data) {}
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf data) {
+	}
 
 	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf data) {}
+	public void decodeInto(ChannelHandlerContext ctx, ByteBuf data) {
+	}
 
 	@Override
 	public void handleServerSide(EntityPlayerMP entityPlayer) {
-		if(entityPlayer.getHeldItemMainhand() != null)
-		{
-			if(entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
-			{
+		if (entityPlayer.getHeldItemMainhand() != null) {
+			if (entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun) {
 				ItemStack gunStack = entityPlayer.getHeldItemMainhand();
 				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
 				GunType gunType = itemGun.type;
 				InventoryPlayer inventory = entityPlayer.inventory;
-				
-				if(inventory.offHandInventory.get(0) != ItemStack.EMPTY)
-				{
+
+				if (inventory.offHandInventory.get(0) != ItemStack.EMPTY) {
 					ItemStack offhandStack = inventory.offHandInventory.get(0);
-					if(offhandStack.getItem() instanceof ItemAttachment)
-					{
+					if (offhandStack.getItem() instanceof ItemAttachment) {
 						ItemAttachment itemAttachment = (ItemAttachment) offhandStack.getItem();
 						AttachmentType attachType = itemAttachment.type;
-						if(gunType.acceptedAttachments.get(attachType.attachmentType) != null && gunType.acceptedAttachments.get(attachType.attachmentType).size() >= 1)
-						{
-							if(gunType.acceptedAttachments.get(attachType.attachmentType).contains(attachType.internalName))
-							{
+						if (gunType.acceptedAttachments.get(attachType.attachmentType) != null && gunType.acceptedAttachments.get(attachType.attachmentType).size() >= 1) {
+							if (gunType.acceptedAttachments.get(attachType.attachmentType).contains(attachType.internalName)) {
 								ItemStack attachmentStack = new ItemStack(itemAttachment);
 								NBTTagCompound tag = new NBTTagCompound();
 								tag.setInteger("skinId", 0);
 								attachmentStack.setTagCompound(tag);
 								GunType.addAttachment(gunStack, attachType.attachmentType, attachmentStack);
+								inventory.offHandInventory.get(0).shrink(1);
 							}
 						}
 					}
@@ -60,8 +56,7 @@ public class PacketGunAddAttachment extends PacketBase {
 		}
 	}
 
-	
-	
+
 	@Override
 	public void handleClientSide(EntityPlayer entityPlayer) {
 		// UNUSED

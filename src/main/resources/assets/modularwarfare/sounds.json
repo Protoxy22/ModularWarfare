@@ -13,7 +13,13 @@
             "modularwarfare:defemptyclick"
         ]
     },
-    "impact": {
+    "hitmarker": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:hitmarker"
+        ]
+    },    
+    "hit": {
         "category": "player",
         "sounds": [
             "modularwarfare:bullet/impact/hit1",

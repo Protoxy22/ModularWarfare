@@ -1,0 +1,37 @@
+{
+    "internalName": "omw.scarl",
+    "displayName": "SCAR-L",
+    "modelName": "omw.guns.scarl",
+    "weaponType": "carbine",
+    "gunDamage": 6,
+    "roundsPerMin": 500,
+    "allowSprintFiring": true,
+    "recoilPitch": 5.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["omw.m4a1ammo"],
+    "acceptedAttachments": {
+        "sight": ["omw.aimpoint"]
+    },
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "SCARHShoot",
+                "soundNameDistant": "SCARHShoot",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "AKMReload"
+            }
+        ]
+    }
+}

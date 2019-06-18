@@ -1,8 +1,6 @@
 package com.modularwarfare.api;
 
-import com.google.gson.annotations.SerializedName;
-
-import net.minecraft.inventory.EntityEquipmentSlot;
+import com.google.gsonapi.annotations.SerializedName;
 
 public enum MWArmorType {
 	

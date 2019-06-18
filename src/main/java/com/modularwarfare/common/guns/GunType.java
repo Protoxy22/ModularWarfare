@@ -140,9 +140,13 @@ public class GunType extends BaseType {
 	 */
 	public boolean dynamicAmmo = false;
 
+
 	// Bullet Variables
 	public Integer internalAmmoStorage;
 	public String[] acceptedBullets;
+	public float velocity = 10f;
+	float gravityModifier = 0.035f;
+	public int gravityEffectStart = 7;
 
 	// Misc Settings
 	public boolean allowSprintFiring = false;
@@ -227,7 +231,6 @@ public class GunType extends BaseType {
 						//Send sound packet for simple sounds (no distant sound effect)
 						ModularWarfare.NETWORK.sendTo(new PacketPlaySound(pos, soundEntry.soundName, (soundRange / 16) * soundEntry.soundVolumeMultiplier, (random.nextFloat() / soundEntry.soundRandomPitch) + soundEntry.soundPitch), (EntityPlayerMP) hearingPlayer);
 					}
-
 				}
 			} else {
 
@@ -238,7 +241,6 @@ public class GunType extends BaseType {
 					for (EntityPlayer hearingPlayer : world.getEntities(EntityPlayer.class, e -> e.getPosition().getDistance(pos.getX(), pos.getY(), pos.getZ()) <= soundRange)) {
 						//Send sound packet for simple sounds (no distant sound effect)
 						ModularWarfare.NETWORK.sendTo(new PacketPlaySound(pos, soundName, (soundRange / 16) * 1f, (random.nextFloat() / 5) + 1), (EntityPlayerMP) hearingPlayer);
-						ModularWarfare.LOGGER.info("TEST 4");
 					}
 				}
 			}
@@ -345,9 +347,11 @@ public class GunType extends BaseType {
 		}
 	}
 
-	@Override
-	public String getAssetDir() {
-		return "guns";
+	public static void removeAttachment(ItemStack heldStack, AttachmentEnum type) {
+		if (heldStack.getTagCompound() != null) {
+			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+			nbtTagCompound.removeTag("attachment_" + type.typeName);
+		}
 	}
 
 }

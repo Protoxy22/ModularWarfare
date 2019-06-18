@@ -1,6 +1,6 @@
 package com.modularwarfare.common.guns;
 
-import com.google.gson.annotations.SerializedName;
+import com.google.gsonapi.annotations.SerializedName;
 
 public enum WeaponSoundType {
 	
@@ -9,7 +9,7 @@ public enum WeaponSoundType {
 	
 	/** The sound played upon shooting */
 	@SerializedName("weaponFire") Fire("weaponFire", 64, null),
-	
+
 	/** The sound played upon shooting with a silencer */
 	@SerializedName("weaponFireSuppressed") FireSuppressed("weaponFireSuppressed", 32, null),
 	
@@ -22,9 +22,11 @@ public enum WeaponSoundType {
 	/** The sound to play when a bullet hit a block */
 	@SerializedName("impact") Impact("impact", 16, "impact"),
 
+	/** The sound to play when a bullet hit an entity (played to the shooter) */
+	@SerializedName("hitmarker") Hitmarker("hitmarker", 8, "hitmarker"),
+
 	/** The sound to play when an entity is damaged */
 	@SerializedName("penetration") Penetration("penetration", 20, "penetration"),
-
 
 	/** The sound to play upon reloading */
 	@SerializedName("weaponLoad") Load("weaponLoad", 12, null),
