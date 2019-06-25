@@ -99,8 +99,7 @@ public class RenderAttachment extends CustomItemRenderer {
 				{
 					float f = 1F / 16F;
 					float modelScale = model.modelScale;
-					//int skinId = item.getTagCompound().getInteger("skinId");
-					int skinId = 0;
+					int skinId = item.getTagCompound().getInteger("skinId");
 					String path = skinId > 0 ? "skins/" + attachmentType.modelSkins[skinId].getSkin() : attachmentType.modelSkins[0].getSkin();
 					bindTexture("attachments", path);
 					GL11.glScalef(modelScale, modelScale, modelScale);

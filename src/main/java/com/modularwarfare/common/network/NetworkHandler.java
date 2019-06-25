@@ -185,13 +185,14 @@ public class NetworkHandler extends MessageToMessageCodec<FMLProxyPacket, Packet
 		
 		registerPacket(PacketGunFire.class);
 		registerPacket(PacketPlaySound.class);
-		registerPacket(PacketPlayHitmarker.class);
 		registerPacket(PacketGunSwitchMode.class);
 		registerPacket(PacketGunReload.class);
 		registerPacket(PacketGunReloadSound.class);
 		registerPacket(PacketGunAddAttachment.class);
-		registerPacket(PacketGunUnloadAttachment.class);
 		registerPacket(PacketClientAnimation.class);
+		registerPacket(PacketOpenBaublesInventory.class);
+		registerPacket(PacketOpenNormalInventory.class);
+		registerPacket(PacketSync.class);
 	}
 	
 	/**

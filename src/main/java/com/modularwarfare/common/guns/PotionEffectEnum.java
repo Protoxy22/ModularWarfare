@@ -1,6 +1,6 @@
 package com.modularwarfare.common.guns;
 
-import com.google.gsonapi.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName;
 
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;

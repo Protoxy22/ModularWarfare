@@ -1023,7 +1023,7 @@ public class m4a1 extends ModelGun //Same as Filename
 		translateAll = new Vector3f(18F, 7.5F, 0F);
 		this.crouchZoom = -0.2f;
 		
-		leftArmPos = new Vector3f(0.1F, -0.45F, 0.1F);
+		leftArmPos = new Vector3f(0.1F, -0.45F, 0.15F);
         leftArmRot = new Vector3f(65.0F, 32.0F, -46.0F);
 		leftArmReloadPos = new Vector3f(0.F, -0.72F, 0.02F);
         leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);

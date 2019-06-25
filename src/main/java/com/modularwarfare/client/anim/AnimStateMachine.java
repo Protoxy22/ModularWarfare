@@ -117,7 +117,7 @@ public class AnimStateMachine {
 		if (!isGunEmpty && gunSlide > 0.9) // Add one extra frame to slide
 			gunSlide -= 0.1F;
 		else if (gunSlide > 0 && !isGunEmpty)
-			gunSlide *= 0.5F;
+			gunSlide *= 0.5F;		
 		
 		
 		// Recoil

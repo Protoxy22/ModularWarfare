@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.BaublesApi;
 import com.modularwarfare.api.WeaponAnimation;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.ClientRenderHooks;
@@ -23,6 +24,9 @@ import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.model.objects.CustomItemRenderType;
 import com.modularwarfare.client.model.objects.CustomItemRenderer;
 import com.modularwarfare.client.model.objects.RenderVariables;
+import com.modularwarfare.common.armor.ArmorType;
+import com.modularwarfare.common.armor.ItemMWArmor;
+import com.modularwarfare.common.armor.ItemSpecialArmor;
 import com.modularwarfare.common.guns.AmmoType;
 import com.modularwarfare.common.guns.AttachmentEnum;
 import com.modularwarfare.common.guns.AttachmentType;
@@ -35,6 +39,8 @@ import com.modularwarfare.common.guns.WeaponFireMode;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -42,6 +48,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
@@ -147,15 +154,7 @@ public class RenderGun extends CustomItemRenderer {
 				// Store the model settings as local variables to reduce calls
 				Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
 				Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
-
-
 				Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
-
-				if(GunType.getAttachment(item, AttachmentEnum.Sight) != null){
-					customAimRotation = new Vector3f(model.rotateSight.x, model.rotateSight.y, model.rotateSight.z);
-
-				}
-
 				Vector3f customAimTranslate = new Vector3f(model.translateAimPosition.x, model.translateAimPosition.y, model.translateAimPosition.z);
 
 				// Default render position calculation, set up to be compatible with existing gun configuration
@@ -238,18 +237,7 @@ public class RenderGun extends CustomItemRenderer {
 				
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				GL11.glTranslatef(model.translateAll.x * worldScale, -model.translateAll.y * worldScale, -model.translateAll.z * worldScale);
-
-
-				for(AttachmentEnum attachment : AttachmentEnum.values()) {
-					ItemStack itemStack = GunType.getAttachment(item, attachment);
-					if (itemStack != null && itemStack.getItem() != Items.AIR) {
-						AttachmentType attachmentType = ((ItemAttachment) itemStack.getItem()).type;
-						if (attachmentType.attachmentType == AttachmentEnum.Sight) {
-							GL11.glTranslatef(model.translateSight.x * worldScale, -model.translateSight.y * worldScale, -model.translateSight.z * worldScale);
-						}
-					}
-				}
-
+				
 				// Item frame rendering properties
 				if(renderType == CustomItemRenderType.ENTITY)
 				{
@@ -263,7 +251,7 @@ public class RenderGun extends CustomItemRenderer {
 				}
 				
 				model.renderGun(worldScale);
-
+				
 				//Render any attachments
 				if(GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
 					model.renderDefaultScope(worldScale);
@@ -575,8 +563,7 @@ public class RenderGun extends CustomItemRenderer {
 					}
 				}
 
-
-				if (anim.muzzleFlashTime > 0 && model.hasFlash &&(GunType.getAttachment(item, AttachmentEnum.Barrel) == null)){
+				if (anim.muzzleFlashTime > 0 && model.hasFlash) {
 					GL11.glPushMatrix();
 					ModelFlash flash = new com.modularwarfare.client.model.omw.ModelFlash();
 					GL11.glScalef(model.flashScale, model.flashScale, model.flashScale);{
@@ -642,10 +629,6 @@ public class RenderGun extends CustomItemRenderer {
 								Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
 								GL11.glTranslatef(attachmentVec.x / attachmentModel.modelScale, attachmentVec.y / attachmentModel.modelScale, attachmentVec.z / attachmentModel.modelScale);
-
-								if(attachmentType.attachmentType == AttachmentEnum.Sight){
-									GL11.glTranslatef(model.translateSight.x * worldScale, -model.translateSight.y * worldScale, -model.translateSight.z * worldScale);
-								}
 								attachmentModel.renderAttachment(worldScale);
 							}
 							GL11.glPopMatrix();
@@ -768,10 +751,10 @@ public class RenderGun extends CustomItemRenderer {
 			renderplayer.getMainModel().bipedRightArm.offsetX = 0F;
 			if(rightArm) {
 				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
-				//renderRightSleeve(player, renderplayer.getMainModel());
+				renderRightSleeve(player, renderplayer.getMainModel());
 			} else {
 				renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
-				//renderLeftSleeve(player, renderplayer.getMainModel());
+				renderLeftSleeve(player, renderplayer.getMainModel());
 			}
 		}
 		GL11.glPopMatrix();
@@ -805,7 +788,7 @@ public class RenderGun extends CustomItemRenderer {
 					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
 					renderplayer.getMainModel().bipedRightArm.offsetX = 0F;
 					renderplayer.renderRightArm(mc.player);
-					//renderRightSleeve(player, renderplayer.getMainModel());
+					renderRightSleeve(player, renderplayer.getMainModel());
 				}
 				GL11.glPopMatrix();
 			}
@@ -824,7 +807,7 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 					renderplayer.getMainModel().bipedLeftArm.offsetY = 0F;
 					renderplayer.renderLeftArm(mc.player);
-					//renderLeftSleeve(player, renderplayer.getMainModel());
+					renderLeftSleeve(player, renderplayer.getMainModel());
 				}
 				GL11.glPopMatrix();
 			}
@@ -832,8 +815,6 @@ public class RenderGun extends CustomItemRenderer {
 		GL11.glPopMatrix();
 	}
 
-
-	/*
 	public void renderLeftSleeve(EntityPlayer player, ModelBiped modelplayer)
 	{
 		if(player.inventory.armorItemInSlot(2) != null)
@@ -931,5 +912,5 @@ public class RenderGun extends CustomItemRenderer {
 			}
 		}
 	}
-	*/
+
 }
