@@ -9,3 +9,5 @@ New features:
  - Better sounds managment
  - Added muzzleflashes
  - Added Blood effect
+ - Optifine compatibility
+ - Hitmarker mode
