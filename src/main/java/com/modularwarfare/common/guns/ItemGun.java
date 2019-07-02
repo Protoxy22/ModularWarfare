@@ -147,8 +147,6 @@ public class ItemGun extends BaseItem {
 					target = (EntityLivingBase) rayTrace.entityHit;
 					gunType.playSoundPos(target.getPosition(), world, WeaponSoundType.Penetration);
 					boolean headshot = canEntityGetHeadshot(target) && rayTrace.hitVec.y >= target.getPosition().getY() + target.getEyeHeight() - 0.15f;
-					ModularWarfare.LOGGER.info(rayTrace.hitVec.y);
-					ModularWarfare.LOGGER.info(target.getPosition().getY() + target.getEyeHeight() - 0.15f);
 					if (entityPlayer instanceof EntityPlayerMP) {
 						ModularWarfare.NETWORK.sendTo(new PacketPlayHitmarker(headshot), (EntityPlayerMP) entityPlayer);
 					}

@@ -24,32 +24,32 @@ public class RenderArms {
 	 */
 	
 	// right hand pump action animation
-	public static void renderToFrom(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f targetRot, Vector3f targetPos, Vector3f originRot, Vector3f originPos, boolean leftHand)
-	{
+	public static void renderToFrom(ModelGun model, AnimStateMachine anim, float smoothing, Vector3f targetRot, Vector3f targetPos, Vector3f originRot, Vector3f originPos, boolean leftHand) {
 		float progress = anim.getReloadState().isPresent() ? anim.getReloadState().get().currentValue : anim.getShootState().isPresent() ? anim.getShootState().get().currentValue : 1f;
-		Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(targetPos, originPos), progress);
-		
-		float cancelOut = anim.getReloadState().isPresent() ? anim.getReloadState().get().stateType == StateType.ReturnHands ? 0f : 1f : anim.getShootState().isPresent() ? anim.getShootState().get().stateType == StateType.ReturnHands ? 0f : 1f : 1f;
-				
-		GL11.glTranslatef(originPos.x + offsetPosition.x + (cancelOut * (Math.abs(1f + (1f - 1f) * smoothing) * (model.chargeModifier.x * model.modelScale))), 0F, 0F);
-		GL11.glTranslatef(0F, originPos.y + offsetPosition.y + (cancelOut * (Math.abs(1f + (1f - 1f) * smoothing) * (model.chargeModifier.y * model.modelScale))), 0F);
-		GL11.glTranslatef(0F, 0F, originPos.z + offsetPosition.z + (cancelOut * (Math.abs(1f + (1f - 1f) * smoothing) * (model.chargeModifier.z * model.modelScale))));
-		
-		//Rotation
-		Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(targetRot, originRot), progress);
-		if(leftHand) {
-			GL11.glTranslatef(0.225F, 0.75F, 0);
-			GL11.glRotatef(originRot.x + offsetRotation.x, 1F, 0F, 0F);
-			GL11.glRotatef(originRot.y + offsetRotation.y, 0F, 1F, 0F);
-			GL11.glRotatef(originRot.z + offsetRotation.z, 0F, 0F, 1F);
-			GL11.glTranslatef(-0.225F, -0.75F, 0);
-		}
-		else {
-			GL11.glTranslatef(-0.225F, 0.75F, 0);
-			GL11.glRotatef(originRot.x + offsetRotation.x, 1F, 0F, 0F);
-			GL11.glRotatef(originRot.y + offsetRotation.y, 0F, 1F, 0F);
-			GL11.glRotatef(originRot.z + offsetRotation.z, 0F, 0F, 1F);
-			GL11.glTranslatef(0.225F, -0.75F, 0);
+
+		if(NumberHelper.subtractVector(targetPos, originPos) != null) {
+			Vector3f offsetPosition = NumberHelper.multiplyVector(NumberHelper.subtractVector(targetPos, originPos), progress);
+			float cancelOut = anim.getReloadState().isPresent() ? anim.getReloadState().get().stateType == StateType.ReturnHands ? 0f : 1f : anim.getShootState().isPresent() ? anim.getShootState().get().stateType == StateType.ReturnHands ? 0f : 1f : 1f;
+
+			GL11.glTranslatef(originPos.x + offsetPosition.x + (cancelOut * (Math.abs(1f + (1f - 1f) * smoothing) * (model.chargeModifier.x * model.modelScale))), 0F, 0F);
+			GL11.glTranslatef(0F, originPos.y + offsetPosition.y + (cancelOut * (Math.abs(1f + (1f - 1f) * smoothing) * (model.chargeModifier.y * model.modelScale))), 0F);
+			GL11.glTranslatef(0F, 0F, originPos.z + offsetPosition.z + (cancelOut * (Math.abs(1f + (1f - 1f) * smoothing) * (model.chargeModifier.z * model.modelScale))));
+
+			//Rotation
+			Vector3f offsetRotation = NumberHelper.multiplyVector(NumberHelper.subtractVector(targetRot, originRot), progress);
+			if (leftHand) {
+				GL11.glTranslatef(0.225F, 0.75F, 0);
+				GL11.glRotatef(originRot.x + offsetRotation.x, 1F, 0F, 0F);
+				GL11.glRotatef(originRot.y + offsetRotation.y, 0F, 1F, 0F);
+				GL11.glRotatef(originRot.z + offsetRotation.z, 0F, 0F, 1F);
+				GL11.glTranslatef(-0.225F, -0.75F, 0);
+			} else {
+				GL11.glTranslatef(-0.225F, 0.75F, 0);
+				GL11.glRotatef(originRot.x + offsetRotation.x, 1F, 0F, 0F);
+				GL11.glRotatef(originRot.y + offsetRotation.y, 0F, 1F, 0F);
+				GL11.glRotatef(originRot.z + offsetRotation.z, 0F, 0F, 1F);
+				GL11.glTranslatef(0.225F, -0.75F, 0);
+			}
 		}
 	}
 	

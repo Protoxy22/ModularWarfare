@@ -135,6 +135,8 @@ public class RenderGun extends CustomItemRenderer {
 			}
 
 			case EQUIPPED_FIRST_PERSON: {
+
+
 				EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
 				float modelScale = model.modelScale;
 				float rotateX = 0;
@@ -262,7 +264,7 @@ public class RenderGun extends CustomItemRenderer {
 						GlStateManager.enableDepth();
 					}
 				}
-				
+
 				model.renderGun(worldScale);
 
 				//Render any attachments
@@ -592,6 +594,20 @@ public class RenderGun extends CustomItemRenderer {
 						ModelGun.glowOff();
 					}
 					GL11.glPopMatrix();
+				}
+
+
+				//Render Scope
+				if(gunType.scopeType != null) {
+					if (adsSwitch == 1.0F) {
+						if (!ClientRenderHooks.isAimingScope) {
+							ClientRenderHooks.isAimingScope = true;
+						}
+					} else {
+						if (ClientRenderHooks.isAimingScope) {
+							ClientRenderHooks.isAimingScope = false;
+						}
+					}
 				}
 
 				// Render moving arm

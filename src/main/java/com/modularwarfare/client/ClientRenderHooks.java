@@ -58,13 +58,15 @@ public class ClientRenderHooks extends ForgeEvent {
 	public static final ResourceLocation hitMarkerHS = new ResourceLocation("modularwarfare", "textures/gui/hitmarkerhs.png");
 
 	public static final ResourceLocation Scope2X = new ResourceLocation("modularwarfare", "textures/overlay/scope2x.png");
-	public static final ResourceLocation[] Scope4X = {new ResourceLocation("modularwarfare", ":textures/overlay/scope4x_arrow.png"), new ResourceLocation("modularwarfare", "textures/overlay/scope4x_cross.png")};
+	public static final ResourceLocation Scope4X = new ResourceLocation("modularwarfare", "textures/overlay/scope4x_cross.png");
 	public static final ResourceLocation Scope8X = new ResourceLocation("modularwarfare", ":textures/overlay/scope8x.png");
 	public static final ResourceLocation Scope15X = new ResourceLocation("modularwarfare", "textures/overlay/scope15x.png");
 
 
 	public static int hitMarkerTime = 0;
 	public static boolean hitMarkerheadshot;
+
+	public static boolean isAimingScope;
 
 	public ClientRenderHooks() {
 		mc = Minecraft.getMinecraft();
@@ -123,37 +125,55 @@ public class ClientRenderHooks extends ForgeEvent {
 
 	@SubscribeEvent
 	public void renderGameOverlay(RenderGameOverlayEvent.Pre event) {
-		EntityPlayer player = mc.player;
+        EntityPlayer player = mc.player;
 
-		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-			ScaledResolution scaledresolution = new ScaledResolution(mc);
-			int i = scaledresolution.getScaledWidth();
-			int j = scaledresolution.getScaledHeight();
-			RenderPlayerAmmo(i, j);
-		}
-		ItemStack stack = player.getHeldItemMainhand();
-		if (stack != null && stack.getItem() instanceof ItemGun) {
+        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+            ScaledResolution scaledresolution = new ScaledResolution(mc);
+            int i = scaledresolution.getScaledWidth();
+            int j = scaledresolution.getScaledHeight();
+            RenderPlayerAmmo(i, j);
+        }
+        ItemStack stack = player.getHeldItemMainhand();
+        if (stack != null && stack.getItem() instanceof ItemGun) {
 
-			switch (event.getType()) {
-				case CROSSHAIRS:
-					if (player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET) {
-						event.setCanceled(false);
-					} else {
-						event.setCanceled(true);
-					}
-					break;
-				case ALL:
-					ScaledResolution scaledresolution = new ScaledResolution(mc);
-					int i = scaledresolution.getScaledWidth();
-					int j = scaledresolution.getScaledHeight();
-					RenderHitMarker(Tessellator.getInstance(), i, j);
-					break;
-				default:
-					break;
+            switch (event.getType()) {
+                case CROSSHAIRS:
+                    if (player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET) {
+                        event.setCanceled(false);
+                    } else {
+                        event.setCanceled(true);
+                    }
+                    break;
+                case ALL:
+                    ScaledResolution scaledresolution = new ScaledResolution(mc);
+                    int i = scaledresolution.getScaledWidth();
+                    int j = scaledresolution.getScaledHeight();
+                    RenderHitMarker(Tessellator.getInstance(), i, j);
 
-			}
-		}
-	}
+                    if (isAimingScope && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
+                        ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
+                        switch (gun.type.scopeType) {
+                            case TWO:
+                                drawFullScreenImage(mc, scaledresolution, Scope2X, true);
+                                break;
+                            case FOUR:
+                                drawFullScreenImage(mc, scaledresolution, Scope4X, true);
+                                break;
+                            case EIGHT:
+                                drawFullScreenImage(mc, scaledresolution, Scope8X, true);
+                                break;
+                            case FIFTEEN:
+                                drawFullScreenImage(mc, scaledresolution, Scope15X, true);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                default:
+                    break;
+            }
+        }
+    }
 
 	@SubscribeEvent
 	public void renderHeldItem(RenderSpecificHandEvent event) {
@@ -483,4 +503,28 @@ public class ClientRenderHooks extends ForgeEvent {
 		return animation;
 	}
 
+    public static void drawFullScreenImage(Minecraft minecraft, ScaledResolution resolution, ResourceLocation imageLocation, boolean transparent)
+    {
+        minecraft.getTextureManager().bindTexture(imageLocation);
+        GlStateManager.color(1f, 1f, 1f);
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder buffer = tessellator.getBuffer();
+
+        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+        buffer.pos(0, resolution.getScaledHeight(), 0).tex(0, 1).endVertex();
+        buffer.pos(resolution.getScaledWidth(), resolution.getScaledHeight(), 0).tex(1, 1).endVertex();
+        buffer.pos(resolution.getScaledWidth(), 0, 0).tex(1, 0).endVertex();
+        buffer.pos(0, 0, 0).tex(0, 0).endVertex();
+
+        if(transparent)
+        {
+            GlStateManager.enableAlpha();
+            GlStateManager.enableBlend();
+            tessellator.draw();
+            GlStateManager.disableBlend();
+            GlStateManager.disableAlpha();
+        }
+
+        else tessellator.draw();
+    }
 }

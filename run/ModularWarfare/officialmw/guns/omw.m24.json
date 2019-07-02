@@ -2,6 +2,7 @@
   "displayName": "M24",
   "internalName": "omw.m24",
   "weaponType": "boltsniper",
+  "scopeType": "4x",
   "gunDamage": 19,
   "roundsPerMin": 34,
   "acceptedAmmo": ["omw.m24ammo"],

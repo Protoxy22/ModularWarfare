@@ -62,14 +62,15 @@ public class NumberHelper {
 		resultVector = resultVector.add(left, right, resultVector);
 		return resultVector;
 	}
-	
-	public static Vector3f subtractVector(Vector3f left, Vector3f right)
-	{
+
+	public static Vector3f subtractVector(Vector3f left, Vector3f right) {
 		Vector3f resultVector = new Vector3f();
-		resultVector = resultVector.sub(left, right, resultVector);
+		if(left != null && right!= null) {
+			resultVector = resultVector.sub(left, right, resultVector);
+		}
 		return resultVector;
 	}
-	
+
 	public static Vector3f multiplyVector(Vector3f vector, float amount)
 	{
 		vector.x *= amount;

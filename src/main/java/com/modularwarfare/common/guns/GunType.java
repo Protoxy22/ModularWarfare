@@ -28,7 +28,7 @@ public class GunType extends BaseType {
 	 */
 	public WeaponType weaponType;
 
-	public WeaponScopeType scopeType;
+	public WeaponScopeType scopeType = null;
 
 	//Munition variables
 	/**
