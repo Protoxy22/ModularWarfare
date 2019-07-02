@@ -13,3 +13,4 @@ New features:
  - Added Blood effect
  - Optifine compatibility
  - Hitmarker mode
+ - Headshot Detection
