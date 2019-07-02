@@ -29,6 +29,9 @@ public class ModelCustomArmor extends TurboBipedBase {
 	public ModelRendererTurbo[] rightLegModel = new ModelRendererTurbo[0];
 	public ModelRendererTurbo[] skirtFrontModel = new ModelRendererTurbo[0]; //Acts like a leg piece, but its pitch is set to the maximum of the two legs
 	public ModelRendererTurbo[] skirtRearModel = new ModelRendererTurbo[0]; //Acts like a leg piece, but its pitch is set to the minimum of the two legs
+	public ModelRendererTurbo[] leftFootModel = new ModelRendererTurbo[0];
+	public ModelRendererTurbo[] rightFootModel = new ModelRendererTurbo[0];
+
 
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
 	{
@@ -60,6 +63,8 @@ public class ModelCustomArmor extends TurboBipedBase {
 		render(rightArmModel, bipedRightArm, f5, modelScale);
 		render(leftLegModel, bipedLeftLeg, f5, modelScale);
 		render(rightLegModel, bipedRightLeg, f5, modelScale);
+		render(leftFootModel, bipedLeftLeg, f5, modelScale);
+		render(rightFootModel, bipedRightLeg, f5, modelScale);
 		//Skirt front
 		{
 			for(ModelRendererTurbo mod : skirtFrontModel)

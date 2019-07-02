@@ -62,8 +62,8 @@ import java.io.Writer;
  * strings like {@code "5,8"} rather than objects like {@code {"x":5,"y":8}}. In
  * this case the type adapter binds a rich Java class to a compact JSON value.
  *
- * <p>The {@link #read(com.google.gsonapi.stream.JsonReader) read()} method must read exactly one value
- * and {@link #write(com.google.gsonapi.stream.JsonWriter,Object) write()} must write exactly one value.
+ * <p>The {@link #read(JsonReader) read()} method must read exactly one value
+ * and {@link #write(JsonWriter,Object) write()} must write exactly one value.
  * For primitive types this is means readers should make exactly one call to
  * {@code nextBoolean()}, {@code nextDouble()}, {@code nextInt()}, {@code
  * nextLong()}, {@code nextString()} or {@code nextNull()}. Writers should make
@@ -125,21 +125,21 @@ public abstract class TypeAdapter<T> {
    *
    * @param value the Java object to write. May be null.
    */
-  public abstract void write(com.google.gsonapi.stream.JsonWriter out, T value) throws IOException;
+  public abstract void write(JsonWriter out, T value) throws IOException;
 
   /**
    * Converts {@code value} to a JSON document and writes it to {@code out}.
-   * Unlike Gson's similar {@link com.google.gsonapi.Gson#toJson(JsonElement, Appendable) toJson}
+   * Unlike Gson's similar {@link Gson#toJson(JsonElement, Appendable) toJson}
    * method, this write is strict. Create a {@link
-   * com.google.gsonapi.stream.JsonWriter#setLenient(boolean) lenient} {@code JsonWriter} and call
-   * {@link #write(com.google.gsonapi.stream.JsonWriter, Object)} for lenient
+   * JsonWriter#setLenient(boolean) lenient} {@code JsonWriter} and call
+   * {@link #write(JsonWriter, Object)} for lenient
    * writing.
    *
    * @param value the Java object to convert. May be null.
    * @since 2.2
    */
   public final void toJson(Writer out, T value) throws IOException {
-    com.google.gsonapi.stream.JsonWriter writer = new com.google.gsonapi.stream.JsonWriter(out);
+    JsonWriter writer = new JsonWriter(out);
     write(writer, value);
   }
 
@@ -185,14 +185,14 @@ public abstract class TypeAdapter<T> {
    */
   public final TypeAdapter<T> nullSafe() {
     return new TypeAdapter<T>() {
-      @Override public void write(com.google.gsonapi.stream.JsonWriter out, T value) throws IOException {
+      @Override public void write(JsonWriter out, T value) throws IOException {
         if (value == null) {
           out.nullValue();
         } else {
           TypeAdapter.this.write(out, value);
         }
       }
-      @Override public T read(com.google.gsonapi.stream.JsonReader reader) throws IOException {
+      @Override public T read(JsonReader reader) throws IOException {
         if (reader.peek() == JsonToken.NULL) {
           reader.nextNull();
           return null;
@@ -204,8 +204,8 @@ public abstract class TypeAdapter<T> {
 
   /**
    * Converts {@code value} to a JSON document. Unlike Gson's similar {@link
-   * com.google.gsonapi.Gson#toJson(Object) toJson} method, this write is strict. Create a {@link
-   * com.google.gsonapi.stream.JsonWriter#setLenient(boolean) lenient} {@code JsonWriter} and call
+   * Gson#toJson(Object) toJson} method, this write is strict. Create a {@link
+   * JsonWriter#setLenient(boolean) lenient} {@code JsonWriter} and call
    * {@link #write(JsonWriter, Object)} for lenient
    * writing.
    *
@@ -226,12 +226,12 @@ public abstract class TypeAdapter<T> {
    * Converts {@code value} to a JSON tree.
    *
    * @param value the Java object to convert. May be null.
-   * @return the converted JSON tree. May be {@link com.google.gsonapi.JsonNull}.
+   * @return the converted JSON tree. May be {@link JsonNull}.
    * @since 2.2
    */
   public final JsonElement toJsonTree(T value) {
     try {
-      com.google.gsonapi.internal.bind.JsonTreeWriter jsonWriter = new JsonTreeWriter();
+      JsonTreeWriter jsonWriter = new JsonTreeWriter();
       write(jsonWriter, value);
       return jsonWriter.get();
     } catch (IOException e) {
@@ -245,27 +245,27 @@ public abstract class TypeAdapter<T> {
    *
    * @return the converted Java object. May be null.
    */
-  public abstract T read(com.google.gsonapi.stream.JsonReader in) throws IOException;
+  public abstract T read(JsonReader in) throws IOException;
 
   /**
    * Converts the JSON document in {@code in} to a Java object. Unlike Gson's
-   * similar {@link com.google.gsonapi.Gson#fromJson(Reader, Class) fromJson} method, this
-   * read is strict. Create a {@link com.google.gsonapi.stream.JsonReader#setLenient(boolean) lenient}
-   * {@code JsonReader} and call {@link #read(com.google.gsonapi.stream.JsonReader)} for lenient reading.
+   * similar {@link Gson#fromJson(Reader, Class) fromJson} method, this
+   * read is strict. Create a {@link JsonReader#setLenient(boolean) lenient}
+   * {@code JsonReader} and call {@link #read(JsonReader)} for lenient reading.
    *
    * @return the converted Java object. May be null.
    * @since 2.2
    */
   public final T fromJson(Reader in) throws IOException {
-    com.google.gsonapi.stream.JsonReader reader = new com.google.gsonapi.stream.JsonReader(in);
+    JsonReader reader = new JsonReader(in);
     return read(reader);
   }
 
   /**
    * Converts the JSON document in {@code json} to a Java object. Unlike Gson's
    * similar {@link Gson#fromJson(String, Class) fromJson} method, this read is
-   * strict. Create a {@link com.google.gsonapi.stream.JsonReader#setLenient(boolean) lenient} {@code
-   * JsonReader} and call {@link #read(com.google.gsonapi.stream.JsonReader)} for lenient reading.
+   * strict. Create a {@link JsonReader#setLenient(boolean) lenient} {@code
+   * JsonReader} and call {@link #read(JsonReader)} for lenient reading.
    *
    * @return the converted Java object. May be null.
    * @since 2.2

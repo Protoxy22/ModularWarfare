@@ -3,7 +3,9 @@ package com.modularwarfare.client.model;
 import java.util.Optional;
 import java.util.Random;
 
+import com.modularwarfare.common.armor.ItemMWArmor;
 import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import org.lwjgl.opengl.GL11;
@@ -209,7 +211,6 @@ public class RenderGun extends CustomItemRenderer {
 					RenderGun.swayVerticalEP = 0f;
 					RenderGun.reloadSwitch = 0f;
 					RenderGun.sprintSwitch = 0f;
-					RenderGun.crouchSwitch = 0f;
 				}
 		        break;
 
@@ -768,10 +769,10 @@ public class RenderGun extends CustomItemRenderer {
 			renderplayer.getMainModel().bipedRightArm.offsetX = 0F;
 			if(rightArm) {
 				renderplayer.renderRightArm(Minecraft.getMinecraft().player);
-				//renderRightSleeve(player, renderplayer.getMainModel());
+				renderRightSleeve(player, renderplayer.getMainModel());
 			} else {
 				renderplayer.renderLeftArm(Minecraft.getMinecraft().player);
-				//renderLeftSleeve(player, renderplayer.getMainModel());
+				renderLeftSleeve(player, renderplayer.getMainModel());
 			}
 		}
 		GL11.glPopMatrix();
@@ -805,7 +806,7 @@ public class RenderGun extends CustomItemRenderer {
 					renderplayer.getMainModel().setRotationAngles(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F, player);
 					renderplayer.getMainModel().bipedRightArm.offsetX = 0F;
 					renderplayer.renderRightArm(mc.player);
-					//renderRightSleeve(player, renderplayer.getMainModel());
+					renderRightSleeve(player, renderplayer.getMainModel());
 				}
 				GL11.glPopMatrix();
 			}
@@ -824,7 +825,7 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glScalef(model.leftArmScale.x, model.leftArmScale.y, model.leftArmScale.z);
 					renderplayer.getMainModel().bipedLeftArm.offsetY = 0F;
 					renderplayer.renderLeftArm(mc.player);
-					//renderLeftSleeve(player, renderplayer.getMainModel());
+					renderLeftSleeve(player, renderplayer.getMainModel());
 				}
 				GL11.glPopMatrix();
 			}
@@ -833,7 +834,7 @@ public class RenderGun extends CustomItemRenderer {
 	}
 
 
-	/*
+
 	public void renderLeftSleeve(EntityPlayer player, ModelBiped modelplayer)
 	{
 		if(player.inventory.armorItemInSlot(2) != null)
@@ -853,38 +854,9 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPopMatrix();
 			}
 		}
-
-		int[] slots = {1, 2, 6, 3};
-		for(int slot : slots)
-		{
-			ItemStack itemStack = BaublesApi.getArmorInSlot(player, slot);
-			if(!itemStack.isEmpty())
-			{
-				ArmorType armorType = ((ItemSpecialArmor) itemStack.getItem()).type;
-				if(armorType.hasModel())
-				{
-					ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-					GlStateManager.pushMatrix();
-					{
-						int skinId = 0;
-						String path = ((ItemSpecialArmor) itemStack.getItem()).type.modelSkins[0].getSkin();
-						bindTexture("armor", path);
-						GL11.glPushMatrix();
-						{
-							float modelScale = armorModel.modelScale;
-							GL11.glScalef(modelScale, modelScale, modelScale);
-							armorModel.render(armorModel.leftArmModel, modelplayer.bipedLeftArm, 0.0625F, modelScale);
-						}
-						GL11.glPopMatrix();
-					}
-					GlStateManager.popMatrix();
-				}
-			}
-		}
 	}
 
-	public void renderRightSleeve(EntityPlayer player, ModelBiped modelplayer)
-	{
+	public void renderRightSleeve(EntityPlayer player, ModelBiped modelplayer) {
 		if(player.inventory.armorItemInSlot(2) != null)
 		{
 			ItemStack armorStack = player.inventory.armorItemInSlot(2);
@@ -903,33 +875,5 @@ public class RenderGun extends CustomItemRenderer {
 			}
 		}
 
-		int[] slots = {1, 2, 6, 3};
-		for(int slot : slots)
-		{
-			ItemStack itemStack = BaublesApi.getArmorInSlot(player, slot);
-			if(!itemStack.isEmpty())
-			{
-				ArmorType armorType = ((ItemSpecialArmor) itemStack.getItem()).type;
-				if(armorType.hasModel())
-				{
-					ModelArmor armorModel = (ModelArmor) armorType.bipedModel;
-					GlStateManager.pushMatrix();
-					{
-						int skinId = 0;
-						String path = ((ItemSpecialArmor) itemStack.getItem()).type.modelSkins[0].getSkin();
-						bindTexture("armor", path);
-						GL11.glPushMatrix();
-						{
-							float modelScale = armorModel.modelScale;
-							GL11.glScalef(modelScale, modelScale, modelScale);
-							armorModel.render(armorModel.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
-						}
-						GL11.glPopMatrix();
-					}
-					GlStateManager.popMatrix();
-				}
-			}
-		}
 	}
-	*/
 }

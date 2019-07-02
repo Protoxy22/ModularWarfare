@@ -28,11 +28,20 @@ public class GunType extends BaseType {
 	 */
 	public WeaponType weaponType;
 
+	public WeaponScopeType scopeType;
+
 	//Munition variables
 	/**
 	 * Damage inflicted per bullet. Multiplied by the bullet damage value.
 	 */
 	public float gunDamage = 0;
+
+	/**
+	 * Damage inflicted per bullet. Multiplied by the bullet damage value.
+	 */
+	public float gunDamageHeadshotBonus = 0;
+
+
 	/**
 	 * Weapon block range
 	 */
@@ -144,10 +153,6 @@ public class GunType extends BaseType {
 	// Bullet Variables
 	public Integer internalAmmoStorage;
 	public String[] acceptedBullets;
-	public float velocity = 10f;
-	float gravityModifier = 0.035f;
-	public int gravityEffectStart = 7;
-
 	// Misc Settings
 	public boolean allowSprintFiring = false;
 	public boolean allowDefaultSounds = true;
@@ -352,6 +357,12 @@ public class GunType extends BaseType {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
 			nbtTagCompound.removeTag("attachment_" + type.typeName);
 		}
+	}
+
+
+	@Override
+	public String getAssetDir() {
+		return "guns";
 	}
 
 }

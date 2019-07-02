@@ -84,7 +84,7 @@ import com.google.gsonapi.stream.MalformedJsonException;
  * <p>See the <a href="https://sites.google.com/site/gson/gson-user-guide">Gson User Guide</a>
  * for a more complete set of examples.</p>
  *
- * @see com.google.gsonapi.reflect.TypeToken
+ * @see TypeToken
  *
  * @author Inderjeet Singh
  * @author Joel Leitch
@@ -99,7 +99,7 @@ public final class Gson {
   static final boolean DEFAULT_COMPLEX_MAP_KEYS = false;
   static final boolean DEFAULT_SPECIALIZE_FLOAT_VALUES = false;
 
-  private static final com.google.gsonapi.reflect.TypeToken<?> NULL_KEY_SURROGATE = com.google.gsonapi.reflect.TypeToken.get(Object.class);
+  private static final TypeToken<?> NULL_KEY_SURROGATE = TypeToken.get(Object.class);
   private static final String JSON_NON_EXECUTABLE_PREFIX = ")]}'\n";
 
   /**
@@ -109,17 +109,17 @@ public final class Gson {
    * lookup would stack overflow. We cheat by returning a proxy type adapter.
    * The proxy is wired up once the initial adapter has been created.
    */
-  private final ThreadLocal<Map<com.google.gsonapi.reflect.TypeToken<?>, FutureTypeAdapter<?>>> calls
-      = new ThreadLocal<Map<com.google.gsonapi.reflect.TypeToken<?>, FutureTypeAdapter<?>>>();
+  private final ThreadLocal<Map<TypeToken<?>, FutureTypeAdapter<?>>> calls
+      = new ThreadLocal<Map<TypeToken<?>, FutureTypeAdapter<?>>>();
 
-  private final Map<com.google.gsonapi.reflect.TypeToken<?>, TypeAdapter<?>> typeTokenCache = new ConcurrentHashMap<com.google.gsonapi.reflect.TypeToken<?>, TypeAdapter<?>>();
+  private final Map<TypeToken<?>, TypeAdapter<?>> typeTokenCache = new ConcurrentHashMap<TypeToken<?>, TypeAdapter<?>>();
 
-  private final com.google.gsonapi.internal.ConstructorConstructor constructorConstructor;
-  private final com.google.gsonapi.internal.bind.JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory;
+  private final ConstructorConstructor constructorConstructor;
+  private final JsonAdapterAnnotationTypeAdapterFactory jsonAdapterFactory;
 
   final List<TypeAdapterFactory> factories;
 
-  final com.google.gsonapi.internal.Excluder excluder;
+  final Excluder excluder;
   final FieldNamingStrategy fieldNamingStrategy;
   final Map<Type, InstanceCreator<?>> instanceCreators;
   final boolean serializeNulls;
@@ -171,7 +171,7 @@ public final class Gson {
    * </ul>
    */
   public Gson() {
-    this(com.google.gsonapi.internal.Excluder.DEFAULT, FieldNamingPolicy.IDENTITY,
+    this(Excluder.DEFAULT, FieldNamingPolicy.IDENTITY,
         Collections.<Type, InstanceCreator<?>>emptyMap(), DEFAULT_SERIALIZE_NULLS,
         DEFAULT_COMPLEX_MAP_KEYS, DEFAULT_JSON_NON_EXECUTABLE, DEFAULT_ESCAPE_HTML,
         DEFAULT_PRETTY_PRINT, DEFAULT_LENIENT, DEFAULT_SPECIALIZE_FLOAT_VALUES,
@@ -180,7 +180,7 @@ public final class Gson {
         Collections.<TypeAdapterFactory>emptyList());
   }
 
-  Gson(final com.google.gsonapi.internal.Excluder excluder, final FieldNamingStrategy fieldNamingStrategy,
+  Gson(final Excluder excluder, final FieldNamingStrategy fieldNamingStrategy,
        final Map<Type, InstanceCreator<?>> instanceCreators, boolean serializeNulls,
        boolean complexMapKeySerialization, boolean generateNonExecutableGson, boolean htmlSafe,
        boolean prettyPrinting, boolean lenient, boolean serializeSpecialFloatingPointValues,
@@ -209,7 +209,7 @@ public final class Gson {
     List<TypeAdapterFactory> factories = new ArrayList<TypeAdapterFactory>();
 
     // built-in type adapters that cannot be overridden
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.JSON_ELEMENT_FACTORY);
+    factories.add(TypeAdapters.JSON_ELEMENT_FACTORY);
     factories.add(ObjectTypeAdapter.FACTORY);
 
     // the excluder must precede all adapters that handle user-defined types
@@ -219,49 +219,49 @@ public final class Gson {
     factories.addAll(factoriesToBeAdded);
 
     // type adapters for basic platform types
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.STRING_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.INTEGER_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.BOOLEAN_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.BYTE_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.SHORT_FACTORY);
+    factories.add(TypeAdapters.STRING_FACTORY);
+    factories.add(TypeAdapters.INTEGER_FACTORY);
+    factories.add(TypeAdapters.BOOLEAN_FACTORY);
+    factories.add(TypeAdapters.BYTE_FACTORY);
+    factories.add(TypeAdapters.SHORT_FACTORY);
     TypeAdapter<Number> longAdapter = longAdapter(longSerializationPolicy);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(long.class, Long.class, longAdapter));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(double.class, Double.class,
+    factories.add(TypeAdapters.newFactory(long.class, Long.class, longAdapter));
+    factories.add(TypeAdapters.newFactory(double.class, Double.class,
             doubleAdapter(serializeSpecialFloatingPointValues)));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(float.class, Float.class,
+    factories.add(TypeAdapters.newFactory(float.class, Float.class,
             floatAdapter(serializeSpecialFloatingPointValues)));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.NUMBER_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.ATOMIC_INTEGER_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.ATOMIC_BOOLEAN_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(AtomicLong.class, atomicLongAdapter(longAdapter)));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(AtomicLongArray.class, atomicLongArrayAdapter(longAdapter)));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.ATOMIC_INTEGER_ARRAY_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.CHARACTER_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.STRING_BUILDER_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.STRING_BUFFER_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(BigDecimal.class, com.google.gsonapi.internal.bind.TypeAdapters.BIG_DECIMAL));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(BigInteger.class, com.google.gsonapi.internal.bind.TypeAdapters.BIG_INTEGER));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.URL_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.URI_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.UUID_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.CURRENCY_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.LOCALE_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.INET_ADDRESS_FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.BIT_SET_FACTORY);
+    factories.add(TypeAdapters.NUMBER_FACTORY);
+    factories.add(TypeAdapters.ATOMIC_INTEGER_FACTORY);
+    factories.add(TypeAdapters.ATOMIC_BOOLEAN_FACTORY);
+    factories.add(TypeAdapters.newFactory(AtomicLong.class, atomicLongAdapter(longAdapter)));
+    factories.add(TypeAdapters.newFactory(AtomicLongArray.class, atomicLongArrayAdapter(longAdapter)));
+    factories.add(TypeAdapters.ATOMIC_INTEGER_ARRAY_FACTORY);
+    factories.add(TypeAdapters.CHARACTER_FACTORY);
+    factories.add(TypeAdapters.STRING_BUILDER_FACTORY);
+    factories.add(TypeAdapters.STRING_BUFFER_FACTORY);
+    factories.add(TypeAdapters.newFactory(BigDecimal.class, TypeAdapters.BIG_DECIMAL));
+    factories.add(TypeAdapters.newFactory(BigInteger.class, TypeAdapters.BIG_INTEGER));
+    factories.add(TypeAdapters.URL_FACTORY);
+    factories.add(TypeAdapters.URI_FACTORY);
+    factories.add(TypeAdapters.UUID_FACTORY);
+    factories.add(TypeAdapters.CURRENCY_FACTORY);
+    factories.add(TypeAdapters.LOCALE_FACTORY);
+    factories.add(TypeAdapters.INET_ADDRESS_FACTORY);
+    factories.add(TypeAdapters.BIT_SET_FACTORY);
     factories.add(DateTypeAdapter.FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.CALENDAR_FACTORY);
+    factories.add(TypeAdapters.CALENDAR_FACTORY);
     factories.add(TimeTypeAdapter.FACTORY);
     factories.add(SqlDateTypeAdapter.FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.TIMESTAMP_FACTORY);
+    factories.add(TypeAdapters.TIMESTAMP_FACTORY);
     factories.add(ArrayTypeAdapter.FACTORY);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.CLASS_FACTORY);
+    factories.add(TypeAdapters.CLASS_FACTORY);
 
     // type adapters for composite and user-defined types
     factories.add(new CollectionTypeAdapterFactory(constructorConstructor));
     factories.add(new MapTypeAdapterFactory(constructorConstructor, complexMapKeySerialization));
     this.jsonAdapterFactory = new JsonAdapterAnnotationTypeAdapterFactory(constructorConstructor);
     factories.add(jsonAdapterFactory);
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.ENUM_FACTORY);
+    factories.add(TypeAdapters.ENUM_FACTORY);
     factories.add(new ReflectiveTypeAdapterFactory(
         constructorConstructor, fieldNamingStrategy, excluder, jsonAdapterFactory));
 
@@ -296,17 +296,17 @@ public final class Gson {
 
   private TypeAdapter<Number> doubleAdapter(boolean serializeSpecialFloatingPointValues) {
     if (serializeSpecialFloatingPointValues) {
-      return com.google.gsonapi.internal.bind.TypeAdapters.DOUBLE;
+      return TypeAdapters.DOUBLE;
     }
     return new TypeAdapter<Number>() {
-      @Override public Double read(com.google.gsonapi.stream.JsonReader in) throws IOException {
-        if (in.peek() == com.google.gsonapi.stream.JsonToken.NULL) {
+      @Override public Double read(JsonReader in) throws IOException {
+        if (in.peek() == JsonToken.NULL) {
           in.nextNull();
           return null;
         }
         return in.nextDouble();
       }
-      @Override public void write(com.google.gsonapi.stream.JsonWriter out, Number value) throws IOException {
+      @Override public void write(JsonWriter out, Number value) throws IOException {
         if (value == null) {
           out.nullValue();
           return;
@@ -320,17 +320,17 @@ public final class Gson {
 
   private TypeAdapter<Number> floatAdapter(boolean serializeSpecialFloatingPointValues) {
     if (serializeSpecialFloatingPointValues) {
-      return com.google.gsonapi.internal.bind.TypeAdapters.FLOAT;
+      return TypeAdapters.FLOAT;
     }
     return new TypeAdapter<Number>() {
-      @Override public Float read(com.google.gsonapi.stream.JsonReader in) throws IOException {
-        if (in.peek() == com.google.gsonapi.stream.JsonToken.NULL) {
+      @Override public Float read(JsonReader in) throws IOException {
+        if (in.peek() == JsonToken.NULL) {
           in.nextNull();
           return null;
         }
         return (float) in.nextDouble();
       }
-      @Override public void write(com.google.gsonapi.stream.JsonWriter out, Number value) throws IOException {
+      @Override public void write(JsonWriter out, Number value) throws IOException {
         if (value == null) {
           out.nullValue();
           return;
@@ -355,14 +355,14 @@ public final class Gson {
       return TypeAdapters.LONG;
     }
     return new TypeAdapter<Number>() {
-      @Override public Number read(com.google.gsonapi.stream.JsonReader in) throws IOException {
-        if (in.peek() == com.google.gsonapi.stream.JsonToken.NULL) {
+      @Override public Number read(JsonReader in) throws IOException {
+        if (in.peek() == JsonToken.NULL) {
           in.nextNull();
           return null;
         }
         return in.nextLong();
       }
-      @Override public void write(com.google.gsonapi.stream.JsonWriter out, Number value) throws IOException {
+      @Override public void write(JsonWriter out, Number value) throws IOException {
         if (value == null) {
           out.nullValue();
           return;
@@ -374,10 +374,10 @@ public final class Gson {
 
   private static TypeAdapter<AtomicLong> atomicLongAdapter(final TypeAdapter<Number> longAdapter) {
     return new TypeAdapter<AtomicLong>() {
-      @Override public void write(com.google.gsonapi.stream.JsonWriter out, AtomicLong value) throws IOException {
+      @Override public void write(JsonWriter out, AtomicLong value) throws IOException {
         longAdapter.write(out, value.get());
       }
-      @Override public AtomicLong read(com.google.gsonapi.stream.JsonReader in) throws IOException {
+      @Override public AtomicLong read(JsonReader in) throws IOException {
         Number value = longAdapter.read(in);
         return new AtomicLong(value.longValue());
       }
@@ -386,14 +386,14 @@ public final class Gson {
 
   private static TypeAdapter<AtomicLongArray> atomicLongArrayAdapter(final TypeAdapter<Number> longAdapter) {
     return new TypeAdapter<AtomicLongArray>() {
-      @Override public void write(com.google.gsonapi.stream.JsonWriter out, AtomicLongArray value) throws IOException {
+      @Override public void write(JsonWriter out, AtomicLongArray value) throws IOException {
         out.beginArray();
         for (int i = 0, length = value.length(); i < length; i++) {
           longAdapter.write(out, value.get(i));
         }
         out.endArray();
       }
-      @Override public AtomicLongArray read(com.google.gsonapi.stream.JsonReader in) throws IOException {
+      @Override public AtomicLongArray read(JsonReader in) throws IOException {
         List<Long> list = new ArrayList<Long>();
         in.beginArray();
         while (in.hasNext()) {
@@ -418,16 +418,16 @@ public final class Gson {
    *     deserialize {@code type}.
    */
   @SuppressWarnings("unchecked")
-  public <T> TypeAdapter<T> getAdapter(com.google.gsonapi.reflect.TypeToken<T> type) {
+  public <T> TypeAdapter<T> getAdapter(TypeToken<T> type) {
     TypeAdapter<?> cached = typeTokenCache.get(type == null ? NULL_KEY_SURROGATE : type);
     if (cached != null) {
       return (TypeAdapter<T>) cached;
     }
 
-    Map<com.google.gsonapi.reflect.TypeToken<?>, FutureTypeAdapter<?>> threadCalls = calls.get();
+    Map<TypeToken<?>, FutureTypeAdapter<?>> threadCalls = calls.get();
     boolean requiresThreadLocalCleanup = false;
     if (threadCalls == null) {
-      threadCalls = new HashMap<com.google.gsonapi.reflect.TypeToken<?>, FutureTypeAdapter<?>>();
+      threadCalls = new HashMap<TypeToken<?>, FutureTypeAdapter<?>>();
       calls.set(threadCalls);
       requiresThreadLocalCleanup = true;
     }
@@ -510,7 +510,7 @@ public final class Gson {
    *
    * @since 2.2
    */
-  public <T> TypeAdapter<T> getDelegateAdapter(TypeAdapterFactory skipPast, com.google.gsonapi.reflect.TypeToken<T> type) {
+  public <T> TypeAdapter<T> getDelegateAdapter(TypeAdapterFactory skipPast, TypeToken<T> type) {
     // Hack. If the skipPast factory isn't registered, assume the factory is being requested via
     // our @JsonAdapter annotation.
     if (!factories.contains(skipPast)) {
@@ -541,7 +541,7 @@ public final class Gson {
    *     deserialize {@code type}.
    */
   public <T> TypeAdapter<T> getAdapter(Class<T> type) {
-    return getAdapter(com.google.gsonapi.reflect.TypeToken.get(type));
+    return getAdapter(TypeToken.get(type));
   }
 
   /**
@@ -572,7 +572,7 @@ public final class Gson {
    *
    * @param src the object for which JSON representation is to be created
    * @param typeOfSrc The specific genericized type of src. You can obtain
-   * this type by using the {@link com.google.gsonapi.reflect.TypeToken} class. For example,
+   * this type by using the {@link TypeToken} class. For example,
    * to get the type for {@code Collection<Foo>}, you should use:
    * <pre>
    * Type typeOfSrc = new TypeToken&lt;Collection&lt;Foo&gt;&gt;(){}.getType();
@@ -581,7 +581,7 @@ public final class Gson {
    * @since 1.4
    */
   public JsonElement toJsonTree(Object src, Type typeOfSrc) {
-    com.google.gsonapi.internal.bind.JsonTreeWriter writer = new JsonTreeWriter();
+    JsonTreeWriter writer = new JsonTreeWriter();
     toJson(src, typeOfSrc, writer);
     return writer.get();
   }
@@ -614,7 +614,7 @@ public final class Gson {
    *
    * @param src the object for which JSON representation is to be created
    * @param typeOfSrc The specific genericized type of src. You can obtain
-   * this type by using the {@link com.google.gsonapi.reflect.TypeToken} class. For example,
+   * this type by using the {@link TypeToken} class. For example,
    * to get the type for {@code Collection<Foo>}, you should use:
    * <pre>
    * Type typeOfSrc = new TypeToken&lt;Collection&lt;Foo&gt;&gt;(){}.getType();
@@ -656,7 +656,7 @@ public final class Gson {
    *
    * @param src the object for which JSON representation is to be created
    * @param typeOfSrc The specific genericized type of src. You can obtain
-   * this type by using the {@link com.google.gsonapi.reflect.TypeToken} class. For example,
+   * this type by using the {@link TypeToken} class. For example,
    * to get the type for {@code Collection<Foo>}, you should use:
    * <pre>
    * Type typeOfSrc = new TypeToken&lt;Collection&lt;Foo&gt;&gt;(){}.getType();
@@ -667,7 +667,7 @@ public final class Gson {
    */
   public void toJson(Object src, Type typeOfSrc, Appendable writer) throws JsonIOException {
     try {
-      com.google.gsonapi.stream.JsonWriter jsonWriter = newJsonWriter(com.google.gsonapi.internal.Streams.writerForAppendable(writer));
+      JsonWriter jsonWriter = newJsonWriter(Streams.writerForAppendable(writer));
       toJson(src, typeOfSrc, jsonWriter);
     } catch (IOException e) {
       throw new JsonIOException(e);
@@ -680,8 +680,8 @@ public final class Gson {
    * @throws JsonIOException if there was a problem writing to the writer
    */
   @SuppressWarnings("unchecked")
-  public void toJson(Object src, Type typeOfSrc, com.google.gsonapi.stream.JsonWriter writer) throws JsonIOException {
-    TypeAdapter<?> adapter = getAdapter(com.google.gsonapi.reflect.TypeToken.get(typeOfSrc));
+  public void toJson(Object src, Type typeOfSrc, JsonWriter writer) throws JsonIOException {
+    TypeAdapter<?> adapter = getAdapter(TypeToken.get(typeOfSrc));
     boolean oldLenient = writer.isLenient();
     writer.setLenient(true);
     boolean oldHtmlSafe = writer.isHtmlSafe();
@@ -724,7 +724,7 @@ public final class Gson {
    */
   public void toJson(JsonElement jsonElement, Appendable writer) throws JsonIOException {
     try {
-      com.google.gsonapi.stream.JsonWriter jsonWriter = newJsonWriter(com.google.gsonapi.internal.Streams.writerForAppendable(writer));
+      JsonWriter jsonWriter = newJsonWriter(Streams.writerForAppendable(writer));
       toJson(jsonElement, jsonWriter);
     } catch (IOException e) {
       throw new JsonIOException(e);
@@ -734,11 +734,11 @@ public final class Gson {
   /**
    * Returns a new JSON writer configured for the settings on this Gson instance.
    */
-  public com.google.gsonapi.stream.JsonWriter newJsonWriter(Writer writer) throws IOException {
+  public JsonWriter newJsonWriter(Writer writer) throws IOException {
     if (generateNonExecutableJson) {
       writer.write(JSON_NON_EXECUTABLE_PREFIX);
     }
-    com.google.gsonapi.stream.JsonWriter jsonWriter = new com.google.gsonapi.stream.JsonWriter(writer);
+    JsonWriter jsonWriter = new JsonWriter(writer);
     if (prettyPrinting) {
       jsonWriter.setIndent("  ");
     }
@@ -749,8 +749,8 @@ public final class Gson {
   /**
    * Returns a new JSON reader configured for the settings on this Gson instance.
    */
-  public com.google.gsonapi.stream.JsonReader newJsonReader(Reader reader) {
-    com.google.gsonapi.stream.JsonReader jsonReader = new com.google.gsonapi.stream.JsonReader(reader);
+  public JsonReader newJsonReader(Reader reader) {
+    JsonReader jsonReader = new JsonReader(reader);
     jsonReader.setLenient(lenient);
     return jsonReader;
   }
@@ -759,7 +759,7 @@ public final class Gson {
    * Writes the JSON for {@code jsonElement} to {@code writer}.
    * @throws JsonIOException if there was a problem writing to the writer
    */
-  public void toJson(JsonElement jsonElement, com.google.gsonapi.stream.JsonWriter writer) throws JsonIOException {
+  public void toJson(JsonElement jsonElement, JsonWriter writer) throws JsonIOException {
     boolean oldLenient = writer.isLenient();
     writer.setLenient(true);
     boolean oldHtmlSafe = writer.isHtmlSafe();
@@ -799,7 +799,7 @@ public final class Gson {
    */
   public <T> T fromJson(String json, Class<T> classOfT) throws JsonSyntaxException {
     Object object = fromJson(json, (Type) classOfT);
-    return com.google.gsonapi.internal.Primitives.wrap(classOfT).cast(object);
+    return Primitives.wrap(classOfT).cast(object);
   }
 
   /**
@@ -811,7 +811,7 @@ public final class Gson {
    * @param <T> the type of the desired object
    * @param json the string from which the object is to be deserialized
    * @param typeOfT The specific genericized type of src. You can obtain this type by using the
-   * {@link com.google.gsonapi.reflect.TypeToken} class. For example, to get the type for
+   * {@link TypeToken} class. For example, to get the type for
    * {@code Collection<Foo>}, you should use:
    * <pre>
    * Type typeOfT = new TypeToken&lt;Collection&lt;Foo&gt;&gt;(){}.getType();
@@ -849,10 +849,10 @@ public final class Gson {
    * @since 1.2
    */
   public <T> T fromJson(Reader json, Class<T> classOfT) throws JsonSyntaxException, JsonIOException {
-    com.google.gsonapi.stream.JsonReader jsonReader = newJsonReader(json);
+    JsonReader jsonReader = newJsonReader(json);
     Object object = fromJson(jsonReader, classOfT);
     assertFullConsumption(object, jsonReader);
-    return com.google.gsonapi.internal.Primitives.wrap(classOfT).cast(object);
+    return Primitives.wrap(classOfT).cast(object);
   }
 
   /**
@@ -864,7 +864,7 @@ public final class Gson {
    * @param <T> the type of the desired object
    * @param json the reader producing Json from which the object is to be deserialized
    * @param typeOfT The specific genericized type of src. You can obtain this type by using the
-   * {@link com.google.gsonapi.reflect.TypeToken} class. For example, to get the type for
+   * {@link TypeToken} class. For example, to get the type for
    * {@code Collection<Foo>}, you should use:
    * <pre>
    * Type typeOfT = new TypeToken&lt;Collection&lt;Foo&gt;&gt;(){}.getType();
@@ -876,13 +876,13 @@ public final class Gson {
    */
   @SuppressWarnings("unchecked")
   public <T> T fromJson(Reader json, Type typeOfT) throws JsonIOException, JsonSyntaxException {
-    com.google.gsonapi.stream.JsonReader jsonReader = newJsonReader(json);
+    JsonReader jsonReader = newJsonReader(json);
     T object = (T) fromJson(jsonReader, typeOfT);
     assertFullConsumption(object, jsonReader);
     return object;
   }
 
-  private static void assertFullConsumption(Object obj, com.google.gsonapi.stream.JsonReader reader) {
+  private static void assertFullConsumption(Object obj, JsonReader reader) {
     try {
       if (obj != null && reader.peek() != JsonToken.END_DOCUMENT) {
         throw new JsonIOException("JSON document was not fully consumed.");
@@ -903,14 +903,14 @@ public final class Gson {
    * @throws JsonSyntaxException if json is not a valid representation for an object of type
    */
   @SuppressWarnings("unchecked")
-  public <T> T fromJson(com.google.gsonapi.stream.JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException {
+  public <T> T fromJson(JsonReader reader, Type typeOfT) throws JsonIOException, JsonSyntaxException {
     boolean isEmpty = true;
     boolean oldLenient = reader.isLenient();
     reader.setLenient(true);
     try {
       reader.peek();
       isEmpty = false;
-      com.google.gsonapi.reflect.TypeToken<T> typeToken = (com.google.gsonapi.reflect.TypeToken<T>) com.google.gsonapi.reflect.TypeToken.get(typeOfT);
+      TypeToken<T> typeToken = (TypeToken<T>) TypeToken.get(typeOfT);
       TypeAdapter<T> typeAdapter = getAdapter(typeToken);
       T object = typeAdapter.read(reader);
       return object;

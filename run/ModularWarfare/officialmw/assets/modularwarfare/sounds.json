@@ -33,5 +33,19 @@
     "sounds": [
       "modularwarfare:omw.unload.m4"
     ]
+  },
+  "omw.shoot.m24": {
+    "category": "player",
+    "subtitle": "MW Sound",
+    "sounds": [
+      "modularwarfare:omw.shoot.m24"
+    ]
+  },
+  "omw.shoot.m24_distant": {
+    "category": "player",
+    "subtitle": "MW Sound",
+    "sounds": [
+      "modularwarfare:omw.shoot.m24_distant"
+    ]
   }
 }

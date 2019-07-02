@@ -34,7 +34,7 @@ public class AmmoType extends BaseType {
 	/** Will this ammo item be loaded or empty when crafted, default loaded */
 	public boolean emptyOnCraft = false;
 	/** Override ammo deletion, to allow for enabling or disabling of returned empty mags */
-	public boolean allowEmptyMagazines = false;
+	public boolean allowEmptyMagazines = true;
 	
 	// Sub Ammo 
 	/** The ammo type(s) that can be loaded into this item */

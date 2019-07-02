@@ -1,10 +1,9 @@
 package com.modularwarfare.utility;
 
-import com.modularwarfare.client.model.InstantBulletRenderer;
-import com.modularwarfare.common.vector.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -18,6 +17,31 @@ public class RayUtil {
 
     public static boolean isLiving(Entity entity){
         return entity instanceof EntityLivingBase && !(entity instanceof EntityArmorStand);
+    }
+
+    /**
+     * Attacks the given entity with the given damage source and amount, but
+     * preserving the entity's original velocity instead of applying knockback, as
+     * would happen with
+     * {@link EntityLivingBase#attackEntityFrom(DamageSource, float)} <i>(More
+     * accurately, calls that method as normal and then resets the entity's velocity
+     * to what it was before).</i> Handy for when you need to damage an entity
+     * repeatedly in a short space of time.
+     *
+     * @param entity The entity to attack
+     * @param source The source of the damage
+     * @param amount The amount of damage to apply
+     * @return True if the attack succeeded, false if not.
+     */
+    public static boolean attackEntityWithoutKnockback(Entity entity, DamageSource source, float amount) {
+        double vx = entity.motionX;
+        double vy = entity.motionY;
+        double vz = entity.motionZ;
+        boolean succeeded = entity.attackEntityFrom(source, amount);
+        entity.motionX = vx;
+        entity.motionY = vy;
+        entity.motionZ = vz;
+        return succeeded;
     }
 
     /**
@@ -93,7 +117,7 @@ public class RayUtil {
         AxisAlignedBB bb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ).grow(borderSize, borderSize,
                 borderSize);
         List<Entity> allEntities = world.getEntitiesWithinAABBExcludingEntity(null, bb);
-        RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec, true, true, false);
+        RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec,  true, true, false);
         startVec = new Vec3d(x, y, z);
         endVec = new Vec3d(tx, ty, tz);
         float maxDistance = (float)endVec.distanceTo(startVec);
@@ -102,6 +126,7 @@ public class RayUtil {
         }
 
         Entity closestHitEntity = null;
+        Vec3d hit = null;
         float closestHit = maxDistance;
         float currentHit = 0.f;
         AxisAlignedBB entityBb;// = ent.getBoundingBox();
@@ -116,6 +141,7 @@ public class RayUtil {
                     intercept = entityBb.calculateIntercept(startVec, endVec);
                     if(intercept != null){
                         currentHit = (float)intercept.hitVec.distanceTo(startVec);
+                        hit = intercept.hitVec;
                         if(currentHit < closestHit || currentHit == 0){
                             closestHit = currentHit;
                             closestHitEntity = ent;
@@ -124,8 +150,8 @@ public class RayUtil {
                 }
             }
         }
-        if(closestHitEntity != null){
-            blockHit = new RayTraceResult(closestHitEntity);
+        if(closestHitEntity != null && hit != null){
+            blockHit = new RayTraceResult(closestHitEntity, hit);
         }
         return blockHit;
     }

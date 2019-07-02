@@ -2,8 +2,12 @@ package com.modularwarfare.common.guns;
 
 import java.util.List;
 import javax.annotation.Nullable;
+
+import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
+import com.modularwarfare.api.WeaponReloadEvent;
+import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
@@ -16,8 +20,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
@@ -139,8 +146,11 @@ public class ItemGun extends BaseItem {
 				if (rayTrace.entityHit != null) {
 					target = (EntityLivingBase) rayTrace.entityHit;
 					gunType.playSoundPos(target.getPosition(), world, WeaponSoundType.Penetration);
+					boolean headshot = canEntityGetHeadshot(target) && rayTrace.hitVec.y >= target.getPosition().getY() + target.getEyeHeight() - 0.15f;
+					ModularWarfare.LOGGER.info(rayTrace.hitVec.y);
+					ModularWarfare.LOGGER.info(target.getPosition().getY() + target.getEyeHeight() - 0.15f);
 					if (entityPlayer instanceof EntityPlayerMP) {
-						ModularWarfare.NETWORK.sendTo(new PacketPlayHitmarker(), (EntityPlayerMP) entityPlayer);
+						ModularWarfare.NETWORK.sendTo(new PacketPlayHitmarker(headshot), (EntityPlayerMP) entityPlayer);
 					}
 				}
 			}
@@ -150,8 +160,6 @@ public class ItemGun extends BaseItem {
 		}
 
 
-		//EntityBullet bullet = new EntityBullet(world, entityPlayer, this);
-		//world.spawnEntity(bullet);
 
 		if (entityPlayer instanceof EntityPlayerMP) {
 			ModularWarfare.NETWORK.sendTo(new PacketGunFire(), (EntityPlayerMP) entityPlayer);
@@ -164,7 +172,11 @@ public class ItemGun extends BaseItem {
 		if (target != null) {
 			if (target != entityPlayer) {
 				float damage = postFireEvent.getDamage();
-				target.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
+				if(!ModConfig.INSTANCE.applyKnockback) {
+					RayUtil.attackEntityWithoutKnockback(target, DamageSource.causePlayerDamage(entityPlayer), damage);
+				} else {
+					target.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
+				}
 				target.hurtResistantTime = 0;
 			}
 		}
@@ -192,6 +204,11 @@ public class ItemGun extends BaseItem {
 		ServerTickHandler.playerShootCooldown.put(entityPlayer.getUniqueID(), postFireEvent.getFireDelay());
 
 	}
+
+	private boolean canEntityGetHeadshot(Entity e) {
+		return e instanceof EntityZombie || e instanceof EntitySkeleton || e instanceof EntityCreeper || e instanceof EntityWitch || e instanceof EntityPigZombie || e instanceof EntityEnderman || e instanceof EntityWitherSkeleton || e instanceof EntityPlayer || e instanceof EntityVillager || e instanceof EntityEvoker || e instanceof EntityStray || e instanceof EntityVindicator || e instanceof EntityIronGolem || e instanceof EntitySnowman;
+	}
+
 
 	public void onGunSwitchMode(EntityPlayer entityPlayer, World world, ItemStack gunStack, ItemGun itemGun, WeaponFireMode fireMode) {
 		GunType.setFireMode(gunStack, fireMode);
@@ -238,6 +255,8 @@ public class ItemGun extends BaseItem {
 		}
 		return 0;
 	}
+
+
 
 	public static boolean hasNextShot(ItemStack gunStack) {
 		if (hasAmmoLoaded(gunStack)) {

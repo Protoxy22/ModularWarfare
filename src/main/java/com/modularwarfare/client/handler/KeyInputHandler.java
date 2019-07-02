@@ -8,10 +8,7 @@ import com.modularwarfare.client.input.KeyEntry;
 import com.modularwarfare.client.input.KeyType;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.common.guns.ItemGun;
-import com.modularwarfare.common.network.PacketGunAddAttachment;
-import com.modularwarfare.common.network.PacketGunReload;
-import com.modularwarfare.common.network.PacketGunSwitchMode;
-import com.modularwarfare.common.network.PacketGunUnloadAttachment;
+import com.modularwarfare.common.network.*;
 import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.client.Minecraft;
@@ -85,8 +82,8 @@ public class KeyInputHandler extends ForgeEvent {
 					ItemStack unloadStack = entityPlayer.getHeldItemMainhand();
 					if (unloadStack != null && (unloadStack.getItem() instanceof ItemGun || unloadStack.getItem() instanceof ItemAmmo)) {
 						ModularWarfare.NETWORK.sendToServer(new PacketGunReload(true));
+						ModularWarfare.NETWORK.sendToServer(new PacketGunUnloadAttachment());
 					}
-					ModularWarfare.NETWORK.sendToServer(new PacketGunUnloadAttachment());
 					break;
 
 				case DebugMode:

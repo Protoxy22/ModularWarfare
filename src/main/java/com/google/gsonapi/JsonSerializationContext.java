@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 
 /**
  * Context for serialization that is passed to a custom serializer during invocation of its
- * {@link com.google.gsonapi.JsonSerializer#serialize(Object, Type, JsonSerializationContext)} method.
+ * {@link JsonSerializer#serialize(Object, Type, JsonSerializationContext)} method.
  *
  * @author Inderjeet Singh
  * @author Joel Leitch
@@ -31,9 +31,9 @@ public interface JsonSerializationContext {
    * Invokes default serialization on the specified object.
    *
    * @param src the object that needs to be serialized.
-   * @return a tree of {@link com.google.gsonapi.JsonElement}s corresponding to the serialized form of {@code src}.
+   * @return a tree of {@link JsonElement}s corresponding to the serialized form of {@code src}.
    */
-  public com.google.gsonapi.JsonElement serialize(Object src);
+  public JsonElement serialize(Object src);
 
   /**
    * Invokes default serialization on the specified object passing the specific type information.
@@ -43,7 +43,7 @@ public interface JsonSerializationContext {
    *
    * @param src the object that needs to be serialized.
    * @param typeOfSrc the actual genericized type of src object.
-   * @return a tree of {@link com.google.gsonapi.JsonElement}s corresponding to the serialized form of {@code src}.
+   * @return a tree of {@link JsonElement}s corresponding to the serialized form of {@code src}.
    */
   public JsonElement serialize(Object src, Type typeOfSrc);
 }

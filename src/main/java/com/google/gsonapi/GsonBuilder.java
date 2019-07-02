@@ -43,8 +43,8 @@ import static com.google.gsonapi.Gson.DEFAULT_SERIALIZE_NULLS;
 import static com.google.gsonapi.Gson.DEFAULT_SPECIALIZE_FLOAT_VALUES;
 
 /**
- * <p>Use this builder to construct a {@link com.google.gsonapi.Gson} instance when you need to set configuration
- * options other than the default. For {@link com.google.gsonapi.Gson} with default configuration, it is simpler to
+ * <p>Use this builder to construct a {@link Gson} instance when you need to set configuration
+ * options other than the default. For {@link Gson} with default configuration, it is simpler to
  * use {@code new Gson()}. {@code GsonBuilder} is best used by creating it, and then invoking its
  * various configuration methods, and finally calling create.</p>
  *
@@ -77,7 +77,7 @@ import static com.google.gsonapi.Gson.DEFAULT_SPECIALIZE_FLOAT_VALUES;
  * @author Jesse Wilson
  */
 public final class GsonBuilder {
-  private com.google.gsonapi.internal.Excluder excluder = Excluder.DEFAULT;
+  private Excluder excluder = Excluder.DEFAULT;
   private LongSerializationPolicy longSerializationPolicy = LongSerializationPolicy.DEFAULT;
   private com.google.gsonapi.FieldNamingStrategy fieldNamingPolicy = com.google.gsonapi.FieldNamingPolicy.IDENTITY;
   private final Map<Type, com.google.gsonapi.InstanceCreator<?>> instanceCreators
@@ -111,7 +111,7 @@ public final class GsonBuilder {
    *
    * @param gson the gson instance whose configuration should by applied to a new GsonBuilder.
    */
-  GsonBuilder(com.google.gsonapi.Gson gson) {
+  GsonBuilder(Gson gson) {
     this.excluder = gson.excluder;
     this.fieldNamingPolicy = gson.fieldNamingStrategy;
     this.instanceCreators.putAll(gson.instanceCreators);
@@ -503,11 +503,11 @@ public final class GsonBuilder {
       instanceCreators.put(type, (InstanceCreator) typeAdapter);
     }
     if (typeAdapter instanceof com.google.gsonapi.JsonSerializer<?> || typeAdapter instanceof com.google.gsonapi.JsonDeserializer<?>) {
-      com.google.gsonapi.reflect.TypeToken<?> typeToken = com.google.gsonapi.reflect.TypeToken.get(type);
-      factories.add(com.google.gsonapi.internal.bind.TreeTypeAdapter.newFactoryWithMatchRawType(typeToken, typeAdapter));
+      TypeToken<?> typeToken = TypeToken.get(type);
+      factories.add(TreeTypeAdapter.newFactoryWithMatchRawType(typeToken, typeAdapter));
     }
     if (typeAdapter instanceof com.google.gsonapi.TypeAdapter<?>) {
-      factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(TypeToken.get(type), (com.google.gsonapi.TypeAdapter)typeAdapter));
+      factories.add(TypeAdapters.newFactory(TypeToken.get(type), (com.google.gsonapi.TypeAdapter)typeAdapter));
     }
     return this;
   }
@@ -548,7 +548,7 @@ public final class GsonBuilder {
       hierarchyFactories.add(TreeTypeAdapter.newTypeHierarchyFactory(baseType, typeAdapter));
     }
     if (typeAdapter instanceof com.google.gsonapi.TypeAdapter<?>) {
-      factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newTypeHierarchyFactory(baseType, (com.google.gsonapi.TypeAdapter)typeAdapter));
+      factories.add(TypeAdapters.newTypeHierarchyFactory(baseType, (com.google.gsonapi.TypeAdapter)typeAdapter));
     }
     return this;
   }
@@ -579,12 +579,12 @@ public final class GsonBuilder {
   }
 
   /**
-   * Creates a {@link com.google.gsonapi.Gson} instance based on the current configuration. This method is free of
+   * Creates a {@link Gson} instance based on the current configuration. This method is free of
    * side-effects to this {@code GsonBuilder} instance and hence can be called multiple times.
    *
    * @return an instance of Gson configured with the options currently set in this builder
    */
-  public com.google.gsonapi.Gson create() {
+  public Gson create() {
     List<com.google.gsonapi.TypeAdapterFactory> factories = new ArrayList<com.google.gsonapi.TypeAdapterFactory>(this.factories.size() + this.hierarchyFactories.size() + 3);
     factories.addAll(this.factories);
     Collections.reverse(factories);
@@ -621,8 +621,8 @@ public final class GsonBuilder {
       return;
     }
 
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(Date.class, dateTypeAdapter));
-    factories.add(com.google.gsonapi.internal.bind.TypeAdapters.newFactory(Timestamp.class, timestampTypeAdapter));
+    factories.add(TypeAdapters.newFactory(Date.class, dateTypeAdapter));
+    factories.add(TypeAdapters.newFactory(Timestamp.class, timestampTypeAdapter));
     factories.add(TypeAdapters.newFactory(java.sql.Date.class, javaSqlDateTypeAdapter));
   }
 }

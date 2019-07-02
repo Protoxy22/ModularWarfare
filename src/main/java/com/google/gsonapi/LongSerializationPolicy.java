@@ -32,8 +32,8 @@ public enum LongSerializationPolicy {
    * {@code {"f":123}}.
    */
   DEFAULT() {
-    @Override public com.google.gsonapi.JsonElement serialize(Long value) {
-      return new com.google.gsonapi.JsonPrimitive(value);
+    @Override public JsonElement serialize(Long value) {
+      return new JsonPrimitive(value);
     }
   },
   
@@ -43,7 +43,7 @@ public enum LongSerializationPolicy {
    * {@code {"f":"123"}}.
    */
   STRING() {
-    @Override public com.google.gsonapi.JsonElement serialize(Long value) {
+    @Override public JsonElement serialize(Long value) {
       return new JsonPrimitive(String.valueOf(value));
     }
   };
@@ -51,7 +51,7 @@ public enum LongSerializationPolicy {
   /**
    * Serialize this {@code value} using this serialization policy.
    *
-   * @param value the long value to be serialized into a {@link com.google.gsonapi.JsonElement}
+   * @param value the long value to be serialized into a {@link JsonElement}
    * @return the serialized version of {@code value}
    */
   public abstract JsonElement serialize(Long value);

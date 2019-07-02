@@ -55,7 +55,7 @@ public final class JsonParser {
    */
   public JsonElement parse(Reader json) throws JsonIOException, JsonSyntaxException {
     try {
-      com.google.gsonapi.stream.JsonReader jsonReader = new com.google.gsonapi.stream.JsonReader(json);
+      JsonReader jsonReader = new JsonReader(json);
       JsonElement element = parse(jsonReader);
       if (!element.isJsonNull() && jsonReader.peek() != JsonToken.END_DOCUMENT) {
         throw new JsonSyntaxException("Did not consume the entire document.");

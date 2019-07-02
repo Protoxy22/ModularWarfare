@@ -420,7 +420,7 @@ public class JsonReader implements Closeable {
   /**
    * Returns the type of the next token without consuming it.
    */
-  public com.google.gsonapi.stream.JsonToken peek() throws IOException {
+  public JsonToken peek() throws IOException {
     int p = peeked;
     if (p == PEEKED_NONE) {
       p = doPeek();
@@ -428,32 +428,32 @@ public class JsonReader implements Closeable {
 
     switch (p) {
     case PEEKED_BEGIN_OBJECT:
-      return com.google.gsonapi.stream.JsonToken.BEGIN_OBJECT;
+      return JsonToken.BEGIN_OBJECT;
     case PEEKED_END_OBJECT:
-      return com.google.gsonapi.stream.JsonToken.END_OBJECT;
+      return JsonToken.END_OBJECT;
     case PEEKED_BEGIN_ARRAY:
-      return com.google.gsonapi.stream.JsonToken.BEGIN_ARRAY;
+      return JsonToken.BEGIN_ARRAY;
     case PEEKED_END_ARRAY:
-      return com.google.gsonapi.stream.JsonToken.END_ARRAY;
+      return JsonToken.END_ARRAY;
     case PEEKED_SINGLE_QUOTED_NAME:
     case PEEKED_DOUBLE_QUOTED_NAME:
     case PEEKED_UNQUOTED_NAME:
-      return com.google.gsonapi.stream.JsonToken.NAME;
+      return JsonToken.NAME;
     case PEEKED_TRUE:
     case PEEKED_FALSE:
-      return com.google.gsonapi.stream.JsonToken.BOOLEAN;
+      return JsonToken.BOOLEAN;
     case PEEKED_NULL:
-      return com.google.gsonapi.stream.JsonToken.NULL;
+      return JsonToken.NULL;
     case PEEKED_SINGLE_QUOTED:
     case PEEKED_DOUBLE_QUOTED:
     case PEEKED_UNQUOTED:
     case PEEKED_BUFFERED:
-      return com.google.gsonapi.stream.JsonToken.STRING;
+      return JsonToken.STRING;
     case PEEKED_LONG:
     case PEEKED_NUMBER:
-      return com.google.gsonapi.stream.JsonToken.NUMBER;
+      return JsonToken.NUMBER;
     case PEEKED_EOF:
-      return com.google.gsonapi.stream.JsonToken.END_DOCUMENT;
+      return JsonToken.END_DOCUMENT;
     default:
       throw new AssertionError();
     }
@@ -768,7 +768,7 @@ public class JsonReader implements Closeable {
   }
 
   /**
-   * Returns the next token, a {@link com.google.gsonapi.stream.JsonToken#NAME property name}, and
+   * Returns the next token, a {@link JsonToken#NAME property name}, and
    * consumes it.
    *
    * @throws IOException if the next token in the stream is not a property
@@ -795,7 +795,7 @@ public class JsonReader implements Closeable {
   }
 
   /**
-   * Returns the {@link com.google.gsonapi.stream.JsonToken#STRING string} value of the next token,
+   * Returns the {@link JsonToken#STRING string} value of the next token,
    * consuming it. If the next token is a number, this method will return its
    * string form.
    *
@@ -831,7 +831,7 @@ public class JsonReader implements Closeable {
   }
 
   /**
-   * Returns the {@link com.google.gsonapi.stream.JsonToken#BOOLEAN boolean} value of the next token,
+   * Returns the {@link JsonToken#BOOLEAN boolean} value of the next token,
    * consuming it.
    *
    * @throws IllegalStateException if the next token is not a boolean or if
@@ -875,7 +875,7 @@ public class JsonReader implements Closeable {
   }
 
   /**
-   * Returns the {@link com.google.gsonapi.stream.JsonToken#NUMBER double} value of the next token,
+   * Returns the {@link JsonToken#NUMBER double} value of the next token,
    * consuming it. If the next token is a string, this method will attempt to
    * parse it as a double using {@link Double#parseDouble(String)}.
    *
@@ -919,7 +919,7 @@ public class JsonReader implements Closeable {
   }
 
   /**
-   * Returns the {@link com.google.gsonapi.stream.JsonToken#NUMBER long} value of the next token,
+   * Returns the {@link JsonToken#NUMBER long} value of the next token,
    * consuming it. If the next token is a string, this method will attempt to
    * parse it as a long. If the next token's numeric value cannot be exactly
    * represented by a Java {@code long}, this method throws.

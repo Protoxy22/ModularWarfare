@@ -30,7 +30,7 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 	public String internalName;
 
 	public ItemMWArmor(ArmorType type, MWArmorType armorSlot) {
-		super(ItemArmor.ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.fromString(armorSlot.name().toLowerCase()));
+		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.fromString(armorSlot.name().toLowerCase()));
 		type.initializeArmor(armorSlot.name().toLowerCase());
 		type.loadExtraValues();
 		internalName = type.armorTypes.get(armorSlot).internalName;

@@ -20,8 +20,7 @@ public class PacketPlaySound extends PacketBase {
 	public float pitch;
 	
 	public PacketPlaySound() {}
-	public PacketPlaySound(BlockPos blockPos, String soundName, float volume, float pitch)
-	{
+	public PacketPlaySound(BlockPos blockPos, String soundName, float volume, float pitch) {
 		this.posX = blockPos.getX();
 		this.posY = blockPos.getY();
 		this.posZ = blockPos.getZ();

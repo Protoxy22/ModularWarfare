@@ -59,7 +59,7 @@ public class CommonProxy extends ForgeEvent {
 	
 	public void playSound(MWSound sound) {}
 
-	public void playHitmarker() {}
+	public void playHitmarker(boolean headshot) {}
 
 	public void registerSound(String soundName) {}
 	

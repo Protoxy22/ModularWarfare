@@ -1,4 +1,5 @@
 {
   "detailedSkins": true,
-  "hitmarkerenabled": true
+  "hitmarkerenabled": true,
+  "applyKnockback": false
 }

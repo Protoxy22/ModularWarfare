@@ -25,8 +25,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 /**
- * A class representing an element of Json. It could either be a {@link com.google.gsonapi.JsonObject}, a
- * {@link com.google.gsonapi.JsonArray}, a {@link com.google.gsonapi.JsonPrimitive} or a {@link com.google.gsonapi.JsonNull}.
+ * A class representing an element of Json. It could either be a {@link JsonObject}, a
+ * {@link JsonArray}, a {@link com.google.gsonapi.JsonPrimitive} or a {@link JsonNull}.
  *
  * @author Inderjeet Singh
  * @author Joel Leitch
@@ -42,19 +42,19 @@ public abstract class JsonElement {
   /**
    * provides check for verifying if this element is an array or not.
    *
-   * @return true if this element is of type {@link com.google.gsonapi.JsonArray}, false otherwise.
+   * @return true if this element is of type {@link JsonArray}, false otherwise.
    */
   public boolean isJsonArray() {
-    return this instanceof com.google.gsonapi.JsonArray;
+    return this instanceof JsonArray;
   }
 
   /**
    * provides check for verifying if this element is a Json object or not.
    *
-   * @return true if this element is of type {@link com.google.gsonapi.JsonObject}, false otherwise.
+   * @return true if this element is of type {@link JsonObject}, false otherwise.
    */
   public boolean isJsonObject() {
-    return this instanceof com.google.gsonapi.JsonObject;
+    return this instanceof JsonObject;
   }
 
   /**
@@ -69,23 +69,23 @@ public abstract class JsonElement {
   /**
    * provides check for verifying if this element represents a null value or not.
    *
-   * @return true if this element is of type {@link com.google.gsonapi.JsonNull}, false otherwise.
+   * @return true if this element is of type {@link JsonNull}, false otherwise.
    * @since 1.2
    */
   public boolean isJsonNull() {
-    return this instanceof com.google.gsonapi.JsonNull;
+    return this instanceof JsonNull;
   }
 
   /**
-   * convenience method to get this element as a {@link com.google.gsonapi.JsonObject}. If the element is of some
+   * convenience method to get this element as a {@link JsonObject}. If the element is of some
    * other type, a {@link IllegalStateException} will result. Hence it is best to use this method
    * after ensuring that this element is of the desired type by calling {@link #isJsonObject()}
    * first.
    *
-   * @return get this element as a {@link com.google.gsonapi.JsonObject}.
+   * @return get this element as a {@link JsonObject}.
    * @throws IllegalStateException if the element is of another type.
    */
-  public com.google.gsonapi.JsonObject getAsJsonObject() {
+  public JsonObject getAsJsonObject() {
     if (isJsonObject()) {
       return (JsonObject) this;
     }
@@ -93,17 +93,17 @@ public abstract class JsonElement {
   }
 
   /**
-   * convenience method to get this element as a {@link com.google.gsonapi.JsonArray}. If the element is of some
+   * convenience method to get this element as a {@link JsonArray}. If the element is of some
    * other type, a {@link IllegalStateException} will result. Hence it is best to use this method
    * after ensuring that this element is of the desired type by calling {@link #isJsonArray()}
    * first.
    *
-   * @return get this element as a {@link com.google.gsonapi.JsonArray}.
+   * @return get this element as a {@link JsonArray}.
    * @throws IllegalStateException if the element is of another type.
    */
-  public com.google.gsonapi.JsonArray getAsJsonArray() {
+  public JsonArray getAsJsonArray() {
     if (isJsonArray()) {
-      return (com.google.gsonapi.JsonArray) this;
+      return (JsonArray) this;
     }
     throw new IllegalStateException("Not a JSON Array: " + this);
   }
@@ -125,16 +125,16 @@ public abstract class JsonElement {
   }
 
   /**
-   * convenience method to get this element as a {@link com.google.gsonapi.JsonNull}. If the element is of some
+   * convenience method to get this element as a {@link JsonNull}. If the element is of some
    * other type, a {@link IllegalStateException} will result. Hence it is best to use this method
    * after ensuring that this element is of the desired type by calling {@link #isJsonNull()}
    * first.
    *
-   * @return get this element as a {@link com.google.gsonapi.JsonNull}.
+   * @return get this element as a {@link JsonNull}.
    * @throws IllegalStateException if the element is of another type.
    * @since 1.2
    */
-  public com.google.gsonapi.JsonNull getAsJsonNull() {
+  public JsonNull getAsJsonNull() {
     if (isJsonNull()) {
       return (JsonNull) this;
     }
@@ -147,7 +147,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive boolean value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * boolean value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public boolean getAsBoolean() {
@@ -160,7 +160,7 @@ public abstract class JsonElement {
    * @return get this element as a {@link Boolean} value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * boolean value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   Boolean getAsBooleanWrapper() {
@@ -173,7 +173,7 @@ public abstract class JsonElement {
    * @return get this element as a {@link Number}.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * number.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public Number getAsNumber() {
@@ -186,7 +186,7 @@ public abstract class JsonElement {
    * @return get this element as a string value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * string value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public String getAsString() {
@@ -199,7 +199,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive double value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * double value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public double getAsDouble() {
@@ -212,7 +212,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive float value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * float value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public float getAsFloat() {
@@ -225,7 +225,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive long value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * long value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public long getAsLong() {
@@ -238,7 +238,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive integer value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * integer value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    */
   public int getAsInt() {
@@ -251,7 +251,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive byte value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * byte value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    * @since 1.3
    */
@@ -265,7 +265,7 @@ public abstract class JsonElement {
    * @return get this element as a primitive char value.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive} and is not a valid
    * char value.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    * @since 1.3
    */
@@ -279,7 +279,7 @@ public abstract class JsonElement {
    * @return get this element as a {@link BigDecimal}.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive}.
    * * @throws NumberFormatException if the element is not a valid {@link BigDecimal}.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    * @since 1.2
    */
@@ -293,7 +293,7 @@ public abstract class JsonElement {
    * @return get this element as a {@link BigInteger}.
    * @throws ClassCastException if the element is of not a {@link com.google.gsonapi.JsonPrimitive}.
    * @throws NumberFormatException if the element is not a valid {@link BigInteger}.
-   * @throws IllegalStateException if the element is of the type {@link com.google.gsonapi.JsonArray} but contains
+   * @throws IllegalStateException if the element is of the type {@link JsonArray} but contains
    * more than a single element.
    * @since 1.2
    */
@@ -321,7 +321,7 @@ public abstract class JsonElement {
   public String toString() {
     try {
       StringWriter stringWriter = new StringWriter();
-      com.google.gsonapi.stream.JsonWriter jsonWriter = new JsonWriter(stringWriter);
+      JsonWriter jsonWriter = new JsonWriter(stringWriter);
       jsonWriter.setLenient(true);
       Streams.write(this, jsonWriter);
       return stringWriter.toString();

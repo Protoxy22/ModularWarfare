@@ -73,7 +73,7 @@ public class WeaponFireEvent extends WeaponEvent {
 			
 			pitchRecoil = type.recoilPitch + (rand.nextFloat() * (type.randomRecoilPitch*2) - type.randomRecoilPitch);
 			yawRecoil = type.recoilYaw + (rand.nextFloat() * (type.randomRecoilYaw*2) - type.randomRecoilYaw);
-			damage = type.gunDamage /** * ammoType.damageMultiplier */;
+			damage = type.gunDamage + type.gunDamageHeadshotBonus /** * ammoType.damageMultiplier */;
 			fireDelay = type.fireTickDelay;
 		}
 		

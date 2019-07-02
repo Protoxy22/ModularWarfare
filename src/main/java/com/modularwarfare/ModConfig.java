@@ -15,6 +15,7 @@ public class ModConfig {
 	
 	public boolean detailedSkins = true;
 	public boolean hitmarkerenabled = true;
+	public boolean applyKnockback = false;
 
 	public ModConfig(File configFile)
 	{

@@ -487,10 +487,10 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void playHitmarker() {
+	public void playHitmarker(boolean headshot) {
 		if (ModConfig.INSTANCE.hitmarkerenabled) {
 			Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getRecord(ClientProxy.modSounds.get("hitmarker"), 1f, 4f));
-			ClientRenderHooks.AddHitMarker();
+			ClientRenderHooks.AddHitMarker(headshot);
 		}
 	}
 
