@@ -14,3 +14,4 @@ New features:
  - Optifine compatibility
  - Hitmarker mode
  - Headshot Detection
+ - Added Sniper Scopes (x4, x8, x15)
