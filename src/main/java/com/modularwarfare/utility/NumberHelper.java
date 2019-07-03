@@ -65,7 +65,7 @@ public class NumberHelper {
 
 	public static Vector3f subtractVector(Vector3f left, Vector3f right) {
 		Vector3f resultVector = new Vector3f();
-		if(left != null && right!= null) {
+		if(right != null && left != null) {
 			resultVector = resultVector.sub(left, right, resultVector);
 		}
 		return resultVector;

@@ -3,6 +3,8 @@ package com.modularwarfare.client.handler;
 import java.util.Random;
 
 import com.modularwarfare.client.model.InstantBulletRenderer;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.EntityEvent;
 import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;
@@ -31,18 +33,46 @@ public class ClientTickHandler extends ForgeEvent {
 	/** The amount of compensation applied to recoil in order to bring it back to normal */
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
-	
+
 	private int tickCount = 0;
 	private int maxTickCount = 20;
 	
 	private final Random random;
-	
+
+	private float prevFov;
+	private float mouseSens;
+
 	public ClientTickHandler()
 	{
 		super();
 		random = new Random();
 	}
-	
+
+
+	@SubscribeEvent
+	public void onInitialize(EntityEvent.EntityConstructing e) {
+		if (e.getEntity() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e.getEntity();
+			if (player.world.isRemote) {
+
+				//Your fov cannot be under the "Normal" setting since it would be overpowered in some cases
+				//Purely balance stuff
+				float prevfov = Minecraft.getMinecraft().gameSettings.fovSetting;
+
+				if (prevfov < 70) {
+					prevfov = 70;
+					Minecraft.getMinecraft().gameSettings.fovSetting = 70f;
+				}
+
+				//We set the base value to this if the previous value didn't meet our requirements
+				this.prevFov = prevfov;
+				this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+
+			}
+		}
+	}
+
+
 	@SubscribeEvent
 	public void clientTick(TickEvent.ClientTickEvent event) {
 		switch (event.phase) {
@@ -141,31 +171,64 @@ public class ClientTickHandler extends ForgeEvent {
 		}
 	}
 	
-	public void onClientTickStart(Minecraft minecraft)
-	{
+	public void onClientTickStart(Minecraft minecraft) {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
-		
+
 		EntityPlayerSP player = minecraft.player;
-		
-		if(ModularWarfare.DEV_ENV)
-		{
-			if(tickCount == maxTickCount)
-			{
-				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
-				{
+
+		if (ModularWarfare.DEV_ENV) {
+			if (tickCount == maxTickCount) {
+				if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 					GunType gunType = (GunType) ((ItemGun) player.getHeldItemMainhand().getItem()).type;
 					//IDK WHY YOU RELOAD THE MODEL
 					//gunType.reloadModel();
 				}
 			}
-			
-			if(tickCount >= maxTickCount)
+
+			if (tickCount >= maxTickCount)
 				tickCount = 0;
 			else
 				tickCount++;
 		}
-		
+
+		if (ClientRenderHooks.isAimingScope) {
+			if (minecraft.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
+				ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
+				switch (gun.type.scopeType) {
+					case TWO:
+						if (Minecraft.getMinecraft().gameSettings.fovSetting != 45) {
+							Minecraft.getMinecraft().gameSettings.fovSetting = 45;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.95f;
+						}
+						break;
+					case FOUR:
+						if (Minecraft.getMinecraft().gameSettings.fovSetting != 25) {
+							Minecraft.getMinecraft().gameSettings.fovSetting = 25;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
+						}
+						break;
+					case EIGHT:
+						if (Minecraft.getMinecraft().gameSettings.fovSetting != 10) {
+							Minecraft.getMinecraft().gameSettings.fovSetting = 10;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
+						}
+						break;
+					case FIFTEEN:
+						if (Minecraft.getMinecraft().gameSettings.fovSetting != 3) {
+							Minecraft.getMinecraft().gameSettings.fovSetting = 3;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
+						}
+						break;
+					default:
+						break;
+				}
+
+			}
+		} else {
+			Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
+			Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
+		}
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
 	

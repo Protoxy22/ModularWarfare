@@ -58,8 +58,8 @@ public class ClientRenderHooks extends ForgeEvent {
 	public static final ResourceLocation hitMarkerHS = new ResourceLocation("modularwarfare", "textures/gui/hitmarkerhs.png");
 
 	public static final ResourceLocation Scope2X = new ResourceLocation("modularwarfare", "textures/overlay/scope2x.png");
-	public static final ResourceLocation Scope4X = new ResourceLocation("modularwarfare", "textures/overlay/scope4x_cross.png");
-	public static final ResourceLocation Scope8X = new ResourceLocation("modularwarfare", ":textures/overlay/scope8x.png");
+	public static final ResourceLocation Scope4X = new ResourceLocation("modularwarfare", "textures/overlay/scope4x_arrow.png");
+	public static final ResourceLocation Scope8X = new ResourceLocation("modularwarfare", "textures/overlay/scope8x.png");
 	public static final ResourceLocation Scope15X = new ResourceLocation("modularwarfare", "textures/overlay/scope15x.png");
 
 

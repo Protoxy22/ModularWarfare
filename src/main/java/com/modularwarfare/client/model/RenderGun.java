@@ -183,7 +183,8 @@ public class RenderGun extends CustomItemRenderer {
 				GlStateManager.rotate(MathHelper.sin(f2 * (float)Math.PI) * f3 * 3.0F, 0.0F, 0.0F, 1.0F);
 				GlStateManager.rotate(Math.abs(MathHelper.cos(f2 * (float)Math.PI - 0.2F) * f3) * 5.0F, 1.0F, 0.0F, 0.0F);
 				GlStateManager.rotate(f4, 1.0F, 0.0F, 0.0F);
-				
+
+
 				// Position calls and apply a special position if player is sprinting or crouching
 				GL11.glRotatef(rotateX, 1F, 0F, 0F); //ROLL LEFT-RIGHT
 				GL11.glRotatef(rotateY, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
@@ -191,7 +192,21 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glTranslatef(translateX + (crouchZoom * crouchSwitch), 0F, 0F);
 				GL11.glTranslatef(0F, translateY, 0F);
 				GL11.glTranslatef(0F, 0F, translateZ);
-				
+
+
+				//Render Scope
+				if(gunType.scopeType != null) {
+					if (adsSwitch == 1.0F) {
+						GL11.glTranslatef(model.gunOffsetScoping, 0F, 0F);
+						if (!ClientRenderHooks.isAimingScope) {
+							ClientRenderHooks.isAimingScope = true;
+						}
+					} else {
+						if (ClientRenderHooks.isAimingScope) {
+							ClientRenderHooks.isAimingScope = false;
+						}
+					}
+				}
 				
 				// Calls reload animation from the specified animation file
 				if (anim.reloading && WeaponAnimations.getAnimation(model.reloadAnimation) != null) {
@@ -596,19 +611,6 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glPopMatrix();
 				}
 
-
-				//Render Scope
-				if(gunType.scopeType != null) {
-					if (adsSwitch == 1.0F) {
-						if (!ClientRenderHooks.isAimingScope) {
-							ClientRenderHooks.isAimingScope = true;
-						}
-					} else {
-						if (ClientRenderHooks.isAimingScope) {
-							ClientRenderHooks.isAimingScope = false;
-						}
-					}
-				}
 
 				// Render moving arm
 				if(!ModularWarfare.DEV_ENV && model.hasArms() && renderType == CustomItemRenderType.EQUIPPED_FIRST_PERSON){

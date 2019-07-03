@@ -629,6 +629,8 @@ public class m24 extends ModelGun //Same as Filename
 
         leftHandAmmo = true;
 
+        gunOffsetScoping = -0.85F;
+
         //RecoilSlideDistance = 0.16F;
         //RotateSlideDistance = -1F;
 

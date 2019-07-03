@@ -78,7 +78,7 @@ public class ModelGun extends TurboBase
 
 	//Stance variables
 	/**If true, gun will translate when equipped with a sight attachment */
-	public float gunOffset = 0F;
+	public float gunOffsetScoping = 0F;
 	//Zoom/translate the gun model towards player when crouching
 	public float crouchZoom = 0F;
 	//Enable or disable stances
