@@ -198,25 +198,25 @@ public class ClientTickHandler extends ForgeEvent {
 					case TWO:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 45) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 45;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.95f;
+							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.95f;
 						}
 						break;
 					case FOUR:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 25) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 25;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
+							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
 						}
 						break;
 					case EIGHT:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 10) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 10;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
+							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
 						}
 						break;
 					case FIFTEEN:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 3) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 3;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
+							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
 						}
 						break;
 					default:
@@ -227,9 +227,11 @@ public class ClientTickHandler extends ForgeEvent {
 			if(Minecraft.getMinecraft().gameSettings.fovSetting != this.prevFov){
 				Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
 			}
+			/*
 			if(Minecraft.getMinecraft().gameSettings.mouseSensitivity != this.mouseSens){
 				Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
 			}
+			*/
 		}
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
