@@ -16,6 +16,8 @@ public class ModConfig {
 	public boolean detailedSkins = true;
 	public boolean hitmarkerenabled = true;
 	public boolean applyKnockback = false;
+	public boolean dynamicCrosshair = true;
+
 
 	public ModConfig(File configFile)
 	{

@@ -1,5 +1,6 @@
 package com.modularwarfare.common.guns;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -11,6 +12,7 @@ import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.PacketClientAnimation;
 import com.modularwarfare.common.network.PacketGunFire;
+import com.modularwarfare.common.network.PacketGunTrail;
 import com.modularwarfare.common.network.PacketPlayHitmarker;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
@@ -130,52 +132,50 @@ public class ItemGun extends BaseItem {
 		if (preFireEvent.isCanceled())
 			return;
 
-		// Raytrace
-		//RayHelper ah = new RayHelper(this);
-		//ah.attack(entityPlayer, 200.0);
+		List<Entity> entities = new ArrayList();
 
-		EntityLivingBase target = null;
-		// Raytrace
+		ArrayList<RayTraceResult> rayTraceList = new ArrayList<RayTraceResult>();
+		for (int i = 0; i < gunType.numBullets; i++) {
+			RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, (EntityPlayerMP) entityPlayer, 200, itemGun);
+			rayTraceList.add(rayTrace);
+		}
 
-
-
-		RayTraceResult rayTrace = RayUtil.standardEntityRayTrace(world, entityPlayer, 200);
-
-		if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
-			if (!world.isRemote) {
-				if (rayTrace.entityHit != null) {
-					target = (EntityLivingBase) rayTrace.entityHit;
-					gunType.playSoundPos(target.getPosition(), world, WeaponSoundType.Penetration);
-					boolean headshot = canEntityGetHeadshot(target) && rayTrace.hitVec.y >= target.getPosition().getY() + target.getEyeHeight() - 0.15f;
-					if (entityPlayer instanceof EntityPlayerMP) {
-						ModularWarfare.NETWORK.sendTo(new PacketPlayHitmarker(headshot), (EntityPlayerMP) entityPlayer);
+		for (RayTraceResult rayTrace : rayTraceList) {
+			if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.ENTITY && rayTrace.entityHit instanceof EntityLivingBase) {
+				if (!world.isRemote) {
+					if (rayTrace.entityHit != null) {
+						entities.add(rayTrace.entityHit);
+						gunType.playSoundPos(rayTrace.entityHit.getPosition(), world, WeaponSoundType.Penetration);
+						boolean headshot = canEntityGetHeadshot(rayTrace.entityHit) && rayTrace.hitVec.y >= rayTrace.entityHit.getPosition().getY() + rayTrace.entityHit.getEyeHeight() - 0.15f;
+						if (entityPlayer instanceof EntityPlayerMP) {
+							ModularWarfare.NETWORK.sendTo(new PacketPlayHitmarker(headshot), (EntityPlayerMP) entityPlayer);
+						}
 					}
 				}
+			} else if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
+				BlockPos blockPos = rayTrace.getBlockPos();
+				gunType.playSoundPos(blockPos, world, WeaponSoundType.Impact);
 			}
-		} else if (rayTrace != null && rayTrace.typeOfHit == RayTraceResult.Type.BLOCK) {
-			BlockPos blockPos = rayTrace.getBlockPos();
-			gunType.playSoundPos(blockPos, world, WeaponSoundType.Impact);
 		}
 
-
-
-		if (entityPlayer instanceof EntityPlayerMP) {
-			ModularWarfare.NETWORK.sendTo(new PacketGunFire(), (EntityPlayerMP) entityPlayer);
-		}
 
 		// Weapon post fire event
-		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, target);
+		WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, entities);
 		MinecraftForge.EVENT_BUS.post(postFireEvent);
 
-		if (target != null) {
-			if (target != entityPlayer) {
-				float damage = postFireEvent.getDamage();
-				if(!ModConfig.INSTANCE.applyKnockback) {
-					RayUtil.attackEntityWithoutKnockback(target, DamageSource.causePlayerDamage(entityPlayer), damage);
-				} else {
-					target.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
+		if (postFireEvent.getAffectedEntities() != null && !postFireEvent.getAffectedEntities().isEmpty()) {
+			for (Entity target : postFireEvent.getAffectedEntities()) {
+				if (target != null) {
+					if (target != entityPlayer) {
+						float damage = postFireEvent.getDamage();
+						if (!ModConfig.INSTANCE.applyKnockback) {
+							RayUtil.attackEntityWithoutKnockback(target, DamageSource.causePlayerDamage(entityPlayer), damage);
+						} else {
+							target.attackEntityFrom(DamageSource.causePlayerDamage(entityPlayer), damage);
+						}
+						target.hurtResistantTime = 0;
+					}
 				}
-				target.hurtResistantTime = 0;
 			}
 		}
 
@@ -386,7 +386,7 @@ public class ItemGun extends BaseItem {
 
 	@Override
 	public EnumAction getItemUseAction(ItemStack p_77661_1_) {
-		return isAiming ? EnumAction.BOW : EnumAction.BOW;
+			return EnumAction.BLOCK;
 	}
 
 	@Override

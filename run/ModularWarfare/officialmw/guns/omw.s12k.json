@@ -1,0 +1,53 @@
+{
+  "displayName": "S12K",
+  "internalName": "omw.s12k",
+  "weaponType": "shotgun",
+  "gunDamage": 10,
+  "gunDamageHeadshotBonus": 2,
+  "roundsPerMin": 100,
+  "acceptedAmmo": ["omw.s12kammo"],
+  "fireModes": ["semi"],
+  "recoilPitch": 15.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "omw.guns.s12k",
+  "numBullets": 6,
+  "bulletSpread": 3,
+  "allowSprintFiring": true,
+  "allowEmptyMagazines": true,
+  "weaponSoundMap": {
+    "weaponFire": [
+      {
+        "soundEvent": "weaponFire",
+        "soundName": "omw.s12k.shoot",
+        "soundNameDistant": "omw.s12k.distant",
+        "soundRange": 64,
+        "soundMaxRange": 96,
+        "soundFadeMultiplier": 1
+      }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "omw.generic.reload"
+      }
+    ],
+    "weaponUnload": [
+      {
+        "soundEvent": "weaponUnload",
+        "soundName": "omw.generic.unload"
+      }
+    ],
+    "weaponLoad": [
+      {
+        "soundEvent": "weaponLoad",
+        "soundName": "omw.generic.load"
+      }
+    ]
+  },
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  }
+}

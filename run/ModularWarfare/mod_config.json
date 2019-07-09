@@ -1,5 +1,6 @@
 {
   "detailedSkins": true,
   "hitmarkerenabled": true,
-  "applyKnockback": false
+  "applyKnockback": false,
+  "dynamicCrosshair": true
 }

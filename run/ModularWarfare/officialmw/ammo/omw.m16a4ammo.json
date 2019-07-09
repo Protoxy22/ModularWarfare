@@ -1,0 +1,8 @@
+{
+    "internalName": "omw.m16a4ammo",
+    "displayName": "M16A4 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 30,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

@@ -2,7 +2,9 @@ package com.modularwarfare.client;
 
 import java.util.HashMap;
 
+import com.modularwarfare.ModConfig;
 import com.modularwarfare.common.guns.ItemAmmo;
+import com.modularwarfare.utility.RayUtil;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -56,9 +58,10 @@ public class ClientRenderHooks extends ForgeEvent {
 
 	public static final ResourceLocation hitMarker = new ResourceLocation("modularwarfare", "textures/gui/hitmarker.png");
 	public static final ResourceLocation hitMarkerHS = new ResourceLocation("modularwarfare", "textures/gui/hitmarkerhs.png");
+	public static final ResourceLocation crosshair = new ResourceLocation("modularwarfare", "textures/gui/crosshair.png");
 
 	public static final ResourceLocation Scope2X = new ResourceLocation("modularwarfare", "textures/overlay/scope2x.png");
-	public static final ResourceLocation Scope4X = new ResourceLocation("modularwarfare", "textures/overlay/scope4x_arrow.png");
+	public static final ResourceLocation Scope4X = new ResourceLocation("modularwarfare", "textures/overlay/scope4x.png");
 	public static final ResourceLocation Scope8X = new ResourceLocation("modularwarfare", "textures/overlay/scope8x.png");
 	public static final ResourceLocation Scope15X = new ResourceLocation("modularwarfare", "textures/overlay/scope15x.png");
 
@@ -67,6 +70,7 @@ public class ClientRenderHooks extends ForgeEvent {
 	public static boolean hitMarkerheadshot;
 
 	public static boolean isAimingScope;
+	public static boolean isAiming;
 
 	public ClientRenderHooks() {
 		mc = Minecraft.getMinecraft();
@@ -137,39 +141,51 @@ public class ClientRenderHooks extends ForgeEvent {
         if (stack != null && stack.getItem() instanceof ItemGun) {
 
             switch (event.getType()) {
-                case CROSSHAIRS:
-                    if (player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET) {
-                        event.setCanceled(false);
-                    } else {
-                        event.setCanceled(true);
-                    }
-                    break;
-                case ALL:
-                    ScaledResolution scaledresolution = new ScaledResolution(mc);
-                    int i = scaledresolution.getScaledWidth();
-                    int j = scaledresolution.getScaledHeight();
-                    RenderHitMarker(Tessellator.getInstance(), i, j);
+				case CROSSHAIRS:
+					if (player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET) {
+						event.setCanceled(false);
+					} else {
+						event.setCanceled(true);
+					}
+					break;
+				case ALL:
+					ScaledResolution scaledresolution = new ScaledResolution(mc);
+					int i = scaledresolution.getScaledWidth();
+					int j = scaledresolution.getScaledHeight();
+					if (isAimingScope && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
+						ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
+						switch (gun.type.scopeType) {
+							case TWO:
+								drawFullScreenImage(mc, scaledresolution, Scope2X, true);
+								break;
+							case FOUR:
+								drawFullScreenImage(mc, scaledresolution, Scope4X, true);
+								break;
+							case EIGHT:
+								drawFullScreenImage(mc, scaledresolution, Scope8X, true);
+								break;
+							case FIFTEEN:
+								drawFullScreenImage(mc, scaledresolution, Scope15X, true);
+								break;
+							default:
+								break;
+						}
+					}
+					if (ModConfig.INSTANCE.dynamicCrosshair && !isAimingScope && !isAiming && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
+						final float accuracy = RayUtil.calculateAccuracyClient((ItemGun)player.getHeldItemMainhand().getItem(), player);
+						int move = Math.max(0, (int)(accuracy * 3.0f));
+						this.mc.renderEngine.bindTexture(crosshair);
+						int xPos = i/2;
+						int yPos = j/2;
+						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos, 1.0f, 1.0f, 1, 1, 16.0f, 16.0f);
+						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos + move, 1.0f, 1.0f, 1, 4, 16.0f, 16.0f);
+						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos - move - 3, 1.0f, 1.0f, 1, 4, 16.0f, 16.0f);
+						Gui.drawModalRectWithCustomSizedTexture(xPos + move, yPos, 1.0f, 1.0f, 4, 1, 16.0f, 16.0f);
+						Gui.drawModalRectWithCustomSizedTexture(xPos - move - 3, yPos, 1.0f, 1.0f, 4, 1, 16.0f, 16.0f);
 
-                    if (isAimingScope && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
-                        ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
-                        switch (gun.type.scopeType) {
-                            case TWO:
-                                drawFullScreenImage(mc, scaledresolution, Scope2X, true);
-                                break;
-                            case FOUR:
-                                drawFullScreenImage(mc, scaledresolution, Scope4X, true);
-                                break;
-                            case EIGHT:
-                                drawFullScreenImage(mc, scaledresolution, Scope8X, true);
-                                break;
-                            case FIFTEEN:
-                                drawFullScreenImage(mc, scaledresolution, Scope15X, true);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                default:
+					}
+					RenderHitMarker(Tessellator.getInstance(), i, j);
+				default:
                     break;
             }
         }
@@ -235,6 +251,7 @@ public class ClientRenderHooks extends ForgeEvent {
 					//Do lighting
 					int i = this.mc.world.getCombinedLight(new BlockPos(entityplayersp.posX, entityplayersp.posY + (double) entityplayersp.getEyeHeight(), entityplayersp.posZ), 0);
 					OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) (i & 65535), (float) (i >> 16));
+
 
 					//Do hand rotations
 					float f5 = entityplayersp.prevRenderArmPitch + (entityplayersp.renderArmPitch - entityplayersp.prevRenderArmPitch) * partialTicks;

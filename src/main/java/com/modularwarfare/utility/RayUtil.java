@@ -1,10 +1,21 @@
 package com.modularwarfare.utility;
 
+import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.guns.GunType;
+import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.network.PacketGunTrail;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -12,12 +23,64 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 public class RayUtil {
 
     public static boolean isLiving(Entity entity){
         return entity instanceof EntityLivingBase && !(entity instanceof EntityArmorStand);
     }
+
+
+    public static Vec3d getGunAccuracy(float pitch, float yaw, final float accuracy, final Random rand) {
+        final float randAccPitch = rand.nextFloat() * accuracy;
+        final float randAccYaw = rand.nextFloat() * accuracy;
+        pitch += (rand.nextBoolean() ? randAccPitch : (-randAccPitch));
+        yaw += (rand.nextBoolean() ? randAccYaw : (-randAccYaw));
+        final float f = MathHelper.cos(-yaw * 0.017453292f - 3.1415927f);
+        final float f2 = MathHelper.sin(-yaw * 0.017453292f - 3.1415927f);
+        final float f3 = -MathHelper.cos(-pitch * 0.017453292f);
+        final float f4 = MathHelper.sin(-pitch * 0.017453292f);
+        return new Vec3d((double)(f2 * f3), (double)f4, (double)(f * f3));
+    }
+
+    public static float calculateAccuracyServer(final ItemGun item, final EntityPlayerMP player) {
+        final GunType gun = item.type;
+        float acc = gun.bulletSpread;
+        if (player.posX != player.lastTickPosX || player.posZ != player.lastTickPosZ) {
+            acc += 3.0f;
+        }
+        if (!player.onGround) {
+            acc += 5.0f;
+        }
+        if (player.isSprinting()) {
+            acc += 3.0f;
+        }
+        if (player.isSneaking()) {
+            acc *= 0.7f;
+        }
+        return acc;
+    }
+
+    public static float calculateAccuracyClient(final ItemGun item, final EntityPlayer player) {
+        final GunType gun = item.type;
+        float acc = gun.bulletSpread;
+        final GameSettings settings = Minecraft.getMinecraft().gameSettings;
+        if (settings.keyBindForward.isKeyDown() || settings.keyBindLeft.isKeyDown() || settings.keyBindBack.isKeyDown() || settings.keyBindRight.isKeyDown()) {
+            acc += 3.0f;
+        }
+        if (!player.onGround) {
+            acc += 5.0f;
+        }
+        if (player.isSprinting()) {
+            acc += 3.0f;
+        }
+        if (player.isSneaking()) {
+            acc *= 0.7f;
+        }
+        return acc;
+    }
+
 
     /**
      * Attacks the given entity with the given damage source and amount, but
@@ -54,13 +117,20 @@ public class RayUtil {
      * @return
      */
     @Nullable
-    public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase entity, double range){
-        double dx = entity.getLookVec().x * range;
-        double dy = entity.getLookVec().y * range;
-        double dz = entity.getLookVec().z * range;
+    public static RayTraceResult standardEntityRayTrace(World world, EntityPlayerMP player, double range, ItemGun item){
+
         HashSet<Entity> hashset = new HashSet<Entity>(1);
-        hashset.add(entity);
-        return RayUtil.tracePath(world, (float)entity.posX, (float)(entity.getEntityBoundingBox().minY + entity.getEyeHeight()), (float)entity.posZ, (float)(entity.posX + dx), (float)(entity.posY + entity.getEyeHeight() + dy), (float)(entity.posZ + dz), 1.0f, hashset, false);
+        hashset.add(player);
+        final float accuracy = calculateAccuracyServer(item, player);
+        final Vec3d dir = getGunAccuracy(player.rotationPitch, player.rotationYaw, accuracy, player.world.rand);
+
+        double dx = dir.x * range;
+        double dy = dir.y * range;
+        double dz = dir.z * range;
+
+        ModularWarfare.NETWORK.sendToDimension(new PacketGunTrail(player.posX,player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612, player.posZ, player.motionX, player.motionZ, dir.x, dir.y, dir.z, range), player.world.provider.getDimension());
+
+        return RayUtil.tracePath(world, (float)player.posX, (float)(player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612), (float)player.posZ, (float)(player.posX + dx+ player.motionX), (float)(player.posY + dy), (float)(player.posZ + dz + player.motionZ), 1.0f, hashset, false);
     }
 
     /**

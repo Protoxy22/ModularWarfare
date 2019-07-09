@@ -42,9 +42,10 @@ public class ClientTickHandler extends ForgeEvent {
 	private float prevFov;
 	private float mouseSens;
 
-	public ClientTickHandler()
-	{
+	public ClientTickHandler() {
 		super();
+		this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+		ModularWarfare.LOGGER.info("Set original sensibility to: "+this.mouseSens);
 		random = new Random();
 	}
 
@@ -66,8 +67,6 @@ public class ClientTickHandler extends ForgeEvent {
 
 				//We set the base value to this if the previous value didn't meet our requirements
 				this.prevFov = prevfov;
-				this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-
 			}
 		}
 	}
@@ -223,11 +222,14 @@ public class ClientTickHandler extends ForgeEvent {
 					default:
 						break;
 				}
-
 			}
 		} else {
-			Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
-			Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
+			if(Minecraft.getMinecraft().gameSettings.fovSetting != this.prevFov){
+				Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
+			}
+			if(Minecraft.getMinecraft().gameSettings.mouseSensitivity != this.mouseSens){
+				Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
+			}
 		}
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}

@@ -13,6 +13,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import javax.annotation.Nullable;
+
 public class WeaponFireEvent extends WeaponEvent {
 	
 	public WeaponFireEvent(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon)
@@ -56,18 +58,17 @@ public class WeaponFireEvent extends WeaponEvent {
      */
 	public static class Post extends WeaponFireEvent
 	{
-		private Entity affectedEntity;
+		private List<Entity> affectedEntities;
 		private int affectiveWeaponRange;
 		private int fireDelay;
 		private float damage;
 		private float pitchRecoil;
 		private float yawRecoil;
 		
-		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, Entity affectedEntity)
-		{
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, List<Entity> affectedEntities) {
 			super(entityPlayer, stackWeapon, itemWeapon);
-			this.affectedEntity = affectedEntity;
-			
+			this.affectedEntities = affectedEntities;
+
 			Random rand = new Random();
 			GunType type = itemWeapon.type;
 			
@@ -76,15 +77,13 @@ public class WeaponFireEvent extends WeaponEvent {
 			damage = type.gunDamage + type.gunDamageHeadshotBonus /** * ammoType.damageMultiplier */;
 			fireDelay = type.fireTickDelay;
 		}
-		
-		public Entity getAffectedEntity()
-		{
-			return affectedEntity;
+
+		public List<Entity> getAffectedEntities() {
+			return affectedEntities;
 		}
 		
-		public void setAffectedEntitiey(Entity updatedList)
-		{
-			this.affectedEntity = updatedList;
+		public void setAffectedEntities(List<Entity> updatedList) {
+			this.affectedEntities = updatedList;
 		}
 		
 		public float getRecoilPitch()
@@ -127,5 +126,5 @@ public class WeaponFireEvent extends WeaponEvent {
 			this.fireDelay = updatedFireDelay;
 		}
 	}
-	
+
 }

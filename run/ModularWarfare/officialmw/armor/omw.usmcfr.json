@@ -1,0 +1,38 @@
+{
+  "internalName": "omw.usmcfr",
+  "modelName": "omw.armor.usmcfr",
+  "armorTypes":
+  {
+    "head":
+    {
+      "displayName": "USMCFR Helmet"
+    },
+    "chest":
+    {
+      "displayName": "USMCFR Chest"
+    },
+    "legs":
+    {
+      "displayName": "USMCFR Pants"
+    },
+    "feet":
+    {
+      "displayName": "USMCFR Boots"
+    }
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "omw.usmcfr",
+      "displayName": "USMCFR - Default"
+    },
+    {
+      "skinAsset": "omw.usmcfr_forest",
+      "displayName": "USMCFR - Forest"
+    },
+    {
+      "skinAsset": "omw.usmcfr_hd",
+      "displayName": "USMCFR - HD"
+    }
+  ]
+}

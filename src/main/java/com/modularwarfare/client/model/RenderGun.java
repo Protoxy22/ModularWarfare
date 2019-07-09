@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.Random;
 
 import com.modularwarfare.common.armor.ItemMWArmor;
+import com.modularwarfare.common.network.PacketAiming;
+import com.modularwarfare.common.network.PacketGunFire;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.Render;
@@ -200,10 +202,25 @@ public class RenderGun extends CustomItemRenderer {
 						GL11.glTranslatef(model.gunOffsetScoping, 0F, 0F);
 						if (!ClientRenderHooks.isAimingScope) {
 							ClientRenderHooks.isAimingScope = true;
+							ModularWarfare.NETWORK.sendToServer(new PacketAiming(true));
+
 						}
 					} else {
 						if (ClientRenderHooks.isAimingScope) {
 							ClientRenderHooks.isAimingScope = false;
+							ModularWarfare.NETWORK.sendToServer(new PacketAiming(false));
+						}
+					}
+				} else {
+					if (adsSwitch == 1.0F) {
+						if (!ClientRenderHooks.isAiming) {
+							ClientRenderHooks.isAiming = true;
+							ModularWarfare.NETWORK.sendToServer(new PacketAiming(true));
+						}
+					} else {
+						if (ClientRenderHooks.isAiming) {
+							ClientRenderHooks.isAiming = false;
+							ModularWarfare.NETWORK.sendToServer(new PacketAiming(false));
 						}
 					}
 				}

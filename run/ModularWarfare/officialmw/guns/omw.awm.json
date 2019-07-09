@@ -1,0 +1,52 @@
+{
+  "displayName": "AWM",
+  "internalName": "omw.awm",
+  "weaponType": "boltsniper",
+  "scopeType": "4x",
+  "gunDamage": 19,
+  "gunDamageHeadshotBonus": 1,
+  "roundsPerMin": 34,
+  "acceptedAmmo": ["omw.awmammo"],
+  "fireModes": ["semi"],
+  "recoilPitch": 15.0,
+  "recoilYaw": 1.0,
+  "randomRecoilPitch": 0.5,
+  "randomRecoilYaw": 0.5,
+  "modelName": "omw.guns.awm",
+  "allowSprintFiring": true,
+  "allowEmptyMagazines": true,
+  "weaponSoundMap": {
+    "weaponFire": [
+      {
+        "soundEvent": "weaponFire",
+        "soundName": "omw.m24.shoot",
+        "soundNameDistant": "omw.m24.distant",
+        "soundRange": 64,
+        "soundMaxRange": 96,
+        "soundFadeMultiplier": 1
+      }
+    ],
+    "weaponReload": [
+      {
+        "soundEvent": "weaponReload",
+        "soundName": "omw.generic.reload"
+      }
+    ],
+    "weaponUnload": [
+      {
+        "soundEvent": "weaponUnload",
+        "soundName": "omw.generic.unload"
+      }
+    ],
+    "weaponLoad": [
+      {
+        "soundEvent": "weaponLoad",
+        "soundName": "omw.generic.load"
+      }
+    ]
+  },
+  "acceptedAttachments": 
+  {
+    "sight": [""]
+  }
+}

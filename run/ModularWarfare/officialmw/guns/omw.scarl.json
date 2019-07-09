@@ -4,6 +4,7 @@
     "modelName": "omw.guns.scarl",
     "weaponType": "carbine",
     "gunDamage": 6,
+    "gunDamageHeadshotBonus": 2,
     "roundsPerMin": 500,
     "allowSprintFiring": true,
     "allowEmptyMagazines": true,
@@ -13,7 +14,7 @@
     "randomRecoilYaw": 0.5,
 
     "fireModes": ["full", "semi"],
-    "acceptedAmmo": ["omw.m4a1ammo"],
+    "acceptedAmmo": ["omw.scarlammo"],
     "acceptedAttachments": {
         "sight": ["omw.aimpoint"]
     },
@@ -21,8 +22,8 @@
         "weaponFire": [
             {
                 "soundEvent": "weaponFire",
-                "soundName": "SCARHShoot",
-                "soundNameDistant": "SCARHShoot",
+                "soundName": "omw.scarl.shoot",
+                "soundNameDistant": "omw.scarl.distant",
                 "soundRange": 64,
                 "soundMaxRange": 96,
                 "soundFadeMultiplier": 1
@@ -31,7 +32,7 @@
         "weaponUnload": [
             {
                 "soundEvent": "weaponReload",
-                "soundName": "AKMReload"
+                "soundName": "omw.generic.reload"
             }
         ]
     }

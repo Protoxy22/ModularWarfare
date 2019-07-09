@@ -1,0 +1,8 @@
+{
+    "internalName": "omw.fivesevenammo",
+    "displayName": "Five-Seven Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 12,
+    "magazineCount": 1,
+    "reloadTime": 4    
+}

@@ -30,8 +30,7 @@ public class CustomItemRenderer
 		
 		try
 		{
-			ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID,
-					String.format(pathFormat, ModConfig.INSTANCE.detailedSkins ? "hd" : "default", type, fileName));
+			ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID, String.format(pathFormat, ModConfig.INSTANCE.detailedSkins ? "hd" : "default", type, fileName));
 			if(cachedSkins.containsKey(type + "_" + fileName)) 
 			{
 				renderEngine.bindTexture(cachedSkins.get(type + "_" + fileName));

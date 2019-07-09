@@ -4,6 +4,7 @@
   "weaponType": "boltsniper",
   "scopeType": "4x",
   "gunDamage": 19,
+  "gunDamageHeadshotBonus": 1,
   "roundsPerMin": 34,
   "acceptedAmmo": ["omw.m24ammo"],
   "fireModes": ["semi"],
@@ -18,8 +19,8 @@
     "weaponFire": [
       {
         "soundEvent": "weaponFire",
-        "soundName": "omw.shoot.m24",
-        "soundNameDistant": "omw.shoot.m24_distant",
+        "soundName": "omw.m24.shoot",
+        "soundNameDistant": "omw.m24.distant",
         "soundRange": 64,
         "soundMaxRange": 96,
         "soundFadeMultiplier": 1
@@ -28,19 +29,19 @@
     "weaponReload": [
       {
         "soundEvent": "weaponReload",
-        "soundName": "omw.reload.m4"
+        "soundName": "omw.generic.reload"
       }
     ],
     "weaponUnload": [
       {
         "soundEvent": "weaponUnload",
-        "soundName": "omw.unload.m4"
+        "soundName": "omw.generic.unload"
       }
     ],
     "weaponLoad": [
       {
         "soundEvent": "weaponLoad",
-        "soundName": "omw.load.m4"
+        "soundName": "omw.generic.load"
       }
     ]
   },
