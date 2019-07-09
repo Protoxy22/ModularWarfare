@@ -14,3 +14,12 @@ New features:
  - Optifine compatibility
  - Hitmarker mode
  - Headshot Detection
+ - Added Sniper Scopes (x4, x8, x15)
+
+
+New JSON config (Guns):
+ - "scopeType": "", (Ex: "scopeType": "4x")
+ - "gunDamageHeadshotBonus": (Ex: "gunDamageHeadshotBonus": 2)
+ - "allowSprintFiring" (Ex: "allowSprintFiring": true)
+
+
