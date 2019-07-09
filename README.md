@@ -12,10 +12,10 @@ New features:
  - Added muzzleflashes
  - Added Blood effect
  - Optifine compatibility
- - Hitmarker mode
+ - Hitmarker mode (Configurable)
  - Headshot Detection
  - Added Sniper Scopes (x4, x8, x15)
-
+ - Dynamic Crosshair (Configurable)
 
 New JSON config (Guns):
  - "scopeType": "", (Ex: "scopeType": "4x")
