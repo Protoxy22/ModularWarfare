@@ -16,6 +16,8 @@ New features:
  - Headshot Detection
  - Added Sniper Scopes (x4, x8, x15)
  - Dynamic Crosshair (Configurable)
+ - Added equip sounds
+ - Added flyby sounds
 
 New JSON config (Guns):
  - "scopeType": "", (Ex: "scopeType": "4x")
