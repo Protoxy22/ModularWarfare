@@ -16,6 +16,7 @@ New features:
  - Headshot Detection
  - Added Sniper Scopes (x4, x8, x15)
  - Dynamic Crosshair (Configurable)
+ - The bullet accuracy depends of the movement of the player (Better if sneaking)
  - Added equip sounds
  - Added flyby sounds
  - Added aim animation on third person
