@@ -18,6 +18,7 @@ New features:
  - Dynamic Crosshair (Configurable)
  - Added equip sounds
  - Added flyby sounds
+ - Added aim animation on third person
 
 New JSON config (Guns):
  - "scopeType": "", (Ex: "scopeType": "4x")
