@@ -45,6 +45,8 @@ public class ClientTickHandler extends ForgeEvent {
 
 	private float prevFov;
 	private float mouseSens;
+
+	private boolean hasChangedFOV;
 	private boolean hasChangedSens;
 
 	private static Item oldItem;
@@ -208,6 +210,7 @@ public class ClientTickHandler extends ForgeEvent {
 							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
 							Minecraft.getMinecraft().gameSettings.mouseSensitivity = f*0.95f;
 							hasChangedSens = false;
+							hasChangedFOV = false;
 						}
 						break;
 					case FOUR:
@@ -216,6 +219,7 @@ public class ClientTickHandler extends ForgeEvent {
 							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
 							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
 							hasChangedSens = false;
+							hasChangedFOV = false;
 						}
 						break;
 					case EIGHT:
@@ -224,6 +228,7 @@ public class ClientTickHandler extends ForgeEvent {
 							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
 							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
 							hasChangedSens = false;
+							hasChangedFOV = false;
 						}
 						break;
 					case FIFTEEN:
@@ -232,6 +237,7 @@ public class ClientTickHandler extends ForgeEvent {
 							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
 							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
 							hasChangedSens = false;
+							hasChangedFOV = false;
 						}
 						break;
 					default:
@@ -239,8 +245,9 @@ public class ClientTickHandler extends ForgeEvent {
 				}
 			}
 		} else {
-			if(Minecraft.getMinecraft().gameSettings.fovSetting != this.prevFov){
+			if(hasChangedFOV == false) {
 				Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
+				hasChangedFOV = true;
 			}
 			if(hasChangedSens == false) {
 				Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
