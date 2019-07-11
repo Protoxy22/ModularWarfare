@@ -18,7 +18,17 @@
         "sounds": [
             "modularwarfare:hitmarker"
         ]
-    },    
+    },  
+    "equip": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:equip/equip1",
+            "modularwarfare:equip/equip2",
+            "modularwarfare:equip/equip3",
+            "modularwarfare:equip/equip4",
+            "modularwarfare:equip/equip5"
+        ]
+    },  
     "hit": {
         "category": "player",
         "sounds": [

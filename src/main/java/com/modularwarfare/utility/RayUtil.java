@@ -4,6 +4,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.network.PacketGunTrail;
+import com.modularwarfare.common.network.PacketPlaySound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -112,7 +113,6 @@ public class RayUtil {
      * with a specified range, using the tracePath method. Tidies up the code a bit. Border size defaults to 1.
      *
      * @param world
-     * @param entity
      * @param range
      * @return
      */
@@ -130,7 +130,7 @@ public class RayUtil {
 
         ModularWarfare.NETWORK.sendToDimension(new PacketGunTrail(player.posX,player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612, player.posZ, player.motionX, player.motionZ, dir.x, dir.y, dir.z, range), player.world.provider.getDimension());
 
-        return RayUtil.tracePath(world, (float)player.posX, (float)(player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612), (float)player.posZ, (float)(player.posX + dx+ player.motionX), (float)(player.posY + dy), (float)(player.posZ + dz + player.motionZ), 1.0f, hashset, false);
+        return RayUtil.tracePath(world, (float)player.posX, (float)(player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612), (float)player.posZ, (float)(player.posX + dx+ player.motionX), (float)(player.posY + dy), (float)(player.posZ + dz + player.motionZ), 0.1f, hashset, false);
     }
 
     /**
@@ -202,8 +202,10 @@ public class RayUtil {
         AxisAlignedBB entityBb;// = ent.getBoundingBox();
         RayTraceResult intercept;
         for(Entity ent : allEntities){
-            if((ent.canBeCollidedWith() || !collideablesOnly)
-                    && ((excluded != null && !excluded.contains(ent)) || excluded == null)){
+            if((ent.canBeCollidedWith() || !collideablesOnly) && ((excluded != null && !excluded.contains(ent)) || excluded == null)){
+                if(ent instanceof EntityPlayerMP){
+                    ModularWarfare.NETWORK.sendTo(new PacketPlaySound(ent.getPosition(), "flyby", 0.4f, 1f), (EntityPlayerMP) ent);
+                }
                 float entBorder = ent.getCollisionBorderSize();
                 entityBb = ent.getEntityBoundingBox();
                 if(entityBb != null){

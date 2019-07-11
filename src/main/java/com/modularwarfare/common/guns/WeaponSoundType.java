@@ -22,6 +22,10 @@ public enum WeaponSoundType {
 	/** The sound to play when a bullet hit a block */
 	@SerializedName("impact") Impact("impact", 16, "impact"),
 
+	/** The sound to play when equip a gun */
+	@SerializedName("equip") Equip("equip", 8, "equip"),
+
+
 	/** The sound to play when a bullet hit an entity (played to the shooter) */
 	@SerializedName("hitmarker") Hitmarker("hitmarker", 8, "hitmarker"),
 
@@ -41,8 +45,12 @@ public enum WeaponSoundType {
 	@SerializedName("weaponCharge") Charge("weaponCharge", 16, null),
 	
 	/** The sound to play upon switching fire modes */
-	@SerializedName("weaponModeSwitch") ModeSwitch("weaponModeSwitch", 8, "defweaponmodeswitch");
-	
+	@SerializedName("weaponModeSwitch") ModeSwitch("weaponModeSwitch", 8, "defweaponmodeswitch"),
+
+	/** The sound of flyby */
+	@SerializedName("bulletFlyBy") FlyBy("bulletFlyBy", 8, "flyby");
+
+
 	public String eventName;
 	public Integer defaultRange;
 	public String defaultSound;

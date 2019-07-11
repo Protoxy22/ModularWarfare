@@ -62,6 +62,13 @@
       "modularwarfare:m4a1/shoot"
     ]
   },
+  "omw.m4a1.shoot.sup": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:m4a1/supressed1",
+      "modularwarfare:m4a1/supressed2"
+    ]
+  },
   "omw.m4a1.distant": {
     "category": "player",
     "sounds": [

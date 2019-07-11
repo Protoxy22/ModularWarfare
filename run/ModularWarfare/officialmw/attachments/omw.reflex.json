@@ -1,0 +1,12 @@
+{
+  "displayName": "Reflex Sight",
+  "internalName": "omw.reflex",
+  "modelName": "omw.attachments.reflex",
+  "attachmentType": "sight",
+  "modelSkins": [
+    {
+      "skinAsset": "omw.reflex",
+      "displayName": "Reflex Sight - Default"
+    }
+  ]
+}

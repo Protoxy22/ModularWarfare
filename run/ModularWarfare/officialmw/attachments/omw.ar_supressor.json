@@ -1,0 +1,12 @@
+{
+  "displayName": "AR Supressor",
+  "internalName": "omw.ar_supressor",
+  "modelName": "omw.attachments.ar_supressor",
+  "attachmentType": "barrel",
+  "modelSkins": [
+    {
+      "skinAsset": "omw.ar_supressor",
+      "displayName": "AR Supressor - Default"
+    }
+  ]
+}

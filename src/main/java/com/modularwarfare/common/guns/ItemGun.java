@@ -43,7 +43,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemGun extends BaseItem {
 
 	public GunType type;
-	public boolean isAiming = false;
 	public static float modelScale = 0;
 	public static boolean canDryFire = true;
 	public static boolean fireButtonHeld = false;

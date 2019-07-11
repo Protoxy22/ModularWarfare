@@ -2,8 +2,12 @@ package com.modularwarfare.client.handler;
 
 import java.util.Random;
 
+import com.modularwarfare.client.ClientProxy;
 import com.modularwarfare.client.model.InstantBulletRenderer;
+import com.modularwarfare.common.guns.WeaponSoundType;
+import com.modularwarfare.utility.MWSound;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.EntityEvent;
 import org.lwjgl.input.Mouse;
 
@@ -41,6 +45,9 @@ public class ClientTickHandler extends ForgeEvent {
 
 	private float prevFov;
 	private float mouseSens;
+	private boolean hasChangedSens;
+
+	private static Item oldItem;
 
 	public ClientTickHandler() {
 		super();
@@ -198,25 +205,33 @@ public class ClientTickHandler extends ForgeEvent {
 					case TWO:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 45) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 45;
-							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.95f;
+							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = f*0.95f;
+							hasChangedSens = false;
 						}
 						break;
 					case FOUR:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 25) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 25;
-							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
+							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
+							hasChangedSens = false;
 						}
 						break;
 					case EIGHT:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 10) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 10;
-							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
+							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
+							hasChangedSens = false;
 						}
 						break;
 					case FIFTEEN:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 3) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 3;
-							//Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
+							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
+							hasChangedSens = false;
 						}
 						break;
 					default:
@@ -227,12 +242,13 @@ public class ClientTickHandler extends ForgeEvent {
 			if(Minecraft.getMinecraft().gameSettings.fovSetting != this.prevFov){
 				Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
 			}
-			/*
-			if(Minecraft.getMinecraft().gameSettings.mouseSensitivity != this.mouseSens){
+			if(hasChangedSens == false) {
 				Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
+				hasChangedSens = true;
 			}
-			*/
 		}
+
+		this.playEquipSound();
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
 	
@@ -266,4 +282,18 @@ public class ClientTickHandler extends ForgeEvent {
 
 	}
 
+
+	public void playEquipSound() {
+		final EntityPlayer player = Minecraft.getMinecraft().player;
+		if (player.getHeldItemMainhand().getItem() != this.oldItem) {
+			if (player.getHeldItemMainhand().getItem() instanceof ItemGun) {
+				final ItemGun gun = (ItemGun)player.getHeldItemMainhand().getItem();
+				final GunType gunType = gun.type;
+                ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "equip", 5f, 1f));
+			}
+		}
+		if(this.oldItem != player.getHeldItemMainhand().getItem()) {
+			this.oldItem = player.getHeldItemMainhand().getItem();
+		}
+	}
 }

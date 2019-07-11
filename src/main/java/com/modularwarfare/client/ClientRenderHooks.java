@@ -3,6 +3,7 @@ package com.modularwarfare.client;
 import java.util.HashMap;
 
 import com.modularwarfare.ModConfig;
+import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.utility.RayUtil;
 import net.minecraft.client.gui.FontRenderer;
@@ -90,9 +91,9 @@ public class ClientRenderHooks extends ForgeEvent {
 			}
 			case END: {
 				if (mc.player == null || mc.world == null)
-				return;
+					return;
 				if (hitMarkerTime > 0)
-						hitMarkerTime--;
+					hitMarkerTime--;
 				break;
 			}
 		}
@@ -129,18 +130,18 @@ public class ClientRenderHooks extends ForgeEvent {
 
 	@SubscribeEvent
 	public void renderGameOverlay(RenderGameOverlayEvent.Pre event) {
-        EntityPlayer player = mc.player;
+		EntityPlayer player = mc.player;
 
-        if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
-            ScaledResolution scaledresolution = new ScaledResolution(mc);
-            int i = scaledresolution.getScaledWidth();
-            int j = scaledresolution.getScaledHeight();
-            RenderPlayerAmmo(i, j);
-        }
-        ItemStack stack = player.getHeldItemMainhand();
-        if (stack != null && stack.getItem() instanceof ItemGun) {
+		if (event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+			ScaledResolution scaledresolution = new ScaledResolution(mc);
+			int i = scaledresolution.getScaledWidth();
+			int j = scaledresolution.getScaledHeight();
+			RenderPlayerAmmo(i, j);
+		}
+		ItemStack stack = player.getHeldItemMainhand();
+		if (stack != null && stack.getItem() instanceof ItemGun) {
 
-            switch (event.getType()) {
+			switch (event.getType()) {
 				case CROSSHAIRS:
 					if (player.inventory.armorItemInSlot(3) != null && player.inventory.armorItemInSlot(3).getItem() == Items.GOLDEN_HELMET) {
 						event.setCanceled(false);
@@ -172,11 +173,11 @@ public class ClientRenderHooks extends ForgeEvent {
 						}
 					}
 					if (ModConfig.INSTANCE.dynamicCrosshair && !isAimingScope && !isAiming && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
-						final float accuracy = RayUtil.calculateAccuracyClient((ItemGun)player.getHeldItemMainhand().getItem(), player);
-						int move = Math.max(0, (int)(accuracy * 3.0f));
+						final float accuracy = RayUtil.calculateAccuracyClient((ItemGun) player.getHeldItemMainhand().getItem(), player);
+						int move = Math.max(0, (int) (accuracy * 3.0f));
 						this.mc.renderEngine.bindTexture(crosshair);
-						int xPos = i/2;
-						int yPos = j/2;
+						int xPos = i / 2;
+						int yPos = j / 2;
 						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos, 1.0f, 1.0f, 1, 1, 16.0f, 16.0f);
 						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos + move, 1.0f, 1.0f, 1, 4, 16.0f, 16.0f);
 						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos - move - 3, 1.0f, 1.0f, 1, 4, 16.0f, 16.0f);
@@ -186,10 +187,10 @@ public class ClientRenderHooks extends ForgeEvent {
 					}
 					RenderHitMarker(Tessellator.getInstance(), i, j);
 				default:
-                    break;
-            }
-        }
-    }
+					break;
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void renderHeldItem(RenderSpecificHandEvent event) {
@@ -382,7 +383,15 @@ public class ClientRenderHooks extends ForgeEvent {
 				GlStateManager.enableAlpha();
 
 				if (type.id == 0) {
-					biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+					if (entity instanceof EntityPlayer) {
+						if (AnimationUtils.isAiming.containsKey(((EntityPlayer) entity).getDisplayNameString())) {
+							biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+						} else {
+							biped.rightArmPose = ArmPose.ITEM;
+						}
+					} else {
+						biped.rightArmPose = ArmPose.BOW_AND_ARROW;
+					}
 				}
 
 
@@ -413,7 +422,7 @@ public class ClientRenderHooks extends ForgeEvent {
 
 	private void RenderHitMarker(Tessellator tessellator, int i, int j) {
 		if (hitMarkerTime > 0) {
-			if(!hitMarkerheadshot) {
+			if (!hitMarkerheadshot) {
 				mc.renderEngine.bindTexture(hitMarker);
 			} else {
 				mc.renderEngine.bindTexture(hitMarkerHS);
@@ -520,28 +529,24 @@ public class ClientRenderHooks extends ForgeEvent {
 		return animation;
 	}
 
-    public static void drawFullScreenImage(Minecraft minecraft, ScaledResolution resolution, ResourceLocation imageLocation, boolean transparent)
-    {
-        minecraft.getTextureManager().bindTexture(imageLocation);
-        GlStateManager.color(1f, 1f, 1f);
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder buffer = tessellator.getBuffer();
+	public static void drawFullScreenImage(Minecraft minecraft, ScaledResolution resolution, ResourceLocation imageLocation, boolean transparent) {
+		minecraft.getTextureManager().bindTexture(imageLocation);
+		GlStateManager.color(1f, 1f, 1f);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder buffer = tessellator.getBuffer();
 
-        buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        buffer.pos(0, resolution.getScaledHeight(), 0).tex(0, 1).endVertex();
-        buffer.pos(resolution.getScaledWidth(), resolution.getScaledHeight(), 0).tex(1, 1).endVertex();
-        buffer.pos(resolution.getScaledWidth(), 0, 0).tex(1, 0).endVertex();
-        buffer.pos(0, 0, 0).tex(0, 0).endVertex();
+		buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		buffer.pos(0, resolution.getScaledHeight(), 0).tex(0, 1).endVertex();
+		buffer.pos(resolution.getScaledWidth(), resolution.getScaledHeight(), 0).tex(1, 1).endVertex();
+		buffer.pos(resolution.getScaledWidth(), 0, 0).tex(1, 0).endVertex();
+		buffer.pos(0, 0, 0).tex(0, 0).endVertex();
 
-        if(transparent)
-        {
-            GlStateManager.enableAlpha();
-            GlStateManager.enableBlend();
-            tessellator.draw();
-            GlStateManager.disableBlend();
-            GlStateManager.disableAlpha();
-        }
-
-        else tessellator.draw();
-    }
+		if (transparent) {
+			GlStateManager.enableAlpha();
+			GlStateManager.enableBlend();
+			tessellator.draw();
+			GlStateManager.disableBlend();
+			GlStateManager.disableAlpha();
+		} else tessellator.draw();
+	}
 }
