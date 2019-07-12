@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.Multimap;
 import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
@@ -22,16 +23,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemAir;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
@@ -47,17 +52,18 @@ public class ItemGun extends BaseItem {
 	public static boolean canDryFire = true;
 	public static boolean fireButtonHeld = false;
 	public static boolean lastFireButtonHeld = false;
+	public static int delay;
 
 	public ItemGun(GunType type) {
 		super(type);
 		this.type = type;
 		this.setNoRepair();
 	}
-
 	@Override
 	public void setType(BaseType type) {
 		this.type = (GunType) type;
 	}
+
 
 	@Override
 	public void onUpdate(ItemStack unused, World world, Entity holdingEntity, int intI, boolean flag) {
@@ -85,7 +91,10 @@ public class ItemGun extends BaseItem {
 	}
 
 	public void onUpdateClient(EntityPlayer entityPlayer, World world, ItemStack heldStack, ItemGun itemGun, GunType gunType) {
-		if (entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun) {
+		if(delay > 0){
+			delay--;
+		}
+		if (entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun && delay == 0) {
 			if (fireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.FULL) {
 				ModularWarfare.NETWORK.sendToServer(new PacketGunFire());
 			} else if (fireButtonHeld & !lastFireButtonHeld && Minecraft.getMinecraft().inGameHasFocus && gunType.getFireMode(heldStack) == WeaponFireMode.SEMI) {

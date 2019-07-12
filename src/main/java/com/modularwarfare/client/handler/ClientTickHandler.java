@@ -294,9 +294,8 @@ public class ClientTickHandler extends ForgeEvent {
 		final EntityPlayer player = Minecraft.getMinecraft().player;
 		if (player.getHeldItemMainhand().getItem() != this.oldItem) {
 			if (player.getHeldItemMainhand().getItem() instanceof ItemGun) {
-				final ItemGun gun = (ItemGun)player.getHeldItemMainhand().getItem();
-				final GunType gunType = gun.type;
-                ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "equip", 5f, 1f));
+                ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "equip", 1f, 1f));
+                ItemGun.delay = 20;
 			}
 		}
 		if(this.oldItem != player.getHeldItemMainhand().getItem()) {
