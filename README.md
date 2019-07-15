@@ -1,6 +1,6 @@
 # Modular Warfare
 
-Notes: If you want the extra armors feature, look to the master branch.
+Notes: If you want the extra armors feature, look to the master branch (discontinued branch).
 
 New features:
  - Added officialmw pack (M4A1, armors and clothing)
