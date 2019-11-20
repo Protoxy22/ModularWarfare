@@ -917,6 +917,9 @@ public class awm  extends ModelGun //Same as Filename
         sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
+
+        thirdPersonOffset = new Vector3f(-0.05F, -0.02F, 0F);//forward/up/?
+        thirdPersonScale = 0.7f;
         flipAll();
     }
 }

@@ -442,6 +442,7 @@ public class groza extends ModelGun //Same as Filename
 
         this.thirdPersonScale = 0.75f;
         this.thirdPersonOffset = new Vector3f(-0.2F, -0.1F, 0F);
+        backPersonOffset = new Vector3f(0.4F, -0.1F, 0.25F);
 
         flipAll();
 

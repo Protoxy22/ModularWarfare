@@ -37,8 +37,7 @@ public class ItemAmmo extends BaseItem {
 	@Override
 	public void onUpdate(ItemStack heldStack, World world, Entity holdingEntity, int intI, boolean flag)
     {
-		if(heldStack.getTagCompound() == null && !world.isRemote)
-		{
+		if(heldStack.getTagCompound() == null && !world.isRemote) {
 			ItemAmmo itemAmmo = (ItemAmmo) heldStack.getItem();
 			NBTTagCompound nbtTagCompound = new NBTTagCompound();
 			nbtTagCompound.setInteger("ammocount", itemAmmo.type.ammoCapacity);

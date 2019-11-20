@@ -634,9 +634,9 @@ public class m24 extends ModelGun //Same as Filename
         //RecoilSlideDistance = 0.16F;
         //RotateSlideDistance = -1F;
 
-        pumpDelayAfterReload = 65;
+        pumpDelayAfterReload = 40;
         pumpDelay = 10;
-        pumpTime = 20;
+        pumpTime = 10;
         gripIsOnPump = false;
         pumpHandleDistance = 0.45F;
 
@@ -647,7 +647,9 @@ public class m24 extends ModelGun //Same as Filename
         sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
-        flipAll();
+        thirdPersonOffset = new Vector3f(-0.05F, -0.05F, 0F);//forward/up/?
+        thirdPersonScale = 0.7f;
 
+        flipAll();
     }
 }

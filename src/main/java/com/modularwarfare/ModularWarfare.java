@@ -146,7 +146,6 @@ public class ModularWarfare {
 	 */
 	@EventHandler
 	public void onServerStarting(FMLServerStartingEvent event) {
-
 	}
 
 	@SubscribeEvent

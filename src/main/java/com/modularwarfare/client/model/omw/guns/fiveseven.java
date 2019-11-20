@@ -336,6 +336,9 @@ public class fiveseven extends ModelGun //Same as Filename
 
         chargeModifier = new Vector3f (0.0F, 0.0F, 0.0F);
 
+        thirdPersonOffset = new Vector3f(-0.3F, -0.1F, 0F);//forward/up/?
+        thirdPersonScale = 0.7f;
+
         flipAll();
     }
 }

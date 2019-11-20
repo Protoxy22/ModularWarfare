@@ -49,16 +49,16 @@ public class RayUtil {
         final GunType gun = item.type;
         float acc = gun.bulletSpread;
         if (player.posX != player.lastTickPosX || player.posZ != player.lastTickPosZ) {
-            acc += 3.0f;
+            acc += 0.75f;
         }
         if (!player.onGround) {
-            acc += 5.0f;
+            acc += 1.5f;
         }
         if (player.isSprinting()) {
-            acc += 3.0f;
+            acc += 0.25f;
         }
         if (player.isSneaking()) {
-            acc *= 0.7f;
+            acc *= 0.5f;
         }
         return acc;
     }
@@ -68,16 +68,16 @@ public class RayUtil {
         float acc = gun.bulletSpread;
         final GameSettings settings = Minecraft.getMinecraft().gameSettings;
         if (settings.keyBindForward.isKeyDown() || settings.keyBindLeft.isKeyDown() || settings.keyBindBack.isKeyDown() || settings.keyBindRight.isKeyDown()) {
-            acc += 3.0f;
+            acc += 0.75f;
         }
         if (!player.onGround) {
-            acc += 5.0f;
+            acc += 1.5f;
         }
         if (player.isSprinting()) {
-            acc += 3.0f;
+            acc += 0.25f;
         }
         if (player.isSneaking()) {
-            acc *= 0.7f;
+            acc *= 0.5f;
         }
         return acc;
     }

@@ -39,6 +39,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -260,6 +261,52 @@ public class ItemGun extends BaseItem {
 			}
 		}
 		return 0;
+	}
+
+	public static void giveLoadedWeapon(EntityPlayerMP playerMP, String name, int slot) {
+		if (ModularWarfare.gunTypes.containsKey(name)) {
+			ItemGun gun = ModularWarfare.gunTypes.get(name);
+			GunType gunType = gun.type;
+			ItemStack gunStack = new ItemStack(gun);
+
+			NBTTagCompound nbtTagCompound0 = new NBTTagCompound();
+			nbtTagCompound0.setString("firemode", gunType.fireModes[0].name().toLowerCase());
+			nbtTagCompound0.setInteger("skinId", 0);
+			gunStack.setTagCompound(nbtTagCompound0);
+
+			NBTTagCompound nbtTagCompound = gunStack.getTagCompound();
+			ItemStack ammoStackToLoad = null;
+
+			for (ItemAmmo itemAmmo : ModularWarfare.ammoTypes.values()) {
+				if (itemAmmo.type.internalName.equalsIgnoreCase(gunType.acceptedAmmo[0])) {
+					ammoStackToLoad = new ItemStack(itemAmmo);
+				}
+			}
+
+			if (!ammoStackToLoad.hasTagCompound()) {
+				ItemAmmo itemAmmo = (ItemAmmo) ammoStackToLoad.getItem();
+				NBTTagCompound nbtTagCompoundBis = new NBTTagCompound();
+				nbtTagCompoundBis.setInteger("ammocount", itemAmmo.type.ammoCapacity);
+				nbtTagCompoundBis.setInteger("skinId", 0);
+				if (itemAmmo.type.magazineCount != null) {
+					nbtTagCompoundBis.setInteger("magcount", 1);
+					for (int i = 1; i < itemAmmo.type.magazineCount + 1; i++) {
+						nbtTagCompoundBis.setInteger("ammocount" + i, itemAmmo.type.ammoCapacity);
+					}
+				}
+				ammoStackToLoad.setTagCompound(nbtTagCompoundBis);
+			}
+
+			ItemStack loadingItemStack = ammoStackToLoad.copy();
+			nbtTagCompound.setTag("ammo", loadingItemStack.writeToNBT(new NBTTagCompound()));
+
+			gunStack.setTagCompound(nbtTagCompound);
+
+			playerMP.inventory.add(slot,gunStack);
+		}
+		else {
+			playerMP.sendMessage(new TextComponentString("This gun doesn't exist."));
+		}
 	}
 
 

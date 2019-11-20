@@ -88,7 +88,19 @@ public class RenderGun extends CustomItemRenderer {
 
 	}
 
-	private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine anim, GunType gunType, Object... data) {
+    private float interpolateRotation(float x, float y, float dT) {
+        float f3;
+
+        for (f3 = y - x; f3 < -180.0F; f3 += 360.0F) {
+        }
+        for (; f3 >= 180.0F; f3 -= 360.0F) {
+        }
+
+        return x + dT * f3;
+    }
+
+
+    private void renderGun(CustomItemRenderType renderType, ItemStack item, AnimStateMachine anim, GunType gunType, Object... data) {
 		Minecraft mc = Minecraft.getMinecraft();
 		ModelGun model = (ModelGun) gunType.model;
 
@@ -132,6 +144,31 @@ public class RenderGun extends CustomItemRenderer {
 
 					GL11.glScalef(model.thirdPersonScale, model.thirdPersonScale, model.thirdPersonScale);
 					GL11.glTranslatef(model.thirdPersonOffset.x, model.thirdPersonOffset.y + crouchOffset, model.thirdPersonOffset.z);
+					break;
+				}
+
+				case BACK: {
+					EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
+					GL11.glRotatef(0F, 1F, 0F, 0F);
+					GL11.glRotatef(-90F, 0F, 1F, 0F);
+					GL11.glRotatef(90F, 0F, 0F, 1F);
+					GL11.glTranslatef(0.25F, 0F, -0.05F);
+					GL11.glScalef(1F, 1F, 1F);
+
+                    float f2 = this.interpolateRotation(entityLivingBase.prevRenderYawOffset, entityLivingBase.renderYawOffset, (float)data[2]);
+                    if (Math.abs(entityLivingBase.prevRenderYawOffset - entityLivingBase.renderYawOffset) > 30F)
+                        f2 = entityLivingBase.renderYawOffset;
+
+                    GL11.glRotatef(-f2-90F, 1F, 0F, 0F);
+					GL11.glRotatef(-15.0f, 0F, 0F, 1F);
+                    if(entityLivingBase.isSneaking()){
+                        GL11.glTranslatef(-0.2f, 0.0f, 0.30f);
+                        GL11.glTranslatef(0.0f, 0.0f, 0.0f);
+                        GL11.glRotatef(30.0f, 0F, 1F, 0F);
+                    }
+
+					GL11.glScalef(model.thirdPersonScale, model.thirdPersonScale, model.thirdPersonScale);
+					GL11.glTranslatef(model.backPersonOffset.x, model.backPersonOffset.y, model.backPersonOffset.z);
 					break;
 				}
 
@@ -730,6 +767,8 @@ public class RenderGun extends CustomItemRenderer {
 		RenderGun.sprintSwitch = 0f;
 		RenderGun.adsSwitch = 0f;
 		RenderGun.crouchSwitch = 0f;
+		ClientRenderHooks.isAimingScope = false;
+		ClientRenderHooks.isAiming = false;
 	}
 
 	//Renders the static left or right hand that does not move with the ammo depending on leftHandAmmo setting

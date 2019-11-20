@@ -1,12 +1,9 @@
 package com.modularwarfare.common.network;
 
-import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.client.model.InstantBulletRenderer;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.guns.WeaponFireMode;
 
-import com.modularwarfare.common.vector.Vector3f;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,14 +26,16 @@ public class PacketGunFire extends PacketBase {
 
 	@Override
 	public void handleServerSide(EntityPlayerMP entityPlayer) {
-		if (entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun) {
-			ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
-			WeaponFireMode fireMode = GunType.getFireMode(entityPlayer.getHeldItemMainhand());
-			if (fireMode == null)
-				return;
+		if(entityPlayer != null) {
+			if (entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun) {
+				ItemGun itemGun = (ItemGun) entityPlayer.getHeldItemMainhand().getItem();
+				WeaponFireMode fireMode = GunType.getFireMode(entityPlayer.getHeldItemMainhand());
+				if (fireMode == null)
+					return;
 
-			itemGun.onGunFire(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun, fireMode);
-   		}
+				itemGun.onGunFire(entityPlayer, entityPlayer.world, entityPlayer.getHeldItemMainhand(), itemGun, fireMode);
+			}
+		}
 	}
 
 	@Override

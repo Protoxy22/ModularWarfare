@@ -55,7 +55,7 @@ public class ModelPool
 	private static String[] resourceDir = new String[]{
 			"/resources/models/",
 			"/resources/mod/models/",
-			"/Flan/"
+			"/ModularWarfare/"
 	};
 	public static final Class OBJ = ModelPoolObjEntry.class;
 }

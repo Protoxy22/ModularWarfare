@@ -1,8 +1,11 @@
 package com.modularwarfare.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.modularwarfare.ModConfig;
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.utility.RayUtil;
@@ -301,19 +304,54 @@ public class ClientRenderHooks extends ForgeEvent {
 		}
 	}
 
+
 	public void SetPartialTick(float dT) {
 		partialTicks = dT;
 	}
+
+
+	/*
+	public ArrayList<ItemStack> getItemsInBack(EntityPlayerSP entityPlayerSP){
+		ArrayList<ItemStack> guns = new ArrayList<ItemStack>();
+		for(int i=0; i<= entityPlayerSP.inventory.getSizeInventory(); i++){
+			if(guns.size() < 2) {
+				if (entityPlayerSP.inventory.getStackInSlot(i) != null && entityPlayerSP.inventory.getStackInSlot(i).getItem() instanceof ItemGun && entityPlayerSP.inventory.getStackInSlot(i) != entityPlayerSP.getHeldItemMainhand()) {
+					guns.add(entityPlayerSP.inventory.getStackInSlot(i));
+				}
+			}
+		}
+		return guns;
+	}
+*/
 
 	@SubscribeEvent
 	public void renderThirdPersonWeapons(RenderLivingEvent.Pre event) {
 		ModelBase mainModel = event.getRenderer().getMainModel();
 		EntityLivingBase entity = event.getEntity();
 
+		/*
+		if(entity instanceof EntityPlayerSP){
+			ModelBiped biped = (ModelBiped) mainModel;
+			ArrayList<ItemStack> guns = getItemsInBack((EntityPlayerSP)entity);
+			if(guns.size() > 0) {
+				BaseType type = ((BaseItem) guns.get(0).getItem()).baseType;
+
+				{
+					GlStateManager.pushMatrix();
+					if (customRenderers[type.id] != null) {
+						GlStateManager.translate(-0.05F, 0.4F, 0.05F);
+						customRenderers[type.id].renderItem(CustomItemRenderType.BACK, null, guns.get(0), mc.world, entity, partialTicks);
+					}
+					GlStateManager.popMatrix();
+				}
+			}
+		}
+		*/
 		for (int i = 0; i < 1; i++) {
 			EnumHand hand = EnumHand.values()[i];
 			if (entity.getHeldItem(hand) != null && entity.getHeldItem(hand).getItem() instanceof BaseItem && mainModel instanceof ModelBiped) {
 				ModelBiped biped = (ModelBiped) mainModel;
+
 				ItemStack stack = entity.getHeldItem(hand);
 				BaseType type = ((BaseItem) stack.getItem()).baseType;
 				if (!type.hasModel())

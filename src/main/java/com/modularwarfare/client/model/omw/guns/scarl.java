@@ -886,8 +886,9 @@ public class scarl extends ModelGun //Same as Filename
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
 
-        this.thirdPersonScale = 0.75f;
-        this.thirdPersonOffset = new Vector3f(-0.2F, -0.1F, 0F);
+        thirdPersonOffset = new Vector3f(-0.05F, 0.05F, 0F);//forward/up/?
+        backPersonOffset = new Vector3f(0.6F, 0F, 0.3F);
+        thirdPersonScale = 0.7f;
 
         flipAll();
     }

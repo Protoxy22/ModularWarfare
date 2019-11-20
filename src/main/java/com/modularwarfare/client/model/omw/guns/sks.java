@@ -3,6 +3,7 @@ package com.modularwarfare.client.model.omw.guns;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
+import com.modularwarfare.common.guns.AttachmentEnum;
 import org.lwjgl.util.vector.Vector3f;
 
 public class sks extends ModelGun //Same as Filename
@@ -595,7 +596,6 @@ public class sks extends ModelGun //Same as Filename
         this.modelScale = 0.20F;
 
         translateAll = new Vector3f(30F, -19.4F, -0.15F);//forward/down/right
-        thirdPersonOffset = new Vector3f(0F, -.05F, 0F);//forward/up/?
 
         hasFlash = false;
 
@@ -622,6 +622,15 @@ public class sks extends ModelGun //Same as Filename
         fancyStance = true;
         sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
+
+        attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(-0.18F, 0.37F, 0F));
+
+        translateSight = new Vector3f(0F, 2.2F, 0.07F);
+        rotateSight = new Vector3f(-0.1F, 0F, 0F);
+
+
+        thirdPersonOffset = new Vector3f(-0.05F, -0.05F, 0F);//forward/up/?
+        thirdPersonScale = 0.7f;
 
         flipAll();
     }

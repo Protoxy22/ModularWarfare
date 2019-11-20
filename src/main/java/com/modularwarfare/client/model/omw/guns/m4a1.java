@@ -1055,8 +1055,8 @@ public class m4a1 extends ModelGun //Same as Filename
 		sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
 
-		this.thirdPersonScale = 0.75f;
-		this.thirdPersonOffset = new Vector3f(-0.2F, -0.1F, 0F);
+		this.thirdPersonScale = 0.60f;
+		this.thirdPersonOffset = new Vector3f(-0.1F, 0.05F, 0F);
 
 		attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(0F, 0.32F, 0F));
 		attachmentPointMap.put(AttachmentEnum.Barrel, new Vector3f(0.8F, 0.28F, 0.03F));

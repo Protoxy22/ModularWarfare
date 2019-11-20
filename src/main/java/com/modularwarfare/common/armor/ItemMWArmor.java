@@ -9,6 +9,7 @@ import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.common.type.BaseType;
 
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -96,11 +97,15 @@ public class ItemMWArmor extends ItemArmor implements ISpecialArmor {
 					armorModel.showLegs(slot == EntityEquipmentSlot.LEGS);
 				}
 
-				armorModel.isSneak = defaultModel.isSneak;
-				armorModel.isRiding = defaultModel.isRiding;
-				armorModel.isChild = defaultModel.isChild;
-				armorModel.rightArmPose = defaultModel.rightArmPose;
-				armorModel.leftArmPose = defaultModel.leftArmPose;
+				armorModel.setModelAttributes(defaultModel);
+
+				ModelBase.copyModelAngles(defaultModel.bipedLeftArm, armorModel.bipedLeftArm);
+				ModelBase.copyModelAngles(defaultModel.bipedRightArm, armorModel.bipedRightArm);
+				ModelBase.copyModelAngles(defaultModel.bipedBody, armorModel.bipedBody);
+				ModelBase.copyModelAngles(defaultModel.bipedLeftLeg, armorModel.bipedLeftLeg);
+				ModelBase.copyModelAngles(defaultModel.bipedRightLeg, armorModel.bipedRightLeg);
+				ModelBase.copyModelAngles(defaultModel.bipedHead, armorModel.bipedHead);
+
 				return armorModel;
 			}
 		}

@@ -470,6 +470,8 @@ public class s12k extends ModelGun //Same as Filename
         rightArmScale = new Vector3f(0.7F, 0.8F, 0.7F);
         leftArmScale = new Vector3f(0.7F, 1.0F, 0.7F);
 
+        this.thirdPersonScale = 0.60f;
+        this.thirdPersonOffset = new Vector3f(-0.2F, -0.05F, 0F);
 
         flipAll();
     }

@@ -29,18 +29,19 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ClientTickHandler extends ForgeEvent {
-		
+
 	// Recoil variables
-	/** The recoil applied to the player view by shooting */
+	/**
+	 * The recoil applied to the player view by shooting
+	 */
 	public static float playerRecoilPitch;
 	public static float playerRecoilYaw;
-	/** The amount of compensation applied to recoil in order to bring it back to normal */
+	/**
+	 * The amount of compensation applied to recoil in order to bring it back to normal
+	 */
 	public static float antiRecoilPitch;
 	public static float antiRecoilYaw;
 
-	private int tickCount = 0;
-	private int maxTickCount = 20;
-	
 	private final Random random;
 
 	private float prevFov;
@@ -54,7 +55,7 @@ public class ClientTickHandler extends ForgeEvent {
 	public ClientTickHandler() {
 		super();
 		this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-		ModularWarfare.LOGGER.info("Set original sensibility to: "+this.mouseSens);
+		ModularWarfare.LOGGER.info("Set original sensibility to: " + this.mouseSens);
 		random = new Random();
 	}
 
@@ -93,72 +94,69 @@ public class ClientTickHandler extends ForgeEvent {
 				break;
 		}
 	}
-	
+
 	@SubscribeEvent
-	public void renderTick(TickEvent.RenderTickEvent event)
-	{
-		switch(event.phase)
-		{
-			case START:
-			{
+	public void renderTick(TickEvent.RenderTickEvent event) {
+		switch (event.phase) {
+			case START: {
 				float renderTick = event.renderTickTime;
 				renderTick *= 60d / (double) Minecraft.getDebugFPS();
 				StateEntry.smoothing = renderTick;
 				onRenderTickStart(Minecraft.getMinecraft(), renderTick);
 				break;
 			}
-			case END:
-			{
+			case END: {
 				float renderTick = NumberHelper.clamp(event.renderTickTime, 0.019998193f, 0.99999803f);
 				renderTick *= 60d / (double) Minecraft.getDebugFPS();
 				break;
 			}
 		}
 	}
-	
-	public void onRenderTickStart(Minecraft minecraft, float renderTick)
-	{	
+
+	public void onRenderTickStart(Minecraft minecraft, float renderTick) {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
-			
+
 		EntityPlayerSP player = minecraft.player;
-		
-		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun)
-		{
+
+		if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 			ModelGun model = (ModelGun) ((ItemGun) player.getHeldItemMainhand().getItem()).type.model;
-			if(!RenderGun.lastModel.equalsIgnoreCase(model.getClass().getName()))
-			{
+			if (!RenderGun.lastModel.equalsIgnoreCase(model.getClass().getName())) {
 				RenderGun.resetRenderMods();
-				RenderGun.lastModel = model.getClass().getName(); 
+				RenderGun.lastModel = model.getClass().getName();
 			}
-			
+
 			AnimStateMachine anim = ClientRenderHooks.getAnimMachine(player);
-			
+
 			float adsSpeed = (0.15f + model.adsSpeed) * renderTick;
 			boolean aimChargeMisc = !anim.reloading;
 			float value = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(1) && aimChargeMisc ? RenderGun.adsSwitch + adsSpeed : RenderGun.adsSwitch - adsSpeed;
-			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));;
-			
+			RenderGun.adsSwitch = Math.max(0, Math.min(1, value));
+			;
+
 			float sprintSpeed = 0.15f * renderTick;
 			float sprintValue = player.isSprinting() ? RenderGun.sprintSwitch + sprintSpeed : RenderGun.sprintSwitch - sprintSpeed;
-			RenderGun.sprintSwitch = Math.max(0, Math.min(1, sprintValue));;
-			
+			RenderGun.sprintSwitch = Math.max(0, Math.min(1, sprintValue));
+			;
+
 			float crouchSpeed = 0.15f * renderTick;
 			float crouchValue = player.isSneaking() ? RenderGun.crouchSwitch + crouchSpeed : RenderGun.crouchSwitch - crouchSpeed;
-			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));;
-			
+			RenderGun.crouchSwitch = Math.max(0, Math.min(1, crouchValue));
+			;
+
 			float reloadSpeed = 0.15f * renderTick;
 			float reloadValue = anim.reloading ? RenderGun.reloadSwitch - reloadSpeed : RenderGun.reloadSwitch + reloadSpeed;
-			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));;
-			
+			RenderGun.reloadSwitch = Math.max(0, Math.min(1, reloadValue));
+			;
+
 			float triggerPullSpeed = 0.03f * renderTick;
 			float triggerPullValue = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
 			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
-			
+
 			float modeSwitchSpeed = 0.03f * renderTick;
 			float modeSwitchValue = Minecraft.getMinecraft().inGameHasFocus && Mouse.isButtonDown(0) ? RenderGun.triggerPullSwitch + triggerPullSpeed : RenderGun.triggerPullSwitch - triggerPullSpeed;
 			RenderGun.triggerPullSwitch = Math.max(0, Math.min(model.triggerDistance, triggerPullValue));
-			
+
 //			float maxHorizontal = 3.0f;
 //			float maxVertical = 1.5f;
 //			float swaySpeed = 0.003f * renderTick;
@@ -168,37 +166,21 @@ public class ClientTickHandler extends ForgeEvent {
 //			RenderGun.swayVertical = !Float.isNaN(RenderGun.swayVertical) ? NumberHelper.isInRange(maxVertical, RenderGun.swayVertical) ? NumberHelper.addTowards(RenderGun.swayVerticalEP, RenderGun.swayVertical, swaySpeed/2) : 0 : 0;
 //			RenderGun.swayHorizontalEP = NumberHelper.isTargetMet(RenderGun.swayHorizontalEP, RenderGun.swayHorizontal) ? NumberHelper.generateInRange(maxHorizontal) : RenderGun.swayHorizontalEP;
 //			RenderGun.swayVerticalEP = NumberHelper.isTargetMet(RenderGun.swayVerticalEP, RenderGun.swayVertical) ? NumberHelper.generateInRange(maxVertical) : RenderGun.swayVerticalEP;
-			
-			for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values())
-			{
+
+			for (AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
 				stateMachine.onRenderTickUpdate();
 			}
-		} else
-		{
+		} else {
 			RenderGun.resetRenderMods();
 		}
 	}
-	
+
 	public void onClientTickStart(Minecraft minecraft) {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
 
 		EntityPlayerSP player = minecraft.player;
 
-		if (ModularWarfare.DEV_ENV) {
-			if (tickCount == maxTickCount) {
-				if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
-					GunType gunType = (GunType) ((ItemGun) player.getHeldItemMainhand().getItem()).type;
-					//IDK WHY YOU RELOAD THE MODEL
-					//gunType.reloadModel();
-				}
-			}
-
-			if (tickCount >= maxTickCount)
-				tickCount = 0;
-			else
-				tickCount++;
-		}
 
 		if (ClientRenderHooks.isAimingScope) {
 			if (minecraft.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
@@ -207,8 +189,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case TWO:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 45) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 45;
-							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity = f*0.95f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.95f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -216,8 +197,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case FOUR:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 25) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 25;
-							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.65f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.65f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -225,8 +205,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case EIGHT:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 10) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 10;
-							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.2f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.2f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -234,8 +213,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case FIFTEEN:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 3) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 3;
-							float f = this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity *= 0.1f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.1f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -245,32 +223,35 @@ public class ClientTickHandler extends ForgeEvent {
 				}
 			}
 		} else {
-			if(hasChangedFOV == false) {
+			if (hasChangedFOV == false) {
 				Minecraft.getMinecraft().gameSettings.fovSetting = this.prevFov;
 				hasChangedFOV = true;
 			}
-			if(hasChangedSens == false) {
+			if (hasChangedSens == false) {
 				Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens;
 				hasChangedSens = true;
+			} else {
+				this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
+				this.prevFov = Minecraft.getMinecraft().gameSettings.fovSetting;
 			}
 		}
 
 		this.playEquipSound();
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
 	}
-	
+
 	public void onClientTickEnd(Minecraft minecraft) {
 		if (minecraft.player == null || minecraft.world == null)
 			return;
 
 		EntityPlayerSP player = minecraft.player;
-		
+
 		if (playerRecoilPitch > 0)
 			playerRecoilPitch *= 0.8F;
-		
+
 		if (playerRecoilYaw > 0)
 			playerRecoilYaw *= 0.8F;
-		
+
 		player.rotationPitch -= playerRecoilPitch;
 		player.rotationYaw -= playerRecoilYaw;
 		antiRecoilPitch += playerRecoilPitch;
@@ -280,8 +261,8 @@ public class ClientTickHandler extends ForgeEvent {
 		player.rotationYaw += antiRecoilYaw * 0.2F;
 		antiRecoilPitch *= 0.8F;
 		antiRecoilYaw *= 0.8F;
-		
-		for(AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
+
+		for (AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
 			stateMachine.onTickUpdate();
 		}
 
@@ -294,11 +275,11 @@ public class ClientTickHandler extends ForgeEvent {
 		final EntityPlayer player = Minecraft.getMinecraft().player;
 		if (player.getHeldItemMainhand().getItem() != this.oldItem) {
 			if (player.getHeldItemMainhand().getItem() instanceof ItemGun) {
-                ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "equip", 1f, 1f));
-                ItemGun.delay = 20;
+				ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "equip", 1f, 1f));
+				ItemGun.delay = 20;
 			}
 		}
-		if(this.oldItem != player.getHeldItemMainhand().getItem()) {
+		if (this.oldItem != player.getHeldItemMainhand().getItem()) {
 			this.oldItem = player.getHeldItemMainhand().getItem();
 		}
 	}
