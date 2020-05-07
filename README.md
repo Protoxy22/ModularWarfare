@@ -1,10 +1,11 @@
-# Modular Warfare
+# ModularWarfare Stable Version
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e9c139b80e3e40b5af1cdc61feeb46e5)](https://app.codacy.com/manual/Protoxy22/ModularWarfare?utm_source=github.com&utm_medium=referral&utm_content=Protoxy22/ModularWarfare&utm_campaign=Badge_Grade_Dashboard)[![](http://cf.way2muchnoise.eu/versions/modularwarfare.svg)](https://minecraft.curseforge.com/projects/modularwarfare) [![](http://cf.way2muchnoise.eu/modularwarfare.svg)](https://minecraft.curseforge.com/projects/modularwarfare)
 
 Notes: If you want the extra armors feature, look to the master branch (discontinued branch).
 
-New features:
+Changelog:
+0.1f:
  - Added officialmw pack (M4A1, armors and clothing)
  - Fixed serverside loading
  - Fixed raytracing
@@ -22,8 +23,20 @@ New features:
  - Added equip sounds
  - Added flyby sounds
  - Added aim animation on third person
+0.3f:
+ - Added bullet holes.
+ - Added bullet impact sound.
+ - Added back the expanded inventory.
+ - 3rd person hands are upwards when shooting and aiming.
+ - Fixed ammo count rendering.
+ -  Improved gun movements.
+ - Fixed various crash when helding a gun with players around.
+ - Fixed crash when applying an attachment to a gun.
+ - Added experimental bots (Attacking players and other bots, officialmw needed).
+
 
 New JSON config (Guns):
+0.1f
  - "scopeType": "", (Ex: "scopeType": "4x")
  - "gunDamageHeadshotBonus": (Ex: "gunDamageHeadshotBonus": 2)
  - "allowSprintFiring" (Ex: "allowSprintFiring": true)
