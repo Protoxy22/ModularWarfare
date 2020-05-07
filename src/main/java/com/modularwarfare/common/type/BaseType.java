@@ -1,9 +1,5 @@
 package com.modularwarfare.common.type;
 
-import java.util.Map;
-
-import com.modularwarfare.client.model.ModelArmor;
-import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.client.model.objects.TurboBase;
 import com.modularwarfare.client.model.objects.TurboBipedBase;
 import com.modularwarfare.common.guns.SkinType;
@@ -30,7 +26,6 @@ public class BaseType {
 	public String iconName;
 	public transient int id;
 	public transient String contentPack;
-	public Map<String, Object> customVariables;
 
 	/**
 	 * Method for sub types to use for loading extra values

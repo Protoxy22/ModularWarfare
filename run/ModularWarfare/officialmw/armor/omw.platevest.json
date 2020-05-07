@@ -1,0 +1,19 @@
+{
+    "internalName": "omw.platevest",
+    "modelName": "omw.armor.platevest",
+    "defense": "0.1",
+    "armorTypes": 
+    {
+        "vest": 
+        {
+            "displayName": "Plate Carrier Vest"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.platevest",
+        "displayName": "Plate Carrier Vest - Default"
+      }
+    ]
+}

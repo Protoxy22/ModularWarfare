@@ -5,7 +5,7 @@
     "weaponType": "carbine",
     "gunDamage": 6,
     "gunDamageHeadshotBonus": 5,
-    "roundsPerMin": 500,
+    "roundsPerMin": 400,
     "allowSprintFiring": true,
     "allowEmptyMagazines": true,
     "recoilPitch": 5.0,
@@ -13,7 +13,7 @@
     "randomRecoilPitch": 0.5,
     "randomRecoilYaw": 0.5,
 
-    "fireModes": ["full", "semi", "burst"],
+    "fireModes": ["full", "semi"],
     "acceptedAmmo": ["omw.akmammo"],
     "acceptedAttachments": {
         "sight": ["omw.aimpoint"]
@@ -35,5 +35,17 @@
                 "soundName": "omw.generic.reload"
             }
         ]
-    }
+    },
+    "modelSkins": [
+        {
+            "internalName": "omw.akm",
+            "skinAsset": "omw.akm",
+            "displayName": "Default"
+        },
+        {
+            "internalName": "omw.akm.snow",
+            "skinAsset": "omw.akm.snow",
+            "displayName": "Snow"
+        }
+    ]
 }

@@ -29,11 +29,28 @@
                 "soundFadeMultiplier": 1
             }
         ],
+        "weaponFireSuppressed": [
+            {
+                "soundEvent": "weaponFireSuppressed",
+                "soundName": "omw.m4a1.shoot.sup",
+                "soundRange": 30,
+                "soundMaxRange": 30,
+                "soundFadeMultiplier": 1
+            }
+        ],
         "weaponUnload": [
             {
                 "soundEvent": "weaponReload",
                 "soundName": "omw.generic.reload"
             }
+        ]
+    },
+    "acceptedAttachments": {
+        "sight": [
+            "omw.reflex"
+        ],
+        "barrel": [
+            "omw.ar_supressor"
         ]
     }
 }

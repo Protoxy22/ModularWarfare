@@ -4,7 +4,7 @@
   "weaponType": "boltsniper",
   "scopeType": "4x",
   "gunDamage": 19,
-  "gunDamageHeadshotBonus": 1,
+  "gunDamageHeadshotBonus": 50,
   "roundsPerMin": 34,
   "acceptedAmmo": ["omw.awmammo"],
   "fireModes": ["semi"],

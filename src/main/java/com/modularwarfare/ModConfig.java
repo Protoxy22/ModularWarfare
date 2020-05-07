@@ -12,12 +12,12 @@ import com.google.gsonapi.stream.JsonReader;
 public class ModConfig {
 	
 	public transient static ModConfig INSTANCE;
-	
-	public boolean detailedSkins = true;
-	public boolean hitmarkerenabled = true;
+
+	public boolean hitmarkerenabled = false;
 	public boolean applyKnockback = false;
 	public boolean dynamicCrosshair = true;
-
+	public static int bulletImpact = 2;
+	public static int bloodAmount = 3;
 
 	public ModConfig(File configFile)
 	{

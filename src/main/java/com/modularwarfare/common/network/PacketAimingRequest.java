@@ -3,6 +3,7 @@ package com.modularwarfare.common.network;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.common.handler.ServerTickHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,7 +38,9 @@ public class PacketAimingRequest extends PacketBase {
 
 	@Override
 	public void handleServerSide(EntityPlayerMP entityPlayer) {
-		ModularWarfare.NETWORK.sendToAll(new PacketAimingReponse(playername, aiming));
+	    if(!ServerTickHandler.playerAimShootCooldown.contains(playername)){
+            ModularWarfare.NETWORK.sendToAll(new PacketAimingReponse(playername, aiming));
+        }
 	}
 
 	@Override

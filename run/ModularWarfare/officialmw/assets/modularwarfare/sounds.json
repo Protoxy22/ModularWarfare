@@ -102,6 +102,18 @@
       "modularwarfare:m24/distant"
     ]
   },
+  "omw.kar98k.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:kar98k/shoot"
+    ]
+  },
+  "omw.kar98k.distant": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:kar98k/distant"
+    ]
+  },
   "omw.s12k.shoot": {
     "category": "player",
     "sounds": [
@@ -140,6 +152,36 @@
       "modularwarfare:sks/distant"
     ]
   },
+  "omw.mini14.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:mini14/shoot1",
+      "modularwarfare:mini14/shoot2",
+      "modularwarfare:mini14/shoot3",
+      "modularwarfare:mini14/shoot4"
+    ]
+  },
+  "omw.mini14distant": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:mini14/distant"
+    ]
+  },
+  "omw.vss.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:vss/shoot1",
+      "modularwarfare:vss/shoot2",
+      "modularwarfare:vss/shoot3",
+      "modularwarfare:vss/shoot4"
+    ]
+  },
+  "omw.vss.distant": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:vss/distant"
+    ]
+  },
   "omw.fiveseven.shoot": {
     "category": "player",
     "sounds": [
@@ -153,6 +195,24 @@
     "category": "player",
     "sounds": [
       "modularwarfare:fiveseven/distant"
+    ]
+  },
+  "omw.ump45.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:ump45/shoot1",
+      "modularwarfare:ump45/shoot2",
+      "modularwarfare:ump45/shoot3",
+      "modularwarfare:ump45/shoot4"
+    ]
+  },
+  "omw.ump45.shoot.sup": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:ump45/shoot_sup1",
+      "modularwarfare:ump45/shoot_sup2",
+      "modularwarfare:ump45/shoot_sup3",
+      "modularwarfare:ump45/shoot_sup4"
     ]
   }
 }

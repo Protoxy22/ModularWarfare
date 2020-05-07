@@ -18,7 +18,56 @@
         "sounds": [
             "modularwarfare:hitmarker"
         ]
-    },  
+    },
+    "sound_heli": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:sound_heli"
+        ]
+    },
+    "punched": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:punched"
+        ]
+    },
+    "heli1": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:heli/heli1"
+        ]
+    },
+    "heli2": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:heli/heli2"
+        ]
+    },
+    "heli3": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:heli/heli3"
+        ]
+    },
+    "heli4": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:heli/heli4"
+        ]
+    },
+    "heli5": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:heli/heli5"
+        ]
+    },
+
+    "spray": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:spray"
+        ]
+    },
     "equip": {
         "category": "player",
         "sounds": [

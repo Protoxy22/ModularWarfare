@@ -65,7 +65,7 @@ public class WeaponFireEvent extends WeaponEvent {
 		private float pitchRecoil;
 		private float yawRecoil;
 		
-		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, List<Entity> affectedEntities) {
+		public Post(EntityPlayer entityPlayer, ItemStack stackWeapon, ItemGun itemWeapon, List<Entity> affectedEntities, boolean isHeadshot) {
 			super(entityPlayer, stackWeapon, itemWeapon);
 			this.affectedEntities = affectedEntities;
 
@@ -74,7 +74,10 @@ public class WeaponFireEvent extends WeaponEvent {
 			
 			pitchRecoil = type.recoilPitch + (rand.nextFloat() * (type.randomRecoilPitch*2) - type.randomRecoilPitch);
 			yawRecoil = type.recoilYaw + (rand.nextFloat() * (type.randomRecoilYaw*2) - type.randomRecoilYaw);
-			damage = type.gunDamage + type.gunDamageHeadshotBonus /** * ammoType.damageMultiplier */;
+			damage = type.gunDamage;
+			if(isHeadshot){
+				damage = damage + type.gunDamageHeadshotBonus;
+			}
 			fireDelay = type.fireTickDelay;
 		}
 

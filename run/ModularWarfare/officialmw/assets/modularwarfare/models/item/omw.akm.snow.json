@@ -1,0 +1,22 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "modularwarfare:items/sprays/omw.akm.snow"
+  },
+  "display": {
+    "thirdperson_lefthand": {
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "thirdperson_righthand": {
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  }
+}

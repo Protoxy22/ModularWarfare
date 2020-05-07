@@ -3,12 +3,19 @@ package com.modularwarfare.client.model;
 import java.util.Optional;
 import java.util.Random;
 
+import com.modularwarfare.api.ArmorApi;
+import com.modularwarfare.client.handler.ClientTickHandler;
+import com.modularwarfare.client.model.omw.OmwModelFlash;
+import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
+import com.modularwarfare.common.armor.ItemSpecialArmor;
 import com.modularwarfare.common.network.PacketAimingRequest;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.util.Timer;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -67,6 +74,7 @@ public class RenderGun extends CustomItemRenderer {
 	public int oldMagCount;
 	private int direction = 0;
 	private float lastReloadProgress = 0f;
+	private Timer timer;
 
 
 	@Override
@@ -148,27 +156,15 @@ public class RenderGun extends CustomItemRenderer {
 				}
 
 				case BACK: {
-					EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
-					GL11.glRotatef(0F, 1F, 0F, 0F);
-					GL11.glRotatef(-90F, 0F, 1F, 0F);
-					GL11.glRotatef(90F, 0F, 0F, 1F);
-					GL11.glTranslatef(0.25F, 0F, -0.05F);
-					GL11.glScalef(1F, 1F, 1F);
-
-                    float f2 = this.interpolateRotation(entityLivingBase.prevRenderYawOffset, entityLivingBase.renderYawOffset, (float)data[2]);
-                    if (Math.abs(entityLivingBase.prevRenderYawOffset - entityLivingBase.renderYawOffset) > 30F)
-                        f2 = entityLivingBase.renderYawOffset;
-
-                    GL11.glRotatef(-f2-90F, 1F, 0F, 0F);
-					GL11.glRotatef(-15.0f, 0F, 0F, 1F);
-                    if(entityLivingBase.isSneaking()){
-                        GL11.glTranslatef(-0.2f, 0.0f, 0.30f);
-                        GL11.glTranslatef(0.0f, 0.0f, 0.0f);
-                        GL11.glRotatef(30.0f, 0F, 1F, 0F);
-                    }
-
+					/*
 					GL11.glScalef(model.thirdPersonScale, model.thirdPersonScale, model.thirdPersonScale);
+					GL11.glTranslatef(-0.2f, 0.5f, 0.3f);
 					GL11.glTranslatef(model.backPersonOffset.x, model.backPersonOffset.y, model.backPersonOffset.z);
+					GL11.glRotatef(90.0f, 0.0f, 20.0f, 0.0f);
+					GL11.glRotatef(90.0f, 0.0f, 0.0f, -90.0f);
+					GL11.glRotatef(90.0f, 20.0f, 0.0f, 0.0f);
+					GL11.glRotatef(20.0f, 0.0f, 0.0f, 20.0f);
+					*/
 					break;
 				}
 
@@ -231,6 +227,17 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glTranslatef(0F, translateY, 0F);
 					GL11.glTranslatef(0F, 0F, translateZ);
 
+					if (this.timer == null) {
+						this.timer = ReflectionHelper.getPrivateValue(Minecraft.class, mc, "timer", "field_71428_T");
+					}
+
+					float partialTicks = this.timer.renderPartialTicks;
+
+
+					float gunRotX = ClientTickHandler.GUN_ROT_X_LAST + (ClientTickHandler.GUN_ROT_X - ClientTickHandler.GUN_ROT_X_LAST) * partialTicks;
+					float gunRotY = ClientTickHandler.GUN_ROT_Y_LAST + (ClientTickHandler.GUN_ROT_Y - ClientTickHandler.GUN_ROT_Y_LAST) * partialTicks;
+					GL11.glRotatef(gunRotX,0,-1,0);
+					GL11.glRotatef(gunRotY,0,0,-1);
 
 					//Render Scope
 					if (gunType.scopeType != null) {
@@ -300,14 +307,23 @@ public class RenderGun extends CustomItemRenderer {
 				float modelScale = model.modelScale;
 
 				/** Weapon Texture */
-				//skinId = item.getTagCompound().getInteger("skinId");
 				int skinId = 0;
-				String path = skinId > 0 ? "skins/" + gunType.modelSkins[skinId].getSkin() : gunType.modelSkins[0].getSkin();
-				bindTexture("guns", path);
+				if(item.hasTagCompound()) {
+                    if (item.getTagCompound().hasKey("skinId")) {
+                        skinId = item.getTagCompound().getInteger("skinId");
+                    }
+                }
+
+				if(renderType == CustomItemRenderType.ENTITY){
+					GL11.glColor3f(0.7f, 0.7f, 0.7f);
+					renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/gray.png"));
+				} else {
+					String path = skinId > 0 ? gunType.modelSkins[skinId].getSkin() : gunType.modelSkins[0].getSkin();
+					bindTexture("guns", path);
+				}
 
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				GL11.glTranslatef(model.translateAll.x * worldScale, -model.translateAll.y * worldScale, -model.translateAll.z * worldScale);
-
 
 				for (AttachmentEnum attachment : AttachmentEnum.values()) {
 					ItemStack itemStack = GunType.getAttachment(item, attachment);
@@ -542,8 +558,15 @@ public class RenderGun extends CustomItemRenderer {
 
 											Vector3f adjustedScale = new Vector3f(ammoScale.x / modelScale, ammoScale.y / modelScale, ammoScale.z / modelScale);
 											GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
-											int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
-											String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
+
+											int skinIdAmmo = 0;
+
+											if(stackAmmo.hasTagCompound()) {
+												if (stackAmmo.getTagCompound().hasKey("skinId")) {
+													skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
+												}
+											}
+											String pathAmmo = skinIdAmmo > 0 ? ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 											bindTexture("ammo", pathAmmo);
 
 											if (anim.shouldRenderAmmo()) {
@@ -565,8 +588,15 @@ public class RenderGun extends CustomItemRenderer {
 							if (shouldNormalRender && anim.shouldRenderAmmo()) {
 								if (!cachedUnload)
 									anim.cachedAmmoStack = stackAmmo;
-								int skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
-								String pathAmmo = skinIdAmmo > 0 ? "skins/" + ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
+
+								int skinIdAmmo = 0;
+
+								if(stackAmmo.hasTagCompound()) {
+									if (stackAmmo.getTagCompound().hasKey("skinId")) {
+										skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
+									}
+								}
+								String pathAmmo = skinIdAmmo > 0 ? ammoType.modelSkins[skinIdAmmo].getSkin() : ammoType.modelSkins[0].getSkin();
 								bindTexture("ammo", pathAmmo);
 								modelAmmo.renderAmmo(worldScale);
 							}
@@ -617,7 +647,7 @@ public class RenderGun extends CustomItemRenderer {
 
 				if (anim.muzzleFlashTime > 0 && model.hasFlash && (GunType.getAttachment(item, AttachmentEnum.Barrel) == null)) {
 					GL11.glPushMatrix();
-					ModelFlash flash = new com.modularwarfare.client.model.omw.ModelFlash();
+					final ModelFlash flash = model.flashModel;
 					GL11.glScalef(model.flashScale, model.flashScale, model.flashScale);
 					{
 						if (adsSwitch != 1.0F) {
@@ -625,7 +655,18 @@ public class RenderGun extends CustomItemRenderer {
 						} else {
 							GL11.glTranslatef(model.muzzleFlashPointScoping.x, model.muzzleFlashPointScoping.y, model.muzzleFlashPointScoping.z);
 						}
-						renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "flash.png"));
+						/** Weapon Texture */
+						boolean punched = false;
+						if(item.hasTagCompound()) {
+							if (item.getTagCompound().hasKey("punched")) {
+								punched = item.getTagCompound().getBoolean("punched");
+							}
+						}
+						if(!punched) {
+							RenderGun.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + model.flashTexture +".png"));
+						} else {
+							RenderGun.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + model.flashTexture + "_punched.png"));
+						}
 						ModelGun.glowOn();
 						flash.renderFlash(worldScale, anim.flashInt);
 						ModelGun.glowOff();
@@ -652,10 +693,10 @@ public class RenderGun extends CustomItemRenderer {
 				if (ModularWarfare.DEV_ENV && renderType == CustomItemRenderType.ENTITY) {
 					GL11.glPushMatrix();
 					{
-						ModelRotateTool tool = rotateToolModel;
-						GL11.glTranslatef(model.rotationHelper.x, model.rotationHelper.y, model.rotationHelper.z);
-						renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "rotatetool.png"));
-						tool.renderRotateTool(worldScale);
+						//ModelRotateTool tool = rotateToolModel;
+						//GL11.glTranslatef(model.rotationHelper.x, model.rotationHelper.y, model.rotationHelper.z);
+						//renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "rotatetool.png"));
+						//tool.renderRotateTool(worldScale);
 					}
 					GL11.glPopMatrix();
 				}
@@ -673,8 +714,14 @@ public class RenderGun extends CustomItemRenderer {
 						if (attachmentModel != null) {
 							GL11.glPushMatrix();
 							{
-								int skinId = itemStack.getTagCompound().getInteger("skinId");
-								String path = skinId > 0 ? "skins/" + attachmentType.modelSkins[skinId].getSkin() : attachmentType.modelSkins[0].getSkin();
+								int skinId = 0;
+								if(itemStack.hasTagCompound()) {
+									if (itemStack.getTagCompound().hasKey("skinId")) {
+										skinId = itemStack.getTagCompound().getInteger("skinId");
+									}
+								}
+
+								String path = skinId > 0 ? attachmentType.modelSkins[skinId].getSkin() : attachmentType.modelSkins[0].getSkin();
 								bindTexture("attachments", path);
 								Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
 								Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
@@ -896,7 +943,7 @@ public class RenderGun extends CustomItemRenderer {
 			if (armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
 				int skinId = 0;
-				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
+				String path = skinId > 0 ? ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
 				bindTexture("armor", path);
 				GL11.glPushMatrix();
 				{
@@ -907,6 +954,27 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glPopMatrix();
 			}
 		}
+		final int[] array;
+		final int[] slots = array = new int[] { 1, 2, 6, 3 };
+		for (final int slot : array) {
+			final ItemStack itemStack = ArmorApi.getArmorInSlot(player, slot);
+			if (!itemStack.isEmpty()) {
+				final ArmorType armorType = ((ItemSpecialArmor)itemStack.getItem()).type;
+				if (armorType.hasModel()) {
+					final ModelArmor armorModel = (ModelArmor)armorType.bipedModel;
+					GlStateManager.pushMatrix();
+					final int skinId2 = 0;
+					final String path2 = ((ItemSpecialArmor)itemStack.getItem()).type.modelSkins[0].getSkin();
+					this.bindTexture("armor", path2);
+					GL11.glPushMatrix();
+					final float modelScale2 = armorModel.modelScale;
+					GL11.glScalef(modelScale2, modelScale2, modelScale2);
+					armorModel.render(armorModel.leftArmModel, modelplayer.bipedLeftArm, 0.0625f, modelScale2);
+					GL11.glPopMatrix();
+					GlStateManager.popMatrix();
+				}
+			}
+		}
 	}
 
 	public void renderRightSleeve(EntityPlayer player, ModelBiped modelplayer) {
@@ -915,7 +983,7 @@ public class RenderGun extends CustomItemRenderer {
 			if (armorStack.getItem() instanceof ItemMWArmor) {
 				ModelArmor modelArmor = ((ModelArmor) ((ItemMWArmor) armorStack.getItem()).type.bipedModel);
 				int skinId = 0;
-				String path = skinId > 0 ? "skins/" + ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
+				String path = skinId > 0 ? ((ItemMWArmor) armorStack.getItem()).type.modelSkins[skinId].getSkin() : ((ItemMWArmor) armorStack.getItem()).type.modelSkins[0].getSkin();
 				bindTexture("armor", path);
 				GL11.glPushMatrix();
 				{
@@ -924,6 +992,27 @@ public class RenderGun extends CustomItemRenderer {
 					modelArmor.render(modelArmor.rightArmModel, modelplayer.bipedRightArm, 0.0625F, modelScale);
 				}
 				GL11.glPopMatrix();
+			}
+		}
+		final int[] array;
+		final int[] slots = array = new int[] { 1, 2, 6, 3 };
+		for (final int slot : array) {
+			final ItemStack itemStack = ArmorApi.getArmorInSlot(player, slot);
+			if (!itemStack.isEmpty()) {
+				final ArmorType armorType = ((ItemSpecialArmor)itemStack.getItem()).type;
+				if (armorType.hasModel()) {
+					final ModelArmor armorModel = (ModelArmor)armorType.bipedModel;
+					GlStateManager.pushMatrix();
+					final int skinId2 = 0;
+					final String path2 = ((ItemSpecialArmor)itemStack.getItem()).type.modelSkins[0].getSkin();
+					this.bindTexture("armor", path2);
+					GL11.glPushMatrix();
+					final float modelScale2 = armorModel.modelScale;
+					GL11.glScalef(modelScale2, modelScale2, modelScale2);
+					armorModel.render(armorModel.rightArmModel, modelplayer.bipedRightArm, 0.0625f, modelScale2);
+					GL11.glPopMatrix();
+					GlStateManager.popMatrix();
+				}
 			}
 		}
 

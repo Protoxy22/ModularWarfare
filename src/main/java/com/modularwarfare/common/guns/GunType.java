@@ -11,11 +11,13 @@ import com.modularwarfare.common.network.PacketPlaySound;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -54,6 +56,8 @@ public class GunType extends BaseType {
 	 * The number of bullet entities created by each shot
 	 */
 	public int numBullets = 1;
+
+	public float bulletSpeed = 6F;
 	/**
 	 * The amount that bullets spread out when fired from this gun
 	 */
@@ -75,6 +79,9 @@ public class GunType extends BaseType {
 	 */
 	public boolean consumeGunUponUse = false;
 
+	public boolean isEnergyGun = false;
+
+
 	//Recoil Variables
 	/**
 	 * Base value for Upwards cursor/view recoil
@@ -87,11 +94,23 @@ public class GunType extends BaseType {
 	/**
 	 * Modifier for setting the maximum pitch divergence when randomizing recoil (Recoil 2 + rndRecoil 0.5 == 1.5-2.5 Recoil range)
 	 */
+
+	/**
+	 * Factor of accuracy when sneaking
+	 */
+	public float accuracySneakFactor = 0.5f;
+
 	public float randomRecoilPitch = 0.5F;
 	/**
 	 * Modifier for setting the maximum yaw divergence when randomizing recoil (Recoil 2 + rndRecoil 0.5 == 1.5-2.5 Recoil range)
 	 */
 	public float randomRecoilYaw = 0.5F;
+
+
+	/**
+	 * Modifier for setting the maximum yaw divergence when randomizing recoil (Recoil 2 + rndRecoil 0.5 == 1.5-2.5 Recoil range)
+	 */
+	public float recoilAimReducer = 0.7F;
 
 	/**
 	 * The firing modes of the gun. SEMI, FULL, BURST
@@ -253,7 +272,7 @@ public class GunType extends BaseType {
 	}
 
 
-	public void playSound(EntityPlayer entityPlayer, WeaponSoundType weaponSoundType, ItemStack gunStack) {
+	public void playSound(EntityLivingBase entityPlayer, WeaponSoundType weaponSoundType, ItemStack gunStack) {
 		if (weaponSoundType != null) {
 			if (weaponSoundMap.containsKey(weaponSoundType)) {
 				BlockPos originPos = entityPlayer.getPosition();
@@ -321,6 +340,22 @@ public class GunType extends BaseType {
 		return false;
 	}
 
+    public static boolean isPackAPunched(ItemStack heldStack) {
+        if (heldStack.getTagCompound() != null) {
+            NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+            return nbtTagCompound.hasKey("punched") ? nbtTagCompound.getBoolean("punched") : false;
+        }
+        return false;
+    }
+
+	public static void setPackAPunched(ItemStack heldStack, boolean bool) {
+		if (heldStack.getTagCompound() != null) {
+			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
+			nbtTagCompound.setBoolean("punched", bool);
+			heldStack.setTagCompound(nbtTagCompound);
+		}
+	}
+
 	public static WeaponFireMode getFireMode(ItemStack heldStack) {
 		if (heldStack.getTagCompound() != null) {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
@@ -344,7 +379,6 @@ public class GunType extends BaseType {
 		}
 		return null;
 	}
-
 	public static void addAttachment(ItemStack heldStack, AttachmentEnum type, ItemStack attachment) {
 		if (heldStack.getTagCompound() != null) {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();

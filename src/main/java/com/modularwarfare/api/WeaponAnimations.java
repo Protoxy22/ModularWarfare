@@ -18,6 +18,7 @@ public class WeaponAnimations {
 	public static String PISTOL = "pistol";
 	public static String SHOTGUN = "shotgun";
 	public static String SNIPER = "sniper";
+	public static String SNIPER_TOP = "sniper_top";
 	public static String SIDE_CLIP = "sideclip";
 	public static String TOP_RIFLE = "toprifle";
 	
@@ -34,5 +35,7 @@ public class WeaponAnimations {
 			ModularWarfare.LOGGER.log(Level.ERROR, String.format("Animation named '%s' does not exist in animation registry.", internalName));
 		return animationMap.get(internalName);
 	}
+
+
 
 }

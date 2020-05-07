@@ -4,6 +4,9 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.AnimationUtils;
+import com.modularwarfare.common.network.PacketAimingReponse;
+import com.modularwarfare.common.network.PacketAimingRequest;
 import com.modularwarfare.utility.event.ForgeEvent;
 
 import net.minecraft.client.Minecraft;
@@ -14,6 +17,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 public class ServerTickHandler extends ForgeEvent {
 
 	public static ConcurrentHashMap<UUID, Integer> playerShootCooldown = new ConcurrentHashMap<UUID, Integer>();
+	public static ConcurrentHashMap<String, Integer> playerAimShootCooldown = new ConcurrentHashMap<String, Integer>();
+
 	public static ConcurrentHashMap<UUID, Integer> playerReloadCooldown = new ConcurrentHashMap<UUID, Integer>();
 
 	int i = 0;
@@ -33,6 +38,21 @@ public class ServerTickHandler extends ForgeEvent {
 					} else {
 						playerShootCooldown.replace(uuid, value);
 					}
+				}
+
+				// Player shoot aim cooldown
+				for (String playername : playerAimShootCooldown.keySet()) {
+					i += 1;
+
+					int value = playerAimShootCooldown.get(playername) - 1;
+
+					if (value <= 0) {
+						playerAimShootCooldown.remove(playername);
+						ModularWarfare.NETWORK.sendToAll(new PacketAimingReponse(playername, false));
+					} else {
+						playerAimShootCooldown.replace(playername, value);
+					}
+
 				}
 
 				// Player reload cooldown

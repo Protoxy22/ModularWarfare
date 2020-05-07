@@ -1,0 +1,51 @@
+{
+    "internalName": "omw.ump45",
+    "displayName": "UMP45",
+    "modelName": "omw.guns.ump45",
+    "weaponType": "smg",
+    "gunDamage": 6,
+    "roundsPerMin": 600,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 3.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+    "fireModes": [
+        "full"
+    ],
+    "acceptedAmmo": [
+        "omw.ump45ammo"
+    ],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "omw.ump45.shoot",
+                "soundNameDistant": "omw.groza.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponFireSuppressed": [
+            {
+                "soundEvent": "weaponFireSuppressed",
+                "soundName": "omw.ump45.shoot.sup",
+                "soundNameDistant": "omw.ump45.shoot.sup",
+                "soundRange": 20,
+                "soundMaxRange": 32,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "omw.generic.reload"
+            }
+        ]
+    },
+    "acceptedAttachments":
+    {
+        "sight": [""]
+    }}

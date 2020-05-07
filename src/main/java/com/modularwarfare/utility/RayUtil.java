@@ -1,10 +1,14 @@
 package com.modularwarfare.utility;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.entity.EntityBot;
 import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.network.PacketGunTrail;
 import com.modularwarfare.common.network.PacketPlaySound;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
@@ -12,13 +16,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -45,7 +45,7 @@ public class RayUtil {
         return new Vec3d((double)(f2 * f3), (double)f4, (double)(f * f3));
     }
 
-    public static float calculateAccuracyServer(final ItemGun item, final EntityPlayerMP player) {
+    public static float calculateAccuracyServer(final ItemGun item, final EntityLivingBase player) {
         final GunType gun = item.type;
         float acc = gun.bulletSpread;
         if (player.posX != player.lastTickPosX || player.posZ != player.lastTickPosZ) {
@@ -58,7 +58,22 @@ public class RayUtil {
             acc += 0.25f;
         }
         if (player.isSneaking()) {
-            acc *= 0.5f;
+            acc *= gun.accuracySneakFactor;
+        }
+        if(player instanceof EntityBot){
+            switch (((EntityBot) player).difficulty){
+                case 1:
+                    acc += 1.5f;
+                    break;
+                case 2:
+                    acc += 0.75f;
+                case 3:
+                    acc += 0.25f;
+                case 4:
+                    break;
+                default:
+                    break;
+            }
         }
         return acc;
     }
@@ -77,7 +92,7 @@ public class RayUtil {
             acc += 0.25f;
         }
         if (player.isSneaking()) {
-            acc *= 0.5f;
+            acc *= gun.accuracySneakFactor;
         }
         return acc;
     }
@@ -117,10 +132,10 @@ public class RayUtil {
      * @return
      */
     @Nullable
-    public static RayTraceResult standardEntityRayTrace(World world, EntityPlayerMP player, double range, ItemGun item){
-
+    public static RayTraceResult standardEntityRayTrace(World world, EntityLivingBase player, double range, ItemGun item, boolean isPunched){
         HashSet<Entity> hashset = new HashSet<Entity>(1);
         hashset.add(player);
+
         final float accuracy = calculateAccuracyServer(item, player);
         final Vec3d dir = getGunAccuracy(player.rotationPitch, player.rotationYaw, accuracy, player.world.rand);
 
@@ -128,9 +143,9 @@ public class RayUtil {
         double dy = dir.y * range;
         double dz = dir.z * range;
 
-        ModularWarfare.NETWORK.sendToDimension(new PacketGunTrail(player.posX,player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612, player.posZ, player.motionX, player.motionZ, dir.x, dir.y, dir.z, range), player.world.provider.getDimension());
+        ModularWarfare.NETWORK.sendToDimension(new PacketGunTrail(player.posX,player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612, player.posZ, player.motionX, player.motionZ, dir.x, dir.y, dir.z, range, 10, isPunched), player.world.provider.getDimension());
 
-        return RayUtil.tracePath(world, (float)player.posX, (float)(player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612), (float)player.posZ, (float)(player.posX + dx+ player.motionX), (float)(player.posY + dy), (float)(player.posZ + dz + player.motionZ), 0.1f, hashset, false);
+        return RayUtil.tracePath(world, (float)player.posX, (float)(player.getEntityBoundingBox().minY + player.getEyeHeight() - 0.10000000149011612), (float)player.posZ, (float)(player.posX + dx+ player.motionX), (float)(player.posY + dy + player.motionY), (float)(player.posZ + dz + player.motionZ), 0.1f, hashset, false);
     }
 
     /**
@@ -187,7 +202,7 @@ public class RayUtil {
         AxisAlignedBB bb = new AxisAlignedBB(minX, minY, minZ, maxX, maxY, maxZ).grow(borderSize, borderSize,
                 borderSize);
         List<Entity> allEntities = world.getEntitiesWithinAABBExcludingEntity(null, bb);
-        RayTraceResult blockHit = world.rayTraceBlocks(startVec, endVec,  true, true, false);
+        RayTraceResult blockHit = rayTraceBlocks(world, startVec, endVec,  true, true, false);
         startVec = new Vec3d(x, y, z);
         endVec = new Vec3d(tx, ty, tz);
         float maxDistance = (float)endVec.distanceTo(startVec);
@@ -203,20 +218,25 @@ public class RayUtil {
         RayTraceResult intercept;
         for(Entity ent : allEntities){
             if((ent.canBeCollidedWith() || !collideablesOnly) && ((excluded != null && !excluded.contains(ent)) || excluded == null)){
-                if(ent instanceof EntityPlayerMP){
-                    ModularWarfare.NETWORK.sendTo(new PacketPlaySound(ent.getPosition(), "flyby", 0.4f, 1f), (EntityPlayerMP) ent);
-                }
-                float entBorder = ent.getCollisionBorderSize();
-                entityBb = ent.getEntityBoundingBox();
-                if(entityBb != null){
-                    entityBb = entityBb.grow(entBorder, entBorder, entBorder);
-                    intercept = entityBb.calculateIntercept(startVec, endVec);
-                    if(intercept != null){
-                        currentHit = (float)intercept.hitVec.distanceTo(startVec);
-                        hit = intercept.hitVec;
-                        if(currentHit < closestHit || currentHit == 0){
-                            closestHit = currentHit;
-                            closestHitEntity = ent;
+                if(ent instanceof EntityLivingBase) {
+                    EntityLivingBase entityLivingBase = (EntityLivingBase)ent;
+                    if(!ent.isDead && entityLivingBase.getHealth() > 0.0F){
+                        if (ent instanceof EntityPlayerMP) {
+                            ModularWarfare.NETWORK.sendTo(new PacketPlaySound(ent.getPosition(), "flyby", 0.4f, 1f), (EntityPlayerMP) ent);
+                        }
+                        float entBorder = ent.getCollisionBorderSize();
+                        entityBb = ent.getEntityBoundingBox();
+                        if (entityBb != null) {
+                            entityBb = entityBb.grow(entBorder, entBorder, entBorder);
+                            intercept = entityBb.calculateIntercept(startVec, endVec);
+                            if (intercept != null) {
+                                currentHit = (float) intercept.hitVec.distanceTo(startVec);
+                                hit = intercept.hitVec;
+                                if (currentHit < closestHit || currentHit == 0) {
+                                    closestHit = currentHit;
+                                    closestHitEntity = ent;
+                                }
+                            }
                         }
                     }
                 }
@@ -227,4 +247,147 @@ public class RayUtil {
         }
         return blockHit;
     }
+
+
+
+    @Nullable
+    public static RayTraceResult rayTraceBlocks(World world, Vec3d vec31, Vec3d vec32, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+        if (!Double.isNaN(vec31.x) && !Double.isNaN(vec31.y) && !Double.isNaN(vec31.z)) {
+            if (!Double.isNaN(vec32.x) && !Double.isNaN(vec32.y) && !Double.isNaN(vec32.z)) {
+                int i = MathHelper.floor(vec32.x);
+                int j = MathHelper.floor(vec32.y);
+                int k = MathHelper.floor(vec32.z);
+                int l = MathHelper.floor(vec31.x);
+                int i1 = MathHelper.floor(vec31.y);
+                int j1 = MathHelper.floor(vec31.z);
+                BlockPos blockpos = new BlockPos(l, i1, j1);
+                IBlockState iblockstate = world.getBlockState(blockpos);
+                Block block = iblockstate.getBlock();
+
+                if ((!ignoreBlockWithoutBoundingBox || iblockstate.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) && block.canCollideCheck(iblockstate, stopOnLiquid)) {
+                    RayTraceResult raytraceresult = iblockstate.collisionRayTrace(world, blockpos, vec31, vec32);
+
+                    if (raytraceresult != null) {
+                        return raytraceresult;
+                    }
+                }
+
+                RayTraceResult raytraceresult2 = null;
+                int k1 = 200;
+
+                while (k1-- >= 0) {
+                    if (Double.isNaN(vec31.x) || Double.isNaN(vec31.y) || Double.isNaN(vec31.z)) {
+                        return null;
+                    }
+
+                    if (l == i && i1 == j && j1 == k) {
+                        return returnLastUncollidableBlock ? raytraceresult2 : null;
+                    }
+
+                    boolean flag2 = true;
+                    boolean flag = true;
+                    boolean flag1 = true;
+                    double d0 = 999.0D;
+                    double d1 = 999.0D;
+                    double d2 = 999.0D;
+
+                    if (i > l) {
+                        d0 = (double) l + 1.0D;
+                    } else if (i < l) {
+                        d0 = (double) l + 0.0D;
+                    } else {
+                        flag2 = false;
+                    }
+
+                    if (j > i1) {
+                        d1 = (double) i1 + 1.0D;
+                    } else if (j < i1) {
+                        d1 = (double) i1 + 0.0D;
+                    } else {
+                        flag = false;
+                    }
+
+                    if (k > j1) {
+                        d2 = (double) j1 + 1.0D;
+                    } else if (k < j1) {
+                        d2 = (double) j1 + 0.0D;
+                    } else {
+                        flag1 = false;
+                    }
+
+                    double d3 = 999.0D;
+                    double d4 = 999.0D;
+                    double d5 = 999.0D;
+                    double d6 = vec32.x - vec31.x;
+                    double d7 = vec32.y - vec31.y;
+                    double d8 = vec32.z - vec31.z;
+
+                    if (flag2) {
+                        d3 = (d0 - vec31.x) / d6;
+                    }
+
+                    if (flag) {
+                        d4 = (d1 - vec31.y) / d7;
+                    }
+
+                    if (flag1) {
+                        d5 = (d2 - vec31.z) / d8;
+                    }
+
+                    if (d3 == -0.0D) {
+                        d3 = -1.0E-4D;
+                    }
+
+                    if (d4 == -0.0D) {
+                        d4 = -1.0E-4D;
+                    }
+
+                    if (d5 == -0.0D) {
+                        d5 = -1.0E-4D;
+                    }
+
+                    EnumFacing enumfacing;
+
+                    if (d3 < d4 && d3 < d5) {
+                        enumfacing = i > l ? EnumFacing.WEST : EnumFacing.EAST;
+                        vec31 = new Vec3d(d0, vec31.y + d7 * d3, vec31.z + d8 * d3);
+                    } else if (d4 < d5) {
+                        enumfacing = j > i1 ? EnumFacing.DOWN : EnumFacing.UP;
+                        vec31 = new Vec3d(vec31.x + d6 * d4, d1, vec31.z + d8 * d4);
+                    } else {
+                        enumfacing = k > j1 ? EnumFacing.NORTH : EnumFacing.SOUTH;
+                        vec31 = new Vec3d(vec31.x + d6 * d5, vec31.y + d7 * d5, d2);
+                    }
+
+                    l = MathHelper.floor(vec31.x) - (enumfacing == EnumFacing.EAST ? 1 : 0);
+                    i1 = MathHelper.floor(vec31.y) - (enumfacing == EnumFacing.UP ? 1 : 0);
+                    j1 = MathHelper.floor(vec31.z) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
+                    blockpos = new BlockPos(l, i1, j1);
+                    IBlockState iblockstate1 = world.getBlockState(blockpos);
+                    Block block1 = iblockstate1.getBlock();
+
+                    if (!ignoreBlockWithoutBoundingBox || iblockstate1.getMaterial() == Material.BARRIER || iblockstate1.getMaterial() == Material.PORTAL || iblockstate1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) {
+                        if (block1.canCollideCheck(iblockstate1, stopOnLiquid)) {
+                            RayTraceResult raytraceresult1 = iblockstate1.collisionRayTrace(world, blockpos, vec31, vec32);
+                            if (raytraceresult1 != null) {
+                                return raytraceresult1;
+                            }
+                        } else {
+                            raytraceresult2 = new RayTraceResult(RayTraceResult.Type.MISS, vec31, enumfacing, blockpos);
+                        }
+                    }
+                }
+
+                return returnLastUncollidableBlock ? raytraceresult2 : null;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
+
+
+
 }

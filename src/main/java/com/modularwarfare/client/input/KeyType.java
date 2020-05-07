@@ -8,7 +8,8 @@ public enum KeyType {
 	FireMode("Fire Mode", 0x2F), // V 
 	GunUnload("Unload Key", 0x16), // U
 	AddAttachment("Add Attachment", 0x32), // M
-	HitmarkerMode("Hitmarker Mode", 0x23); // H
+	HitmarkerMode("Hitmarker Mode", 0x23), // H
+	EngineStart("Start Engine", 0x22); // H
 
 	//Keyboard
 	public String displayName;

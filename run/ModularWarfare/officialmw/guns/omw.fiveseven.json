@@ -5,18 +5,14 @@
     "roundsPerMin": 250,
     "allowSprintFiring": true,
     "allowEmptyMagazines": true,
-    "recoilPitch": 0.1,
-    "recoilYaw": 0.1,
-    "randomRecoilPitch": 0.1,
-    "randomRecoilYaw": 0.1,
     "weaponType": "pistol",
     "acceptedAmmo": ["omw.fivesevenammo"],
     "modelName": "omw.guns.fiveseven",
     "fireModes": ["semi"],
-    "recoilPitch": 10.0,
-    "recoilYaw": 1.0,
-    "randomRecoilPitch": 0.5,
-    "randomRecoilYaw": 0.5,
+    "recoilPitch": 0.2,
+    "recoilYaw": 0.2,
+    "randomRecoilPitch": 0.1,
+    "randomRecoilYaw": 0.1,
     "weaponSoundMap": {
         "weaponFire": [
             {

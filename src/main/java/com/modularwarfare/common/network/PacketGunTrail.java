@@ -19,10 +19,13 @@ public class PacketGunTrail extends PacketBase {
 	double dirY;
 	double dirZ;
 	double range;
+	float bulletspeed;
+
+	boolean isPunched;
 
 	public PacketGunTrail() {}
 
-	public PacketGunTrail(double X, double Y, double Z, double motionX, double motionZ, double x, double y, double z, double range) {
+	public PacketGunTrail(double X, double Y, double Z, double motionX, double motionZ, double x, double y, double z, double range, float bulletspeed, boolean isPunched) {
 		this.posX = X;
 		this.posY = Y;
 		this.posZ = Z;
@@ -34,6 +37,8 @@ public class PacketGunTrail extends PacketBase {
 		this.dirY = y;
 		this.dirZ = z;
 		this.range = range;
+		this.bulletspeed = bulletspeed;
+		this.isPunched = isPunched;
 	}
 
 	@Override
@@ -50,6 +55,8 @@ public class PacketGunTrail extends PacketBase {
 		data.writeDouble(dirZ);
 
 		data.writeDouble(range);
+		data.writeFloat(bulletspeed);
+		data.writeBoolean(isPunched);
 	}
 
 	@Override
@@ -66,6 +73,8 @@ public class PacketGunTrail extends PacketBase {
 		dirZ = data.readDouble();
 
 		range = data.readDouble();
+		bulletspeed = data.readFloat();
+		isPunched = data.readBoolean();
 	}
 
 	@Override
@@ -81,7 +90,7 @@ public class PacketGunTrail extends PacketBase {
 		double dz = this.dirZ * this.range;
 
 		final Vector3f vec = new Vector3f((float)posX, (float)posY, (float)posZ);
-		InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(vec, new Vector3f((float)(vec.x + dx+ motionX), (float)(vec.y + dy), (float)(vec.z + dz + motionZ))));
+		InstantBulletRenderer.AddTrail(new InstantBulletRenderer.InstantShotTrail(vec, new Vector3f((float)(vec.x + dx+ motionX), (float)(vec.y + dy), (float)(vec.z + dz + motionZ)), this.bulletspeed, this.isPunched));
 	}
 
 }

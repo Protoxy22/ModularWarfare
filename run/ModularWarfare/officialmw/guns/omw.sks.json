@@ -3,7 +3,7 @@
     "displayName": "SKS",
     "modelName": "omw.guns.sks",
     "weaponType": "carbine",
-    "gunDamage": 7,
+    "gunDamage": 9,
     "gunDamageHeadshotBonus": 3,
     "roundsPerMin": 300,
     "allowSprintFiring": true,
@@ -31,6 +31,11 @@
                 "soundEvent": "weaponReload",
                 "soundName": "omw.generic.reload"
             }
+        ]
+    },
+    "acceptedAttachments": {
+        "sight": [
+            "omw.reflex"
         ]
     }
 }

@@ -13,37 +13,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 
-public class CustomItemRenderer
-{
-	
+public class CustomItemRenderer {
+
 	protected static TextureManager renderEngine = Minecraft.getMinecraft().renderEngine;
 	private HashMap<String, ResourceLocation> cachedSkins = new HashMap<String, ResourceLocation>();
-	
-	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {}
-	
-	public void bindTexture(String type, String fileName)
-	{
-		String pathFormat = "skins/%s/%s/%s.png";
-		
-		if(renderEngine == null)
+
+	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
+	}
+
+	public void bindTexture(String type, String fileName) {
+		String pathFormat = "skins/%s/%s.png";
+
+		if (renderEngine == null)
 			renderEngine = Minecraft.getMinecraft().renderEngine;
-		
-		try
-		{
-			ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID, String.format(pathFormat, ModConfig.INSTANCE.detailedSkins ? "hd" : "default", type, fileName));
-			if(cachedSkins.containsKey(type + "_" + fileName)) 
-			{
+
+		try {
+			ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID, String.format(pathFormat, type, fileName));
+			if (cachedSkins.containsKey(type + "_" + fileName)) {
 				renderEngine.bindTexture(cachedSkins.get(type + "_" + fileName));
 				return;
-			} else if(renderEngine.getTexture(resourceLocation) == null)
-			{
+			} else if (renderEngine.getTexture(resourceLocation) == null) {
 				ITextureObject itextureobject = new SimpleTexture(resourceLocation);
 				itextureobject.loadTexture(Minecraft.getMinecraft().getResourceManager());
 			}
-			
+
 			renderEngine.bindTexture(resourceLocation);
-		} catch(Exception e)
-		{
+		} catch (Exception e) {
 			ResourceLocation resourceLocation = new ResourceLocation(ModularWarfare.MOD_ID,
 					String.format(pathFormat, "default", type, fileName));
 			cachedSkins.put(type + "_" + fileName, resourceLocation);

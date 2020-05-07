@@ -2,23 +2,21 @@ package com.modularwarfare.client.handler;
 
 import java.util.Random;
 
-import com.modularwarfare.client.ClientProxy;
 import com.modularwarfare.client.model.InstantBulletRenderer;
-import com.modularwarfare.common.guns.WeaponSoundType;
+import com.modularwarfare.common.guns.ItemSpray;
 import com.modularwarfare.utility.MWSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.fml.client.FMLClientHandler;
 import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.ClientRenderHooks;
-import com.modularwarfare.client.StateMachine;
 import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
-import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.utility.NumberHelper;
 import com.modularwarfare.utility.event.ForgeEvent;
@@ -44,13 +42,24 @@ public class ClientTickHandler extends ForgeEvent {
 
 	private final Random random;
 
-	private float prevFov;
-	private float mouseSens;
+	public static float prevFov;
+	public static float mouseSens;
 
 	private boolean hasChangedFOV;
 	private boolean hasChangedSens;
 
 	private static Item oldItem;
+
+	public static float GUN_ROT_X = 0;
+	public static float GUN_ROT_Y = 0;
+	public static float GUN_ROT_Z = 0;
+
+	public static float GUN_ROT_X_LAST = 0;
+	public static float GUN_ROT_Y_LAST = 0;
+	public static float GUN_ROT_Z_LAST = 0;
+
+	public static float prevPitch = 0;
+
 
 	public ClientTickHandler() {
 		super();
@@ -91,7 +100,7 @@ public class ClientTickHandler extends ForgeEvent {
 				break;
 			case END:
 				onClientTickEnd(Minecraft.getMinecraft());
-				break;
+
 		}
 	}
 
@@ -189,7 +198,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case TWO:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 45) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 45;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.95f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens * 0.95f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -197,7 +206,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case FOUR:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 25) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 25;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.65f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens * 0.65f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -205,7 +214,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case EIGHT:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 10) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 10;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.2f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens * 0.2f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -213,7 +222,7 @@ public class ClientTickHandler extends ForgeEvent {
 					case FIFTEEN:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 3) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 3;
-							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens*0.1f;
+							Minecraft.getMinecraft().gameSettings.mouseSensitivity = this.mouseSens * 0.1f;
 							hasChangedSens = false;
 							hasChangedFOV = false;
 						}
@@ -235,6 +244,43 @@ public class ClientTickHandler extends ForgeEvent {
 				this.prevFov = Minecraft.getMinecraft().gameSettings.fovSetting;
 			}
 		}
+
+		GUN_ROT_X_LAST = GUN_ROT_X;
+		GUN_ROT_Y_LAST = GUN_ROT_Y;
+		GUN_ROT_Z_LAST = GUN_ROT_Z;
+
+		Minecraft mc = FMLClientHandler.instance().getClient();
+
+		if (mc.getRenderViewEntity() != null) {
+			if (mc.getRenderViewEntity().getRotationYawHead() > mc.getRenderViewEntity().prevRotationYaw) {
+				GUN_ROT_X += (mc.getRenderViewEntity().getRotationYawHead() - mc.getRenderViewEntity().prevRotationYaw) / 2;
+			} else if (mc.getRenderViewEntity().getRotationYawHead() < mc.getRenderViewEntity().prevRotationYaw) {
+				GUN_ROT_X -= (mc.getRenderViewEntity().prevRotationYaw - mc.getRenderViewEntity().getRotationYawHead()) / 2;
+			}
+			if (mc.getRenderViewEntity().rotationPitch > prevPitch) {
+				GUN_ROT_Y += (mc.getRenderViewEntity().rotationPitch - prevPitch) / 2;
+			} else if (mc.getRenderViewEntity().rotationPitch < prevPitch) {
+				GUN_ROT_Y -= (prevPitch - mc.getRenderViewEntity().rotationPitch) / 2;
+			}
+			prevPitch = mc.getRenderViewEntity().rotationPitch;
+		}
+
+		GUN_ROT_X *= .2F;
+		GUN_ROT_Y *= .2F;
+		GUN_ROT_Z *= .2F;
+
+		if (GUN_ROT_X > 20) {
+			GUN_ROT_X = 20;
+		} else if (GUN_ROT_X < -20) {
+			GUN_ROT_X = -20;
+		}
+
+		if (GUN_ROT_Y > 20) {
+			GUN_ROT_Y = 20;
+		} else if (GUN_ROT_Y < -20) {
+			GUN_ROT_Y = -20;
+		}
+
 
 		this.playEquipSound();
 		ItemGun.fireButtonHeld = Mouse.isButtonDown(0);
@@ -267,7 +313,6 @@ public class ClientTickHandler extends ForgeEvent {
 		}
 
 		InstantBulletRenderer.UpdateAllTrails();
-
 	}
 
 
@@ -276,6 +321,9 @@ public class ClientTickHandler extends ForgeEvent {
 		if (player.getHeldItemMainhand().getItem() != this.oldItem) {
 			if (player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 				ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "equip", 1f, 1f));
+				ItemGun.delay = 20;
+			} else if (player.getHeldItemMainhand().getItem() instanceof ItemSpray) {
+				ModularWarfare.PROXY.playSound(new MWSound(player.getPosition(), "shake", 1f, 1f));
 				ItemGun.delay = 20;
 			}
 		}

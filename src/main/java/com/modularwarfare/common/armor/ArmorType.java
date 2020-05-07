@@ -5,52 +5,47 @@ import java.util.HashMap;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.client.model.ModelArmor;
-import com.modularwarfare.client.model.ModelCustomArmor;
 import com.modularwarfare.common.type.BaseType;
 
-public class ArmorType extends BaseType {
-	
+public class ArmorType extends BaseType
+{
 	public Integer durability;
 	public double defense;
+	public HashMap<MWArmorType, ArmorInfo> armorTypes;
 
-	public HashMap<MWArmorType, ArmorInfo> armorTypes = new HashMap<MWArmorType, ArmorInfo>();
-	
-	
-	public void initializeArmor(String slot)
-	{
-		for(MWArmorType armorType : armorTypes.keySet())
-		{
-			if(armorType.name().toLowerCase().equalsIgnoreCase(slot))
-			{
-				armorTypes.get(armorType).internalName = internalName + (armorTypes.size() > 1 ? "_" + slot : "");
+	public ArmorType() {
+		this.armorTypes = new HashMap<MWArmorType, ArmorInfo>();
+	}
+
+	public void initializeArmor(final String slot) {
+		for (final MWArmorType armorType : this.armorTypes.keySet()) {
+			if (armorType.name().toLowerCase().equalsIgnoreCase(slot)) {
+				this.armorTypes.get(armorType).internalName = this.internalName + ((this.armorTypes.size() > 1) ? ("_" + slot) : "");
 			}
 		}
 	}
-	
+
 	@Override
-	public void loadExtraValues()
-	{
-		if(maxStackSize == null)
-			maxStackSize = 1;
-		
-		loadBaseValues();
+	public void loadExtraValues() {
+		if (this.maxStackSize == null) {
+			this.maxStackSize = 1;
+		}
+		this.loadBaseValues();
 	}
-	
+
 	@Override
 	public void reloadModel() {
-		bipedModel = ModularWarfare.PROXY.loadModel(modelName != null ? modelName : internalName, internalName, ModelArmor.class);
+		this.bipedModel = ModularWarfare.PROXY.loadModel((this.modelName != null) ? this.modelName : this.internalName, this.internalName, ModelArmor.class);
 	}
-	
+
 	@Override
-	public String getAssetDir()
-	{
+	public String getAssetDir() {
 		return "armor";
 	}
-	
+
 	public static class ArmorInfo
 	{
 		public String displayName;
 		public transient String internalName;
 	}
-	
 }

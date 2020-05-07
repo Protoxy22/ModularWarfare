@@ -1,11 +1,8 @@
 package com.modularwarfare.client;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import com.modularwarfare.ModConfig;
-import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.utility.RayUtil;
@@ -15,6 +12,9 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.*;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.util.glu.Project;
@@ -44,10 +44,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderItemInFrameEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -55,7 +51,7 @@ public class ClientRenderHooks extends ForgeEvent {
 
 	public static HashMap<EntityLivingBase, AnimStateMachine> weaponAnimations = new HashMap<EntityLivingBase, AnimStateMachine>();
 	private Minecraft mc;
-	private CustomItemRenderer[] customRenderers = new CustomItemRenderer[4];
+	public static CustomItemRenderer[] customRenderers = new CustomItemRenderer[4];
 	private float equippedProgress = 1f, prevEquippedProgress = 1f;
 	private float partialTicks;
 	private static RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
@@ -195,7 +191,9 @@ public class ClientRenderHooks extends ForgeEvent {
 		}
 	}
 
-	@SubscribeEvent
+
+
+		@SubscribeEvent
 	public void renderHeldItem(RenderSpecificHandEvent event) {
 		EntityPlayer player = mc.player;
 		ItemStack stack = event.getItemStack();
@@ -309,44 +307,12 @@ public class ClientRenderHooks extends ForgeEvent {
 		partialTicks = dT;
 	}
 
-
-	/*
-	public ArrayList<ItemStack> getItemsInBack(EntityPlayerSP entityPlayerSP){
-		ArrayList<ItemStack> guns = new ArrayList<ItemStack>();
-		for(int i=0; i<= entityPlayerSP.inventory.getSizeInventory(); i++){
-			if(guns.size() < 2) {
-				if (entityPlayerSP.inventory.getStackInSlot(i) != null && entityPlayerSP.inventory.getStackInSlot(i).getItem() instanceof ItemGun && entityPlayerSP.inventory.getStackInSlot(i) != entityPlayerSP.getHeldItemMainhand()) {
-					guns.add(entityPlayerSP.inventory.getStackInSlot(i));
-				}
-			}
-		}
-		return guns;
-	}
-*/
-
 	@SubscribeEvent
 	public void renderThirdPersonWeapons(RenderLivingEvent.Pre event) {
 		ModelBase mainModel = event.getRenderer().getMainModel();
 		EntityLivingBase entity = event.getEntity();
 
-		/*
-		if(entity instanceof EntityPlayerSP){
-			ModelBiped biped = (ModelBiped) mainModel;
-			ArrayList<ItemStack> guns = getItemsInBack((EntityPlayerSP)entity);
-			if(guns.size() > 0) {
-				BaseType type = ((BaseItem) guns.get(0).getItem()).baseType;
 
-				{
-					GlStateManager.pushMatrix();
-					if (customRenderers[type.id] != null) {
-						GlStateManager.translate(-0.05F, 0.4F, 0.05F);
-						customRenderers[type.id].renderItem(CustomItemRenderType.BACK, null, guns.get(0), mc.world, entity, partialTicks);
-					}
-					GlStateManager.popMatrix();
-				}
-			}
-		}
-		*/
 		for (int i = 0; i < 1; i++) {
 			EnumHand hand = EnumHand.values()[i];
 			if (entity.getHeldItem(hand) != null && entity.getHeldItem(hand).getItem() instanceof BaseItem && mainModel instanceof ModelBiped) {
@@ -422,7 +388,7 @@ public class ClientRenderHooks extends ForgeEvent {
 
 				if (type.id == 0) {
 					if (entity instanceof EntityPlayer) {
-						if (AnimationUtils.isAiming.containsKey(((EntityPlayer) entity).getDisplayNameString())) {
+						if (AnimationUtils.isAiming.containsKey(((EntityPlayer) entity).getName())) {
 							biped.rightArmPose = ArmPose.BOW_AND_ARROW;
 						} else {
 							biped.rightArmPose = ArmPose.ITEM;
@@ -501,20 +467,20 @@ public class ClientRenderHooks extends ForgeEvent {
 					int x = 0;
 					final int top = j - 38;
 					final int left = 2;
-					final int right = Math.min(left + 110, i / 2 - 91);
+					final int right = Math.min(left + 66, i / 2 - 60);
 					final int bottom = top + 22;
-					Gui.drawRect(left + right, top, right * 2 - 50, bottom, Integer.MIN_VALUE);
+					Gui.drawRect(left + right-3, top, right * 2 - 18, bottom, Integer.MIN_VALUE);
 
 
 					RenderHelper.enableGUIStandardItemLighting();
 					GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 					OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240F, 240F);
-					drawSlotInventory(mc.fontRenderer, ammoStack, left + 115, j - 35);
+					drawSlotInventory(mc.fontRenderer, ammoStack, left + 67, j - 35);
 					GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 					RenderHelper.disableStandardItemLighting();
 					String s = String.valueOf(currentAmmoCount) + "/" + itemAmmo.type.ammoCapacity;
 
-					mc.fontRenderer.drawStringWithShadow(String.valueOf(s), left + 135, j - 30, 0xffffff);
+					mc.fontRenderer.drawStringWithShadow(String.valueOf(s), left + 83, j - 30, 0xffffff);
 					x += 16 + mc.fontRenderer.getStringWidth(s);
 				}
 			}

@@ -22,6 +22,9 @@ public enum WeaponSoundType {
 	/** The sound to play when a bullet hit a block */
 	@SerializedName("impact") Impact("impact", 16, "impact"),
 
+	/** The sound to play when a bullet hit a block */
+	@SerializedName("hit") Hit("hit", 16, "hit"),
+
 	/** The sound to play when equip a gun */
 	@SerializedName("equip") Equip("equip", 8, "equip"),
 
@@ -48,7 +51,20 @@ public enum WeaponSoundType {
 	@SerializedName("weaponModeSwitch") ModeSwitch("weaponModeSwitch", 8, "defweaponmodeswitch"),
 
 	/** The sound of flyby */
-	@SerializedName("bulletFlyBy") FlyBy("bulletFlyBy", 8, "flyby");
+	@SerializedName("bulletFlyBy") FlyBy("bulletFlyBy", 8, "flyby"),
+
+	/** The sound of spray */
+	@SerializedName("spray") Spray("spray", 8, "spray"),
+
+	/** The sound of heli */
+	@SerializedName("sound_heli") Heli_Background("sound_heli", 64, "sound_heli"),
+	@SerializedName("heli1") Heli1("heli1", 32, "heli1"),
+	@SerializedName("heli2") Heli2("heli2", 32, "heli2"),
+	@SerializedName("heli3") Heli3("heli3", 32, "heli3"),
+	@SerializedName("heli4") Heli4("heli4", 32, "heli4"),
+	@SerializedName("heli5") Heli5("heli5", 32, "heli5"),
+
+	@SerializedName("punched") Punched("punched", 64, "punched");
 
 
 	public String eventName;

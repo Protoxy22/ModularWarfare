@@ -8,8 +8,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.container.ContainerPlayerExpanded;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.handler.EventHandlerEntity;
+import com.modularwarfare.common.handler.EventHandlerItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.MWSound;
 import com.modularwarfare.utility.event.ForgeEvent;
@@ -17,9 +19,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
 
-public class CommonProxy extends ForgeEvent {
+public class CommonProxy extends ForgeEvent implements IGuiHandler {
 
 	protected static Pattern zipJar = Pattern.compile("(.+).(zip|jar)$");
 
@@ -46,7 +49,22 @@ public class CommonProxy extends ForgeEvent {
 		ModularWarfare.LOGGER.info("Loaded content pack list server side.");
 		return contentPacks;
 	}
-	
+
+	public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
+		return null;
+	}
+
+	public Object getServerGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
+		switch (ID) {
+			case 0: {
+				return new ContainerPlayerExpanded(player.inventory, !world.isRemote, player);
+			}
+			default: {
+				return null;
+			}
+		}
+	}
+
 	public <T> T loadModel(String s, String shortName, Class<T> typeClass) {return null;}
 	
 	public void reloadModels(boolean reloadSkins) {}
@@ -78,9 +96,14 @@ public class CommonProxy extends ForgeEvent {
 
 	public void registerEventHandlers() {
 		MinecraftForge.EVENT_BUS.register(new EventHandlerEntity());
+		MinecraftForge.EVENT_BUS.register(new EventHandlerItem());
+
 	}
 
 	public void init() {
+	}
+
+	public void resetSens() {
 	}
 
 }

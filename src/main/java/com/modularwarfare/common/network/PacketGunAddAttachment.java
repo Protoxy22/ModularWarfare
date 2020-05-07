@@ -1,10 +1,9 @@
 package com.modularwarfare.common.network;
 
-import com.modularwarfare.common.guns.AttachmentType;
-import com.modularwarfare.common.guns.GunType;
-import com.modularwarfare.common.guns.ItemAttachment;
-import com.modularwarfare.common.guns.ItemGun;
+import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.common.guns.*;
 
+import com.modularwarfare.utility.MWSound;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextComponentString;
 
 public class PacketGunAddAttachment extends PacketBase {
 
@@ -48,6 +48,19 @@ public class PacketGunAddAttachment extends PacketBase {
 								attachmentStack.setTagCompound(tag);
 								GunType.addAttachment(gunStack, attachType.attachmentType, attachmentStack);
 								inventory.offHandInventory.get(0).shrink(1);
+							}
+						}
+					} else if (offhandStack.getItem() instanceof ItemSpray) {
+						ItemSpray itemSpray = (ItemSpray) offhandStack.getItem();
+						if (gunStack.getTagCompound() != null) {
+							for(int i=0; i<gunType.modelSkins.length; i++) {
+								if (gunType.modelSkins[i].internalName.equalsIgnoreCase(itemSpray.type.skinName)) {
+									NBTTagCompound nbtTagCompound = gunStack.getTagCompound();
+									nbtTagCompound.setInteger("skinId", i);
+									gunStack.setTagCompound(nbtTagCompound);
+									inventory.offHandInventory.get(0).damageItem(1, entityPlayer);
+									ModularWarfare.NETWORK.sendTo(new PacketPlaySound(entityPlayer.getPosition(), "spray", 1f, 1f), entityPlayer);
+								}
 							}
 						}
 					}

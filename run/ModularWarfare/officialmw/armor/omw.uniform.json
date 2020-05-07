@@ -1,6 +1,7 @@
 {
     "internalName": "omw.uniform",
     "modelName": "omw.armor.uniform",
+    "defense": "0.1",
     "armorTypes": 
     {
         "chest": 

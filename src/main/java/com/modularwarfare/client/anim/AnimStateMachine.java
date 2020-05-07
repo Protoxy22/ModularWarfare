@@ -181,28 +181,6 @@ public class AnimStateMachine {
 			shooting = true;
 			shootTime = shootDelay;
 		}
-				
-		/*timeUntilPump = model.pumpDelay;
-		timeToPumpFor = model.pumpTime;
-		timeUntilCasing = model.casingDelay;
-		muzzleFlashTime = 2;
-
-		int Low = -1;
-		int High = 3;
-		int result = r.nextInt(High-Low) + Low;
-		if(result == -1) result = 0;
-		if(result == 3) result = 2;
-        flashInt = result;
-        
-        casingRandom.x = ((r.nextFloat()*2)-1);
-        casingRandom.y = ((r.nextFloat()*2)-1);
-        casingRandom.z = ((r.nextFloat()*2)-1);
-		casingStage = 0;
-		
-		if(model.pumpDelay == 0)
-		{
-			RenderGun.shotState = 1;
-		}*/
 	}
 	
 	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType) {

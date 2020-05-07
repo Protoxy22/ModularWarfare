@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.dogtags",
+    "modelName": "omw.armor.dogtags",
+    "armorTypes": 
+    {
+        "accessory": 
+        {
+            "displayName": "Dog Tags"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.dogtags",
+        "displayName": "Dog Tags - Default"
+      }
+    ]
+}

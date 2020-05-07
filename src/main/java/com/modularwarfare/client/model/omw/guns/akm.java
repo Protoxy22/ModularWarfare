@@ -1,16 +1,17 @@
 package com.modularwarfare.client.model.omw.guns;
 
+import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.WeaponAnimations;
+import com.modularwarfare.client.hands.HandsConfig;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 import org.lwjgl.util.vector.Vector3f;
 
-public class akm extends ModelGun //Same as Filename
-{
+public class akm extends ModelGun {
     int textureX = 256;
     int textureY = 256;
 
-    public akm() //Same as Filename
-    {
+    public akm() {
         gunModel = new ModelRendererTurbo[112];
         gunModel[0] = new ModelRendererTurbo(this, 1, 1, textureX, textureY); // Box 236
         gunModel[1] = new ModelRendererTurbo(this, 65, 1, textureX, textureY); // Box 1

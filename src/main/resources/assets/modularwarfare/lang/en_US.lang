@@ -1,4 +1,4 @@
-itemGroup.modularwarfareTab=Modular Warfare
+itemGroup.modularwarfareTab=ModularWarfare
 button.equipment=Equipment
 button.normal=Normal
 name.Vest=Vest
@@ -9,3 +9,5 @@ name.Gloves=Gloves
 name.Arms=Arms
 name.Accessory=Accessory
 name.Any=Any
+gui.button.equipment=Equipment
+gui.button.normal=Normal

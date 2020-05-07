@@ -3,6 +3,7 @@ package com.modularwarfare.client.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.modularwarfare.client.model.omw.OmwModelFlash;
 import net.minecraft.client.renderer.RenderHelper;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
@@ -97,6 +98,8 @@ public class ModelGun extends TurboBase
 	public float adsSpeed = 0.02F;
 
 	//Muzzle flash variables
+	public String flashTexture = "flash";
+	public ModelFlash flashModel = new OmwModelFlash();
 	public boolean hasFlash = false;
 	public float flashScale = 1F;
 	public Vector3f muzzleFlashPointNormal = new Vector3f(0,0,0);
@@ -106,11 +109,11 @@ public class ModelGun extends TurboBase
 	public float gunSlideDistance = 1F / 4F;
 	public float altgunSlideDistance = 1F / 4F;
 	/** Adds backwards recoil translations to the gun model when firing  */
-	public float modelRecoilBackwards = 0.05F;
+	public float modelRecoilBackwards = 0.15F;
 	/** Adds upwards/downwards recoil translations to the gun model when firing  */
 	public float modelRecoilUpwards = 1.0F;
 	/** Adds a left-right model shaking motion when firing, default 0.5 */
-	public float modelRecoilShake = 0.10F;
+	public float modelRecoilShake = 0.5F;
 
 	//Casing ejection variables
 	/** Total distance to translate the casing model, effects speed */

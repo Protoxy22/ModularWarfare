@@ -20,31 +20,23 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
 import com.modularwarfare.client.anim.ReloadType;
 import com.modularwarfare.client.export.ItemModelExport;
+import com.modularwarfare.client.gui.GuiEvents;
+import com.modularwarfare.client.gui.GuiPlayerExpanded;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.handler.ClientWeaponHandler;
 import com.modularwarfare.client.handler.KeyInputHandler;
 import com.modularwarfare.client.handler.RenderGuiHandler;
+import com.modularwarfare.client.hands.HandsConfig;
 import com.modularwarfare.client.model.*;
-import com.modularwarfare.client.model.animations.AnimationPistol;
-import com.modularwarfare.client.model.animations.AnimationRifle;
-import com.modularwarfare.client.model.animations.AnimationRifle2;
-import com.modularwarfare.client.model.animations.AnimationRifle3;
-import com.modularwarfare.client.model.animations.AnimationRifle4;
-import com.modularwarfare.client.model.animations.AnimationShotgun;
-import com.modularwarfare.client.model.animations.AnimationSideClip;
-import com.modularwarfare.client.model.animations.AnimationSniper;
-import com.modularwarfare.client.model.animations.AnimationTopRifle;
+import com.modularwarfare.client.model.animations.*;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ArmorType.ArmorInfo;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
-import com.modularwarfare.common.guns.GunType;
-import com.modularwarfare.common.guns.ItemAmmo;
-import com.modularwarfare.common.guns.ItemAttachment;
-import com.modularwarfare.common.guns.ItemBullet;
-import com.modularwarfare.common.guns.ItemGun;
-import com.modularwarfare.common.guns.WeaponSoundType;
+import com.modularwarfare.common.entity.EntityBot;
+import com.modularwarfare.common.entity.decals.EntityBulletHole;
+import com.modularwarfare.common.guns.*;
 import com.modularwarfare.common.particle.EntityBloodFX;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.objects.SoundEntry;
@@ -64,16 +56,21 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.MetadataCollection;
 import net.minecraftforge.fml.common.discovery.ContainerType;
 import net.minecraftforge.fml.common.discovery.ModCandidate;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.EntityEntry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ClientProxy extends CommonProxy {
@@ -104,13 +101,16 @@ public class ClientProxy extends CommonProxy {
 		WeaponAnimations.registerAnimation("rifle4", new AnimationRifle4());
 		WeaponAnimations.registerAnimation("pistol", new AnimationPistol());
 		WeaponAnimations.registerAnimation("shotgun", new AnimationShotgun());
-		WeaponAnimations.registerAnimation("sniper", new AnimationSniper());
+		WeaponAnimations.registerAnimation("sniper", new AnimationSniperBottom());
+		WeaponAnimations.registerAnimation("sniper_top", new AnimationSniperTop());
 		WeaponAnimations.registerAnimation("sideclip", new AnimationSideClip());
 		WeaponAnimations.registerAnimation("toprifle", new AnimationTopRifle());
 		RenderGun.rotateToolModel = new rotatetool();
 
-		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-		RenderPlayer rp = renderManager.getSkinMap().get("default");
+		final RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
+		for (final RenderPlayer rp : renderManager.getSkinMap().values()) {
+			ClientEventHandler.setupLayers(rp);
+		}
 	}
 
 	@SubscribeEvent
@@ -137,6 +137,9 @@ public class ClientProxy extends CommonProxy {
 
 		for (ItemSpecialArmor itemArmor : ModularWarfare.specialArmorTypes.values()) {
 			ModelLoader.setCustomModelResourceLocation(itemArmor, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemArmor.type.internalName));
+		}
+		for (ItemSpray itemSpray : ModularWarfare.sprayTypes.values()) {
+			ModelLoader.setCustomModelResourceLocation(itemSpray, 0, new ModelResourceLocation(ModularWarfare.MOD_ID + ":" + itemSpray.type.internalName));
 		}
 	}
 
@@ -221,7 +224,20 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
+	public Object getClientGuiElement(final int ID, final EntityPlayer player, final World world, final int x, final int y, final int z) {
+		if (world instanceof WorldClient) {
+			switch (ID) {
+				case 0: {
+					return new GuiPlayerExpanded(player);
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public void generateJsonModels(ArrayList<BaseType> types) {
+
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 		for (BaseType type : types) {
@@ -231,17 +247,22 @@ public class ClientProxy extends CommonProxy {
 			File contentPackDir = new File(ModularWarfare.MOD_DIR, type.contentPack);
 			if (contentPackDir.exists() && contentPackDir.isDirectory()) {
 				File itemModelsDir = new File(contentPackDir, "/assets/modularwarfare/models/item");
+				//File handsConfigDir = new File(contentPackDir, "/hands");
+
 				if (!itemModelsDir.exists())
 					itemModelsDir.mkdirs();
 
+				//if (!handsConfigDir.exists())
+				//	handsConfigDir.mkdirs();
+
 				File typeModel = new File(itemModelsDir, type.internalName + ".json");
+				//File typeHand = new File(handsConfigDir, type.internalName + ".json");
 
 				if (ModularWarfare.DEV_ENV ? /*true*/ !typeModel.exists() : !typeModel.exists()) {
 					if (type instanceof ArmorType) {
 						ArmorType armorType = (ArmorType) type;
 						for (ArmorInfo armorInfo : armorType.armorTypes.values()) {
 							String internalName = armorInfo.internalName != null ? armorInfo.internalName : armorType.internalName;
-							System.out.println(internalName);
 							typeModel = new File(itemModelsDir, internalName + ".json");
 
 							try {
@@ -259,11 +280,26 @@ public class ClientProxy extends CommonProxy {
 							gson.toJson(createJson(type), fileWriter);
 							fileWriter.flush();
 							fileWriter.close();
+
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
 				}
+				/*
+				if (ModularWarfare.DEV_ENV && !typeHand.exists()) {
+					if (type instanceof GunType) {
+						try {
+							FileWriter fileWriter = new FileWriter(typeHand, false);
+							gson.toJson(new HandsConfig(), fileWriter);
+							fileWriter.flush();
+							fileWriter.close();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+				*/
 			}
 		}
 	}
@@ -449,13 +485,31 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
+	@SubscribeEvent
+	public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+
+			//RENDER PLAYER BOT
+			RenderingRegistry.registerEntityRenderingHandler(EntityBot.class, RenderBot::new);
+			RenderingRegistry.registerEntityRenderingHandler(EntityBulletHole.class, RenderDecal.FACTORY);
+
+		}
+
+	}
+
 	@Override
 	public void onShootAnimation(EntityPlayer player, String wepType, int fireDelay, float recoilPitch, float recoilYaw) {
 		GunType gunType = ModularWarfare.gunTypes.get(wepType).type;
 		if (gunType != null) {
 			ClientRenderHooks.getAnimMachine(player).triggerShoot((ModelGun) gunType.model, gunType, fireDelay);
-			ClientTickHandler.playerRecoilPitch += recoilPitch * new Random().nextFloat();
-			ClientTickHandler.playerRecoilYaw += recoilYaw * new Random().nextFloat();
+			if (!ClientRenderHooks.isAiming) {
+				ClientTickHandler.playerRecoilPitch += recoilPitch * new Random().nextFloat();
+				ClientTickHandler.playerRecoilYaw += recoilYaw * new Random().nextFloat();
+			} else {
+				ClientTickHandler.playerRecoilPitch += recoilPitch *gunType.recoilAimReducer* new Random().nextFloat();
+				ClientTickHandler.playerRecoilYaw += recoilYaw *gunType.recoilAimReducer* new Random().nextFloat();
+			}
 		}
 	}
 
@@ -476,6 +530,7 @@ public class ClientProxy extends CommonProxy {
 	public void registerEventHandlers() {
 		super.registerEventHandlers();
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
+		MinecraftForge.EVENT_BUS.register(new GuiEvents());
 	}
 
 
@@ -497,18 +552,27 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void addBlood(final EntityLivingBase living, final int amount) {
 		for (int k = 0; k < amount; ++k) {
-			float var4 = 0.3f;
-			double mX = -MathHelper.sin(living.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(living.rotationPitch / 180.0f * 3.1415927f) * var4;
-			double mZ = MathHelper.cos(living.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(living.rotationPitch / 180.0f * 3.1415927f) * var4;
-			double mY = -MathHelper.sin(living.rotationPitch / 180.0f * 3.1415927f) * var4 + 0.1f;
-			var4 = 0.02f;
+			float attenuator = 0.3f;
+			double mX = -MathHelper.sin(living.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(living.rotationPitch / 180.0f * 3.1415927f) * attenuator;
+			double mZ = MathHelper.cos(living.rotationYaw / 180.0f * 3.1415927f) * MathHelper.cos(living.rotationPitch / 180.0f * 3.1415927f) * attenuator;
+			double mY = -MathHelper.sin(living.rotationPitch / 180.0f * 3.1415927f) * attenuator + 0.1f;
+			attenuator = 0.02f;
 			final float var5 = living.getRNG().nextFloat() * 3.1415927f * 2.0f;
-			var4 *= living.getRNG().nextFloat();
-			mX += Math.cos(var5) * var4;
+			attenuator *= living.getRNG().nextFloat();
+			mX += Math.cos(var5) * attenuator;
 			mY += (living.getRNG().nextFloat() - living.getRNG().nextFloat()) * 0.1f;
-			mZ += Math.sin(var5) * var4;
+			mZ += Math.sin(var5) * attenuator;
 			final Particle blood = new EntityBloodFX(living.getEntityWorld(), living.posX, living.posY + 0.5 + living.getRNG().nextDouble() * 0.7, living.posZ, living.motionX * 2.0 + mX, living.motionY + mY, living.motionZ * 2.0 + mZ, 0.0);
 			Minecraft.getMinecraft().effectRenderer.addEffect(blood);
 		}
 	}
+
+	@Override
+	public void resetSens() {
+		ClientRenderHooks.isAimingScope = false;
+		ClientRenderHooks.isAiming = false;
+		Minecraft.getMinecraft().gameSettings.mouseSensitivity = ClientTickHandler.mouseSens;
+		Minecraft.getMinecraft().gameSettings.mouseSensitivity = ClientTickHandler.prevFov;
+	}
+
 }

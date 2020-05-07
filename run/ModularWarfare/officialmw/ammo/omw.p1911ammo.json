@@ -1,0 +1,8 @@
+{
+    "internalName": "omw.p1911ammo",
+    "displayName": "P1911 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 12,
+    "magazineCount": 1,
+    "reloadTime": 4    
+}

@@ -1,0 +1,18 @@
+{
+    "internalName": "omw.hikingpack",
+    "modelName": "omw.armor.hikingpack",
+    "armorTypes": 
+    {
+        "backpack": 
+        {
+            "displayName": "Hiking Pack"
+        }
+    },
+    "modelSkins":
+    [
+      {
+        "skinAsset": "omw.hikingpack",
+        "displayName": "Hiking Pack - Default"
+      }
+    ]
+}

@@ -19,18 +19,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class  RenderGuiHandler extends ForgeEvent {
 
 	@SubscribeEvent
-	public void onRenderGui(RenderGameOverlayEvent.Post event)
-	{
-		if(event.getType() != ElementType.EXPERIENCE) return;
-		
-		if(Minecraft.getMinecraft().player != null)
-		{
+	public void onRenderGui(RenderGameOverlayEvent.Post event) {
+		if (event.getType() != ElementType.EXPERIENCE) return;
+
+		if (Minecraft.getMinecraft().player != null) {
 			EntityPlayerSP entityPlayer = Minecraft.getMinecraft().player;
-			if(entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun)
-			{
-				new DevGui(Minecraft.getMinecraft(), entityPlayer.getHeldItemMainhand(), ((ItemGun)entityPlayer.getHeldItemMainhand().getItem()), ClientProxy.gunRenderer, ClientRenderHooks.getAnimMachine(entityPlayer));
+			if (entityPlayer.getHeldItemMainhand() != null && entityPlayer.getHeldItemMainhand().getItem() instanceof ItemGun) {
+				new DevGui(Minecraft.getMinecraft(), entityPlayer.getHeldItemMainhand(), ((ItemGun) entityPlayer.getHeldItemMainhand().getItem()), ClientProxy.gunRenderer, ClientRenderHooks.getAnimMachine(entityPlayer));
 			}
 		}
 	}
-		
+
 }

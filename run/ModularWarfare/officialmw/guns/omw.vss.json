@@ -1,0 +1,37 @@
+{
+    "internalName": "omw.vss",
+    "displayName": "VSS",
+    "modelName": "omw.guns.vss",
+    "weaponType": "carbine",
+    "gunDamage": 6,
+    "gunDamageHeadshotBonus": 3,
+    "roundsPerMin": 600,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 2.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+    "scopeType": "2x",
+
+    "fireModes": ["semi"],
+    "acceptedAmmo": ["omw.vssammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "omw.vss.shoot",
+                "soundNameDistant": "omw.vss.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "omw.generic.reload"
+            }
+        ]
+    }
+}

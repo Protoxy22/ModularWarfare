@@ -1,6 +1,7 @@
 {
   "internalName": "omw.usmcfr",
   "modelName": "omw.armor.usmcfr",
+  "defense": "0.1",
   "armorTypes":
   {
     "head":

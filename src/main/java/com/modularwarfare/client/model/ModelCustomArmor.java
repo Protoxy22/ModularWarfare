@@ -1,7 +1,7 @@
 package com.modularwarfare.client.model;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.client.model.objects.TurboBipedBase;
-import com.modularwarfare.common.armor.ArmorType;
 import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
@@ -11,13 +11,9 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-
-import java.util.HashMap;
-import java.util.UUID;
 
 public class ModelCustomArmor extends TurboBipedBase {
 
@@ -33,8 +29,7 @@ public class ModelCustomArmor extends TurboBipedBase {
 	public ModelRendererTurbo[] rightFootModel = new ModelRendererTurbo[0];
 
 
-	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
-	{
+	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		GL11.glPushMatrix();
 		GL11.glScalef(modelScale, modelScale, modelScale);
 		isSneak = entity.isSneaking();

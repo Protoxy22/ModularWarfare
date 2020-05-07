@@ -2,7 +2,7 @@
   "displayName": "S12K",
   "internalName": "omw.s12k",
   "weaponType": "shotgun",
-  "gunDamage": 10,
+  "gunDamage": 2,
   "gunDamageHeadshotBonus": 2,
   "roundsPerMin": 100,
   "acceptedAmmo": ["omw.s12kammo"],
@@ -13,7 +13,7 @@
   "randomRecoilYaw": 0.5,
   "modelName": "omw.guns.s12k",
   "numBullets": 6,
-  "bulletSpread": 3,
+  "bulletSpread": 5,
   "allowSprintFiring": true,
   "allowEmptyMagazines": true,
   "weaponSoundMap": {

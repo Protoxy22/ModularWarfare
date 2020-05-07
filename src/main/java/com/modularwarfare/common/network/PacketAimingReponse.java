@@ -1,5 +1,6 @@
 package com.modularwarfare.common.network;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -39,7 +40,7 @@ public class PacketAimingReponse extends PacketBase {
 
 	@Override
 	public void handleClientSide(EntityPlayer entityPlayer) {
-		if(aiming == true) {
+		if(aiming) {
 			AnimationUtils.isAiming.put(playername, aiming);
 		} else {
 			AnimationUtils.isAiming.remove(playername);

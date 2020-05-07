@@ -57,16 +57,21 @@ public class InstantBulletRenderer
 		
 		private ResourceLocation texture;
 		
-		public InstantShotTrail(Vector3f origin, Vector3f hitPos)
+		public InstantShotTrail(Vector3f origin, Vector3f hitPos, float bulletSpeed, boolean isPunched)
 		{
 			this.ticksExisted = 0;
-			this.bulletSpeed = 10.0f;
+			this.bulletSpeed = bulletSpeed;
 			this.origin = origin;
 			this.hitPos = hitPos;
-			this.width = 0.05f;
 			this.length = 10.0f;
-			this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "defaultbullettrail.png");
-			
+			if(!isPunched){
+				this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "defaultbullettrail.png");
+				this.width = 0.05f;
+			} else {
+				this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "punchedbullettrail.png");
+				this.width = 0.1f;
+			}
+
 			Vector3f dPos = Vector3f.sub(hitPos, origin, null);
 			this.distanceToTarget = dPos.length();
 			

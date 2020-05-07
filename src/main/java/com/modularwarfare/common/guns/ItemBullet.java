@@ -37,14 +37,6 @@ public class ItemBullet extends BaseItem {
 			tooltip.add(generateLoreHeader("Modifiers"));
 			BulletProperty bulletProperty = type.bulletProperties.get(key);
 			tooltip.add(generateLoreListEntry(key + " Damage", bulletProperty.bulletDamage + "x"));
-			if(bulletProperty.potionEffects != null)
-			{
-				tooltip.add(generateLoreHeader("Effects"));
-				for(PotionEntry potionEntry : bulletProperty.potionEffects)
-				{
-					tooltip.add(generateLoreListEntry(potionEntry.potionEffect.name(), ""));
-				}
-			}
 			break;
 		}
     }

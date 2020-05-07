@@ -1,0 +1,46 @@
+{
+    "displayName": "P1911",
+    "internalName": "omw.p1911",
+    "gunDamage": 8,
+    "roundsPerMin": 250,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "weaponType": "pistol",
+    "acceptedAmmo": ["omw.p1911ammo"],
+    "modelName": "omw.guns.p1911",
+    "fireModes": ["semi"],
+    "recoilPitch": 0.2,
+    "recoilYaw": 0.2,
+    "randomRecoilPitch": 0.1,
+    "randomRecoilYaw": 0.1,
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "omw.fiveseven.shoot",
+                "soundNameDistant": "omw.fiveseven.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponReload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "omw.generic.reload"
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponUnload",
+                "soundName": "omw.generic.unload"
+            }
+        ],
+        "weaponLoad": [
+            {
+                "soundEvent": "weaponLoad",
+                "soundName": "omw.generic.load"
+            }
+        ]
+    }
+}

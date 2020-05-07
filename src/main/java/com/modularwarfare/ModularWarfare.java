@@ -1,10 +1,6 @@
 package com.modularwarfare;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,11 +11,27 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import com.google.gsonapi.Gson;
+import com.google.gsonapi.GsonBuilder;
 import com.google.gsonapi.stream.JsonReader;
+import com.modularwarfare.api.IArmor;
+import com.modularwarfare.api.MWArmorType;
+import com.modularwarfare.api.cap.ArmorCapabilities;
+import com.modularwarfare.api.cap.ArmorContainer;
+import com.modularwarfare.api.cap.IArmorItemHandler;
+import com.modularwarfare.api.cap.SpecialArmorItem;
+import com.modularwarfare.common.entity.EntityBot;
+import com.modularwarfare.common.entity.decals.EntityBulletHole;
 import com.modularwarfare.common.guns.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import org.apache.logging.log4j.Logger;
 
-import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.common.CommonProxy;
 import com.modularwarfare.common.MWTab;
 import com.modularwarfare.common.armor.ArmorType;
@@ -51,7 +63,7 @@ public class ModularWarfare {
 
 	// Mod Info
 	public static final String MOD_ID = "modularwarfare";
-	public static final String MOD_NAME = "Modular Warfare";
+	public static final String MOD_NAME = "ModularWarfare";
 	public static final String MOD_VERSION = "1.0.0";
 	// Main instance
 	@Instance(ModularWarfare.MOD_ID)
@@ -67,6 +79,7 @@ public class ModularWarfare {
 	public static Logger LOGGER;
 	// Network Handler
 	public static NetworkHandler NETWORK;
+
 	// The ModularWarfare directory
 	public static File MOD_DIR;
 
@@ -77,10 +90,13 @@ public class ModularWarfare {
 	public static LinkedHashMap<String, ItemMWArmor> armorTypes = new LinkedHashMap<String, ItemMWArmor>();
 	public static LinkedHashMap<String, ItemSpecialArmor> specialArmorTypes = new LinkedHashMap<String, ItemSpecialArmor>();
 	public static HashMap<String, ItemBullet> bulletTypes = new HashMap<String, ItemBullet>();
+	public static HashMap<String, ItemSpray> sprayTypes = new HashMap<String, ItemSpray>();
+
 	public static ArrayList<BaseType> baseTypes = new ArrayList<BaseType>();
 
-	public static final int GUI = 0;
 	static int entityID = -1;
+
+	public static boolean isPropsFeaturesEnabled = false;
 
 	/**
 	 * Registers items, blocks, renders, etc
@@ -107,6 +123,9 @@ public class ModularWarfare {
 		// Client side loading
 		PROXY.forceReload();
 
+		CapabilityManager.INSTANCE.register(IArmorItemHandler.class, new ArmorCapabilities.CapabilityBaubles(), ArmorContainer.class);
+		CapabilityManager.INSTANCE.register(IArmor.class, new ArmorCapabilities.CapabilityItemBaubleStorage(), () -> new SpecialArmorItem(MWArmorType.Any));
+
 		PROXY.registerEventHandlers();
 
 		MinecraftForge.EVENT_BUS.register(this);
@@ -126,6 +145,8 @@ public class ModularWarfare {
 		NETWORK = new NetworkHandler();
 		NETWORK.initialise();
 
+		NetworkRegistry.INSTANCE.registerGuiHandler(ModularWarfare.INSTANCE, ModularWarfare.PROXY);
+
 		PROXY.init();
 	}
 
@@ -137,6 +158,12 @@ public class ModularWarfare {
 	@EventHandler
 	public void onPostInitialization(FMLPostInitializationEvent event) {
 		NETWORK.postInitialise();
+		if (Loader.isModLoaded("modelloader")) {
+			isPropsFeaturesEnabled = true;
+			LOGGER.info("[ModularWarfare] Modelloader has been registered.");
+		} else {
+			LOGGER.info("[ModularWarfare] Modelloader missing, disabling props.");
+		}
 	}
 
 	/**
@@ -175,16 +202,42 @@ public class ModularWarfare {
 			event.getRegistry().register(itemAttachment);
 			tabOrder.add(itemAttachment);
 		}
+		for (ItemSpray itemAttachment : sprayTypes.values()) {
+			event.getRegistry().register(itemAttachment);
+			tabOrder.add(itemAttachment);
+		}
+
 		MOD_TAB.preInitialize(tabOrder);
 	}
 
 	@SubscribeEvent
-	public void registerBlocks(RegistryEvent.Register<Block> event) {
+	public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+		EntityRegistry.registerModEntity(new ResourceLocation(ModularWarfare.MOD_ID, "bot"), EntityBot.class, "bot", 2, this, 64, 1, false);
+		EntityRegistry.registerModEntity(new ResourceLocation(ModularWarfare.MOD_ID, "bullethole"), EntityBulletHole.class, "bullethole", 3, this, 80, 10, false);
 
 	}
 
-	@SubscribeEvent
-	public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
+
+	private ItemBlock createItemBlock(Block block) {
+		ItemBlock item = new ItemBlock(block);
+		item.setRegistryName(block.getRegistryName());
+		item.setCreativeTab(MOD_TAB);
+		return item;
+	}
+
+	private static <E extends Entity> EntityEntryBuilder<E> createEntityBuilder(String name) {
+		EntityEntryBuilder<E> builder = EntityEntryBuilder.create();
+		ResourceLocation regName = new ResourceLocation(MOD_ID, name);
+		return builder.id(regName, ID()).name(regName.toString());
+	}
+
+	private static EntityEntry registerEntity(String name, Class<? extends Entity> cl, int trackRange, int frequency, boolean velocityUpdates) {
+		return createEntityBuilder(name).entity(cl).tracker(trackRange, frequency, velocityUpdates).build();
+	}
+
+	private static int ID() {
+		++entityID;
+		return entityID;
 	}
 
 	/**
@@ -203,6 +256,7 @@ public class ModularWarfare {
 
 		List<File> contentPacks = PROXY.getContentList(method, classloader);
 		getTypeFiles(contentPacks);
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 		if (reload) {
 			for (BaseType baseType : baseTypes) {
@@ -228,13 +282,21 @@ public class ModularWarfare {
 						bulletTypes.get(baseType.internalName).setType((BulletType) baseType);
 						break;
 					}
+					case 5: {
+						sprayTypes.get(baseType.internalName).setType((SprayType) baseType);
+						break;
+					}
 				}
 			}
 		} else {
 			for (BaseType baseType : baseTypes) {
 				switch (baseType.id) {
 					case 0: {
-						gunTypes.put(baseType.internalName, new ItemGun((GunType) baseType));
+						try {
+							gunTypes.put(baseType.internalName, new ItemGun((GunType) baseType));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 						break;
 					}
 					case 1: {
@@ -246,18 +308,23 @@ public class ModularWarfare {
 						break;
 					}
 					case 3: {
-						ArmorType armorType = (ArmorType) baseType;
+						ArmorType armorType = (ArmorType)baseType;
 						for (MWArmorType mwArmorType : armorType.armorTypes.keySet()) {
 							if (MWArmorType.isVanilla(mwArmorType)) {
-								armorTypes.put(armorType.internalName + "_" + mwArmorType.name().toLowerCase(), new ItemMWArmor(armorType, mwArmorType));
-							} else {
-								specialArmorTypes.put(armorType.internalName, new ItemSpecialArmor(armorType, mwArmorType));
+								ModularWarfare.armorTypes.put(armorType.internalName + "_" + mwArmorType.name().toLowerCase(), new ItemMWArmor(armorType, mwArmorType));
+							}
+							else {
+								ModularWarfare.specialArmorTypes.put(armorType.internalName, new ItemSpecialArmor(armorType, mwArmorType));
 							}
 						}
-						break;
+						continue;
 					}
 					case 4: {
 						bulletTypes.put(baseType.internalName, new ItemBullet((BulletType) baseType));
+						break;
+					}
+					case 5: {
+						sprayTypes.put(baseType.internalName, new ItemSpray((SprayType) baseType));
 						break;
 					}
 				}
@@ -291,7 +358,6 @@ public class ModularWarfare {
 					if (subFolder.exists()) {
 						for (File typeFile : subFolder.listFiles()) {
 							try {
-								ModularWarfare.LOGGER.info("TYPE: " + type.typeClass.getName());
 								JsonReader jsonReader = new JsonReader(new FileReader(typeFile));
 								BaseType parsedType = (BaseType) gson.fromJson(jsonReader, type.typeClass);
 								parsedType.id = type.id;
