@@ -25,7 +25,7 @@ Changelog:
  - Added aim animation on third person
  
 Changelog:
-0.1f:
+0.3f:
  - Added bullet holes.
  - Added bullet impact sound.
  - Added back the expanded inventory.
