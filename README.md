@@ -23,7 +23,9 @@ Changelog:
  - Added equip sounds
  - Added flyby sounds
  - Added aim animation on third person
-0.3f:
+ 
+Changelog:
+0.1f:
  - Added bullet holes.
  - Added bullet impact sound.
  - Added back the expanded inventory.
