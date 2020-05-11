@@ -80,8 +80,8 @@ public class GuiPlayerExpanded extends InventoryEffectRenderer
     
     public void displayNormalInventory() {
         final GuiInventory gui = new GuiInventory(this.mc.player);
-        ReflectionHelper.setPrivateValue(GuiInventory.class,gui,this.oldMouseX, "oldMouseX", "oldMouseX");
-        ReflectionHelper.setPrivateValue(GuiInventory.class,gui,this.oldMouseY, "oldMouseY", "oldMouseY");
+        ReflectionHelper.setPrivateValue(GuiInventory.class,gui,this.oldMouseX, "oldMouseX", "field_147048_u");
+        ReflectionHelper.setPrivateValue(GuiInventory.class,gui,this.oldMouseY, "oldMouseY", "field_147047_v");
         this.mc.displayGuiScreen(gui);
     }
     
