@@ -3,7 +3,9 @@ package com.modularwarfare.client;
 import java.util.HashMap;
 
 import com.modularwarfare.ModConfig;
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
+import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.common.guns.ItemAmmo;
 import com.modularwarfare.utility.RayUtil;
 import net.minecraft.client.gui.FontRenderer;
@@ -59,6 +61,7 @@ public class ClientRenderHooks extends ForgeEvent {
 	public static final ResourceLocation hitMarker = new ResourceLocation("modularwarfare", "textures/gui/hitmarker.png");
 	public static final ResourceLocation hitMarkerHS = new ResourceLocation("modularwarfare", "textures/gui/hitmarkerhs.png");
 	public static final ResourceLocation crosshair = new ResourceLocation("modularwarfare", "textures/gui/crosshair.png");
+	public static final ResourceLocation reddot = new ResourceLocation("modularwarfare", "textures/gui/reddot.png");
 
 	public static final ResourceLocation Scope2X = new ResourceLocation("modularwarfare", "textures/overlay/scope2x.png");
 	public static final ResourceLocation Scope4X = new ResourceLocation("modularwarfare", "textures/overlay/scope4x.png");
@@ -155,6 +158,19 @@ public class ClientRenderHooks extends ForgeEvent {
 					if (isAimingScope && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 						ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
 						switch (gun.type.scopeType) {
+							case DEFAULT:
+								break;
+							case REDDOT:
+								this.mc.renderEngine.bindTexture(reddot);
+								float gunRotX = ClientTickHandler.GUN_ROT_X_LAST + (ClientTickHandler.GUN_ROT_X - ClientTickHandler.GUN_ROT_X_LAST) * partialTicks;
+								float gunRotY = ClientTickHandler.GUN_ROT_Y_LAST + (ClientTickHandler.GUN_ROT_Y - ClientTickHandler.GUN_ROT_Y_LAST) * partialTicks;
+
+								if(gunRotX > -1 && gunRotX < 1 && gunRotY > -1 && gunRotY < 1) {
+									GL11.glRotatef(gunRotX,0,-1,0);
+									GL11.glRotatef(gunRotY,0,0,-1);
+									Gui.drawModalRectWithCustomSizedTexture(i/2, j/2, 2.0f, 2.0f, 2, 2, 16.0f, 16.0f);
+								}
+								break;
 							case TWO:
 								drawFullScreenImage(mc, scaledresolution, Scope2X, true);
 								break;

@@ -4,6 +4,10 @@ import com.google.gsonapi.annotations.SerializedName;
 
 public enum WeaponScopeType {
 
+	@SerializedName("default") DEFAULT,
+
+	@SerializedName("reddot") REDDOT,
+
 	@SerializedName("2x") TWO,
 
 	@SerializedName("4x") FOUR,

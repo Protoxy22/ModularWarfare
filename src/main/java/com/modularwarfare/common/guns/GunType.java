@@ -30,7 +30,7 @@ public class GunType extends BaseType {
 	 */
 	public WeaponType weaponType;
 
-	public WeaponScopeType scopeType = null;
+	public WeaponScopeType scopeType = WeaponScopeType.DEFAULT;
 
 	//Munition variables
 	/**
@@ -379,17 +379,29 @@ public class GunType extends BaseType {
 		}
 		return null;
 	}
-	public static void addAttachment(ItemStack heldStack, AttachmentEnum type, ItemStack attachment) {
+	public static void addAttachment(ItemStack heldStack, AttachmentEnum type, WeaponScopeType weaponScopeType, ItemStack attachment) {
 		if (heldStack.getTagCompound() != null) {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
 			nbtTagCompound.setTag("attachment_" + type.typeName, attachment.writeToNBT(new NBTTagCompound()));
+			if(weaponScopeType != WeaponScopeType.DEFAULT){
+				if(heldStack.getItem() instanceof ItemGun) {
+					ItemGun gun = (ItemGun) heldStack.getItem();
+					gun.type.scopeType = weaponScopeType;
+				}
+			}
 		}
 	}
 
-	public static void removeAttachment(ItemStack heldStack, AttachmentEnum type) {
+	public static void removeAttachment(ItemStack heldStack,  WeaponScopeType weaponScopeType, AttachmentEnum type) {
 		if (heldStack.getTagCompound() != null) {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
 			nbtTagCompound.removeTag("attachment_" + type.typeName);
+			if(weaponScopeType != WeaponScopeType.DEFAULT){
+				if(heldStack.getItem() instanceof ItemGun) {
+					ItemGun gun = (ItemGun) heldStack.getItem();
+					gun.type.scopeType = WeaponScopeType.DEFAULT;
+				}
+			}
 		}
 	}
 

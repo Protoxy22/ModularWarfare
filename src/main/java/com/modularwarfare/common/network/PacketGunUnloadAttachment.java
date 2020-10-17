@@ -35,7 +35,7 @@ public class PacketGunUnloadAttachment extends PacketBase {
 					if (itemStack != null && itemStack.getItem() != Items.AIR) {
 						ItemAttachment itemAttachment = (ItemAttachment) itemStack.getItem();
 						AttachmentType attachType = itemAttachment.type;
-						GunType.removeAttachment(gunStack, attachType.attachmentType);
+						GunType.removeAttachment(gunStack, attachType.scopeType, attachType.attachmentType);
 						inventory.addItemStackToInventory(itemStack);
 					}
 				}

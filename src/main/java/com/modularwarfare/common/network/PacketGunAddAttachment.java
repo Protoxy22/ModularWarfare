@@ -46,7 +46,7 @@ public class PacketGunAddAttachment extends PacketBase {
 								NBTTagCompound tag = new NBTTagCompound();
 								tag.setInteger("skinId", 0);
 								attachmentStack.setTagCompound(tag);
-								GunType.addAttachment(gunStack, attachType.attachmentType, attachmentStack);
+								GunType.addAttachment(gunStack, attachType.attachmentType, attachType.scopeType, attachmentStack);
 								inventory.offHandInventory.get(0).shrink(1);
 							}
 						}

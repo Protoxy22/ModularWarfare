@@ -12,7 +12,7 @@
     "recoilYaw": 1.0,
     "randomRecoilPitch": 0.5,
     "randomRecoilYaw": 0.5,
-
+    "scopeType": "default",
     "fireModes": ["semi"],
     "acceptedAmmo": ["omw.sksammo"],
     "weaponSoundMap": {

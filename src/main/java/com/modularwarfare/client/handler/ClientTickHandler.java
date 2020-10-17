@@ -195,6 +195,8 @@ public class ClientTickHandler extends ForgeEvent {
 			if (minecraft.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 				ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
 				switch (gun.type.scopeType) {
+					case DEFAULT:
+						break;
 					case TWO:
 						if (Minecraft.getMinecraft().gameSettings.fovSetting != 45) {
 							Minecraft.getMinecraft().gameSettings.fovSetting = 45;

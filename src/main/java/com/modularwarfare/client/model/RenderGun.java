@@ -9,6 +9,7 @@ import com.modularwarfare.client.model.omw.OmwModelFlash;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
+import com.modularwarfare.common.guns.*;
 import com.modularwarfare.common.network.PacketAimingRequest;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
@@ -33,15 +34,6 @@ import com.modularwarfare.client.model.objects.BreakActionData;
 import com.modularwarfare.client.model.objects.CustomItemRenderType;
 import com.modularwarfare.client.model.objects.CustomItemRenderer;
 import com.modularwarfare.client.model.objects.RenderVariables;
-import com.modularwarfare.common.guns.AmmoType;
-import com.modularwarfare.common.guns.AttachmentEnum;
-import com.modularwarfare.common.guns.AttachmentType;
-import com.modularwarfare.common.guns.GunType;
-import com.modularwarfare.common.guns.ItemAmmo;
-import com.modularwarfare.common.guns.ItemAttachment;
-import com.modularwarfare.common.guns.ItemBullet;
-import com.modularwarfare.common.guns.ItemGun;
-import com.modularwarfare.common.guns.WeaponFireMode;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -240,9 +232,11 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glRotatef(gunRotY,0,0,-1);
 
 					//Render Scope
-					if (gunType.scopeType != null) {
+					if (gunType.scopeType != WeaponScopeType.DEFAULT) {
 						if (adsSwitch == 1.0F) {
-							GL11.glTranslatef(model.gunOffsetScoping, 0F, 0F);
+							if(gunType.scopeType != WeaponScopeType.REDDOT) {
+								GL11.glTranslatef(model.gunOffsetScoping, 0F, 0F);
+							}
 							if (!ClientRenderHooks.isAimingScope) {
 								ClientRenderHooks.isAimingScope = true;
 								ModularWarfare.NETWORK.sendToServer(new PacketAimingRequest(entityplayer.getDisplayNameString(), true));
@@ -288,13 +282,9 @@ public class RenderGun extends CustomItemRenderer {
 						RenderGun.sprintSwitch = 0f;
 					}
 					break;
-
-
 				}
-
 				default:
 					break;
-
 			}
 
 			//Render call for the static arm

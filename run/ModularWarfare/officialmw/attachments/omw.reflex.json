@@ -3,6 +3,7 @@
   "internalName": "omw.reflex",
   "modelName": "omw.attachments.reflex",
   "attachmentType": "sight",
+  "scopeType": "reddot",
   "modelSkins": [
     {
       "skinAsset": "omw.reflex",

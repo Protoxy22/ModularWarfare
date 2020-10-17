@@ -8,6 +8,8 @@ public class AttachmentType extends BaseType {
 
 	public AttachmentEnum attachmentType;
 
+	public WeaponScopeType scopeType = WeaponScopeType.DEFAULT;
+
 	@Override
 	public void loadExtraValues() {
 		if (maxStackSize == null)
