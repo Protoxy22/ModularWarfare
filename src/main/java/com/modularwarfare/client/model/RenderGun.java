@@ -232,9 +232,18 @@ public class RenderGun extends CustomItemRenderer {
 					GL11.glRotatef(gunRotY,0,0,-1);
 
 					//Render Scope
-					if (gunType.scopeType != WeaponScopeType.DEFAULT) {
+
+					WeaponScopeType scopeType = gunType.scopeType;
+					if(GunType.getAttachment(item, AttachmentEnum.Sight) != null) {
+						ItemAttachment attachmentSight = (ItemAttachment) GunType.getAttachment(item, AttachmentEnum.Sight).getItem();
+						if (attachmentSight != null && attachmentSight.type.scopeType != WeaponScopeType.DEFAULT) {
+							scopeType = attachmentSight.type.scopeType;
+						}
+					}
+
+					if (scopeType != WeaponScopeType.DEFAULT) {
 						if (adsSwitch == 1.0F) {
-							if(gunType.scopeType != WeaponScopeType.REDDOT) {
+							if(scopeType != WeaponScopeType.REDDOT) {
 								GL11.glTranslatef(model.gunOffsetScoping, 0F, 0F);
 							}
 							if (!ClientRenderHooks.isAimingScope) {

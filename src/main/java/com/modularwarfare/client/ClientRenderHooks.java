@@ -6,7 +6,7 @@ import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.client.handler.ClientTickHandler;
-import com.modularwarfare.common.guns.ItemAmmo;
+import com.modularwarfare.common.guns.*;
 import com.modularwarfare.utility.RayUtil;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -26,7 +26,6 @@ import com.modularwarfare.client.model.RenderAttachment;
 import com.modularwarfare.client.model.RenderGun;
 import com.modularwarfare.client.model.objects.CustomItemRenderType;
 import com.modularwarfare.client.model.objects.CustomItemRenderer;
-import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.type.BaseItem;
 import com.modularwarfare.common.type.BaseType;
 import com.modularwarfare.utility.event.ForgeEvent;
@@ -157,7 +156,16 @@ public class ClientRenderHooks extends ForgeEvent {
 					int j = scaledresolution.getScaledHeight();
 					if (isAimingScope && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 						ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
-						switch (gun.type.scopeType) {
+						WeaponScopeType scopeType = gun.type.scopeType;
+
+						if(GunType.getAttachment(stack, AttachmentEnum.Sight) != null) {
+							ItemAttachment attachmentSight = (ItemAttachment) GunType.getAttachment(stack, AttachmentEnum.Sight).getItem();
+							if (attachmentSight != null && attachmentSight.type.scopeType != WeaponScopeType.DEFAULT) {
+								scopeType = attachmentSight.type.scopeType;
+							}
+						}
+
+						switch (scopeType) {
 							case DEFAULT:
 								break;
 							case REDDOT:
@@ -165,10 +173,10 @@ public class ClientRenderHooks extends ForgeEvent {
 								float gunRotX = ClientTickHandler.GUN_ROT_X_LAST + (ClientTickHandler.GUN_ROT_X - ClientTickHandler.GUN_ROT_X_LAST) * partialTicks;
 								float gunRotY = ClientTickHandler.GUN_ROT_Y_LAST + (ClientTickHandler.GUN_ROT_Y - ClientTickHandler.GUN_ROT_Y_LAST) * partialTicks;
 
-								if(gunRotX > -1 && gunRotX < 1 && gunRotY > -1 && gunRotY < 1) {
-									GL11.glRotatef(gunRotX,0,-1,0);
-									GL11.glRotatef(gunRotY,0,0,-1);
-									Gui.drawModalRectWithCustomSizedTexture(i/2, j/2, 2.0f, 2.0f, 2, 2, 16.0f, 16.0f);
+								if (gunRotX > -1 && gunRotX < 1 && gunRotY > -1 && gunRotY < 1) {
+									GL11.glRotatef(gunRotX, 0, -1, 0);
+									GL11.glRotatef(gunRotY, 0, 0, -1);
+									Gui.drawModalRectWithCustomSizedTexture(i / 2, j / 2, 2.0f, 2.0f, 2, 2, 16.0f, 16.0f);
 								}
 								break;
 							case TWO:
