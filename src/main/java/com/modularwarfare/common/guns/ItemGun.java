@@ -79,7 +79,6 @@ public class ItemGun extends BaseItem {
                     nbtTagCompound.setString("firemode", gunType.fireModes[0].name().toLowerCase());
                     nbtTagCompound.setInteger("skinId", 0);
                     nbtTagCompound.setBoolean("punched", gunType.isEnergyGun);
-
                     heldStack.setTagCompound(nbtTagCompound);
                 }
             }
@@ -544,6 +543,25 @@ public class ItemGun extends BaseItem {
         baseDisplayLine = baseDisplayLine.replaceAll("%g", TextFormatting.GRAY.toString());
         tooltip.add(String.format(baseDisplayLine, GunType.getFireMode(stack) != null ? GunType.getFireMode(stack) : gunType.fireModes[0]));
 
+
+        tooltip.add("Accepted attachments:");
+        List<String> attachments = null;
+
+        if (gunType.acceptedAttachments != null) {
+            if (!gunType.acceptedAttachments.isEmpty()) {
+                for (ArrayList<String> strings : gunType.acceptedAttachments.values()) {
+                    for (int i = 0; i < strings.size(); i++) {
+                        try {
+                            final String attachment = ModularWarfare.attachmentTypes.get(strings.get(i)).type.displayName;
+                            if (attachment != null) {
+                                tooltip.add("- " + attachment);
+                            }
+                        } catch (NullPointerException error) {
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static boolean isIndoors(final EntityLivingBase givenEntity) {

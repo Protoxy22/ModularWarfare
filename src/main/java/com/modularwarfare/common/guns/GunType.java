@@ -120,7 +120,7 @@ public class GunType extends BaseType {
 	/**
 	 * Attachment Types
 	 */
-	public HashMap<AttachmentEnum, ArrayList<String>> acceptedAttachments = new HashMap<AttachmentEnum, ArrayList<String>>();
+	public HashMap<AttachmentEnum, ArrayList<String>> acceptedAttachments;
 
 	// Reload Variables
 	/**
@@ -383,12 +383,6 @@ public class GunType extends BaseType {
 		if (heldStack.getTagCompound() != null) {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
 			nbtTagCompound.setTag("attachment_" + type.typeName, attachment.writeToNBT(new NBTTagCompound()));
-			if(weaponScopeType != WeaponScopeType.DEFAULT){
-				if(heldStack.getItem() instanceof ItemGun) {
-					ItemGun gun = (ItemGun) heldStack.getItem();
-					gun.type.scopeType = weaponScopeType;
-				}
-			}
 		}
 	}
 
@@ -396,12 +390,6 @@ public class GunType extends BaseType {
 		if (heldStack.getTagCompound() != null) {
 			NBTTagCompound nbtTagCompound = heldStack.getTagCompound();
 			nbtTagCompound.removeTag("attachment_" + type.typeName);
-			if(weaponScopeType != WeaponScopeType.DEFAULT){
-				if(heldStack.getItem() instanceof ItemGun) {
-					ItemGun gun = (ItemGun) heldStack.getItem();
-					gun.type.scopeType = WeaponScopeType.DEFAULT;
-				}
-			}
 		}
 	}
 

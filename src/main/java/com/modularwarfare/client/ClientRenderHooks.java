@@ -7,7 +7,9 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.common.guns.*;
+import com.modularwarfare.common.network.BackWeaponsManager;
 import com.modularwarfare.utility.RayUtil;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -337,6 +339,26 @@ public class ClientRenderHooks extends ForgeEvent {
 		EntityLivingBase entity = event.getEntity();
 
 
+		if(entity instanceof AbstractClientPlayer){
+
+			ItemStack gun = BackWeaponsManager.INSTANCE.getItemToRender((AbstractClientPlayer) entity);
+			if(gun != ItemStack.EMPTY && !gun.isEmpty())
+			{
+				BaseType type = ((BaseItem) gun.getItem()).baseType;
+				{
+					GlStateManager.pushMatrix();
+					GlStateManager.translate(event.getX(), event.getY(), event.getZ());
+					if (customRenderers[type.id] != null) {
+						float f2 = this.interpolateRotation(entity.prevRenderYawOffset, entity.renderYawOffset, partialTicks);
+
+						GlStateManager.rotate(-f2, 0, 1, 0);
+						customRenderers[type.id].renderItem(CustomItemRenderType.BACK, null, gun, mc.world, entity, partialTicks);
+					}
+					GlStateManager.popMatrix();
+				}
+			}
+
+		}
 		for (int i = 0; i < 1; i++) {
 			EnumHand hand = EnumHand.values()[i];
 			if (entity.getHeldItem(hand) != null && entity.getHeldItem(hand).getItem() instanceof BaseItem && mainModel instanceof ModelBiped) {
@@ -404,8 +426,8 @@ public class ClientRenderHooks extends ForgeEvent {
 					f8 *= 3.0F;
 				}
 
-				if (f7 > 1.0F) {
-					f7 = 1.0F;
+				if (f7 > 1F) {
+					f7 = 1F;
 				}
 
 				GlStateManager.enableAlpha();
@@ -415,7 +437,10 @@ public class ClientRenderHooks extends ForgeEvent {
 						if (AnimationUtils.isAiming.containsKey(((EntityPlayer) entity).getName())) {
 							biped.rightArmPose = ArmPose.BOW_AND_ARROW;
 						} else {
-							biped.rightArmPose = ArmPose.ITEM;
+							biped.rightArmPose = ArmPose.BLOCK;
+							biped.leftArmPose = ArmPose.BLOCK;
+
+
 						}
 					} else {
 						biped.rightArmPose = ArmPose.BOW_AND_ARROW;
@@ -432,6 +457,7 @@ public class ClientRenderHooks extends ForgeEvent {
 					if (hand == EnumHand.MAIN_HAND && customRenderers[type.id] != null) {
 						biped.bipedRightArm.postRender(0.0625F);
 						GlStateManager.translate(-0.05F, 0.4F, 0.05F);
+
 						customRenderers[type.id].renderItem(CustomItemRenderType.EQUIPPED, hand, stack, mc.world, entity);
 					}
 					GlStateManager.popMatrix();

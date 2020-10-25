@@ -610,7 +610,7 @@ public class kar98k extends ModelGun //Same as Filename
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
         thirdPersonOffset = new Vector3f(-0.05F, -0.05F, 0F);//forward/up/?
-        thirdPersonScale = 0.7f;
+        thirdPersonScale = 0.5f;
 
         flipAll();
     }

@@ -148,15 +148,22 @@ public class RenderGun extends CustomItemRenderer {
 				}
 
 				case BACK: {
-					/*
+					EntityLivingBase entityLivingBase = (EntityLivingBase) data[1];
+
 					GL11.glScalef(model.thirdPersonScale, model.thirdPersonScale, model.thirdPersonScale);
-					GL11.glTranslatef(-0.2f, 0.5f, 0.3f);
+					GL11.glTranslatef(-0.32F, 1.3F, -0.23F);
 					GL11.glTranslatef(model.backPersonOffset.x, model.backPersonOffset.y, model.backPersonOffset.z);
+					if (entityLivingBase.isSneaking())
+					{
+						GlStateManager.rotate(20, 1, 0,0);
+						GlStateManager.translate(0, -0.3f, -0.2f);
+					}
 					GL11.glRotatef(90.0f, 0.0f, 20.0f, 0.0f);
-					GL11.glRotatef(90.0f, 0.0f, 0.0f, -90.0f);
+					GL11.glRotatef(270.0f, 0.0f, 0.0f, -90.0f);
 					GL11.glRotatef(90.0f, 20.0f, 0.0f, 0.0f);
+
 					GL11.glRotatef(20.0f, 0.0f, 0.0f, 20.0f);
-					*/
+
 					break;
 				}
 
@@ -234,12 +241,14 @@ public class RenderGun extends CustomItemRenderer {
 					//Render Scope
 
 					WeaponScopeType scopeType = gunType.scopeType;
+
 					if(GunType.getAttachment(item, AttachmentEnum.Sight) != null) {
 						ItemAttachment attachmentSight = (ItemAttachment) GunType.getAttachment(item, AttachmentEnum.Sight).getItem();
 						if (attachmentSight != null && attachmentSight.type.scopeType != WeaponScopeType.DEFAULT) {
 							scopeType = attachmentSight.type.scopeType;
 						}
 					}
+
 
 					if (scopeType != WeaponScopeType.DEFAULT) {
 						if (adsSwitch == 1.0F) {

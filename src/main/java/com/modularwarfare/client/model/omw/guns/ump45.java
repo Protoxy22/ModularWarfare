@@ -621,7 +621,7 @@ public class ump45 extends ModelGun //Same as Filename
         leftArmReloadPos = new Vector3f(0.F, -0.72F, 0.02F);
         leftArmReloadRot = new Vector3f(35.0F, 0.0F, -25.0F);
 
-        rightArmPos = new Vector3f(0.27F, -0.67F, 0.0F);
+        rightArmPos = new Vector3f(0.27F, -0.76F, 0.0F);
         rightArmRot = new Vector3f(0.0F, 0.0F, -90.0F);
         rightArmReloadPos = new Vector3f(0.35F, -0.80F, 0.0F);
         rightArmReloadRot = new Vector3f(0.0F, 0.0F, -90.0F);
@@ -643,9 +643,8 @@ public class ump45 extends ModelGun //Same as Filename
         sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
-
-
         thirdPersonOffset = new Vector3f(-0.1F, -0.13F, 0F);
+        thirdPersonScale = 0.8f;
         translateAll(0F, 0F, 0F);
 
         flipAll();
