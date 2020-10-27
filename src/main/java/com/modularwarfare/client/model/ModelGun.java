@@ -2,6 +2,7 @@ package com.modularwarfare.client.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.modularwarfare.client.model.omw.OmwModelFlash;
 import net.minecraft.client.renderer.RenderHelper;
@@ -208,7 +209,7 @@ public class ModelGun extends TurboBase
 	public HashMap<String, RenderVariables> ammoMap = new HashMap<String, RenderVariables>();
 	public HashMap<String, RenderVariables> bulletMap = new HashMap<String, RenderVariables>();
 
-	public HashMap<AttachmentEnum, Vector3f> attachmentPointMap = new HashMap<AttachmentEnum, Vector3f>();
+	public HashMap<AttachmentEnum, List<Vector3f>> attachmentPointMap = new HashMap<AttachmentEnum, List<Vector3f>>();
 
 	public Vector3f translateSight = new Vector3f(0F, 0F, 0F);
 	public Vector3f rotateSight = new Vector3f(0F, 0F, 0F);
