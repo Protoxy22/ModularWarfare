@@ -6,6 +6,7 @@ import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.client.handler.ClientTickHandler;
+import com.modularwarfare.client.input.KeyType;
 import com.modularwarfare.common.guns.*;
 import com.modularwarfare.common.network.BackWeaponsManager;
 import com.modularwarfare.utility.RayUtil;
@@ -15,7 +16,9 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -510,10 +513,12 @@ public class ClientRenderHooks extends ForgeEvent {
 		if (stack != null && stack.getItem() instanceof ItemGun) {
 			int currentAmmoCount = ItemGun.getMagazineBullets(stack);
 
+
 			if (stack.getTagCompound() != null) {
 				ItemStack ammoStack = new ItemStack(stack.getTagCompound().getCompoundTag("ammo"));
 				if (ammoStack.getTagCompound() != null) {
 					ItemAmmo itemAmmo = (ItemAmmo) ammoStack.getItem();
+
 					int x = 0;
 					final int top = j - 38;
 					final int left = 2;
@@ -521,6 +526,11 @@ public class ClientRenderHooks extends ForgeEvent {
 					final int bottom = top + 22;
 					Gui.drawRect(left + right-3, top, right * 2 - 18, bottom, Integer.MIN_VALUE);
 
+					String color = TextFormatting.WHITE+"";
+					if(currentAmmoCount < itemAmmo.type.ammoCapacity/6){
+						color = TextFormatting.RED+"";
+						mc.fontRenderer.drawStringWithShadow(String.valueOf(TextFormatting.YELLOW+ "[R]" +TextFormatting.WHITE+" Reload"), left + 120, j - 30, 0xffffff);
+					}
 
 					RenderHelper.enableGUIStandardItemLighting();
 					GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -528,7 +538,7 @@ public class ClientRenderHooks extends ForgeEvent {
 					drawSlotInventory(mc.fontRenderer, ammoStack, left + 67, j - 35);
 					GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 					RenderHelper.disableStandardItemLighting();
-					String s = String.valueOf(currentAmmoCount) + "/" + itemAmmo.type.ammoCapacity;
+					String s = String.valueOf(color+currentAmmoCount) + "/" + itemAmmo.type.ammoCapacity;
 
 					mc.fontRenderer.drawStringWithShadow(String.valueOf(s), left + 83, j - 30, 0xffffff);
 					x += 16 + mc.fontRenderer.getStringWidth(s);

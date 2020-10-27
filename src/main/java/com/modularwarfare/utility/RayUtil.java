@@ -7,6 +7,9 @@ import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.network.PacketGunTrail;
 import com.modularwarfare.common.network.PacketPlaySound;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockGlass;
+import net.minecraft.block.BlockGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -365,6 +368,10 @@ public class RayUtil {
                     blockpos = new BlockPos(l, i1, j1);
                     IBlockState iblockstate1 = world.getBlockState(blockpos);
                     Block block1 = iblockstate1.getBlock();
+
+                    if(block1 instanceof BlockDoor || block1 instanceof BlockGlass){
+                        return null;
+                    }
 
                     if (!ignoreBlockWithoutBoundingBox || iblockstate1.getMaterial() == Material.BARRIER || iblockstate1.getMaterial() == Material.PORTAL || iblockstate1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) {
                         if (block1.canCollideCheck(iblockstate1, stopOnLiquid)) {
