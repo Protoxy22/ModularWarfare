@@ -6,6 +6,9 @@ import com.modularwarfare.client.tmt.ModelRendererTurbo;
 import com.modularwarfare.common.guns.AttachmentEnum;
 import org.lwjgl.util.vector.Vector3f;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class sks extends ModelGun //Same as Filename
 {
     int textureX = 256;
@@ -623,10 +626,14 @@ public class sks extends ModelGun //Same as Filename
         sprintRotate = new Vector3f(-20.0F, 30.0F, -0.0F);
         sprintTranslate = new Vector3f(0.5F, -0.10F, -0.65F);
 
-        attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(-0.18F, 0.37F, 0F));
 
-        translateSight = new Vector3f(0F, 2.2F, 0.07F);
-        rotateSight = new Vector3f(-0.1F, 0F, 0F);
+        List<Vector3f> attachmentVectorsSight = new ArrayList<Vector3f>();
+        attachmentVectorsSight.add(new Vector3f(-0.18F, 0.37F, 0F)); //Sight translation
+        attachmentVectorsSight.add(new Vector3f(0F, 0F, 0F)); //Sight rotation
+        attachmentPointMap.put(AttachmentEnum.Sight, attachmentVectorsSight);
+
+        translateSight = new Vector3f(0F, 0.6F, 0F);
+        //rotateSight = new Vector3f(-0.1F, 0F, 0F);
 
 
         thirdPersonOffset = new Vector3f(-0.05F, -0.05F, 0F);//forward/up/?

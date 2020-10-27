@@ -185,6 +185,15 @@ public class RenderGun extends CustomItemRenderer {
 					Vector3f customHipRotation = new Vector3f(model.rotateHipPosition.x + (model.sprintRotate.x * sprintSwitch * hipRecover), model.rotateHipPosition.y + (model.sprintRotate.y * sprintSwitch * hipRecover), model.rotateHipPosition.z + (model.sprintRotate.z * sprintSwitch * hipRecover));
 					Vector3f customHipTranslate = new Vector3f(model.translateHipPosition.x + (model.sprintTranslate.x * sprintSwitch * hipRecover), model.translateHipPosition.y + (model.sprintTranslate.y * sprintSwitch * hipRecover), model.translateHipPosition.z + (model.sprintTranslate.z * sprintSwitch * hipRecover));
 
+					for (AttachmentEnum attachment : AttachmentEnum.values()) {
+						ItemStack itemStack = GunType.getAttachment(item, attachment);
+						if (itemStack != null && itemStack.getItem() != Items.AIR) {
+							AttachmentType attachmentType = ((ItemAttachment) itemStack.getItem()).type;
+							if (attachmentType.attachmentType == AttachmentEnum.Sight) {
+								GL11.glTranslatef(model.translateSight.x * worldScale, -model.translateSight.y * worldScale, -model.translateSight.z * worldScale);
+							}
+						}
+					}
 
 					Vector3f customAimRotation = new Vector3f(model.rotateAimPosition.x, model.rotateAimPosition.y, model.rotateAimPosition.z);
 
@@ -333,15 +342,6 @@ public class RenderGun extends CustomItemRenderer {
 				GL11.glScalef(modelScale, modelScale, modelScale);
 				GL11.glTranslatef(model.translateAll.x * worldScale, -model.translateAll.y * worldScale, -model.translateAll.z * worldScale);
 
-				for (AttachmentEnum attachment : AttachmentEnum.values()) {
-					ItemStack itemStack = GunType.getAttachment(item, attachment);
-					if (itemStack != null && itemStack.getItem() != Items.AIR) {
-						AttachmentType attachmentType = ((ItemAttachment) itemStack.getItem()).type;
-						if (attachmentType.attachmentType == AttachmentEnum.Sight) {
-							GL11.glTranslatef(model.translateSight.x * worldScale, -model.translateSight.y * worldScale, -model.translateSight.z * worldScale);
-						}
-					}
-				}
 
 				// Item frame rendering properties
 				if (renderType == CustomItemRenderType.ENTITY) {
@@ -354,6 +354,7 @@ public class RenderGun extends CustomItemRenderer {
 				}
 
 				model.renderGun(worldScale);
+
 
 				//Render any attachments
 				if (GunType.getAttachment(item, AttachmentEnum.Sight) == null && !model.scopeIsOnSlide)
@@ -731,14 +732,17 @@ public class RenderGun extends CustomItemRenderer {
 
 								String path = skinId > 0 ? attachmentType.modelSkins[skinId].getSkin() : attachmentType.modelSkins[0].getSkin();
 								bindTexture("attachments", path);
-								Vector3f attachmentVec = model.attachmentPointMap.get(attachment);
+								Vector3f attachmentVecTranslate = model.attachmentPointMap.get(attachment).get(0);
+								Vector3f attachmentVecRotate = model.attachmentPointMap.get(attachment).get(1);
+
 								Vector3f adjustedScale = new Vector3f(attachmentModel.modelScale, attachmentModel.modelScale, attachmentModel.modelScale);
 								GL11.glScalef(adjustedScale.x, adjustedScale.y, adjustedScale.z);
-								GL11.glTranslatef(attachmentVec.x / attachmentModel.modelScale, attachmentVec.y / attachmentModel.modelScale, attachmentVec.z / attachmentModel.modelScale);
 
-								if (attachmentType.attachmentType == AttachmentEnum.Sight) {
-									GL11.glTranslatef(model.translateSight.x * worldScale, -model.translateSight.y * worldScale, -model.translateSight.z * worldScale);
-								}
+								GL11.glTranslatef(attachmentVecTranslate.x / attachmentModel.modelScale, attachmentVecTranslate.y / attachmentModel.modelScale, attachmentVecTranslate.z / attachmentModel.modelScale);
+
+								GL11.glRotatef(attachmentVecRotate.x, 1F, 0F, 0F); //ROLL LEFT-RIGHT
+								GL11.glRotatef(attachmentVecRotate.y, 0F, 1F, 0F); //ANGLE LEFT-RIGHT
+								GL11.glRotatef(attachmentVecRotate.z, 0F, 0F, 1F); //ANGLE UP-DOWN
 								attachmentModel.renderAttachment(worldScale);
 							}
 							GL11.glPopMatrix();

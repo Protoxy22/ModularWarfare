@@ -44,8 +44,5 @@
                 "soundName": "omw.generic.reload"
             }
         ]
-    },
-    "acceptedAttachments":
-    {
-        "sight": [""]
-    }}
+    }
+}

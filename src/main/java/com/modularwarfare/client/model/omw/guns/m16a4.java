@@ -5,6 +5,9 @@ import com.modularwarfare.client.tmt.ModelRendererTurbo;
 import com.modularwarfare.common.guns.AttachmentEnum;
 import org.lwjgl.util.vector.Vector3f;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class m16a4 extends ModelGun { //Same as Filename{
     int textureX = 512;
     int textureY = 256;
@@ -2502,7 +2505,7 @@ public class m16a4 extends ModelGun { //Same as Filename{
 
         hasFlash = true;
         flashScale = 2F;
-        this.muzzleFlashPointNormal = new Vector3f(1F, 1.40F, 0.9F);
+        this.muzzleFlashPointNormal = new Vector3f(3F, 1.40F, 0.9F);
         this.muzzleFlashPointScoping = new Vector3f(1.2F, 1.80F, 0.1F);
 
         fancyStance = true;
@@ -2513,11 +2516,15 @@ public class m16a4 extends ModelGun { //Same as Filename{
         this.thirdPersonScale = 0.60f;
         this.thirdPersonOffset = new Vector3f(-0.1F, 0.05F, 0F);
 
-        attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(0F, 0.32F, 0F));
-        attachmentPointMap.put(AttachmentEnum.Barrel, new Vector3f(1.2F, 0.28F, 0.03F));
+        List<Vector3f> attachmentVectorsSight = new ArrayList<Vector3f>();
+        attachmentVectorsSight.add(new Vector3f(0F, 0.33F, 0F)); //Sight translation
+        attachmentVectorsSight.add(new Vector3f(0F, 0F, 0F)); //Sight rotation
+        attachmentPointMap.put(AttachmentEnum.Sight, attachmentVectorsSight);
 
-        translateSight = new Vector3f(0F, 0.62F, 0.07F);
-        rotateSight = new Vector3f(-0.1F, 0F, 1.5F);
+        List<Vector3f> attachmentVectorsBarrel = new ArrayList<Vector3f>();
+        attachmentVectorsBarrel.add(new Vector3f(1.3F, 0.29F, 0.035F)); //Sight translation
+        attachmentVectorsBarrel.add(new Vector3f(0F, 0F, 0F)); //Sight rotation
+        attachmentPointMap.put(AttachmentEnum.Barrel, attachmentVectorsBarrel);
 
         flipAll();
     }

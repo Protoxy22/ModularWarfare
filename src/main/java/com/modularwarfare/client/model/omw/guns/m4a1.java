@@ -6,6 +6,9 @@ import org.lwjgl.util.vector.Vector3f;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class m4a1 extends ModelGun //Same as Filename
 {
 	int textureX = 256;
@@ -1058,11 +1061,20 @@ public class m4a1 extends ModelGun //Same as Filename
 		this.thirdPersonScale = 0.60f;
 		this.thirdPersonOffset = new Vector3f(-0.1F, 0.05F, 0F);
 
-		attachmentPointMap.put(AttachmentEnum.Sight, new Vector3f(0F, 0.32F, 0F));
-		attachmentPointMap.put(AttachmentEnum.Barrel, new Vector3f(0.8F, 0.28F, 0.03F));
 
-		translateSight = new Vector3f(0F, 0.62F, 0.07F);
-		rotateSight = new Vector3f(-0.1F, 0F, 1.5F);
+		List<Vector3f> attachmentVectorsSight = new ArrayList<Vector3f>();
+		attachmentVectorsSight.add(new Vector3f(0F, 0.33F, 0F)); //Sight translation
+		attachmentVectorsSight.add(new Vector3f(0F, 0F, 0F)); //Sight rotation
+		attachmentPointMap.put(AttachmentEnum.Sight, attachmentVectorsSight);
+
+		List<Vector3f> attachmentVectorsBarrel = new ArrayList<Vector3f>();
+		attachmentVectorsBarrel.add(new Vector3f(1.0F, 0.29F, 0.039F)); //Sight translation
+		attachmentVectorsBarrel.add(new Vector3f(0F, 0F, 0F)); //Sight rotation
+		attachmentPointMap.put(AttachmentEnum.Barrel, attachmentVectorsBarrel);
+
+
+		//translateSight = new Vector3f(0F, 0.62F, 0.07F);
+		//rotateSight = new Vector3f(-0.1F, 0F, 1.5F);
 
 		flipAll();
 	}

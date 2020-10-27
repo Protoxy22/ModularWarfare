@@ -15,9 +15,6 @@
 
     "fireModes": ["full", "semi", "burst"],
     "acceptedAmmo": ["omw.m4a1ammo"],
-    "acceptedAttachments": {
-        "sight": ["omw.aimpoint"]
-    },
     "weaponSoundMap": {
         "weaponFire": [
             {
