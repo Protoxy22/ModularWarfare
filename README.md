@@ -25,7 +25,6 @@ Changelog:
  - Added flyby sounds
  - Added aim animation on third person
  
-Changelog:
 0.3f:
  - Added bullet holes.
  - Added bullet impact sound.
@@ -36,6 +35,15 @@ Changelog:
  - Fixed various crash when helding a gun with players around.
  - Fixed crash when applying an attachment to a gun.
  - Added experimental bots (Attacking players and other bots, officialmw needed).
+ 
+0.4f:
+- Added reload indicator 
+- Hit trough glass and doors
+- Improved scopes images
+- Fixed attachments configuration
+- Weapons on back
+- Swaying guns on first person
+- Added dynamic red dot
 
 
 New JSON config (Guns):
