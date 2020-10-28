@@ -6,6 +6,29 @@
 Notes: If you want the extra armors feature, look to the master branch (discontinued branch).
 
 Changelog:
+
+0.4f:
+- Added reload indicator 
+- Hit trough glass and doors
+- Improved scopes images
+- Fixed attachments configuration
+- Weapons on back
+- Swaying guns on first person
+- Added dynamic red dot
+
+ 
+0.3f:
+ - Added bullet holes.
+ - Added bullet impact sound.
+ - Added back the expanded inventory.
+ - 3rd person hands are upwards when shooting and aiming.
+ - Fixed ammo count rendering.
+ -  Improved gun movements.
+ - Fixed various crash when helding a gun with players around.
+ - Fixed crash when applying an attachment to a gun.
+ - Added experimental bots (Attacking players and other bots, officialmw needed).
+ 
+
 0.1f:
  - Added officialmw pack (M4A1, armors and clothing)
  - Fixed serverside loading
@@ -24,26 +47,6 @@ Changelog:
  - Added equip sounds
  - Added flyby sounds
  - Added aim animation on third person
- 
-0.3f:
- - Added bullet holes.
- - Added bullet impact sound.
- - Added back the expanded inventory.
- - 3rd person hands are upwards when shooting and aiming.
- - Fixed ammo count rendering.
- -  Improved gun movements.
- - Fixed various crash when helding a gun with players around.
- - Fixed crash when applying an attachment to a gun.
- - Added experimental bots (Attacking players and other bots, officialmw needed).
- 
-0.4f:
-- Added reload indicator 
-- Hit trough glass and doors
-- Improved scopes images
-- Fixed attachments configuration
-- Weapons on back
-- Swaying guns on first person
-- Added dynamic red dot
 
 
 New JSON config (Guns):
