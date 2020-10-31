@@ -245,9 +245,13 @@ public class ClientRenderHooks extends ForgeEvent {
 				float farPlaneDistance = mc.gameSettings.renderDistanceChunks * 16F;
 				ItemRenderer itemRenderer = mc.getItemRenderer();
 
+
+
+				/* SHADERS COMPATIBILITY
 				GlStateManager.clear(256);
 				GlStateManager.matrixMode(5889);
 				GlStateManager.loadIdentity();
+				*/
 
 				float separation = 0.07F;
 
@@ -256,10 +260,6 @@ public class ClientRenderHooks extends ForgeEvent {
 				GlStateManager.loadIdentity();
 
 				GlStateManager.pushMatrix();
-				//hurtCameraEffect(partialTicks);
-
-				/*if(mc.gameSettings.viewBobbing)
-					setupViewBobbing(partialTicks);*/
 
 				boolean flag = mc.getRenderViewEntity() instanceof EntityLivingBase && ((EntityLivingBase) mc.getRenderViewEntity()).isPlayerSleeping();
 
