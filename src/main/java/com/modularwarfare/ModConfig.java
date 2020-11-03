@@ -17,7 +17,8 @@ public class ModConfig {
 	public boolean applyKnockback = false;
 	public boolean dynamicCrosshair = true;
 	public static int bulletImpact = 2;
-	public static int bloodAmount = 3;
+	public boolean showAmmoCount = true;
+	public int bloodAmount = 3;
 
 	public ModConfig(File configFile)
 	{

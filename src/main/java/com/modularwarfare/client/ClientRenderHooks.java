@@ -142,7 +142,9 @@ public class ClientRenderHooks extends ForgeEvent {
 			ScaledResolution scaledresolution = new ScaledResolution(mc);
 			int i = scaledresolution.getScaledWidth();
 			int j = scaledresolution.getScaledHeight();
-			RenderPlayerAmmo(i, j);
+			if(ModConfig.INSTANCE.showAmmoCount) {
+				RenderPlayerAmmo(i, j);
+			}
 		}
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack != null && stack.getItem() instanceof ItemGun) {
