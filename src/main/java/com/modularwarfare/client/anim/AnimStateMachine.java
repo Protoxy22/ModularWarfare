@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
 
+import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;
+import com.modularwarfare.client.input.KeyBindingDisable;
+import com.modularwarfare.client.input.KeyBindingEnable;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.common.guns.GunType;
 
+import com.modularwarfare.common.guns.WeaponSoundType;
+import com.modularwarfare.common.network.PacketGunReloadSound;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 public class AnimStateMachine {
@@ -51,9 +57,19 @@ public class AnimStateMachine {
 	public int muzzleFlashTime = 0;
 	public int flashInt = 0;
 
+	/** SOUND **/
+	public boolean hasPlayedReloadSound = false;
+
+	/** WasSprinting **/
+	public boolean wasSprinting = false;
 
 	public void onTickUpdate() {
+		if(Minecraft.getMinecraft().gameSettings.keyBindSprint.isKeyDown()) {
+			ModularWarfare.LOGGER.info(Minecraft.getMinecraft().gameSettings.keyBindSprint.isKeyDown());
+		}
 		if(reloading) {
+			disableSprinting(true);
+			Minecraft.getMinecraft().player.setSprinting(false);
 			if(currentReloadState == null)
 				currentReloadState = reloadStateEntries.get(0);
 															
@@ -73,8 +89,9 @@ public class AnimStateMachine {
 			}
 			
 			reloadProgress += 1F / reloadTime;
-			if(reloadProgress >= 0.9F)
+			if(reloadProgress >= 0.9F) {
 				isGunEmpty = false;
+			}
 			if(reloadProgress >= 1F) {
 				reloading = false;
 				reloadProgress = 0f;
@@ -82,9 +99,15 @@ public class AnimStateMachine {
 				currentReloadState = null;
 				reloadStateIndex = 0;
 				reloadType = null;
+				disableSprinting(false);
+				Minecraft.getMinecraft().player.setSprinting(wasSprinting);
+			}
+			if(!hasPlayedReloadSound){
+				ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Load));
+				hasPlayedReloadSound = true;
 			}
 		}
-		
+
 		if(shooting) {
 			if(currentShootState == null)
 				currentShootState = shootStateEntries.get(0);
@@ -109,7 +132,7 @@ public class AnimStateMachine {
 				shootStateIndex = 0;
 			}
 		}
-		
+
 		// Slide model
 		lastGunSlide = gunSlide;
 		if (isGunEmpty)
@@ -183,13 +206,15 @@ public class AnimStateMachine {
 		}
 	}
 	
-	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType) {
+	public void triggerReload(int reloadTime, int reloadCount, ModelGun model, ReloadType reloadType, boolean wasSprinting) {
 		ArrayList<StateEntry> animEntries = WeaponAnimations.getAnimation(model.reloadAnimation).getReloadStates(reloadType, reloadCount);
 		reloadStateEntries = adjustTiming(animEntries);
 		
 		this.reloadTime = reloadType != ReloadType.Full ? reloadTime*0.65f : reloadTime;
 		this.reloadType = reloadType;
 		this.reloading = true;
+		this.hasPlayedReloadSound = false;
+		this.wasSprinting = wasSprinting;
 	}
 	
 	public Optional<StateEntry> getReloadState()
@@ -281,6 +306,16 @@ public class AnimStateMachine {
 			}
 		}
 		return Optional.ofNullable(stateEntry);
+	}
+
+	public static void disableSprinting(boolean bool) {
+		if (bool) {
+			if (!(Minecraft.getMinecraft().gameSettings.keyBindSprint instanceof KeyBindingDisable)) {
+				Minecraft.getMinecraft().gameSettings.keyBindSprint = new KeyBindingDisable(Minecraft.getMinecraft().gameSettings.keyBindSprint);
+			}
+		} else if (Minecraft.getMinecraft().gameSettings.keyBindSprint instanceof KeyBindingDisable) {
+			Minecraft.getMinecraft().gameSettings.keyBindSprint = new KeyBindingEnable(Minecraft.getMinecraft().gameSettings.keyBindSprint);
+		}
 	}
 	
 }

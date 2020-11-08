@@ -19,6 +19,18 @@
             "modularwarfare:hitmarker"
         ]
     },
+    "load": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:load"
+        ]
+    },
+    "reload": {
+        "category": "player",
+        "sounds": [
+            "modularwarfare:reload"
+        ]
+    },
     "sound_heli": {
         "category": "player",
         "sounds": [

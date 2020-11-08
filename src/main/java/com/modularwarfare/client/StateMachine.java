@@ -24,7 +24,7 @@ public class StateMachine {
 
 	/** Recoil */
 	public float gunRecoil = 0F, lastGunRecoil = 0F;
-//	
+//
 	/** Slide */
 	public float gunSlide = 0F, lastGunSlide = 0F;
 //	/** Delayed Reload Animations */
@@ -37,7 +37,7 @@ public class StateMachine {
 //	public int timeUntilCharge = 0, timeToChargeFor = 0;
 //	public float charged = -1F, lastCharged = -1F;
 //	public boolean charging = false;
-//	
+//
 //	public int muzzleFlashTime = 0;
 //	public int flashInt = 0;
 //
@@ -52,25 +52,25 @@ public class StateMachine {
 	public int timeUntilPullback = 0;
 	public float gunPullback = -1F, lastGunPullback = -1F;
 	public boolean isFired = false;
-//	
+//
 //	public Vector3f casingRandom = new Vector3f(0F, 0F, 0F);
-//		
+//
 //	public float chargeTrigger = 0f;
 //	public int chargeTriggerTrigger = 0;
 //
 //	public int chargeDelayAfterReload;
-//	
+//
 	public ItemStack cachedAmmoStack;
 //	public static float renderTick;
-//	
+//
 	boolean playedLoadSound = false;
-	
+
 	public void onUpdate()
 	{
-		
-		
-		
-		
+
+
+
+
 //		lastReloadAnimationProgress = reloadAnimationProgress;
 //		if(reloading)
 //			reloadAnimationProgress += 1F / reloadAnimationTime;
@@ -78,11 +78,11 @@ public class StateMachine {
 //			isGunEmpty = false;
 //		if(reloadAnimationProgress >= 1f)
 //			reloadAnimationProgress -= Math.random()/2;
-		
-		
-		
+
+
+
 		//System.out.println(reloading);
-		
+
 		//Assign values
 //		lastPumped = pumped;
 //		lastCharged = charged;
@@ -111,7 +111,7 @@ public class StateMachine {
 //				ModularWarfare.NETWORK.sendToServer(new PacketGunReloadSound(WeaponSoundType.Charge));
 //				lastCharged = charged = -1F;
 //			}
-//		}	
+//		}
 
 //		if (pumping) {
 //			pumped += 2F / timeToPumpFor;
@@ -121,7 +121,7 @@ public class StateMachine {
 //				pumping = false;
 //			}
 //		}
-//		
+//
 //		if (charging) {
 //			charged += 2F / (timeToChargeFor * 0.51);
 //			charged = NumberHelper.clamp(charged, -1F, 1F);
@@ -129,7 +129,7 @@ public class StateMachine {
 //				charging = false;
 //			}
 //		}
-//		
+//
 		if(unloadOnly && reloadAnimationProgress >= 0.5f) {
 			renderAmmo = false;
 		}
@@ -157,13 +157,13 @@ public class StateMachine {
 		}
 
 	}
-		
+
 	public void triggerReload(int reloadTime, ModelGun model, boolean isLoadOnly, boolean isUnload, int reloadCount) {
 		reloading = true;
-				
+
 		lastReloadAnimationProgress = reloadAnimationProgress = 0F;
 		reloadAnimationTime = isLoadOnly || isUnload ? reloadTime*0.65f : reloadTime;
-		
+
 		/*timeUntilPump = model.pumpDelayAfterReload;
 		timeToPumpFor = model.pumpTime;
 		timeUntilCharge = model.chargeDelay model.chargeDelayAfterReload;

@@ -17,7 +17,7 @@ public enum WeaponSoundType {
 	@SerializedName("weaponFireLast") FireLast("weaponFireLast", 16, null),
 
 	/** The sound to play upon reloading */
-	@SerializedName("weaponReload") Reload("weaponReload", 16, null),
+	@SerializedName("weaponReload") Reload("weaponReload", 16, "reload"),
 
 	/** The sound to play when a bullet hit a block */
 	@SerializedName("impact") Impact("impact", 16, "impact"),
@@ -36,7 +36,7 @@ public enum WeaponSoundType {
 	@SerializedName("penetration") Penetration("penetration", 20, "penetration"),
 
 	/** The sound to play upon reloading */
-	@SerializedName("weaponLoad") Load("weaponLoad", 12, null),
+	@SerializedName("weaponLoad") Load("weaponLoad", 12, "load"),
 	
 	/** The sound to play upon reloading */
 	@SerializedName("weaponUnload") Unload("weaponUnload", 12, null),

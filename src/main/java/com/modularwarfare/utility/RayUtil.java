@@ -6,10 +6,7 @@ import com.modularwarfare.common.guns.GunType;
 import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.network.PacketGunTrail;
 import com.modularwarfare.common.network.PacketPlaySound;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
-import net.minecraft.block.BlockGlass;
-import net.minecraft.block.BlockGrass;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -369,7 +366,7 @@ public class RayUtil {
                     IBlockState iblockstate1 = world.getBlockState(blockpos);
                     Block block1 = iblockstate1.getBlock();
 
-                    if(block1 instanceof BlockDoor || block1 instanceof BlockGlass){
+                    if(block1 instanceof BlockDoor || block1 instanceof BlockGlass || block1 instanceof BlockBarrier){
                         return null;
                     }
 

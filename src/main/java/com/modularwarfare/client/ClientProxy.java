@@ -517,7 +517,7 @@ public class ClientProxy extends CommonProxy {
 	public void onReloadAnimation(EntityPlayer player, String wepType, int reloadTime, int reloadCount, int reloadType) {
 		ItemGun gunType = ModularWarfare.gunTypes.get(wepType);
 		if (gunType != null) {
-			ClientRenderHooks.getAnimMachine(player).triggerReload(reloadTime, reloadCount, (ModelGun) gunType.type.model, ReloadType.getTypeFromInt(reloadType));
+			ClientRenderHooks.getAnimMachine(player).triggerReload(reloadTime, reloadCount, (ModelGun) gunType.type.model, ReloadType.getTypeFromInt(reloadType), player.isSprinting());
 		}
 	}
 

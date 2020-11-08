@@ -202,7 +202,7 @@ public class ClientRenderHooks extends ForgeEvent {
 								break;
 						}
 					}
-					if (ModConfig.INSTANCE.dynamicCrosshair && !isAimingScope && !isAiming && mc.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
+					if (ModConfig.INSTANCE.dynamicCrosshair && !isAimingScope && !isAiming && mc.gameSettings.thirdPersonView == 0 && !player.isSprinting() && !ClientRenderHooks.getAnimMachine(player).reloading && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 						final float accuracy = RayUtil.calculateAccuracyClient((ItemGun) player.getHeldItemMainhand().getItem(), player);
 						int move = Math.max(0, (int) (accuracy * 3.0f));
 						this.mc.renderEngine.bindTexture(crosshair);
