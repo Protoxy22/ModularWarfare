@@ -258,77 +258,9 @@ public class ModularWarfare {
 		getTypeFiles(contentPacks);
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-		if (reload) {
-			for (BaseType baseType : baseTypes) {
-				baseType.loadExtraValues();
-				switch (baseType.id) {
-					case 0: {
-						gunTypes.get(baseType.internalName).setType((GunType) baseType);
-						break;
-					}
-					case 1: {
-						ammoTypes.get(baseType.internalName).setType((AmmoType) baseType);
-						break;
-					}
-					case 2: {
-						attachmentTypes.get(baseType.internalName).setType((AttachmentType) baseType);
-						break;
-					}
-					case 3: {
-						armorTypes.get(baseType.internalName).setType((ArmorType) baseType);
-						break;
-					}
-					case 4: {
-						bulletTypes.get(baseType.internalName).setType((BulletType) baseType);
-						break;
-					}
-					case 5: {
-						sprayTypes.get(baseType.internalName).setType((SprayType) baseType);
-						break;
-					}
-				}
-			}
-		} else {
-			for (BaseType baseType : baseTypes) {
-				switch (baseType.id) {
-					case 0: {
-						try {
-							gunTypes.put(baseType.internalName, new ItemGun((GunType) baseType));
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-						break;
-					}
-					case 1: {
-						ammoTypes.put(baseType.internalName, new ItemAmmo((AmmoType) baseType));
-						break;
-					}
-					case 2: {
-						attachmentTypes.put(baseType.internalName, new ItemAttachment((AttachmentType) baseType));
-						break;
-					}
-					case 3: {
-						ArmorType armorType = (ArmorType)baseType;
-						for (MWArmorType mwArmorType : armorType.armorTypes.keySet()) {
-							if (MWArmorType.isVanilla(mwArmorType)) {
-								ModularWarfare.armorTypes.put(armorType.internalName + "_" + mwArmorType.name().toLowerCase(), new ItemMWArmor(armorType, mwArmorType));
-							}
-							else {
-								ModularWarfare.specialArmorTypes.put(armorType.internalName, new ItemSpecialArmor(armorType, mwArmorType));
-							}
-						}
-						continue;
-					}
-					case 4: {
-						bulletTypes.put(baseType.internalName, new ItemBullet((BulletType) baseType));
-						break;
-					}
-					case 5: {
-						sprayTypes.put(baseType.internalName, new ItemSpray((SprayType) baseType));
-						break;
-					}
-				}
-			}
+		for (BaseType baseType : baseTypes) {
+			baseType.loadExtraValues();
+			ContentTypes.values.get(baseType.id).typeAssignFunction.accept(baseType, reload);
 		}
 
 
