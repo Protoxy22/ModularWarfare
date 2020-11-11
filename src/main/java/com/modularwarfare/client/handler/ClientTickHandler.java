@@ -1,5 +1,6 @@
 package com.modularwarfare.client.handler;
 
+import java.lang.reflect.Field;
 import java.util.Random;
 
 import com.modularwarfare.client.model.InstantBulletRenderer;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.lwjgl.input.Mouse;
 
 import com.modularwarfare.ModularWarfare;
@@ -60,12 +62,19 @@ public class ClientTickHandler extends ForgeEvent {
 
 	public static float prevPitch = 0;
 
+	private static Field sprintToggleTimer = null;
 
 	public ClientTickHandler() {
 		super();
 		this.mouseSens = Minecraft.getMinecraft().gameSettings.mouseSensitivity;
 		ModularWarfare.LOGGER.info("Set original sensibility to: " + this.mouseSens);
 		random = new Random();
+		try {
+			sprintToggleTimer = ReflectionHelper.findField(EntityPlayerSP.class, "sprintToggleTimer", "field_71156_d");
+		} catch (Exception e) {
+			ModularWarfare.LOGGER.error("Unable to find field 'sprintToggleTimer'");
+			e.printStackTrace();
+		}
 	}
 
 
@@ -315,6 +324,15 @@ public class ClientTickHandler extends ForgeEvent {
 
 		for (AnimStateMachine stateMachine : ClientRenderHooks.weaponAnimations.values()) {
 			stateMachine.onTickUpdate();
+		}
+
+		AnimStateMachine anim = ClientRenderHooks.getAnimMachine(player);
+		if(anim.reloading){
+			try {
+				sprintToggleTimer.setInt(player, 7);
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
 		}
 
 		InstantBulletRenderer.UpdateAllTrails();
