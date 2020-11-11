@@ -1,6 +1,7 @@
 package com.modularwarfare.common.guns;
 
 import java.util.List;
+import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +20,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemAmmo extends BaseItem {
 
-	public AmmoType type;
+    public static final Function<AmmoType, ItemAmmo> factory = type -> { return new ItemAmmo(type); };
+    public AmmoType type;
 
 	public ItemAmmo(AmmoType type) {
 		super(type);

@@ -2,6 +2,7 @@ package com.modularwarfare.common.guns;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import com.modularwarfare.ModConfig;
@@ -39,13 +40,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemGun extends BaseItem {
 
+    public static final Function<GunType, ItemGun> factory = type -> { return new ItemGun((type)); };
+
     public GunType type;
     public static float modelScale = 0;
     public static boolean canDryFire = true;
     public static boolean fireButtonHeld = false;
     public static boolean lastFireButtonHeld = false;
     public static int delay;
-
 
     public ItemGun(GunType type){
         super(type);
@@ -632,5 +634,4 @@ public class ItemGun extends BaseItem {
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
         return true;
     }
-
 }
