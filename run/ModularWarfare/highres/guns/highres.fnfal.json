@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.fnfal",
+    "displayName": "FN FAL",
+    "modelName": "highres.guns.fnfal",
+    "weaponType": "carbine",
+    "gunDamage": 9,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 600,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 4.0,
+    "recoilYaw": 1.5,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+
+    "fireModes": ["semi"],
+    "acceptedAmmo": ["highres.fnfalammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.fnfal.shoot",
+                "soundNameDistant": "highres.fnfal.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

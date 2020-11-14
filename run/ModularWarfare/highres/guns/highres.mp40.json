@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.mp40",
+    "displayName": "MP40",
+    "modelName": "highres.guns.mp40",
+    "weaponType": "smg",
+    "gunDamage": 6,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 520,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 3.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.mp40ammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.mp40.shoot",
+                "soundNameDistant": "highres.mp40.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

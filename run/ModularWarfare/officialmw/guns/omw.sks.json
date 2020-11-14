@@ -15,6 +15,7 @@
     "scopeType": "default",
     "fireModes": ["semi"],
     "acceptedAmmo": ["omw.sksammo"],
+    "moveSpeedModifier": 1.0,
     "weaponSoundMap": {
         "weaponFire": [
             {

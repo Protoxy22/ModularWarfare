@@ -15,6 +15,7 @@
   "modelName": "omw.guns.awm",
   "allowSprintFiring": true,
   "allowEmptyMagazines": true,
+  "moveSpeedModifier": 0.8,
   "weaponSoundMap": {
     "weaponFire": [
       {

@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.galil",
+    "displayName": "IMI Galil",
+    "modelName": "highres.guns.galil",
+    "weaponType": "carbine",
+    "gunDamage": 7,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 600,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 4.0,
+    "recoilYaw": 1.5,
+    "randomRecoilPitch": 1.0,
+    "randomRecoilYaw": 1.0,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.galilammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.galil.shoot",
+                "soundNameDistant": "highres.galil.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

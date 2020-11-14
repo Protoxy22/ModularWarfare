@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.ppsh",
+    "displayName": "PPsH",
+    "modelName": "highres.guns.ppsh",
+    "weaponType": "carbine",
+    "gunDamage": 7,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 800,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 5.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 1.5,
+    "randomRecoilYaw": 1.5,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.ppshammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.ppsh.shoot",
+                "soundNameDistant": "highres.ppsh.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

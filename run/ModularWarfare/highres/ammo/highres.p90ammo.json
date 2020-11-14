@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.p90ammo",
+    "displayName": "P90 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 50,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

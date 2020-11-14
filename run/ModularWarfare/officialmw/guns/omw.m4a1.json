@@ -15,6 +15,7 @@
 
     "fireModes": ["full", "semi", "burst"],
     "acceptedAmmo": ["omw.m4a1ammo"],
+    "moveSpeedModifier": 1.0,
     "weaponSoundMap": {
         "weaponFire": [
             {

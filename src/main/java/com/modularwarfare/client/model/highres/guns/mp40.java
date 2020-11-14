@@ -14,20 +14,20 @@ public class mp40 extends ModelGun {
         gunModel = new ModelRendererTurbo[1];
 
         gunModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 0
-        gunModel[0].addObj("guns/mp40/body");
+        gunModel[0].addObj("highres/obj/guns/mp40/body");
         gunModel[0].setRotationPoint(0F, 0F, 0F);
 
         ammoModel = new ModelRendererTurbo[1];
 
         ammoModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 0
-        ammoModel[0].addObj("guns/mp40/ammo");
+        ammoModel[0].addObj("highres/obj/guns/mp40/ammo");
         ammoModel[0].setRotationPoint(0F, 0F, 0F);
 
 
         slideModel = new ModelRendererTurbo[1];
 
         slideModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 1
-        slideModel[0].addObj("guns/mp40/slide");
+        slideModel[0].addObj("highres/obj/guns/mp40/slide");
         slideModel[0].setRotationPoint(0F, 0F, 0F);
 
         leftArmPos = new Vector3f(0.20F, -0.7F, 0.06F);

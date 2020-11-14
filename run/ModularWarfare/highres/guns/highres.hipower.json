@@ -1,0 +1,39 @@
+{
+    "displayName": "Hi-Power",
+    "internalName": "highres.hipower",
+    "iconName": "highres.hipower",
+    "gunDamage": 10,
+    "weaponType": "pistol",
+    "roundsPerMin": 250,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 1.5,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+    "acceptedAmmo": ["highres.hipowerammo"],
+    "modelName": "highres.guns.hipower",
+    "fireModes": ["semi"],
+    "recoilPitch": 4.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.fnx45.shoot",
+                "soundNameDistant": "highres.fnx45.shoot",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

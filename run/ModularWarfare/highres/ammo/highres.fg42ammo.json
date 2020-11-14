@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.fg42ammo",
+    "displayName": "FG42 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 20,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

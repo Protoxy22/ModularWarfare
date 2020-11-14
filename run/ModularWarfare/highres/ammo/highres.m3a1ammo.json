@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.m3a1ammo",
+    "displayName": "M3A1 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 30,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

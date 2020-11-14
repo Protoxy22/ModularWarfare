@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.thompson",
+    "displayName": "Thompson M1A1",
+    "modelName": "highres.guns.thompson",
+    "weaponType": "carbine",
+    "gunDamage": 8.5,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 600,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 2.5,
+    "recoilYaw": 1.5,
+    "randomRecoilPitch": 0.25,
+    "randomRecoilYaw": 0.25,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.thompsonammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.thompson.shoot",
+                "soundNameDistant": "highres.thompson.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

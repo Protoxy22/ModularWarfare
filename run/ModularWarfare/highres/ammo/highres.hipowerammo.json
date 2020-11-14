@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.hipowerammo",
+    "displayName": "Browning Hi-Power Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 13,
+    "magazineCount": 1,
+    "reloadTime": 4    
+}

@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.c96ammo",
+    "displayName": "Mauser C96 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 10,
+    "magazineCount": 1,
+    "reloadTime": 4    
+}

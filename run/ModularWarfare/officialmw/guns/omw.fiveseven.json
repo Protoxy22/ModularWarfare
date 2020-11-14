@@ -13,6 +13,7 @@
     "recoilYaw": 0.2,
     "randomRecoilPitch": 0.1,
     "randomRecoilYaw": 0.1,
+    "moveSpeedModifier": 1.0,
     "weaponSoundMap": {
         "weaponFire": [
             {

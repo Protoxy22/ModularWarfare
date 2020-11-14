@@ -1,0 +1,35 @@
+{
+    "internalName": "highres.p90",
+    "displayName": "P90",
+    "modelName": "highres.guns.p90",
+    "weaponType": "smg",
+    "gunDamage": 6,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 800,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 3.0,
+    "recoilYaw": 1.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.p90ammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.p90.shoot",
+                "soundNameDistant": "highres.p90.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

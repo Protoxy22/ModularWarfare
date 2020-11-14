@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.ppshammo",
+    "displayName": "PPSH Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 71,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

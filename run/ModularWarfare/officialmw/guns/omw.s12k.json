@@ -16,6 +16,7 @@
   "bulletSpread": 5,
   "allowSprintFiring": true,
   "allowEmptyMagazines": true,
+  "moveSpeedModifier": 1.0,
   "weaponSoundMap": {
     "weaponFire": [
       {

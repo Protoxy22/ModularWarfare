@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.fg42",
+    "displayName": "FG42",
+    "modelName": "highres.guns.fg42",
+    "weaponType": "carbine",
+    "gunDamage": 8,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 750,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 4.0,
+    "recoilYaw": 3.0,
+    "randomRecoilPitch": 1.0,
+    "randomRecoilYaw": 1.0,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.fg42ammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.stg44.shoot",
+                "soundNameDistant": "highres.stg44.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

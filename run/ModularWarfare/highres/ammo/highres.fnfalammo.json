@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.fnfalammo",
+    "displayName": "FN Fal Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 20,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

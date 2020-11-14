@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.bar",
+    "displayName": "BAR M1918",
+    "modelName": "highres.guns.bar",
+    "weaponType": "carbine",
+    "gunDamage": 6,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 500,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 4.5,
+    "recoilYaw": 2.9,
+    "randomRecoilPitch": 0.8,
+    "randomRecoilYaw": 0.8,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.barammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.bar.shoot",
+                "soundNameDistant": "highres.bar.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

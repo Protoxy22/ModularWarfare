@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 import com.modularwarfare.client.model.InstantBulletRenderer;
-import com.modularwarfare.common.guns.ItemSpray;
+import com.modularwarfare.common.guns.*;
 import com.modularwarfare.utility.MWSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -19,7 +19,6 @@ import com.modularwarfare.client.anim.AnimStateMachine;
 import com.modularwarfare.client.anim.StateEntry;
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.model.RenderGun;
-import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.utility.NumberHelper;
 import com.modularwarfare.utility.event.ForgeEvent;
 
@@ -206,7 +205,16 @@ public class ClientTickHandler extends ForgeEvent {
 		if (ClientRenderHooks.isAimingScope) {
 			if (minecraft.gameSettings.thirdPersonView == 0 && player.getHeldItemMainhand().getItem() instanceof ItemGun) {
 				ItemGun gun = (ItemGun) player.getHeldItemMainhand().getItem();
-				switch (gun.type.scopeType) {
+				WeaponScopeType scopeType = gun.type.scopeType;
+
+				if(GunType.getAttachment(player.getHeldItemMainhand(), AttachmentEnum.Sight) != null) {
+					ItemAttachment attachmentSight = (ItemAttachment) GunType.getAttachment(player.getHeldItemMainhand(), AttachmentEnum.Sight).getItem();
+					if (attachmentSight != null && attachmentSight.type.scopeType != WeaponScopeType.DEFAULT) {
+						scopeType = attachmentSight.type.scopeType;
+					}
+				}
+
+				switch (scopeType) {
 					case DEFAULT:
 						break;
 					case TWO:

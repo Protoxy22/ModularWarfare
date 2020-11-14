@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.akm",
+    "displayName": "AKM",
+    "modelName": "highres.guns.akm",
+    "weaponType": "carbine",
+    "gunDamage": 5,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 600,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 4.0,
+    "recoilYaw": 2.5,
+    "randomRecoilPitch": 0.8,
+    "randomRecoilYaw": 0.8,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.akmammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.akm.shoot",
+                "soundNameDistant": "highres.akm.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

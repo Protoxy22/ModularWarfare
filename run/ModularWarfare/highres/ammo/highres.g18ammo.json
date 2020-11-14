@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.g18ammo",
+    "displayName": "G18 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 12,
+    "magazineCount": 1,
+    "reloadTime": 4    
+}

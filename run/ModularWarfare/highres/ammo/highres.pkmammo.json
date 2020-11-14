@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.pkmammo",
+    "displayName": "PKM Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 75,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

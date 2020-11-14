@@ -17,6 +17,7 @@
     "acceptedAmmo": [
         "omw.ump45ammo"
     ],
+    "moveSpeedModifier": 1.0,
     "weaponSoundMap": {
         "weaponFire": [
             {

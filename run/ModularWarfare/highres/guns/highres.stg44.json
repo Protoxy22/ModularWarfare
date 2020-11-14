@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.stg44",
+    "displayName": "STG44",
+    "modelName": "highres.guns.stg44",
+    "weaponType": "carbine",
+    "gunDamage": 9,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 500,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 6.0,
+    "recoilYaw": 3.5,
+    "randomRecoilPitch": 1.5,
+    "randomRecoilYaw": 1.5,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.stg44ammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.stg44.shoot",
+                "soundNameDistant": "highres.stg44.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

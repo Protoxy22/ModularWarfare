@@ -1,0 +1,125 @@
+{
+  "highres.generic.load": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:load"
+    ]
+  },
+  "highres.generic.reload": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:reload"
+    ]
+  },
+  "highres.scarl.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:scarl/shoot1",
+      "modularwarfare:scarl/shoot2",
+      "modularwarfare:scarl/shoot3",
+      "modularwarfare:scarl/shoot4"
+    ]
+  },
+  "highres.m3a1.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:m3a1/shoot1",
+      "modularwarfare:m3a1/shoot2",
+      "modularwarfare:m3a1/shoot3",
+      "modularwarfare:m3a1/shoot4"
+    ]
+  },
+  "highres.bar.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:bar/shoot01",
+      "modularwarfare:bar/shoot2",
+      "modularwarfare:bar/shoot3",
+      "modularwarfare:bar/shoot4"
+    ]
+  },
+  "highres.fnfal.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:fnfal/shoot1",
+      "modularwarfare:fnfal/shoot2",
+      "modularwarfare:fnfal/shoot3",
+      "modularwarfare:fnfal/shoot4"
+    ]
+  },
+  "highres.fnx45.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:fnx45/shoot1",
+      "modularwarfare:fnx45/shoot2",
+      "modularwarfare:fnx45/shoot3",
+      "modularwarfare:fnx45/shoot4"
+    ]
+  },
+  "highres.galil.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:galil/shoot1",
+      "modularwarfare:galil/shoot2",
+      "modularwarfare:galil/shoot3",
+      "modularwarfare:galil/shoot4"
+    ]
+  },
+  "highres.ump45.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:ump45/shoot1",
+      "modularwarfare:ump45/shoot2",
+      "modularwarfare:ump45/shoot3",
+      "modularwarfare:ump45/shoot4"
+    ]
+  },
+  "highres.thompson.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:thompson/shoot1",
+      "modularwarfare:thompson/shoot2",
+      "modularwarfare:thompson/shoot3",
+      "modularwarfare:thompson/shoot4"
+    ]
+  },
+  "highres.akm.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:ak47/shoot1",
+      "modularwarfare:ak47/shoot2",
+      "modularwarfare:ak47/shoot3",
+      "modularwarfare:ak47/shoot4"
+    ]
+  },
+  "highres.p90.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:p90/shoot"
+    ]
+  },
+  "highres.ppsh.shoot": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:ppsh/shoot"
+    ]
+  },
+  "highres.scarl.distant": {
+    "category": "player",
+    "sounds": [
+      "modularwarfare:scarl/distant"
+    ]
+  },
+  "highres.mp40.shoot": {
+  "category": "player",
+  "sounds": [
+    "modularwarfare:mp40/shoot1"
+  ]
+  },
+  "highres.stg44.shoot": {
+  "category": "player",
+  "sounds": [
+    "modularwarfare:stg44/shoot1"
+  ]
+  }
+}

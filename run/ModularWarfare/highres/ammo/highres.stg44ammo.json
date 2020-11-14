@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.stg44ammo",
+    "displayName": "STG44 Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 30,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

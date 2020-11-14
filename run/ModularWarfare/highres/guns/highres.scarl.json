@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.scarl",
+    "displayName": "SCAR-L",
+    "modelName": "highres.guns.scarl",
+    "weaponType": "carbine",
+    "gunDamage": 9.0,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 550,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 4.0,
+    "recoilYaw": 2.0,
+    "randomRecoilPitch": 0.5,
+    "randomRecoilYaw": 0.5,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.scarlammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.scarl.shoot",
+                "soundNameDistant": "highres.scarl.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}

@@ -15,6 +15,7 @@
 
     "fireModes": ["full", "semi"],
     "acceptedAmmo": ["omw.scarlammo"],
+    "moveSpeedModifier": 1.0,
     "weaponSoundMap": {
         "weaponFire": [
             {

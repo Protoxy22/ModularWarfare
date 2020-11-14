@@ -1,0 +1,8 @@
+{
+    "internalName": "highres.uziammo",
+    "displayName": "UZI Ammo",
+    "numBullets": 1,
+    "ammoCapacity": 25,
+    "magazineCount": 1,
+    "reloadTime": 4
+}

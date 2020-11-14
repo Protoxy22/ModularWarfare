@@ -1,0 +1,36 @@
+{
+    "internalName": "highres.pkm",
+    "displayName": "PKM",
+    "modelName": "highres.guns.pkm",
+    "weaponType": "carbine",
+    "gunDamage": 9,
+    "gunDamageHeadshotBonus": 2,
+    "roundsPerMin": 650,
+    "allowSprintFiring": true,
+    "allowEmptyMagazines": true,
+    "recoilPitch": 5.0,
+    "recoilYaw": 2.0,
+    "randomRecoilPitch": 1.5,
+    "randomRecoilYaw": 1.5,
+
+    "fireModes": ["full", "semi"],
+    "acceptedAmmo": ["highres.pkmammo"],
+    "weaponSoundMap": {
+        "weaponFire": [
+            {
+                "soundEvent": "weaponFire",
+                "soundName": "highres.galil.shoot",
+                "soundNameDistant": "highres.galil.distant",
+                "soundRange": 64,
+                "soundMaxRange": 96,
+                "soundFadeMultiplier": 1
+            }
+        ],
+        "weaponUnload": [
+            {
+                "soundEvent": "weaponReload",
+                "soundName": "highres.generic.reload"
+            }
+        ]
+    }
+}
