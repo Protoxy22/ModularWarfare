@@ -208,7 +208,6 @@ public class ClientRenderHooks extends ForgeEvent {
 						Gui.drawModalRectWithCustomSizedTexture(xPos, yPos - move - 3, 1.0f, 1.0f, 1, 4, 16.0f, 16.0f);
 						Gui.drawModalRectWithCustomSizedTexture(xPos + move, yPos, 1.0f, 1.0f, 4, 1, 16.0f, 16.0f);
 						Gui.drawModalRectWithCustomSizedTexture(xPos - move - 3, yPos, 1.0f, 1.0f, 4, 1, 16.0f, 16.0f);
-
 					}
 					RenderHitMarker(Tessellator.getInstance(), i, j);
 				default:

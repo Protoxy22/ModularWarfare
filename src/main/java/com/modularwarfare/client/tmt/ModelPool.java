@@ -4,40 +4,29 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.modularwarfare.ModularWarfare;
 import net.minecraftforge.fml.common.Loader;
 
-public class ModelPool
-{
-	public static ModelPoolEntry addFile(String file, Class modelClass, Map<String, TransformGroup> group, Map<String, TextureGroup> textureGroup)
-	{
+public class ModelPool {
+	public static ModelPoolEntry addFile(String file, String objGroup, Class modelClass, Map<String, TransformGroup> group, Map<String, TextureGroup> textureGroup) {
 		ModelPoolEntry entry = null;
-		if(modelMap.containsKey(file))
-		{
-			entry = modelMap.get(file);
-			entry.applyGroups(group, textureGroup);
-			return entry;
-		}
-		try
-		{
-			entry = (ModelPoolEntry)modelClass.newInstance();
-		}
-		catch(Exception e)
-		{
-			//FlansMod.log.error("A new " + entry.getClass().getName() + " could not be initialized.");
-			//FlansMod.log.error(e.getMessage());
+
+		try {
+			entry = (ModelPoolEntry) modelClass.newInstance();
+		} catch (Exception e) {
+			ModularWarfare.LOGGER.info("A new " + entry.getClass().getName() + " could not be initialized.");
+			ModularWarfare.LOGGER.info(e.getMessage());
 			return null;
 		}
 		File modelFile = null;
-		for(int i = 0; i < resourceDir.length && (modelFile == null || !modelFile.exists()); i++)
-		{
+		for (int i = 0; i < resourceDir.length && (modelFile == null || !modelFile.exists()); i++) {
 			String absPath = new File(Loader.instance().getConfigDir().getParent(), resourceDir[i]).getAbsolutePath();
-			if(!absPath.endsWith("/") || !absPath.endsWith("\\"))
+			if (!absPath.endsWith("/") || !absPath.endsWith("\\"))
 				absPath += "/";
 			modelFile = entry.checkValidPath(absPath + file);
 		}
-		if(modelFile == null || !modelFile.exists())
-		{
-			//FlansMod.log.warn("The model with the name " + file + " does not exist.");
+		if (modelFile == null || !modelFile.exists()) {
+			ModularWarfare.LOGGER.info("The model with the name " + file + " does not exist.");
 			return null;
 		}
 		entry.groups = new HashMap<>();
@@ -45,13 +34,11 @@ public class ModelPool
 		entry.name = file;
 		entry.setGroup("0");
 		entry.setTextureGroup("0");
-		entry.getModel(modelFile);
+		entry.getModel(modelFile, objGroup);
 		entry.applyGroups(group, textureGroup);
-		modelMap.put(file, entry);
 		return entry;
 	}
-	
-	private static Map<String, ModelPoolEntry> modelMap = new HashMap<>();
+
 	private static String[] resourceDir = new String[]{
 			"/resources/models/",
 			"/resources/mod/models/",

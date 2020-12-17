@@ -26,7 +26,7 @@ public abstract class ModelPoolEntry
 		return file;
 	}
 	
-	public abstract void getModel(File file);
+	public abstract void getModel(File file, String groupObj);
 	
 	/**
 	 * Sets the current transformation group. The transformation group is used

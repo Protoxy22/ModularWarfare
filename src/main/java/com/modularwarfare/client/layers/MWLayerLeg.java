@@ -58,11 +58,17 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer>
                     Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armor/" + path + ".png"));
                     GL11.glScalef(armorModel.modelScale, armorModel.modelScale, armorModel.modelScale);
                     if (this.legType == ModelArmor.EnumLeg.Left) {
-                        armorModel.renderLeftLeg(scale);
-                    }
-                    else {
-                        armorModel.renderRightLeg(scale);
-                    }
+                        if(armorType.isModelOBJ) {
+                            armorModel.renderLeftLeg(1.0f, true);
+                        } else {
+                            armorModel.renderLeftLeg(scale, false);
+                        }
+                    } else {
+                        if(armorType.isModelOBJ) {
+                            armorModel.renderRightLeg(1.0f, true);
+                        } else {
+                            armorModel.renderRightLeg(scale, false);
+                        }                        }
                     GlStateManager.popMatrix();
                 }
             }
@@ -93,11 +99,17 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer>
                 Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation("modularwarfare", "skins/armor/" + path2 + ".png"));
                 GL11.glScalef(armorModel2.modelScale, armorModel2.modelScale, armorModel2.modelScale);
                 if (this.legType == ModelArmor.EnumLeg.Left) {
-                    armorModel2.renderLeftLeg(scale);
-                }
-                else {
-                    armorModel2.renderRightLeg(scale);
-                }
+                    if(armorType2.isModelOBJ) {
+                        armorModel2.renderLeftLeg(1.0f, true);
+                    } else {
+                        armorModel2.renderLeftLeg(scale, false);
+                    }
+                } else {
+                    if(armorType2.isModelOBJ) {
+                        armorModel2.renderRightLeg(1.0f, true);
+                    } else {
+                        armorModel2.renderRightLeg(scale, false);
+                    }                }
                 GlStateManager.popMatrix();
             }
         }
@@ -125,11 +137,17 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer>
                     Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation("modularwarfare", "skins/armor/" + path3 + ".png"));
                     GL11.glScalef(1.0f, 1.0f, 1.0f);
                     if (this.legType == ModelArmor.EnumLeg.Left) {
-                        armorModel3.renderLeftLeg(scale);
-                    }
+                        if(armorType3.isModelOBJ) {
+                            armorModel3.renderLeftLeg(1.0f, true);
+                        } else {
+                            armorModel3.renderLeftLeg(scale, false);
+                        }                          }
                     else {
-                        armorModel3.renderRightLeg(scale);
-                    }
+                        if(armorType3.isModelOBJ) {
+                            armorModel3.renderRightLeg(1.0f, true);
+                        } else {
+                            armorModel3.renderRightLeg(scale, false);
+                        }                        }
                     GlStateManager.popMatrix();
                 }
             }
@@ -160,11 +178,17 @@ public class MWLayerLeg implements LayerRenderer<EntityPlayer>
                 Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation("modularwarfare", "skins/armor/" + path4 + ".png"));
                 GL11.glScalef(armorModel4.modelScale, armorModel4.modelScale, armorModel4.modelScale);
                 if (this.legType == ModelArmor.EnumLeg.Left) {
-                    armorModel4.renderLeftFoot(scale);
-                }
-                else {
-                    armorModel4.renderRightFoot(scale);
-                }
+                    if(armorType4.isModelOBJ) {
+                        armorModel4.renderLeftFoot(1.0f, true);
+                    } else {
+                        armorModel4.renderLeftFoot(scale, false);
+                    }
+                } else {
+                    if(armorType4.isModelOBJ) {
+                        armorModel4.renderRightFoot(1.0f, true);
+                    } else {
+                        armorModel4.renderRightFoot(scale, false);
+                    }                }
                 GlStateManager.popMatrix();
             }
         }

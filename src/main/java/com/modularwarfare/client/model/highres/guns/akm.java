@@ -17,6 +17,7 @@ public class akm extends ModelGun {
         gunModel[0].addObj("highres/obj/guns/akm/body");
         gunModel[0].setRotationPoint(0F, 0F, 0F);
 
+
         ammoModel = new ModelRendererTurbo[1];
 
         ammoModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 0

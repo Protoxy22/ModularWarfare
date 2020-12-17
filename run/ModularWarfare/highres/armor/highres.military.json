@@ -1,0 +1,32 @@
+{
+  "internalName": "highres.military",
+  "modelName": "highres.armor.military",
+  "defense": "0.1",
+  "isModelOBJ": true,
+  "armorTypes":
+  {
+    "head":
+    {
+      "displayName": "Military Helmet"
+    },
+    "chest":
+    {
+      "displayName": "Military Chest"
+    },
+    "legs":
+    {
+      "displayName": "Military Pants"
+    },
+    "feet":
+    {
+      "displayName": "Military Boots"
+    }
+  },
+  "modelSkins":
+  [
+    {
+      "skinAsset": "highres.military",
+      "displayName": "Highres - Default"
+    }
+  ]
+}

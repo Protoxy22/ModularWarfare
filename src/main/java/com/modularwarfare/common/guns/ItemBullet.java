@@ -1,7 +1,6 @@
 package com.modularwarfare.common.guns;
 
 import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
@@ -16,7 +15,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBullet extends BaseItem {
 
-	public static final Function<BulletType, ItemBullet> factory = type -> { return new ItemBullet(type); };
 	public BulletType type;
 	
 	public ItemBullet(BulletType type) {

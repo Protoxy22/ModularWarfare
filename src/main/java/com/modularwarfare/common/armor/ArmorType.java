@@ -12,6 +12,7 @@ public class ArmorType extends BaseType
 	public Integer durability;
 	public double defense;
 	public HashMap<MWArmorType, ArmorInfo> armorTypes;
+	public boolean isModelOBJ = false;
 
 	public ArmorType() {
 		this.armorTypes = new HashMap<MWArmorType, ArmorInfo>();

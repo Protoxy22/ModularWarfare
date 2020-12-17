@@ -6,6 +6,7 @@ import com.modularwarfare.client.model.ModelArmor;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.layers.*;
 import net.minecraft.entity.player.*;
 import net.minecraftforge.fml.relauncher.*;
@@ -16,6 +17,7 @@ import net.minecraft.item.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.*;
 import net.minecraft.util.*;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class MWLayerHead implements LayerRenderer<EntityPlayer>
@@ -41,7 +43,7 @@ public class MWLayerHead implements LayerRenderer<EntityPlayer>
             this.renderHead(player, ((ItemMWArmor)hat.getItem()).type, scale);
         }
     }
-    
+
     public void renderHead(final EntityPlayer player, final ArmorType armorType, final float scale) {
         if (armorType.hasModel()) {
             final ModelArmor armorModel = (ModelArmor)armorType.bipedModel;
@@ -58,8 +60,44 @@ public class MWLayerHead implements LayerRenderer<EntityPlayer>
             final String path = (skinId > 0) ? ("skins/" + armorType.modelSkins[skinId].getSkin()) : armorType.modelSkins[0].getSkin();
             Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armor/" + path + ".png"));
             GlStateManager.scale(1.0f, 1.0f, 1.0f);
-            armorModel.renderHead(scale);
+
+            if(armorType.isModelOBJ) {
+                armorModel.renderHead(1.0f, true);
+            } else {
+                armorModel.renderHead(scale, false);
+            }
+
             GlStateManager.popMatrix();
+        }
+        final ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        if (!chest.isEmpty() && chest.getItem() instanceof ItemMWArmor) {
+            final ArmorType armorType3 = ((ItemMWArmor)chest.getItem()).type;
+            if (armorType3.hasModel()) {
+                final ModelArmor armorModel3 = (ModelArmor)armorType3.bipedModel;
+                if (armorModel3.shouldChestRenderHead) {
+                    GlStateManager.pushMatrix();
+                    if (player.isSneaking()) {
+                        GlStateManager.translate(0.0f, -0.74f, 0.0f);
+                    }
+                    this.modelRenderer.postRender(1.0f);
+                    GlStateManager.translate(0.0, 0.0, 0.0);
+                    GlStateManager.scale(1.0f, 1.0f, 1.0f);
+                    GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
+                    GlStateManager.enableRescaleNormal();
+                    final int skinId = 0;
+                    final String path = (skinId > 0) ? ("skins/" + armorType.modelSkins[skinId].getSkin()) : armorType.modelSkins[0].getSkin();
+                    Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/armor/" + path + ".png"));
+                    GlStateManager.scale(1.0f, 1.0f, 1.0f);
+
+                    if(armorType.isModelOBJ) {
+                        armorModel3.renderHead(1.0f, true);
+                    } else {
+                        armorModel3.renderHead(scale, false);
+                    }
+
+                    GlStateManager.popMatrix();
+                }
+            }
         }
     }
     

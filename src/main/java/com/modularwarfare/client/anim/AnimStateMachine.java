@@ -64,9 +64,6 @@ public class AnimStateMachine {
 	public boolean wasSprinting = false;
 
 	public void onTickUpdate() {
-		if(Minecraft.getMinecraft().gameSettings.keyBindSprint.isKeyDown()) {
-			ModularWarfare.LOGGER.info(Minecraft.getMinecraft().gameSettings.keyBindSprint.isKeyDown());
-		}
 		if(reloading) {
 			disableSprinting(true);
 			Minecraft.getMinecraft().player.setSprinting(false);

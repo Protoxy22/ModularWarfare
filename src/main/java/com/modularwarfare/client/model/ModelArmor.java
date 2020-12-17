@@ -1,27 +1,16 @@
 package com.modularwarfare.client.model;
 
-import java.util.HashMap;
-import java.util.UUID;
-
 import com.modularwarfare.ModularWarfare;
 import org.lwjgl.opengl.GL11;
 
 import com.modularwarfare.client.model.objects.TurboBipedBase;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.math.MathHelper;
 
-public class ModelArmor extends TurboBipedBase
-{
+public class ModelArmor extends TurboBipedBase {
 	public ModelRendererTurbo[] headModel;
 	public ModelRendererTurbo[] bodyModel;
 	public ModelRendererTurbo[] leftArmModel;
@@ -33,7 +22,10 @@ public class ModelArmor extends TurboBipedBase
 	public ModelRendererTurbo[] skirtFrontModel;
 	public ModelRendererTurbo[] skirtRearModel;
 	public boolean shouldChestRenderLegs;
+	public boolean shouldChestRenderHead;
+	public boolean shouldLegsRenderChest;
 	public float renderOffset;
+
 
 	public ModelArmor() {
 		this.headModel = new ModelRendererTurbo[0];
@@ -47,6 +39,8 @@ public class ModelArmor extends TurboBipedBase
 		this.skirtFrontModel = new ModelRendererTurbo[0];
 		this.skirtRearModel = new ModelRendererTurbo[0];
 		this.shouldChestRenderLegs = false;
+		this.shouldChestRenderHead = false;
+		this.shouldLegsRenderChest = false;
 		this.renderOffset = 0.0f;
 	}
 
@@ -114,35 +108,102 @@ public class ModelArmor extends TurboBipedBase
 		this.render(this.rightFootModel, this.bipedRightLeg, scale, this.modelScale);
 	}
 
-	public void renderHead(final float scale) {
+	public void renderHead(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(0F, -1.51F, 0.0F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.headModel, this.bipedHead, scale, this.modelScale);
 	}
 
-	public void renderChest(final float scale) {
+	public void renderChest(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glScalef(1.0f, 1.0f, 1.0f);
+
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(0F, -1.53F, 0.0F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.bodyModel, this.bipedBody, scale, this.modelScale);
 	}
 
-	public void renderLeftLeg(final float scale) {
+	public void renderLeftLeg(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glScalef(1.0f, 1.0f, 1.0f);
+
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(-0.98F, -1.515F, -6.113F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.leftLegModel, this.bipedLeftLeg, scale, this.modelScale);
 	}
 
-	public void renderRightLeg(final float scale) {
+	public void renderRightLeg(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glScalef(1.0f, 1.0f, 1.0f);
+
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(0.98F, -1.515F, -6.113F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.rightLegModel, this.bipedRightLeg, scale, this.modelScale);
 	}
 
-	public void renderLeftFoot(final float scale) {
+	public void renderLeftFoot(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glScalef(1.0f, 1.0f, 1.0f);
+
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(-0.98F, -1.515F, -6.113F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.leftFootModel, this.bipedLeftLeg, scale, this.modelScale);
 	}
 
-	public void renderRightFoot(final float scale) {
+	public void renderRightFoot(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glScalef(1.0f, 1.0f, 1.0f);
+
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(0.98F, -1.515F, -6.113F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.rightFootModel, this.bipedRightLeg, scale, this.modelScale);
 	}
 
-	public void renderLeftArm(final float scale) {
+	public void renderLeftArm(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(-2.1F, -1.42F, -1.02F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+
+		}
 		this.render(this.leftArmModel, this.bipedLeftArm, scale, this.modelScale);
 	}
 
-	public void renderRightArm(final float scale) {
+	public void renderRightArm(final float scale, boolean isModelOBJ) {
+		if(isModelOBJ) {
+			GL11.glRotatef(180.0f, 1F, 0F, 0F);
+			GL11.glTranslatef(2.1F, -1.42F, -1.02F);
+			GL11.glRotatef(90.0f, 1F, 0F, 0F);
+
+			GL11.glScalef(0.51F, 0.51F, 0.51F);
+		}
 		this.render(this.rightArmModel, this.bipedRightArm, scale, this.modelScale);
 	}
 
@@ -200,8 +261,7 @@ public class ModelArmor extends TurboBipedBase
 		this.translate(this.rightFootModel, x, y, z);
 	}
 
-	public enum EnumLeg
-	{
+	public enum EnumLeg {
 		Left,
 		Right;
 	}

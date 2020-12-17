@@ -34,8 +34,7 @@ import net.minecraft.util.math.MathHelper;
  */
 public class ModelRendererTurbo extends ModelRenderer
 {
-	public ModelRendererTurbo(ModelBase modelbase, String s)
-	{
+	public ModelRendererTurbo(ModelBase modelbase, String s) {
 		super(modelbase, s);
 		flip = false;
 		compiled = false;
@@ -1818,8 +1817,15 @@ public class ModelRendererTurbo extends ModelRenderer
 	 */
 	public void addObj(String file)
 	{
-		addModel(file, ModelPool.OBJ);
+		addModel(file, null, ModelPool.OBJ);
 	}
+
+
+	public void addObj(String file, String objGroup)
+	{
+		addModel(file, objGroup, ModelPool.OBJ);
+	}
+
 
 	/**
 	 * Adds model format support. Model files use the entire texture file.
@@ -1828,9 +1834,9 @@ public class ModelRendererTurbo extends ModelRenderer
 	 *                    which are either resources/models or resources/mods/models.
 	 * @param modelFormat the class of the model format interpreter
 	 */
-	public void addModel(String file, Class modelFormat)
+	public void addModel(String file, String objGroup, Class modelFormat)
 	{
-		ModelPoolEntry entry = ModelPool.addFile(file, modelFormat, transformGroup, textureGroup);
+		ModelPoolEntry entry = ModelPool.addFile(file, objGroup, modelFormat, transformGroup, textureGroup);
 		if(entry == null)
 			return;
 		PositionTextureVertex[] verts = Arrays.copyOf(entry.vertices, entry.vertices.length);
@@ -2106,8 +2112,8 @@ public class ModelRendererTurbo extends ModelRenderer
 	 * @param worldScale the scale of the shape. Usually is 0.0625.
 	 */
 	@Override
-	public void render(float worldScale)
-	{
+	public void render(float worldScale) {
+
 		render(worldScale, false);
 	}
 
@@ -2118,8 +2124,7 @@ public class ModelRendererTurbo extends ModelRenderer
 	 * @param worldScale     The scale of the shape
 	 * @param oldRotateOrder Whether to use the old rotate order (ZYX) instead of the new one (YZX)
 	 */
-	public void render(float worldScale, boolean oldRotateOrder)
-	{
+	public void render(float worldScale, boolean oldRotateOrder) {
 		if(field_1402_i)
 		{
 			return;
@@ -2279,7 +2284,7 @@ public class ModelRendererTurbo extends ModelRenderer
 				curTexGroup.loadTexture();
 				GlStateManager.callList(displayListArray[i]);
 				if(!defaultTexture.equals(""))
-					renderEngine.bindTexture(new ResourceLocation("", defaultTexture)); //TODO : Check. Not sure about this one
+					renderEngine.bindTexture(new ResourceLocation("modularwarfare", defaultTexture)); //TODO : Check. Not sure about this one
 			}
 		}
 	}

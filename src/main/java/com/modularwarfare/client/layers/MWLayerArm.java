@@ -52,11 +52,12 @@ public class MWLayerArm implements LayerRenderer<EntityPlayer>
                 GlStateManager.translate(0.0f, 0.2f, 0.0f);
             }
             this.renderer.getMainModel().postRenderArm(0.0625f, (this.armType == ModelGun.EnumArm.Left) ? EnumHandSide.LEFT : EnumHandSide.RIGHT);
-            if (this.armType == ModelGun.EnumArm.Left) {
-                GlStateManager.translate(-0.315f, -0.125f, 0.0f);
-            }
-            else {
-                GlStateManager.translate(0.315f, -0.125f, 0.0f);
+            if(!armorType.isModelOBJ) {
+                if (this.armType == ModelGun.EnumArm.Left) {
+                    GlStateManager.translate(-0.315f, -0.125f, 0.0f);
+                } else {
+                    GlStateManager.translate(0.315f, -0.125f, 0.0f);
+                }
             }
             GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f);
             GlStateManager.enableRescaleNormal();
@@ -65,10 +66,18 @@ public class MWLayerArm implements LayerRenderer<EntityPlayer>
             Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(new ResourceLocation("modularwarfare", "skins/armor/" + path + ".png"));
             GlStateManager.scale(1.0f, 1.0f, 1.0f);
             if (this.armType == ModelGun.EnumArm.Left) {
-                armorModel.renderLeftArm(scale);
+                if(armorType.isModelOBJ) {
+                    armorModel.renderLeftArm(1.0f, true);
+                } else {
+                    armorModel.renderLeftArm(scale, false);
+                }
             }
             else {
-                armorModel.renderRightArm(scale);
+                if(armorType.isModelOBJ) {
+                    armorModel.renderRightArm(1.0f, true);
+                } else {
+                    armorModel.renderRightArm(scale, false);
+                }
             }
             GlStateManager.popMatrix();
         }
