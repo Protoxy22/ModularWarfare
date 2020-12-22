@@ -12,6 +12,7 @@ import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponFireEvent;
 import com.modularwarfare.common.entity.EntityBot;
 import com.modularwarfare.common.entity.decals.EntityDecal;
+import com.modularwarfare.common.entity.decals.EntityShell;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import com.modularwarfare.common.network.*;
 import com.modularwarfare.common.type.BaseItem;
@@ -170,6 +171,13 @@ public class ItemGun extends BaseItem {
             }
         }
 
+
+        EntityShell shell = new EntityShell(world, entityPlayer, itemGun);
+        shell.setHeadingFromThrower(entityPlayer, entityPlayer.rotationPitch, entityPlayer.rotationYaw + 110, 0.0F,0.2F,5);
+
+        if (!world.isRemote) {
+            world.spawnEntity(shell);
+        }
 
         // Weapon post fire event
         WeaponFireEvent.Post postFireEvent = new WeaponFireEvent.Post(entityPlayer, gunStack, itemGun, entities, headshot);

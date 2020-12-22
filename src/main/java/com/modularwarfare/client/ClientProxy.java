@@ -36,6 +36,7 @@ import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
 import com.modularwarfare.common.entity.EntityBot;
 import com.modularwarfare.common.entity.decals.EntityBulletHole;
+import com.modularwarfare.common.entity.decals.EntityShell;
 import com.modularwarfare.common.guns.*;
 import com.modularwarfare.common.particle.EntityBloodFX;
 import com.modularwarfare.common.type.BaseType;
@@ -494,6 +495,8 @@ public class ClientProxy extends CommonProxy {
 			RenderingRegistry.registerEntityRenderingHandler(EntityBot.class, RenderBot::new);
 			RenderingRegistry.registerEntityRenderingHandler(EntityBulletHole.class, RenderDecal.FACTORY);
 
+			//RENDER SHELL EJECTION
+			RenderingRegistry.registerEntityRenderingHandler(EntityShell.class, RenderShell.FACTORY);
 		}
 
 	}

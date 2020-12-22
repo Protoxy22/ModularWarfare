@@ -18,9 +18,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 public class ServerTickHandler extends ForgeEvent {
 
 	public static ConcurrentHashMap<UUID, Integer> playerShootCooldown = new ConcurrentHashMap<UUID, Integer>();
-	public static ConcurrentHashMap<String, Integer> playerAimShootCooldown = new ConcurrentHashMap<String, Integer>();
 
 	public static ConcurrentHashMap<UUID, Integer> playerReloadCooldown = new ConcurrentHashMap<UUID, Integer>();
+
+	public static ConcurrentHashMap<String, Integer> playerAimShootCooldown = new ConcurrentHashMap<String, Integer>();
+	public static ConcurrentHashMap<String, Boolean> playerAimInstant = new ConcurrentHashMap<String, Boolean>();
+
 
 	int i = 0;
 

@@ -1,11 +1,13 @@
 package com.modularwarfare.client.model;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.Random;
 
 import com.modularwarfare.api.ArmorApi;
 import com.modularwarfare.client.handler.ClientTickHandler;
 import com.modularwarfare.client.model.omw.OmwModelFlash;
+import com.modularwarfare.client.tmt.ModelRendererTurbo;
 import com.modularwarfare.common.armor.ArmorType;
 import com.modularwarfare.common.armor.ItemMWArmor;
 import com.modularwarfare.common.armor.ItemSpecialArmor;
@@ -13,10 +15,13 @@ import com.modularwarfare.common.guns.*;
 import com.modularwarfare.common.network.PacketAimingRequest;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.util.Timer;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -67,7 +72,6 @@ public class RenderGun extends CustomItemRenderer {
 	private int direction = 0;
 	private float lastReloadProgress = 0f;
 	private Timer timer;
-
 
 	@Override
 	public void renderItem(CustomItemRenderType type, EnumHand hand, ItemStack item, Object... data) {
@@ -333,7 +337,7 @@ public class RenderGun extends CustomItemRenderer {
 
 				if(renderType == CustomItemRenderType.ENTITY){
 					GL11.glColor3f(0.7f, 0.7f, 0.7f);
-					renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/gray.png"));
+					renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "textures/skins/gray.png"));
 				} else {
 					String path = skinId > 0 ? gunType.modelSkins[skinId].getSkin() : gunType.modelSkins[0].getSkin();
 					bindTexture("guns", path);
@@ -570,7 +574,7 @@ public class RenderGun extends CustomItemRenderer {
 
 											int skinIdAmmo = 0;
 
-											if(stackAmmo.hasTagCompound()) {
+											if (stackAmmo.hasTagCompound()) {
 												if (stackAmmo.getTagCompound().hasKey("skinId")) {
 													skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
 												}
@@ -600,7 +604,7 @@ public class RenderGun extends CustomItemRenderer {
 
 								int skinIdAmmo = 0;
 
-								if(stackAmmo.hasTagCompound()) {
+								if (stackAmmo.hasTagCompound()) {
 									if (stackAmmo.getTagCompound().hasKey("skinId")) {
 										skinIdAmmo = stackAmmo.getTagCompound().getInteger("skinId");
 									}
@@ -672,9 +676,9 @@ public class RenderGun extends CustomItemRenderer {
 							}
 						}
 						if(!punched) {
-							RenderGun.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + model.flashTexture +".png"));
+							RenderGun.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "textures/skins/" + model.flashTexture +".png"));
 						} else {
-							RenderGun.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + model.flashTexture + "_punched.png"));
+							RenderGun.renderEngine.bindTexture(new ResourceLocation(ModularWarfare.MOD_ID, "textures/skins/" + model.flashTexture + "_punched.png"));
 						}
 						ModelGun.glowOn();
 						flash.renderFlash(worldScale, anim.flashInt);
@@ -1027,6 +1031,7 @@ public class RenderGun extends CustomItemRenderer {
 				}
 			}
 		}
-
 	}
+
+
 }

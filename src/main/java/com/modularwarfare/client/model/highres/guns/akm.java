@@ -25,6 +25,7 @@ public class akm extends ModelGun {
         ammoModel[0].setRotationPoint(0F, 0F, 0F);
 
 
+
         slideModel = new ModelRendererTurbo[1];
 
         slideModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 1
