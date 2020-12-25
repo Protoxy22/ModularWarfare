@@ -101,7 +101,6 @@ public class ModelGun extends TurboBase
 	//Muzzle flash variables
 	public String flashTexture = "flash";
 	public ModelFlash flashModel = new OmwModelFlash();
-
 	public boolean hasFlash = false;
 	public float flashScale = 1F;
 	public Vector3f muzzleFlashPointNormal = new Vector3f(0,0,0);
@@ -219,9 +218,7 @@ public class ModelGun extends TurboBase
 	public ArrayList<BreakActionData> breakActions = new ArrayList<BreakActionData>();
 		
 	public float triggerDistance = 0.02f;
-
-	public String path;
-
+	
 	public boolean boltOnFire = false;
 
 	public static void glowOn() {

@@ -1,6 +1,8 @@
 package com.modularwarfare.common.network;
 
 import com.modularwarfare.ModularWarfare;
+import com.modularwarfare.api.AnimationUtils;
+import com.modularwarfare.common.guns.ItemGun;
 import com.modularwarfare.common.handler.ServerTickHandler;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -39,8 +41,6 @@ public class PacketAimingRequest extends PacketBase {
 	    if(!ServerTickHandler.playerAimShootCooldown.contains(playername)){
             ModularWarfare.NETWORK.sendToAll(new PacketAimingReponse(playername, aiming));
         }
-	    ServerTickHandler.playerAimInstant.put(playername, aiming);
-		ModularWarfare.LOGGER.info("Request: "+aiming+" by "+playername);
 	}
 
 	@Override

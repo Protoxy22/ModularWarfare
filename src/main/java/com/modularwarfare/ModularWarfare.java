@@ -21,7 +21,6 @@ import com.modularwarfare.api.cap.IArmorItemHandler;
 import com.modularwarfare.api.cap.SpecialArmorItem;
 import com.modularwarfare.common.entity.EntityBot;
 import com.modularwarfare.common.entity.decals.EntityBulletHole;
-import com.modularwarfare.common.entity.decals.EntityShell;
 import com.modularwarfare.common.guns.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemBlock;
@@ -215,7 +214,7 @@ public class ModularWarfare {
 	public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
 		EntityRegistry.registerModEntity(new ResourceLocation(ModularWarfare.MOD_ID, "bot"), EntityBot.class, "bot", 2, this, 64, 1, false);
 		EntityRegistry.registerModEntity(new ResourceLocation(ModularWarfare.MOD_ID, "bullethole"), EntityBulletHole.class, "bullethole", 3, this, 80, 10, false);
-		EntityRegistry.registerModEntity(new ResourceLocation(ModularWarfare.MOD_ID, "shell"), EntityShell.class, "shell", 4, this, 64, 1, false);
+
 	}
 
 

@@ -15,8 +15,11 @@ public class ModelBullet extends TurboBase {
 	public ModelRendererTurbo[] bulletModel = new ModelRendererTurbo[0];
 	public Vector3f thirdPersonOffset = new Vector3f();
 	/** The amount of attached mags, 0 default, 1 = 1+1 (default + extra) */
-
-
+	public int attachedMagCount = 0;
+	/** Offset by this amount */
+	
+	//public HashMap<Integer, RenderVariables> magCountOffset = new HashMap<Integer, RenderVariables>();
+	
 	public void renderBullet(float f)
 	{
 		render(bulletModel, f);

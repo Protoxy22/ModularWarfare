@@ -65,10 +65,10 @@ public class InstantBulletRenderer
 			this.hitPos = hitPos;
 			this.length = 10.0f;
 			if(!isPunched){
-				this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "textures/skins/" + "defaultbullettrail.png");
+				this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "defaultbullettrail.png");
 				this.width = 0.05f;
 			} else {
-				this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "textures/skins/" + "punchedbullettrail.png");
+				this.texture = new ResourceLocation(ModularWarfare.MOD_ID, "skins/" + "punchedbullettrail.png");
 				this.width = 0.1f;
 			}
 

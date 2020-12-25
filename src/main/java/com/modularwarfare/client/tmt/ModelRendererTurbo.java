@@ -2350,7 +2350,7 @@ public class ModelRendererTurbo extends ModelRenderer
 	public boolean useLegacyCompiler;
 	public List cubeList;
 	public List childModels;
-	public String boxName;
+	public final String boxName;
 
 	private String defaultTexture;
 
