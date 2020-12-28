@@ -4,23 +4,21 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.modularwarfare.ModularWarfare;
-import com.modularwarfare.api.AnimationUtils;
 import com.modularwarfare.common.network.BackWeaponsManager;
 import com.modularwarfare.common.network.PacketAimingReponse;
-import com.modularwarfare.common.network.PacketAimingRequest;
 import com.modularwarfare.utility.event.ForgeEvent;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 public class ServerTickHandler extends ForgeEvent {
 
 	public static ConcurrentHashMap<UUID, Integer> playerShootCooldown = new ConcurrentHashMap<UUID, Integer>();
-	public static ConcurrentHashMap<String, Integer> playerAimShootCooldown = new ConcurrentHashMap<String, Integer>();
 
 	public static ConcurrentHashMap<UUID, Integer> playerReloadCooldown = new ConcurrentHashMap<UUID, Integer>();
+
+	public static ConcurrentHashMap<String, Integer> playerAimShootCooldown = new ConcurrentHashMap<String, Integer>();
+	public static ConcurrentHashMap<String, Boolean> playerAimInstant = new ConcurrentHashMap<String, Boolean>();
+
 
 	int i = 0;
 

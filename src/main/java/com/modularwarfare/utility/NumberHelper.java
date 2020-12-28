@@ -1,5 +1,6 @@
 package com.modularwarfare.utility;
 
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class NumberHelper {
@@ -91,6 +92,20 @@ public class NumberHelper {
 	public static boolean isInRange(float maxValue, float currentValue)
 	{
 		return currentValue <= maxValue && currentValue >= -maxValue;
+	}
+
+	//Find a local vector in terms of the global axes.
+	public static Vector3f findLocalVectorGlobally(Vector3f in, float yaw, float pitch, float roll)
+	{
+		Matrix4f mat = new Matrix4f();
+		mat.m00 = in.x;
+		mat.m10 = in.y;
+		mat.m20 = in.z;
+		//Do the rotations used to obtain this basis in reverse
+		mat.rotate(-yaw * 3.14159265F / 180F, new Vector3f(0F, 1F, 0F));
+		mat.rotate(-pitch * 3.14159265F / 180F, new Vector3f(0F, 0F, 1F));
+		mat.rotate(-roll * 3.14159265F / 180F, new Vector3f(1F, 0F, 0F));
+		return new Vector3f(mat.m00, mat.m10, mat.m20);
 	}
 	
 }

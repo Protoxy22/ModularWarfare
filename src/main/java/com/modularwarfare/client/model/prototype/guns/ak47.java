@@ -1,27 +1,31 @@
-package com.modularwarfare.client.model.highres.guns;
+package com.modularwarfare.client.model.prototype.guns;
 
 import com.modularwarfare.client.model.ModelGun;
 import com.modularwarfare.client.tmt.ModelRendererTurbo;
+import com.modularwarfare.common.guns.AttachmentEnum;
 import org.lwjgl.util.vector.Vector3f;
 
-public class akm extends ModelGun {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ak47 extends ModelGun {
 
     int textureX = 512;
     int textureY = 512;
 
-    public akm() {
+    public ak47() {
 
         gunModel = new ModelRendererTurbo[1];
 
         gunModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 0
-        gunModel[0].addObj("highres/obj/guns/akm/body");
+        gunModel[0].addObj("prototype/obj/guns/ak47/body");
         gunModel[0].setRotationPoint(0F, 0F, 0F);
 
 
         ammoModel = new ModelRendererTurbo[1];
 
         ammoModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 0
-        ammoModel[0].addObj("highres/obj/guns/akm/ammo");
+        ammoModel[0].addObj("prototype/obj/guns/ak47/ammo");
         ammoModel[0].setRotationPoint(0F, 0F, 0F);
 
 
@@ -29,7 +33,7 @@ public class akm extends ModelGun {
         slideModel = new ModelRendererTurbo[1];
 
         slideModel[0] = new ModelRendererTurbo(this, 0, 0, textureX, textureY); // Box 1
-        slideModel[0].addObj("highres/obj/guns/akm/slide");
+        slideModel[0].addObj("prototype/obj/guns/ak47/slide");
         slideModel[0].setRotationPoint(0F, 0F, 0F);
 
         leftArmPos = new Vector3f(0.25F, -0.59F, 0.06F);
@@ -48,7 +52,6 @@ public class akm extends ModelGun {
         rightArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
         leftArmScale = new Vector3f(0.60F, 1.0F, 0.60F);
 
-        rotateAimPosition = new Vector3f(0F, 0.065F, 0.38F);
 
         hasFlash = true;
         flashScale = 1.5F;
@@ -64,10 +67,21 @@ public class akm extends ModelGun {
         this.gunSlideDistance = 0.1F;
 
         this.thirdPersonScale = 0.8F;
-        this.thirdPersonOffset = new Vector3f(0F, -0.15F, 0F);
+        this.thirdPersonOffset = new Vector3f(0F, -0.1F, 0F);
 
-        translateAll = new Vector3f(1F, -1.9F, -0.06F);
-        this.crouchZoom = -0.05f;
+        this.translateAimPosition = new Vector3f(0.14f, 0.008f, 0f);
+        this.rotateAimPosition = new Vector3f(0F, 0.065F, 0.38F);
+
+
+        translateAll = new Vector3f(1F, -1F, -0.07F);
+        this.crouchZoom = -0.035f;
+
+        List<Vector3f> attachmentVectorsBarrel = new ArrayList<Vector3f>();
+        attachmentVectorsBarrel.add(new Vector3f(0.08F, 0.073F, 0.0F)); //Sight translation
+        attachmentVectorsBarrel.add(new Vector3f(0F, 0F, 0F)); //Sight rotation
+        attachmentPointMap.put(AttachmentEnum.Barrel, attachmentVectorsBarrel);
+
+        this.modelScale = 1.2f;
 
         flipAll();
     }

@@ -574,6 +574,15 @@ public class vss extends ModelGun {
         gunModel[122].addBox(0F, 0F, 0F, 2, 2, 1, 0F); // Box 131
         gunModel[122].setRotationPoint(-17F, -24.5F, 4F);
 
+
+        defaultScopeModel = new ModelRendererTurbo[1];
+        defaultScopeModel[0] = new ModelRendererTurbo(this, 97, 113, textureX, textureY); // scope
+
+        defaultScopeModel[0].addBox(0F, 0F, 0F, 1, 4, 4, 0F); // scope
+        defaultScopeModel[0].setRotationPoint(-42.51F, -25.51F, -2F);
+        defaultScopeModel[0].boxName = "scope";
+
+
         ammoModel = new ModelRendererTurbo[9];
         ammoModel[0] = new ModelRendererTurbo(this, 1, 25, textureX, textureY); // Box 51
         ammoModel[1] = new ModelRendererTurbo(this, 57, 89, textureX, textureY); // Box 62
