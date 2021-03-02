@@ -5,7 +5,7 @@ import com.modularwarfare.client.tmt.ModelRendererTurbo;
 
 public class ModelAttachment extends TurboBase {
 	
-	public ModelRendererTurbo[] attachmentModel = new ModelRendererTurbo[0];
+	public transient ModelRendererTurbo[] attachmentModel = new ModelRendererTurbo[0];
 	
 	/** For big scopes, so that the player actually looks through them properly */
 	public float renderOffset = 0F;

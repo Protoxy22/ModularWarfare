@@ -244,10 +244,11 @@ public class ClientRenderHooks extends ForgeEvent {
 
 
 				//** SHADERS COMPATIBILITY
+				/*
 				GlStateManager.clear(256);
 				GlStateManager.matrixMode(5889);
 				GlStateManager.loadIdentity();
-
+				*/
 
 				float separation = 0.07F;
 

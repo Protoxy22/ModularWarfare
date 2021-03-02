@@ -614,7 +614,7 @@ public class ump45 extends ModelGun //Same as Filename
         this.modelScale = 0.15F;
         translateAll = new Vector3f(0F, -10.5F, 0F);
 
-        this.crouchZoom = -0.2f;
+        this.crouchZoom = -0.05f;
 
         leftArmPos = new Vector3f(0.05F, -0.70F, 0.1F);
         leftArmRot = new Vector3f(65.0F, 32.0F, -46.0F);

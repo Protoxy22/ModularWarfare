@@ -13,9 +13,9 @@ public class BaseType {
 	/** The model file for this gun */
 	public String modelName;
 	@SideOnly(value=Side.CLIENT)
-	public TurboBase model;
+	public transient TurboBase model;
 	@SideOnly(value=Side.CLIENT)
-	public TurboBipedBase bipedModel;
+	public transient TurboBipedBase bipedModel;
 	/** Max stack size */
 	public Integer maxStackSize;
 	/** Weapon model skins/textures */

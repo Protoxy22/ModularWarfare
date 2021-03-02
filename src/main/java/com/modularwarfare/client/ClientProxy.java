@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import com.google.gsonapi.Gson;
-import com.google.gsonapi.GsonBuilder;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.modularwarfare.ModConfig;
 import com.modularwarfare.ModularWarfare;
 import com.modularwarfare.api.WeaponAnimations;

@@ -5,7 +5,7 @@ import net.minecraft.client.model.ModelBase;
 
 public class ModelFlash extends ModelBase
 {
-	public ModelRendererTurbo[][] flashModel = new ModelRendererTurbo[0][0];
+	public transient ModelRendererTurbo[][] flashModel = new ModelRendererTurbo[0][0];
 
 	public void renderFlash(float f, int i)
 	{

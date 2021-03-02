@@ -202,22 +202,12 @@ public class EventHandlerEntity {
 		}
 	}
 
+
+
 	@SubscribeEvent
 	public static void onPlayerKilled(LivingDeathEvent e) {
 		if (e.getEntity() instanceof EntityPlayer) {
 			ModularWarfare.PROXY.resetSens();
 		}
 	}
-
-	@SubscribeEvent
-	public void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-		if (!event.getEntity().getEntityWorld().isRemote) {
-			Entity entity = event.getEntity();
-			double offset = entity.getEntityWorld().rand.nextDouble() - 0.2D;
-			ModularWarfare.NETWORK.sendToAll(new PacketDecal(1, EntityDecal.EnumDecalSide.ALL, entity.lastTickPosX - entity.motionX, entity.lastTickPosY - entity.motionY, entity.lastTickPosZ - entity.motionZ, false));
-			ModularWarfare.NETWORK.sendToAll(new PacketDecal(1, EntityDecal.EnumDecalSide.WALLS, entity.lastTickPosX - entity.motionX, entity.lastTickPosY + (double) entity.getEyeHeight() - offset - entity.motionY, entity.lastTickPosZ - entity.motionZ, false));
-		}
-	}
-
-
 }

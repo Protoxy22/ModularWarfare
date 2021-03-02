@@ -10,9 +10,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
-import com.google.gsonapi.Gson;
-import com.google.gsonapi.GsonBuilder;
-import com.google.gsonapi.stream.JsonReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 import com.modularwarfare.api.IArmor;
 import com.modularwarfare.api.MWArmorType;
 import com.modularwarfare.api.cap.ArmorCapabilities;
@@ -313,8 +313,7 @@ public class ModularWarfare {
 						for (MWArmorType mwArmorType : armorType.armorTypes.keySet()) {
 							if (MWArmorType.isVanilla(mwArmorType)) {
 								ModularWarfare.armorTypes.put(armorType.internalName + "_" + mwArmorType.name().toLowerCase(), new ItemMWArmor(armorType, mwArmorType));
-							}
-							else {
+							} else {
 								ModularWarfare.specialArmorTypes.put(armorType.internalName, new ItemSpecialArmor(armorType, mwArmorType));
 							}
 						}

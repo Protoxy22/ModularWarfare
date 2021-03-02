@@ -7,10 +7,10 @@
     "roundsPerMin": 600,
     "allowSprintFiring": true,
     "allowEmptyMagazines": true,
-    "recoilPitch": 3.0,
-    "recoilYaw": 1.0,
-    "randomRecoilPitch": 0.5,
-    "randomRecoilYaw": 0.5,
+    "recoilPitch": 0.75,
+    "recoilYaw": 0.75,
+    "randomRecoilPitch": 0.15,
+    "randomRecoilYaw": 0.15,
     "fireModes": [
         "full"
     ],

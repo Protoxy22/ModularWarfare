@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
 
-import com.google.gsonapi.Gson;
-import com.google.gsonapi.GsonBuilder;
-import com.google.gsonapi.stream.JsonReader;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonReader;
 
 public class ModConfig {
 	

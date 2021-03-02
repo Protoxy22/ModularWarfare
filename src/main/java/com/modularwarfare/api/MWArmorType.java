@@ -1,6 +1,6 @@
 package com.modularwarfare.api;
 
-import com.google.gsonapi.annotations.SerializedName;
+import com.google.gson.annotations.SerializedName;
 
 public enum MWArmorType {
 	

@@ -40,26 +40,30 @@ public class PacketGunAddAttachment extends PacketBase {
 					if (offhandStack.getItem() instanceof ItemAttachment) {
 						ItemAttachment itemAttachment = (ItemAttachment) offhandStack.getItem();
 						AttachmentType attachType = itemAttachment.type;
-						if (gunType.acceptedAttachments.get(attachType.attachmentType) != null && gunType.acceptedAttachments.get(attachType.attachmentType).size() >= 1) {
-							if (gunType.acceptedAttachments.get(attachType.attachmentType).contains(attachType.internalName)) {
-								ItemStack attachmentStack = new ItemStack(itemAttachment);
-								NBTTagCompound tag = new NBTTagCompound();
-								tag.setInteger("skinId", 0);
-								attachmentStack.setTagCompound(tag);
-								GunType.addAttachment(gunStack, attachType.attachmentType, attachType.scopeType, attachmentStack);
-								inventory.offHandInventory.get(0).shrink(1);
+						if (gunType.acceptedAttachments.containsKey(attachType.attachmentType)) {
+							if (gunType.acceptedAttachments.get(attachType.attachmentType) != null) {
+								if (gunType.acceptedAttachments.get(attachType.attachmentType).size() >= 1) {
+									if (gunType.acceptedAttachments.get(attachType.attachmentType).contains(attachType.internalName)) {
+										ItemStack attachmentStack = new ItemStack(itemAttachment);
+										NBTTagCompound tag = new NBTTagCompound();
+										tag.setInteger("skinId", 0);
+										attachmentStack.setTagCompound(tag);
+										GunType.addAttachment(gunStack, attachType.attachmentType, attachType.scopeType, attachmentStack);
+										inventory.offHandInventory.get(0).shrink(1);
+									}
+								}
 							}
-						}
-					} else if (offhandStack.getItem() instanceof ItemSpray) {
-						ItemSpray itemSpray = (ItemSpray) offhandStack.getItem();
-						if (gunStack.getTagCompound() != null) {
-							for(int i=0; i<gunType.modelSkins.length; i++) {
-								if (gunType.modelSkins[i].internalName.equalsIgnoreCase(itemSpray.type.skinName)) {
-									NBTTagCompound nbtTagCompound = gunStack.getTagCompound();
-									nbtTagCompound.setInteger("skinId", i);
-									gunStack.setTagCompound(nbtTagCompound);
-									inventory.offHandInventory.get(0).damageItem(1, entityPlayer);
-									ModularWarfare.NETWORK.sendTo(new PacketPlaySound(entityPlayer.getPosition(), "spray", 1f, 1f), entityPlayer);
+						} else if (offhandStack.getItem() instanceof ItemSpray) {
+							ItemSpray itemSpray = (ItemSpray) offhandStack.getItem();
+							if (gunStack.getTagCompound() != null) {
+								for (int i = 0; i < gunType.modelSkins.length; i++) {
+									if (gunType.modelSkins[i].internalName.equalsIgnoreCase(itemSpray.type.skinName)) {
+										NBTTagCompound nbtTagCompound = gunStack.getTagCompound();
+										nbtTagCompound.setInteger("skinId", i);
+										gunStack.setTagCompound(nbtTagCompound);
+										inventory.offHandInventory.get(0).damageItem(1, entityPlayer);
+										ModularWarfare.NETWORK.sendTo(new PacketPlaySound(entityPlayer.getPosition(), "spray", 1f, 1f), entityPlayer);
+									}
 								}
 							}
 						}
