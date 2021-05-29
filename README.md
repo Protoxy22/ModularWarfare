@@ -1,3 +1,5 @@
+# REPO DISCONTINUED: NEW VERSION IS CLOSED-SOURCE
+
 # ModularWarfare Stable Version
 ![](https://media.discordapp.net/attachments/665677612169035801/762845100128206858/vikingspack.png)
 
